@@ -15,7 +15,7 @@ const Navbar = () => {
     <div>
       {" "}
       <div className="hidden lg:block sticky top-0  my-5">
-        <div className="sm:w-[90%]  sm:mx-auto py-2 flex justify-between border-[1px] shadow-md px-2 rounded-xl">
+        <div className="sm:w-[90%]  sm:mx-auto py-5 flex justify-between border-[1px] shadow-md px-2 rounded-xl">
           <div>
             <Link href={"/"}>
               <Image
@@ -63,7 +63,7 @@ const Navbar = () => {
               }
               href={"/campaigns/"}
             >
-              campaigns
+              Campaigns
             </Link>
             <Link
               className={
@@ -83,8 +83,8 @@ const Navbar = () => {
             >
               Contact
             </Link>
-            <button className="bk-input-button">Register</button>
-            <button className="bk-input-button">Login</button>
+            <button className="bb-input-button">Register</button>
+            <button className="bb-input-button">Login</button>
 
             {/* <Link
               className={
@@ -260,7 +260,7 @@ const Navbar = () => {
           </div>
           <button
             onClick={() => setSearch(!search)}
-            className="bk-input-button "
+            className="bb-input-button "
           >
             Search
           </button>

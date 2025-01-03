@@ -58,6 +58,13 @@ body {
   font-family: "Poppins", sans-serif;
 }
 
+.hero-bg {
+  min-height: 100%;
+  background: url("../../assets/Image/map.png");
+  background-size: cover;
+  height: 70vh;
+}
+
 .input-border {
   border: 1px solid #cacaca;
   border-radius: 4px;
@@ -108,13 +115,31 @@ body {
   letter-spacing: 0.5px;
 }
 
-.bk-input-button {
+.bb-input-button {
+  background-color: #a40000;
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 2em;
+  letter-spacing: 0.3px;
+  color: #fff;
+  padding-left: 8px;
+  padding-right: 8px;
+  padding-top: 4px;
+  padding-bottom: 3px;
+  border-width: 0px;
+  border-radius: 4px;
+  box-shadow: 1px 1px 4px 0px #000000;
+  transition: ease-in-out 0.3s;
+}
+
+.bb-modal-red-button {
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 2em;
+  letter-spacing: 0.3px;
   background-color: #dc0000;
-  font-family: "Poppins", sans-serif;
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 2em;
-  letter-spacing: 0.3px;
   color: #fff;
   padding-left: 8px;
   padding-right: 8px;
@@ -126,14 +151,13 @@ body {
   transition: ease-in-out 0.3s;
 }
 
-.bk-modal-red-button {
+.bb-input-red-button {
   font-family: "Poppins", sans-serif;
   font-weight: 500;
   font-size: 14px;
   line-height: 2em;
   letter-spacing: 0.3px;
-  background-color: #b00808d8;
-  color: #fff;
+  color: #dc0000;
   padding-left: 8px;
   padding-right: 8px;
   padding-top: 4px;
@@ -144,36 +168,19 @@ body {
   transition: ease-in-out 0.3s;
 }
 
-.bk-input-red-button {
-  font-family: "Poppins", sans-serif;
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 2em;
-  letter-spacing: 0.3px;
-  color: #b31312;
-  padding-left: 8px;
-  padding-right: 8px;
-  padding-top: 4px;
-  padding-bottom: 3px;
-  border-width: 0px;
-  border-radius: 4px;
-  box-shadow: 1px 1px 4px 0px #000000;
-  transition: ease-in-out 0.3s;
-}
-
-.bk-input-red-button:hover {
-  background-color: #b00808d8;
+.bb-input-red-button:hover {
+  background-color: #dc0000;
   color: #fff;
 }
 
-.bk-input-button:hover {
+.bb-input-button:hover {
   color: #fff;
-  background-color: #b31312;
+  background-color: #dc0000;
   box-shadow: 1px 1px 4px 0px #000000;
 }
 
 .input-button {
-  color: #dc0000;
+  color: #a40000;
   font-weight: 500;
   font-size: 14px;
   line-height: 2em;
@@ -191,11 +198,11 @@ body {
 
 .input-button:hover {
   color: #fff;
-  background-color: #dc0000;
+  background-color: #a40000;
 }
 
 .heading {
-  color: #dc0000;
+  color: #a40000;
   font-family: "Roboto", sans-serif;
   font-weight: 600;
   font-size: 24px;
@@ -218,9 +225,9 @@ body {
 }
 
 .my-item-button:hover {
-  border: 1px solid #dc0000;
+  border: 1px solid #a40000;
   box-shadow: 1px 1.4px 4px 0px #000000;
-  background-color: #dc0000;
+  background-color: #a40000;
   color: #fff;
 }
 
@@ -233,7 +240,7 @@ body {
 /* menu  hover effect  */
 
 .custom_link {
-  background-image: linear-gradient(to right, #dc0000, #b31312 50%, #000 50%);
+  background-image: linear-gradient(to right, #a40000, #dc0000 50%, #000 50%);
   background-size: 200% 100%;
   background-position: -100%;
   display: inline-block;
@@ -245,7 +252,7 @@ body {
 
 .custom_link:before {
   content: "";
-  background: #dc0000;
+  background: #a40000;
   display: block;
   position: absolute;
   bottom: -3px;
@@ -275,15 +282,15 @@ body {
 }
 
 .box {
-  border-top: 10px solid #b31312;
-  border-bottom: 10px solid #b31312;
+  border-top: 10px solid #dc0000;
+  border-bottom: 10px solid #dc0000;
   border-radius: 10px;
   box-shadow: 2px 2px 2px 0px #2c2e2e;
 }
 
 /* Customized default Select Option */
 select option:checked {
-  background: #dc0000;
+  background: #a40000;
   color: #fff;
 }
 
@@ -293,14 +300,14 @@ select option {
 }
 
 select option:hover {
-  background: #dc0000 !important;
+  background: #a40000 !important;
   color: #fff;
 }
 
 /* For copying things */
 ::selection {
   color: white !important;
-  background: #dc0000 !important;
+  background: #a40000 !important;
 }
 
 /* scrolling  */
@@ -321,7 +328,7 @@ select option:hover {
 
 ::-webkit-scrollbar-thumb {
   /* box-shadow: 0px 0px 2px 0.5px #004d54; */
-  background-color: #dc0000;
+  background-color: #a40000;
   border-top-left-radius: 20px;
   border-top-right-radius: 20px;
   border-bottom-left-radius: 20px;
