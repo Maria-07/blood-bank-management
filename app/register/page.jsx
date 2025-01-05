@@ -1,19 +1,19 @@
 import Image from "next/image";
 import React from "react";
-import loginLogo from "@/assets/video/loginLogo.gif";
+import register from "@/assets/video/register.gif";
 import blood from "@/assets/Image/bloodDrop.png";
 import Link from "next/link";
-import Login from "../(components)/UI/Auth/Login";
+import Register from "../(components)/UI/Auth/Register";
 
-const LoginPage = () => {
+const RegistrationPage = () => {
   return (
     <div>
       {" "}
-      <div className="sm:w-[70%]  sm:mx-auto mt-[10%] my-10 px-5">
+      <div className="sm:w-[70%]  sm:mx-auto my-16 px-5">
         <div className="grid sm:grid-cols-2 grid-cols-1">
-          <div className="mx-auto">
+          <div className="mx-auto my-auto">
             <Image
-              src={loginLogo}
+              src={register}
               width={"auto"}
               height={"auto"}
               alt="Picture of the author"
@@ -29,24 +29,21 @@ const LoginPage = () => {
                 alt="Picture of the author"
               />
             </div>
-            <h1 className="font-primary text-2xl font-bold text-primary flex items-center">
-              WELCOME BACK{" "}
+            <h1 className="font-primary text-2xl font-bold text-primary">
+              WELCOME To Blood Bank Management
             </h1>
             <h3 className="text-base font-normal text-gray-500">
-              Login to continue
+              Create your account
             </h3>
             <div>
               {" "}
-              <Login></Login>{" "}
+              <Register></Register>{" "}
             </div>
 
-            <div className="text-sm font-medium text-gray-600 flex gap-2 my-5">
-              Don&apos;t have any account ?
-              <Link href={"/register"}>
-                <button className="text-primary font-semibold">
-                  {" "}
-                  Register Now
-                </button>
+            <div className="text-sm font-medium text-gray-600 justify-center items-center flex gap-2 my-5">
+              Already have an account ?
+              <Link href={"/login"}>
+                <button className="text-primary font-semibold"> Login </button>
               </Link>
             </div>
           </div>
@@ -56,4 +53,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default RegistrationPage;

@@ -83,8 +83,12 @@ const Navbar = () => {
             >
               Contact
             </Link>
-            <button className="bb-input-button">Register</button>
-            <button className="bb-input-button">Login</button>
+            <Link href={"/register/"}>
+              <button className="bb-input-button">Register</button>
+            </Link>
+            <Link href={"/login/"}>
+              <button className="bb-input-button">Login</button>
+            </Link>
 
             {/* <Link
               className={
