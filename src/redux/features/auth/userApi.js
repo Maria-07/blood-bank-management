@@ -1,0 +1,57 @@
+import { api } from "@/redux/api/apiSlice";
+
+const userApi = api.injectEndpoints({
+  endpoints: (builder) => ({
+    login: builder.mutation({
+      query: (credentials) => ({
+        url: "/auth/login",
+        method: "POST",
+        body: credentials,
+      }),
+      invalidatesTags: ["profile"],
+    }),
+    signup: builder.mutation({
+      query: (userData) => ({
+        url: "/auth/signup",
+        method: "POST",
+        body: userData,
+      }),
+    }),
+    getProfile: builder.query({
+      query: () => ({
+        url: "/users/my-profile",
+        method: "GET",
+        providesTags: ["profile"],
+      }),
+    }),
+    updateProfile: builder.mutation({
+      query: (updatedData) => ({
+        url: "/users/my-profile",
+        method: "PATCH",
+        body: updatedData,
+      }),
+    }),
+    getAllUser: builder.query({
+      query: () => ({
+        url: "/users",
+        method: "GET",
+        // providesTags: ["profile"],
+      }),
+    }),
+    getAllUserData: builder.query({
+      query: () => ({
+        url: "/users",
+        method: "GET",
+        // providesTags: ["profile"],
+      }),
+    }),
+  }),
+});
+
+export const {
+  useLoginMutation,
+  useSignupMutation,
+  useGetProfileQuery,
+  useUpdateProfileMutation,
+  useGetAllUserQuery,
+} = userApi;
