@@ -7,6 +7,9 @@ import {
 import CustomSearchOption from "@/app/(components)/shared/CustomSearchOption";
 import React, { useState } from "react";
 import { MdBloodtype } from "react-icons/md";
+import { LuMapPinned } from "react-icons/lu";
+import { TiPin } from "react-icons/ti";
+import { FaPeopleArrows } from "react-icons/fa6";
 
 const Filters = () => {
   const [bloodType, setBloodType] = useState("");
@@ -17,7 +20,7 @@ const Filters = () => {
   const [unionArray, setUnionArray] = useState([]);
   return (
     <div>
-      <div className="gap-2 grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 2xl:grid-cols-4 px-5 py-5">
+      <div className="gap-5 grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 2xl:grid-cols-4 px-5 py-5">
         <div className="">
           <h1 className="flex items-center gap-1 font-semibold text-base mb-2 text-black">
             <MdBloodtype className="text-secondary text-lg" /> Blood Group
@@ -32,7 +35,7 @@ const Filters = () => {
         </div>
         <div className="">
           <h1 className="flex items-center gap-1 font-semibold text-base mb-2 text-black">
-            <MdBloodtype className="text-secondary text-lg" /> Upazila
+            <LuMapPinned className="text-secondary text-lg" /> Upazila
           </h1>
           <div>
             {" "}
@@ -44,7 +47,7 @@ const Filters = () => {
         </div>
         <div className="">
           <h1 className="flex items-center gap-1 font-semibold text-base mb-2 text-black">
-            <MdBloodtype className="text-secondary text-lg" /> Blood Group
+            <TiPin className="text-secondary text-lg" /> Union
           </h1>
           <div>
             {" "}
@@ -56,7 +59,7 @@ const Filters = () => {
         </div>
         <div className="">
           <h1 className="flex items-center gap-1 font-semibold text-base mb-2 text-black">
-            <MdBloodtype className="text-secondary text-lg" /> Blood Group
+            <FaPeopleArrows className="text-secondary text-lg" /> Age
           </h1>
           <div>
             {" "}
