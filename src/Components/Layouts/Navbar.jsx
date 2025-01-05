@@ -1,4 +1,3 @@
-"use client";
 import Image from "next/image";
 import logo from "@/assets/Image/bbLogo.png";
 import Link from "next/link";

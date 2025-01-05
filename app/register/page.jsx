@@ -3,7 +3,7 @@ import React from "react";
 import register from "@/assets/video/register.gif";
 import blood from "@/assets/Image/bloodDrop.png";
 import Link from "next/link";
-import Register from "../(components)/UI/Auth/Register";
+import Register from "../../src/Components/UI/Auth/Register";
 
 const RegistrationPage = () => {
   return (

@@ -1,10 +1,10 @@
 import React from "react";
-import HeroBanner from "./(components)/UI/home/HeroBanner";
-import Filters from "./(components)/UI/home/Filter/Filters";
-import DonarCards from "./(components)/UI/home/DonarCards/DonarCards";
-import Campaigns from "./(components)/UI/home/Campaigns/Campaigns";
-import Works from "./(components)/UI/home/Works/Works";
-import Volunteers from "./(components)/UI/home/Volunteers/Volunteers";
+import HeroBanner from "../src/Components/UI/HeroBanner";
+import Filters from "../src/Components/UI/Home/Filter/Filters";
+import DonarCards from "../src/Components/UI/Home/DonarCards/DonarCards";
+import Campaigns from "../src/Components/UI/Home/Campaigns/Campaigns";
+import Works from "../src/Components/UI/Home/Works/Works";
+import Volunteers from "../src/Components/UI/Home/Volunteers/Volunteers";
 
 const HomePage = () => {
   return (

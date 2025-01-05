@@ -3,7 +3,7 @@ import React from "react";
 import Image from "next/image";
 import banner from "@/assets/Image/banner.png";
 import Count from "./Count";
-import Filters from "./Filter/Filters";
+import Filters from "./Home/Filter/Filters";
 
 const HeroBanner = () => {
   return (

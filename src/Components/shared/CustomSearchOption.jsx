@@ -1,4 +1,3 @@
-"use client";
 import { Select } from "antd";
 import { useEffect, useState } from "react";
 

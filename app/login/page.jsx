@@ -3,7 +3,7 @@ import React from "react";
 import loginLogo from "@/assets/video/loginLogo.gif";
 import blood from "@/assets/Image/bloodDrop.png";
 import Link from "next/link";
-import Login from "../(components)/UI/Auth/Login";
+import Login from "../../src/Components/UI/Auth/Login";
 
 const LoginPage = () => {
   return (

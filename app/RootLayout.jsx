@@ -1,9 +1,9 @@
 "use client";
 
 import localFont from "next/font/local";
-import Navbar from "./(components)/Layouts/Navbar";
+import Navbar from "../src/Components/Layouts/Navbar";
 import "./styles/globals.css";
-import Footer from "./(components)/Layouts/Footer";
+import Footer from "../src/Components/Layouts/Footer";
 import { Provider } from "react-redux";
 import store from "@/src/redux/store";
 
