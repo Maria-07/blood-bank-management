@@ -58,6 +58,10 @@ const Campaign = () => {
               <div className="text-sm text-accent text-right">10</div>
             </div>
           </div>
+
+          <button className="bg-primary w-full text-white rounded-md hover:bg-secondary py-[1px] shadow-md transition-all">
+            Learn more
+          </button>
         </div>
       </Card>
     </div>

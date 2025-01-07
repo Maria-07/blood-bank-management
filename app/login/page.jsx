@@ -1,7 +1,7 @@
 import Image from "next/image";
 import React from "react";
-import loginLogo from "@/assets/video/loginLogo.gif";
-import blood from "@/assets/Image/bloodDrop.png";
+import loginLogo from "@/src/assets/video/loginLogo.gif";
+import blood from "@/src/assets/Image/bloodDrop.png";
 import Link from "next/link";
 import Login from "../../src/Components/UI/Auth/Login";
 

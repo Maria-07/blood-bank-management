@@ -3,8 +3,8 @@ import {
   bloodGroups,
   unionsOfNilphamari,
   upazilasOfNilphamari,
-} from "@/src/Components/shared/constance";
-import CustomSearchOption from "@/src/Components/shared/CustomSearchOption";
+} from "@/src/shared/constance";
+import CustomSearchOption from "@/src/shared/CustomSearchOption";
 import React, { useState } from "react";
 import { MdBloodtype } from "react-icons/md";
 import { LuMapPinned } from "react-icons/lu";

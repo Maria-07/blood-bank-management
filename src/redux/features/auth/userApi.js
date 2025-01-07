@@ -1,10 +1,18 @@
-import { api } from "@/redux/api/apiSlice";
+import { api } from "../../api/apiSlice";
 
 const userApi = api.injectEndpoints({
   endpoints: (builder) => ({
     login: builder.mutation({
       query: (credentials) => ({
         url: "/auth/login",
+        method: "POST",
+        body: credentials,
+      }),
+      invalidatesTags: ["profile"],
+    }),
+    adminLogin: builder.mutation({
+      query: (credentials) => ({
+        url: "/auth/admin-login",
         method: "POST",
         body: credentials,
       }),
@@ -50,6 +58,7 @@ const userApi = api.injectEndpoints({
 
 export const {
   useLoginMutation,
+  useAdminLoginMutation,
   useSignupMutation,
   useGetProfileQuery,
   useUpdateProfileMutation,

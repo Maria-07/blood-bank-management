@@ -1,7 +1,7 @@
 import React from "react";
 // import { motion } from "motion/react";
 import Image from "next/image";
-import banner from "@/assets/Image/banner.png";
+import banner from "@/src/assets/Image/banner.png";
 import Count from "./Count";
 import Filters from "./Home/Filter/Filters";
 

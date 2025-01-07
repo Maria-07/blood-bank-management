@@ -6,6 +6,8 @@ import "./styles/globals.css";
 import Footer from "../src/Components/Layouts/Footer";
 import { Provider } from "react-redux";
 import store from "@/src/redux/store";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -26,9 +28,8 @@ const geistMono = localFont({
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body>
+        <ToastContainer />
         <Provider store={store}>
           <Navbar />
           <div className="min-h-[70vh]">{children}</div>

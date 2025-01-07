@@ -1,8 +1,6 @@
 "use client";
 import React from "react";
 import { useForm } from "react-hook-form";
-import { FaMobileScreen } from "react-icons/fa6";
-import { MdOutlineDateRange } from "react-icons/md";
 
 const Register = () => {
   const {

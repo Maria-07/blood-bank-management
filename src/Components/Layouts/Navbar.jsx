@@ -1,5 +1,5 @@
 import Image from "next/image";
-import logo from "@/assets/Image/bbLogo.png";
+import logo from "@/src/assets/Image/bbLogo.png";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Dropdown } from "antd";

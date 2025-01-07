@@ -1,7 +1,7 @@
 import Image from "next/image";
 import React from "react";
-import register from "@/assets/video/register.gif";
-import blood from "@/assets/Image/bloodDrop.png";
+import register from "@/src/assets/video/register.gif";
+import blood from "@/src/assets/Image/bloodDrop.png";
 import Link from "next/link";
 import Register from "../../src/Components/UI/Auth/Register";
 

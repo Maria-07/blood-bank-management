@@ -1,6 +1,6 @@
 import Image from "next/image";
 import React from "react";
-import work from "@/assets/Image/pana.png";
+import work from "@/src/assets/Image/pana.png";
 import Work from "./Work";
 
 const Works = () => {

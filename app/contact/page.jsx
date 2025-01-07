@@ -1,3 +1,4 @@
+"use client";
 import { decrement, increment } from "@/src/redux/slices/counterSlice";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,7 +9,7 @@ const ContactPage = () => {
   return (
     <div>
       {" "}
-      <div style={{ textAlign: "center", marginTop: "20px" }}>
+      {/* <div style={{ textAlign: "center", marginTop: "20px" }}>
         <h1>Counter: {counter}</h1>
         <button
           onClick={() => dispatch(increment())}
@@ -22,7 +23,7 @@ const ContactPage = () => {
         >
           Decrement
         </button>
-      </div>
+      </div> */}
     </div>
   );
 };

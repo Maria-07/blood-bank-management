@@ -61,7 +61,7 @@ body {
 
 .hero-bg {
   min-height: 100%;
-  background: url("../../assets/Image/map.png");
+  background: url("../../src/assets/Image/map.png");
   background-size: cover;
   height: 70vh;
 }
@@ -369,4 +369,5 @@ select option:hover {
 }
 
 /* Extra Large Devices (Large Desktops, 1200px and above) */
-@media (min-width: 1200px) {}
+@media (min-width: 1200px) {
+}
