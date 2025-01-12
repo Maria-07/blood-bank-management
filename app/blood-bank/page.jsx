@@ -12,8 +12,6 @@ import { MdBloodtype } from "react-icons/md";
 import { LuMapPinned } from "react-icons/lu";
 import { TiPin } from "react-icons/ti";
 import { FaPeopleArrows } from "react-icons/fa6";
-import { Pagination } from "antd";
-import DonarCards from "@/src/Components/UI/Home/DonarCards/DonarCards";
 import DonarsCard from "@/src/Components/UI/BloodBank/Donars/DonarsCard";
 
 const BloodBankPage = () => {
@@ -33,7 +31,7 @@ const BloodBankPage = () => {
               initial={{ opacity: 0, x: -30 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.4 }}
-              className=""
+              className="sm:pl-10"
             >
               <h1 className="font-bold lg:text-7xl text-4xl font-primary">
                 Blood Bank

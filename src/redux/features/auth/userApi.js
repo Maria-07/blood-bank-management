@@ -3,18 +3,18 @@ import { api } from "../../api/apiSlice";
 const userApi = api.injectEndpoints({
   endpoints: (builder) => ({
     login: builder.mutation({
-      query: (credentials) => ({
+      query: (bbmentials) => ({
         url: "/auth/login",
         method: "POST",
-        body: credentials,
+        body: bbmentials,
       }),
       invalidatesTags: ["profile"],
     }),
     adminLogin: builder.mutation({
-      query: (credentials) => ({
+      query: (bbmentials) => ({
         url: "/auth/admin-login",
         method: "POST",
-        body: credentials,
+        body: bbmentials,
       }),
       invalidatesTags: ["profile"],
     }),

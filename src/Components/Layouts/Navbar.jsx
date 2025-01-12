@@ -66,6 +66,14 @@ const Navbar = () => {
             </Link>
             <Link
               className={
+                currentRoute === "/media" ? "active custom_link" : "custom_link"
+              }
+              href={"/media/"}
+            >
+              Media
+            </Link>
+            <Link
+              className={
                 currentRoute === "/about" ? "active custom_link" : "custom_link"
               }
               href={"/about/"}
@@ -81,6 +89,16 @@ const Navbar = () => {
               href={"/contact/"}
             >
               Contact
+            </Link>
+            <Link
+              className={
+                currentRoute === "/admin/dashboard/campaigns"
+                  ? "active custom_link"
+                  : "custom_link"
+              }
+              href={"/admin/dashboard/campaigns/"}
+            >
+              Dashboard
             </Link>
             <Link href={"/register/"}>
               <button className="bb-input-button">Register</button>
@@ -221,12 +239,13 @@ const Navbar = () => {
                           </>
                         )}
 
-                        <Link href={"/myItems/blogs"}>
-                          <h1 className="hover:text-primary my-2">My Blogs</h1>
-                        </Link>
+                        
                       </div>
                     </div>
                   )} */}
+                  <Link href={"/my-profile"}>
+                    <h1 className="hover:text-primary my-2">My Profile</h1>
+                  </Link>
                 </div>
               }
               placement="bottomRight"

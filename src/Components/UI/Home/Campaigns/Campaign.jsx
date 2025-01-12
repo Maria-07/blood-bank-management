@@ -9,7 +9,7 @@ const Campaign = () => {
   return (
     <div>
       {" "}
-      <Card hoverable className="mb-16 min-h-[500px]">
+      <Card hoverable className="mb-16 min-h-[500px] p-5">
         <div>
           <Image
             src={
@@ -59,7 +59,7 @@ const Campaign = () => {
             </div>
           </div>
 
-          <button className="bg-primary w-full text-white rounded-md hover:bg-secondary py-[1px] shadow-md transition-all">
+          <button className="bg-primary w-full text-white  hover:bg-secondary py-[1px] shadow-md transition-all">
             Learn more
           </button>
         </div>

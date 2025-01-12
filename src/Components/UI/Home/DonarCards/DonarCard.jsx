@@ -12,7 +12,7 @@ import {
 const DonarCard = () => {
   return (
     <div>
-      <Card hoverable className="bg-popover">
+      <Card hoverable className="bg-popover p-5">
         <div>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2 flex-wrap">

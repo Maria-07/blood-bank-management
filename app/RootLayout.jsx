@@ -3,6 +3,7 @@
 import localFont from "next/font/local";
 import Navbar from "../src/Components/Layouts/Navbar";
 import "./styles/globals.css";
+import "./styles/antdCustom.css";
 import Footer from "../src/Components/Layouts/Footer";
 import { Provider } from "react-redux";
 import store from "@/src/redux/store";
