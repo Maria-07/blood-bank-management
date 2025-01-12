@@ -1,17 +1,43 @@
 "use client";
-import React from "react";
+import { useSignupMutation } from "@/src/redux/features/auth/userApi";
+import { useRouter } from "next/compat/router";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 
 const Register = () => {
+  const [bdNumber, seBbdNumber] = useState(0);
+  const [signup, { isLoading }] = useSignupMutation();
+
   const {
     register,
     handleSubmit,
-    watch,
+    reset,
     formState: { errors },
   } = useForm();
 
+  const router = useRouter();
+
   const onSubmit = async (data) => {
-    console.log(data);
+    console.log("Create user data =", data, bdNumber);
+
+    try {
+      const response = await signup({
+        ...data,
+        BloodDonationCount: bdNumber,
+      }).unwrap();
+      if (response) {
+        console.log(response, "response");
+        // toast.success(response?.message);
+      }
+      // router.push("/login");
+    } catch (error) {
+      console.log("error?.data?.message", error);
+      if (error?.data?.message === "Already exist") {
+        toast.error("User already exists");
+      } else {
+        console.error("signUp failed:", error);
+      }
+    }
   };
   return (
     <div>
@@ -118,7 +144,10 @@ const Register = () => {
               <input
                 type="number"
                 className="input-border w-full mb-2"
-                {...register("BloodDonationCount")}
+                // {...register("BloodDonationCount")}
+                onChange={(e) => {
+                  seBbdNumber(e.target.value);
+                }}
               />
             </div>
 

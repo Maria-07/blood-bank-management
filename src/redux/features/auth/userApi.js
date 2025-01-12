@@ -3,24 +3,16 @@ import { api } from "../../api/apiSlice";
 const userApi = api.injectEndpoints({
   endpoints: (builder) => ({
     login: builder.mutation({
-      query: (bbmentials) => ({
-        url: "/auth/login",
+      query: (createUser) => ({
+        url: "/user/registration",
         method: "POST",
-        body: bbmentials,
-      }),
-      invalidatesTags: ["profile"],
-    }),
-    adminLogin: builder.mutation({
-      query: (bbmentials) => ({
-        url: "/auth/admin-login",
-        method: "POST",
-        body: bbmentials,
+        body: createUser,
       }),
       invalidatesTags: ["profile"],
     }),
     signup: builder.mutation({
       query: (userData) => ({
-        url: "/auth/signup",
+        url: "/user/registration",
         method: "POST",
         body: userData,
       }),
@@ -58,7 +50,6 @@ const userApi = api.injectEndpoints({
 
 export const {
   useLoginMutation,
-  useAdminLoginMutation,
   useSignupMutation,
   useGetProfileQuery,
   useUpdateProfileMutation,

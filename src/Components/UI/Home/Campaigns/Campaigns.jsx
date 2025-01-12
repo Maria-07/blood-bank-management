@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 // Swiper components, modules and styles
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -7,8 +7,19 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import Campaign from "./Campaign";
+import { useGetAllCampaignsQuery } from "@/src/redux/features/campaign/campaignApi";
 
 const Campaigns = () => {
+  //! get all Campaigns Data
+  const { data: Campaigns, isLoading, isError } = useGetAllCampaignsQuery();
+
+  useEffect(() => {
+    if (!isLoading && !isError) {
+      console.log("All Data", Campaigns);
+    } else {
+      console.log(Campaigns);
+    }
+  }, [Campaigns, isLoading, isError]);
   return (
     <div className="bg-[#ffe8e8]  ">
       {" "}
@@ -51,24 +62,11 @@ const Campaigns = () => {
               modules={[Pagination]}
               className="mySwiper"
             >
-              <SwiperSlide>
-                <Campaign></Campaign>
-              </SwiperSlide>
-              <SwiperSlide>
-                <Campaign></Campaign>
-              </SwiperSlide>
-              <SwiperSlide>
-                <Campaign></Campaign>
-              </SwiperSlide>
-              <SwiperSlide>
-                <Campaign></Campaign>
-              </SwiperSlide>
-              <SwiperSlide>
-                <Campaign></Campaign>
-              </SwiperSlide>
-              <SwiperSlide>
-                <Campaign></Campaign>
-              </SwiperSlide>
+              {Campaigns?.map((campaign, i) => (
+                <SwiperSlide key={i}>
+                  <Campaign campaign={campaign}></Campaign>
+                </SwiperSlide>
+              ))}
             </Swiper>
           </>
         </div>

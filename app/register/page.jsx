@@ -10,7 +10,7 @@ const RegistrationPage = () => {
     <div>
       {" "}
       <div className="sm:w-[70%]  sm:mx-auto my-16 px-5">
-        <div className="grid sm:grid-cols-2 grid-cols-1">
+        <div className="grid lg:grid-cols-2 grid-cols-1">
           <div className="mx-auto my-auto">
             <Image
               src={register}

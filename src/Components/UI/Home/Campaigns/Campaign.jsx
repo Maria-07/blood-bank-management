@@ -4,24 +4,43 @@ import { FaMapLocationDot } from "react-icons/fa6";
 import { IoLocationOutline } from "react-icons/io5";
 import { MdOutlineDateRange } from "react-icons/md";
 import { IoIosPeople } from "react-icons/io";
+import formatDate from "@/src/shared/ReusedFunctions";
 
-const Campaign = () => {
+const Campaign = ({ campaign }) => {
+  console.log("single campaign", campaign);
+
+  // function formatDate(dateString) {
+  //   const date = new Date(dateString);
+
+  //   // Get day, month, and year
+  //   const day = date.getDate();
+  //   const month = date.toLocaleString("default", { month: "long" });
+  //   const year = date.getFullYear();
+
+  //   // Add ordinal suffix to the day
+  //   const dayWithSuffix =
+  //     day +
+  //     ["th", "st", "nd", "rd"][
+  //       day % 10 > 3 || Math.floor((day % 100) / 10) === 1 ? 0 : day % 10
+  //     ];
+
+  //   return `${dayWithSuffix} ${month}, ${year}`;
+  // }
+
+  const { address, bannerUrl, startDate, endDate, name } = campaign;
+
   return (
     <div>
       {" "}
       <Card hoverable className="mb-16 min-h-[500px] p-5">
         <div>
           <Image
-            src={
-              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ4MOO0iC6xb7Z7vNl2JfamYWHr4sSfBD5pmA&s"
-            }
+            src={bannerUrl}
             width={"100%"}
             height={"100%"}
             alt="Picture of the author"
           ></Image>
-          <h1 className="my-5 text-lg font-semibold">
-            Sukhipur Blood testing campagin
-          </h1>
+          <h1 className="my-5 text-lg font-semibold">{name}</h1>
 
           <div className="my-3">
             <div className="flex items-center justify-between gap-2 my-3">
@@ -29,10 +48,7 @@ const Campaign = () => {
                 <IoLocationOutline className="text-primary text-lg" />{" "}
                 <h1 className="text-base font-semibold">Address: </h1>
               </div>
-              <div className="text-sm text-accent text-right">
-                64167 Keanu Throughway, North Jackland,District of Columbia,
-                68697
-              </div>
+              <div className="text-sm text-accent text-right">{address}</div>
             </div>
             <div className="flex items-center justify-between gap-2 my-3">
               <div className="flex items-center gap-1">
@@ -47,7 +63,7 @@ const Campaign = () => {
                 <h1 className="text-base font-semibold">Ends at:</h1>
               </div>
               <div className="text-sm text-accent text-right">
-                26th January, 2025
+                {formatDate(endDate)}
               </div>
             </div>
             <div className="flex items-center justify-between gap-2 my-3">

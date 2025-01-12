@@ -1,22 +1,40 @@
-import React from "react";
+"use client";
+import { useGetDashboardDataQuery } from "@/src/redux/features/home";
+import React, { useEffect } from "react";
+import { toast } from "react-toastify";
 
 const Count = () => {
+  //! get all Dashboard Data
+  const { data: CountedData, isLoading, isError } = useGetDashboardDataQuery();
+
+  useEffect(() => {
+    if (!isLoading && !isError) {
+      console.log("All Data", CountedData);
+    } else {
+      console.log(CountedData);
+    }
+  }, [CountedData, isLoading, isError]);
+
+  // const { campaign, donor, registeredDonor, volunteer } = CountedData;
+
   return (
     <div className="gap-2 grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 2xl:grid-cols-7">
       <div>
-        <h1 className="text-3xl font-extrabold">30+</h1>
+        <h1 className="text-3xl font-extrabold">{CountedData?.volunteer}+</h1>
         <p className="text-base text-accent my-1">10005 Volunteer</p>
       </div>
       <div>
-        <h1 className="text-3xl font-extrabold">100+</h1>
+        <h1 className="text-3xl font-extrabold">{CountedData?.donor}+</h1>
         <p className="text-base text-accent my-1">Happy Donors</p>
       </div>
       <div>
-        <h1 className="text-3xl font-extrabold">100k+</h1>
+        <h1 className="text-3xl font-extrabold">
+          {CountedData?.registeredDonor}+
+        </h1>
         <p className="text-base text-accent my-1">Registered donors</p>
       </div>
       <div>
-        <h1 className="text-3xl font-extrabold">24+</h1>
+        <h1 className="text-3xl font-extrabold">{CountedData?.campaign}+</h1>
         <p className="text-base text-accent my-1">Active campaigns</p>
       </div>
     </div>
