@@ -6,11 +6,15 @@ import { IoMdCloseCircleOutline } from "react-icons/io";
 import { MdDeleteOutline, MdDone } from "react-icons/md";
 
 const CampaignEditModal = ({ handleClose, clicked, record }) => {
-  const { Address, EndDate, StartDate, Banner, Name, VolunteerList } = record;
+  console.log("record", record);
+
+  const { address, endDate, startDate, banner, name, volunteerList } = record;
 
   const handleChange = (value) => {
     console.log(`selected ${value}`);
   };
+
+  console.log(address);
 
   const {
     register,
@@ -55,7 +59,7 @@ const CampaignEditModal = ({ handleClose, clicked, record }) => {
                     <div className="modal-label-name">Enter Campaign Name</div>
                   </label>
                   <input
-                    defaultValue={Name}
+                    defaultValue={name}
                     type="text"
                     name="Name"
                     className="modal-input-field ml-1 w-full"
@@ -67,11 +71,11 @@ const CampaignEditModal = ({ handleClose, clicked, record }) => {
                     <div className="modal-label-name">Start Date</div>
                   </label>
                   <input
-                    defaultValue={StartDate}
+                    defaultValue={startDate.slice(0, 10)}
                     type="date"
-                    name="StartDate"
+                    name="startDate"
                     className="modal-input-field ml-1 w-full"
-                    {...register("StartDate")}
+                    {...register("startDate")}
                   />
                 </div>
                 <div className="">
@@ -79,23 +83,23 @@ const CampaignEditModal = ({ handleClose, clicked, record }) => {
                     <div className="modal-label-name">End Date</div>
                   </label>
                   <input
-                    defaultValue={EndDate}
+                    defaultValue={endDate.slice(0, 10)}
                     type="date"
-                    name="EndDate"
+                    name="endDate"
                     className="modal-input-field ml-1 w-full"
-                    {...register("EndDate")}
+                    {...register("endDate")}
                   />
                 </div>
                 <div className="sm:col-span-2">
                   <label className="label flex items-center">
-                    <div className="modal-label-name">Address</div>
+                    <div className="modal-label-name">address</div>
                   </label>
                   <input
-                    defaultValue={Address}
+                    defaultValue={address}
                     type="text"
-                    name="Address"
+                    name="address"
                     className="modal-input-field ml-1 w-full"
-                    {...register("Address")}
+                    {...register("address")}
                   />
                 </div>
                 <div className="sm:col-span-2">
@@ -112,10 +116,10 @@ const CampaignEditModal = ({ handleClose, clicked, record }) => {
                     }}
                     size="large"
                     placeholder="Please select"
-                    defaultValue={VolunteerList}
+                    defaultValue={volunteerList}
                     onChange={handleChange}
                     className="ml-1"
-                    options={Campaigns?.VolunteerList}
+                    options={Campaigns?.volunteerList}
                   />
                 </div>
                 <div className="sm:col-span-2">
@@ -123,11 +127,11 @@ const CampaignEditModal = ({ handleClose, clicked, record }) => {
                     <div className="modal-label-name">Campaign Banner</div>
                   </label>
                   <input
-                    defaultValue={Banner}
+                    defaultValue={banner}
                     type="file"
-                    name="Banner"
+                    name="banner"
                     className="modal-input-field ml-1 w-full"
-                    {...register("Banner")}
+                    {...register("banner")}
                   />
                 </div>
               </div>

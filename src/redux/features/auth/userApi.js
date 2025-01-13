@@ -11,10 +11,10 @@ const userApi = api.injectEndpoints({
       invalidatesTags: ["profile"],
     }),
     signup: builder.mutation({
-      query: (userData) => ({
+      query: (formData) => ({
         url: "/user/registration",
         method: "POST",
-        body: userData,
+        body: formData,
       }),
     }),
     getProfile: builder.query({

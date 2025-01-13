@@ -7,6 +7,8 @@ import CampaignEditModal from "./CampaignEditModal";
 import CampaignDeleteModal from "./CampaignDeleteModal";
 
 const ActionModal = ({ record }) => {
+  console.log(record, "record");
+
   const [EditCampaign, setEditCampaign] = useState(false);
   const handleEditCampaign = () => {
     setEditCampaign(!EditCampaign);

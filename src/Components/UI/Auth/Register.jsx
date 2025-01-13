@@ -1,13 +1,10 @@
 "use client";
-import { useSignupMutation } from "@/src/redux/features/auth/userApi";
-import { useRouter } from "next/compat/router";
-import React, { useState } from "react";
+
+import React from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 
 const Register = () => {
-  const [bdNumber, seBbdNumber] = useState(0);
-  const [signup, { isLoading }] = useSignupMutation();
-
   const {
     register,
     handleSubmit,
@@ -15,30 +12,52 @@ const Register = () => {
     formState: { errors },
   } = useForm();
 
-  const router = useRouter();
-
   const onSubmit = async (data) => {
-    console.log("Create user data =", data, bdNumber);
+    console.log("Create user data =", data);
+
+    // Create FormData from input data
+    const formData = new FormData();
+    Object.entries(data).forEach(([key, value]) => {
+      if (key === "ProfilePicture" && value.length > 0) {
+        formData.append(key, value[0]); // Append file
+      } else {
+        formData.append(key, value);
+      }
+    });
+
+    // Log FormData entries for debugging
+    for (const [key, value] of formData.entries()) {
+      console.log(`${key}: ${value}`);
+    }
 
     try {
-      const response = await signup({
-        ...data,
-        BloodDonationCount: bdNumber,
-      }).unwrap();
-      if (response) {
-        console.log(response, "response");
-        // toast.success(response?.message);
-      }
-      // router.push("/login");
-    } catch (error) {
-      console.log("error?.data?.message", error);
-      if (error?.data?.message === "Already exist") {
-        toast.error("User already exists");
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/user/registration`,
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
+
+      if (response.ok) {
+        // Parse JSON response
+        const responseData = await response.json();
+        toast.success(
+          responseData?.data?.message || "User created successfully!"
+        );
+        console.log("Response Data:", responseData);
       } else {
-        console.error("signUp failed:", error);
+        // Handle non-success responses
+        const errorText = await response.text();
+        toast.error("User already exists or another error occurred.");
+        console.error("Error response:", errorText);
       }
+    } catch (error) {
+      console.error("Network or server error:", error);
+      toast.error("An unexpected error occurred. Please try again.");
     }
   };
+
   return (
     <div>
       <div className="mt-5">
@@ -144,10 +163,7 @@ const Register = () => {
               <input
                 type="number"
                 className="input-border w-full mb-2"
-                // {...register("BloodDonationCount")}
-                onChange={(e) => {
-                  seBbdNumber(e.target.value);
-                }}
+                {...register("BloodDonationCount")}
               />
             </div>
 

@@ -29,14 +29,17 @@ const geistMono = localFont({
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body>
-        <ToastContainer />
-        <Provider store={store}>
-          <Navbar />
-          <div className="min-h-[70vh]">{children}</div>
-          <Footer />
-        </Provider>
-      </body>
+      <>
+        <body>
+          {" "}
+          <ToastContainer />
+          <Provider store={store}>
+            <Navbar />
+            <div className="min-h-[70vh]">{children}</div>
+            <Footer />
+          </Provider>
+        </body>
+      </>
     </html>
   );
 }

@@ -17,7 +17,6 @@ export const api = createApi({
       }
       // headers.set("Content-Type", "application/json");
       headers.set("Content-Type", "multipart/form-data");
-      // headers.set("Accept", "*/*");
       return headers;
     },
   }),
