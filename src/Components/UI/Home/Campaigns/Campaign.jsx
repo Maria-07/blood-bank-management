@@ -32,17 +32,20 @@ const Campaign = ({ campaign }) => {
   return (
     <div>
       {" "}
-      <Card hoverable className="mb-16 min-h-[500px] p-5">
+      <Card hoverable className="mb-16 min-h-[500px] ">
         <div>
-          <Image
-            src={bannerUrl}
-            width={"100%"}
-            height={"100%"}
-            alt="Picture of the author"
-          ></Image>
-          <h1 className="my-5 text-lg font-semibold">{name}</h1>
+          <div className="h-[250px] overflow-hidden rounded-t-lg shadow-lg">
+            {" "}
+            <Image
+              src={bannerUrl}
+              width={"100%"}
+              height={"100%"}
+              alt="Picture of the author"
+            ></Image>
+          </div>
 
-          <div className="my-3">
+          <div className="my-3 p-5">
+            <h1 className=" text-lg font-semibold">{name}</h1>
             <div className="flex items-center justify-between gap-2 my-3">
               <div className="flex items-center gap-1">
                 <IoLocationOutline className="text-primary text-lg" />{" "}

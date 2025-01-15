@@ -1,10 +1,12 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 
 const Register = () => {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -15,7 +17,7 @@ const Register = () => {
   const onSubmit = async (data) => {
     console.log("Create user data =", data);
 
-    // Create FormData from input data
+    //! Create FormData from input data
     const formData = new FormData();
     Object.entries(data).forEach(([key, value]) => {
       if (key === "ProfilePicture" && value.length > 0) {
@@ -25,7 +27,7 @@ const Register = () => {
       }
     });
 
-    // Log FormData entries for debugging
+    //! Log FormData entries for debugging
     for (const [key, value] of formData.entries()) {
       console.log(`${key}: ${value}`);
     }
@@ -39,18 +41,22 @@ const Register = () => {
         }
       );
 
-      if (response.ok) {
-        // Parse JSON response
-        const responseData = await response.json();
-        toast.success(
-          responseData?.data?.message || "User created successfully!"
-        );
-        console.log("Response Data:", responseData);
-      } else {
-        // Handle non-success responses
+      if (!response.ok) {
         const errorText = await response.text();
         toast.error("User already exists or another error occurred.");
         console.error("Error response:", errorText);
+        return;
+      }
+
+      const responseData = await response.json();
+      console.log("Response Data:", responseData);
+
+      if (responseData?.data?.isSuccess) {
+        toast.success(
+          responseData?.data?.message || "User created successfully!"
+        );
+        router.push("/login");
+        reset();
       }
     } catch (error) {
       console.error("Network or server error:", error);

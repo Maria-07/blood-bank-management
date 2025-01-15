@@ -12,11 +12,13 @@ export const api = createApi({
     baseUrl: process.env.NEXT_PUBLIC_BASE_URL,
     prepareHeaders: (headers, {}) => {
       const token = getAccessToken();
+      console.log("token", token);
+
       if (token) {
-        headers.set("authorization", token);
+        headers.set("Authorization", `Bearer ${token}`);
       }
       // headers.set("Content-Type", "application/json");
-      headers.set("Content-Type", "multipart/form-data");
+      // headers.set("Content-Type", "multipart/form-data");
       return headers;
     },
   }),

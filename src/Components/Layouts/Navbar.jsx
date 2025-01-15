@@ -1,14 +1,34 @@
 import Image from "next/image";
 import logo from "@/src/assets/Image/bbLogo.png";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { Dropdown } from "antd";
 import { AiOutlineMenu } from "react-icons/ai";
-import { BiSearchAlt2 } from "react-icons/bi";
 import { GiHamburgerMenu } from "react-icons/gi";
+import Cookies from "js-cookie";
+import { getUserType } from "@/src/Hook/authUtils";
+import { useEffect, useState } from "react";
 
 const Navbar = () => {
   const currentRoute = usePathname();
+  const router = useRouter();
+
+  const [token, setToken] = useState(null);
+  const [userType, setUserType] = useState(null);
+
+  useEffect(() => {
+    // Ensure this logic runs on the client
+    const accessToken = Cookies.get("accessToken");
+    setToken(accessToken);
+
+    const type = getUserType();
+    setUserType(type);
+  }, []);
+
+  const handleLogout = () => {
+    Cookies.remove("accessToken");
+    router.push("/login");
+  };
 
   return (
     <div>
@@ -90,23 +110,35 @@ const Navbar = () => {
             >
               Contact
             </Link>
-            <Link
-              className={
-                currentRoute === "/admin/dashboard/campaigns"
-                  ? "active custom_link"
-                  : "custom_link"
-              }
-              href={"/admin/dashboard/campaigns/"}
-            >
-              Dashboard
-            </Link>
-            <Link href={"/register/"}>
-              <button className="bb-input-button">Register</button>
-            </Link>
-            <Link href={"/login/"}>
-              <button className="bb-input-button">Login</button>
-            </Link>
-
+            {token && userType === "Admin" && (
+              <Link
+                className={
+                  currentRoute === "/admin/dashboard/campaigns"
+                    ? "active custom_link"
+                    : "custom_link"
+                }
+                href={"/admin/dashboard/campaigns/"}
+              >
+                Dashboard
+              </Link>
+            )}
+            {!token && (
+              <Link href={"/register/"}>
+                <button className="bb-input-button">Register</button>
+              </Link>
+            )}
+            {!token && (
+              <Link href={"/login/"}>
+                <button className="bb-input-button">Login</button>
+              </Link>
+            )}
+            {token && (
+              <div>
+                <button onClick={handleLogout} className="bb-input-button">
+                  Logout
+                </button>
+              </div>
+            )}
             {/* <Link
               className={
                 currentRoute === "/books"

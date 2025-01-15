@@ -20,7 +20,9 @@ const Login = () => {
     formState: { errors },
   } = useForm();
 
-  //!  * Function to handle API requests with error handling.
+  /**
+   * Utility function to handle API requests with error handling.
+   */
   const fetchData = async (url, payload) => {
     try {
       const response = await fetch(url, {
@@ -34,7 +36,7 @@ const Login = () => {
 
       if (!response.ok) {
         const errorText = await response.text();
-        throw new Error(errorText || "Error occurred");
+        throw new Error(errorText || "Error occurred during the API request.");
       }
 
       return await response.json();
@@ -45,31 +47,39 @@ const Login = () => {
     }
   };
 
-  //! Function to handle user login for both Admin and non-Admin users.
+  /**
+   * Handles the login process for both Admin and regular users.
+   */
   const handleLogin = async (data, isAdmin = false) => {
     const payload = {
       MobileNumber: data.MobileNumber,
       DateOfBirth: data.DateOfBirth,
-      ...(isAdmin && { Password: data.Password }),
+      ...(isAdmin && { Password: data.Password }), // Include password for Admin login
     };
 
-    const url = `${process.env.NEXT_PUBLIC_BASE_URL}/Auth/token`;
-    const responseLoginData = await fetchData(url, payload);
+    try {
+      const url = `${process.env.NEXT_PUBLIC_BASE_URL}/Auth/token`;
+      const responseLoginData = await fetchData(url, payload);
 
-    if (responseLoginData?.isSuccess) {
-      toast.success(responseLoginData?.data?.message || "Login successful!");
+      if (responseLoginData?.isSuccess) {
+        toast.success(responseLoginData?.data?.message || "Login successful!");
 
-      const accessToken = responseLoginData?.content?.token;
-      if (accessToken) {
-        Cookies.set("accessToken", accessToken); // Store access token in a cookie
-        router.push("/"); // Navigate to home page
+        const accessToken = responseLoginData?.content?.token;
+        if (accessToken) {
+          Cookies.set("accessToken", accessToken);
+          router.push("/"); // Redirect to the homepage
+        }
+      } else {
+        toast.error(responseLoginData?.message || "Login failed!");
       }
-    } else {
-      toast.error(responseLoginData?.message || "Login failed!");
+    } catch (error) {
+      console.error("Login Error:", error.message);
     }
   };
 
-  //! Submit handler for login form.
+  /**
+   * Handles form submission and determines user type before proceeding to login.
+   */
   const onSubmit = async (data) => {
     try {
       const userTypeResponse = await fetchData(
@@ -81,12 +91,13 @@ const Login = () => {
       setUserType(detectedUserType);
 
       if (detectedUserType === "Admin") {
-        await handleLogin(data, true); // Admin login
+        // Wait for admin login on button click
+        toast.info("Admin detected, please enter your password.");
       } else {
         await handleLogin(data); // Non-admin login
       }
     } catch (error) {
-      console.error("Login Error:", error.message);
+      console.error("Error detecting user type:", error.message);
     }
   };
 
@@ -171,9 +182,22 @@ const Login = () => {
         )}
 
         {/* Submit Button */}
-        <button type="submit" className="input-button w-full my-5 sm:w-[150%]">
-          Submit
-        </button>
+        {userType !== "Admin" ? (
+          <button
+            type="submit"
+            className="input-button w-full my-5 sm:w-[150%]"
+          >
+            Submit
+          </button>
+        ) : (
+          <button
+            type="button"
+            onClick={handleSubmit((data) => handleLogin(data, true))}
+            className="input-button w-full my-5 sm:w-[150%]"
+          >
+            Admin Login
+          </button>
+        )}
       </form>
     </div>
   );
