@@ -9,8 +9,6 @@ import { useGetAllCampaignsQuery } from "@/src/redux/features/campaign/campaignA
 import { Switch, Table } from "antd";
 import React, { useEffect, useState } from "react";
 import { FaPeopleCarryBox, FaPlus } from "react-icons/fa6";
-import { MdOutlineVolunteerActivism } from "react-icons/md";
-import { toast } from "react-toastify";
 
 const CampaignList = () => {
   const [tableData, setTableData] = useState([]);
@@ -22,7 +20,7 @@ const CampaignList = () => {
   //! Get all Campaigns Data
   const { data, isLoading, isError } = useGetAllCampaignsQuery(undefined, {
     // refetchOnMountOrArgChange: true,
-    pollingInterval: 100000,
+    pollingInterval: 8000,
   });
 
   //! Update table data when data is fetched
@@ -62,6 +60,7 @@ const CampaignList = () => {
             key !== "createTime" &&
             key !== "lastModifiedTime" &&
             key !== "lastModifiedBy" &&
+            key !== "createdBy" &&
             key !== "isDeleted"
         )
         .map((key, index) => ({
@@ -72,7 +71,7 @@ const CampaignList = () => {
 
           dataIndex: key,
           key,
-          width: index === 0 ? 110 : 100,
+          width: index === 3 ? 130 : 100,
           filters: generateFilterValues(tableData, key),
           filterSearch: true,
           filteredValue: filteredInfo[key] || null,
@@ -106,7 +105,7 @@ const CampaignList = () => {
     columns.push({
       title: "Action",
       key: "action",
-      width: 100,
+      width: 50,
       render: (text, record) => <ActionModal record={record}></ActionModal>,
     });
   }

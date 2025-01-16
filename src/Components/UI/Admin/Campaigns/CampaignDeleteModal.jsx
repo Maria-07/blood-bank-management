@@ -93,7 +93,7 @@ const CampaignDeleteModal = ({ handleClose, clicked, record }) => {
             <div className="text-center text-base my-4">
               Do you want to delete this{" "}
               <span className="text-primary font-semibold">{record?.name}</span>{" "}
-              Campaign ? This can not be
+              Campaign ? This can not be reclaimed.
             </div>
             <div className="bg-gray-200 py-[1px] mt-10"></div>
             <div className="flex items-end justify-end gap-2 mt-2">

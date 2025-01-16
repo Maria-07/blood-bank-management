@@ -1,6 +1,5 @@
 "use client";
 import Cookies from "js-cookie";
-import { Campaigns } from "@/src/Components/Data/Data";
 import { Modal, Select } from "antd";
 import { useForm } from "react-hook-form";
 import { IoMdCloseCircleOutline } from "react-icons/io";
@@ -8,8 +7,10 @@ import { MdDeleteOutline, MdDone } from "react-icons/md";
 import { toast } from "react-toastify";
 import { useGetAllVolunteersQuery } from "@/src/redux/features/volunteers/volunteers";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 const CreateCampaignModal = ({ handleClose, clicked }) => {
+  const router = useRouter();
   const [selectedVolunteers, setSelectedVolunteers] = useState([]);
   const [allVolunteers, setAllVolunteers] = useState([]);
   const accessToken = Cookies.get("accessToken");
@@ -39,7 +40,7 @@ const CreateCampaignModal = ({ handleClose, clicked }) => {
     } else {
       console.log(volunteers);
     }
-  }, [volunteers, isLoading, isError]);
+  }, [volunteers, isLoading, isError, router]);
 
   const volunteerOptions = allVolunteers?.map((volunteer) => ({
     label: volunteer.fullName,
@@ -99,6 +100,8 @@ const CreateCampaignModal = ({ handleClose, clicked }) => {
         const errorText = await response.text();
         toast.error(errorText);
         console.error("Error response:", errorText);
+        Cookies.remove("accessToken");
+        router.push("/login");
         return;
       }
 
