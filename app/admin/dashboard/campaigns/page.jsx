@@ -20,9 +20,9 @@ const CampaignList = () => {
   const [sortedInfo, setSortedInfo] = useState({});
 
   //! Get all Campaigns Data
-  const { data, isLoading, isError } = useGetAllCampaignsQuery({
-    refetchOnMountOrArgChange: true,
-    pollingInterval: 5000,
+  const { data, isLoading, isError } = useGetAllCampaignsQuery(undefined, {
+    // refetchOnMountOrArgChange: true,
+    pollingInterval: 100000,
   });
 
   //! Update table data when data is fetched

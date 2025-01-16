@@ -10,6 +10,7 @@ import { useGetAllVolunteersQuery } from "@/src/redux/features/volunteers/volunt
 import { useEffect, useState } from "react";
 
 const CreateCampaignModal = ({ handleClose, clicked }) => {
+  const [selectedVolunteers, setSelectedVolunteers] = useState([]);
   const [allVolunteers, setAllVolunteers] = useState([]);
   const accessToken = Cookies.get("accessToken");
 
@@ -47,6 +48,7 @@ const CreateCampaignModal = ({ handleClose, clicked }) => {
 
   const handleChange = (selectedValues) => {
     console.log("Selected Values:", selectedValues);
+    setSelectedVolunteers(selectedValues);
   };
 
   const onSubmit = async (data) => {
@@ -54,6 +56,8 @@ const CreateCampaignModal = ({ handleClose, clicked }) => {
 
     //! Create FormData from input data
     const formData = new FormData();
+
+    //! Add form fields
     Object.entries(data).forEach(([key, value]) => {
       if (key === "Banner" && value.length > 0) {
         formData.append(key, value[0]); // Append file
@@ -61,6 +65,9 @@ const CreateCampaignModal = ({ handleClose, clicked }) => {
         formData.append(key, value);
       }
     });
+
+    //! Add selectedVolunteers as JSON string
+    formData.append("VolunteerList", JSON.stringify(selectedVolunteers));
 
     //! Log FormData entries for debugging
     for (const [key, value] of formData.entries()) {
@@ -80,9 +87,7 @@ const CreateCampaignModal = ({ handleClose, clicked }) => {
         {
           method: "POST",
           headers: {
-            headers: {
-              Authorization: accessToken,
-            },
+            Authorization: `bearer ${accessToken}`,
           },
           body: formData,
         }
@@ -100,11 +105,11 @@ const CreateCampaignModal = ({ handleClose, clicked }) => {
       const responseData = await response.json();
       console.log("Response Data:", responseData);
 
-      if (responseData?.data?.isSuccess) {
+      if (responseData?.isSuccess) {
         toast.success(
-          responseData?.data?.message || "Campaign created successfully!"
+          responseData?.message || "Campaign created successfully!"
         );
-        // reset();
+        reset();
         handleClose(); // Close modal after successful creation
       }
     } catch (error) {

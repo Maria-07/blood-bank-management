@@ -59,7 +59,7 @@ const ActionModal = ({ record }) => {
 
       {DeleteCampaign && (
         <CampaignDeleteModal
-          record={record?.Name}
+          record={record}
           handleClose={handleDeleteCampaign}
           clicked={DeleteCampaign}
         ></CampaignDeleteModal>
