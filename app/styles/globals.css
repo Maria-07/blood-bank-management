@@ -69,6 +69,7 @@ body {
   background-size: cover;
   height: 70vh;
 }
+
 .Volunteer-bg {
   min-height: 100%;
   background: url("../../src/assets/Image/hand.png");
@@ -260,12 +261,12 @@ body {
   margin: 10px 0;
 }
 
-.my-item-button:hover {
+/* .my-item-button:hover {
   border: 1px solid #a40000;
   box-shadow: 1px 1.4px 4px 0px #000000;
   background-color: #a40000;
   color: #fff;
-}
+} */
 
 .my-profile-bg {
   /* background: url("../assets/img/Heading-bg-01.png"); */
@@ -332,11 +333,9 @@ body {
 }
 
 .bbm-button:hover {
-  background-image: linear-gradient(
-    141deg,
-    var(--secondary-shade) 0%,
-    var(--secondary-shade) 100%
-  );
+  background-image: linear-gradient(141deg,
+      var(--secondary-shade) 0%,
+      var(--secondary-shade) 100%);
   color: rgb(255, 255, 255);
 }
 
@@ -424,19 +423,15 @@ body {
 }
 
 .bbm-all-select-button:hover {
-  background-image: linear-gradient(
-    141deg,
-    var(--secondary-shade) 0%,
-    var(--primary-color) 100%
-  );
+  background-image: linear-gradient(141deg,
+      var(--secondary-shade) 0%,
+      var(--primary-color) 100%);
 }
 
 .bbm-input-button:hover {
-  background-image: linear-gradient(
-    141deg,
-    var(--secondary-shade) 0%,
-    var(--primary-color) 100%
-  );
+  background-image: linear-gradient(141deg,
+      var(--secondary-shade) 0%,
+      var(--primary-color) 100%);
 }
 
 .bbm-white-button {
@@ -589,5 +584,4 @@ select option:hover {
 }
 
 /* Extra Large Devices (Large Desktops, 1200px and above) */
-@media (min-width: 1200px) {
-}
+@media (min-width: 1200px) {}

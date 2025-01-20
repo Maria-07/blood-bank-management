@@ -13,8 +13,8 @@ const DashboardNavbar = ({ data }) => {
         <Link
           className={
             currentRoute === link
-              ? "flex items-center gap-2 rounded-md px-2 border-[2px] h-8 my-item-button text-sm font-medium leading-5 tracking-wide my-3 pt-1 pb-1 transition hover:border-secondary ease-in-out duration-300 bg-primary border-primary text-white hover:bg-secondary hover:text-white"
-              : "flex items-center gap-2 rounded-md px-2 text-dark border-[2px] h-8 my-item-button text-sm font-medium leading-5 tracking-wide my-3 pt-1 pb-1 transition hover:border-secondary ease-in-out duration-300 hover:bg-secondary hover:text-white"
+              ? "flex items-center gap-2 rounded-md px-2  h-8 my-item-button text-sm font-medium leading-5 tracking-wide my-3 pt-1 pb-1 transition  ease-in-out duration-300 bg-soft  text-primary hover:bg-soft hover:text-primary"
+              : "flex items-center gap-2 rounded-md px-2 text-dark  h-8 my-item-button text-sm font-medium leading-5 tracking-wide my-3 pt-1 pb-1 transition  ease-in-out duration-300 hover:bg-soft hover:text-primary"
           }
           href={link}
         >
