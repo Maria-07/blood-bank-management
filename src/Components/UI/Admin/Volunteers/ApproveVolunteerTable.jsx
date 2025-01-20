@@ -1,6 +1,5 @@
 "use client";
 
-import ActionModal from "@/src/Components/UI/Admin/Campaigns/ActionModal";
 import CreateCampaignModal from "@/src/Components/UI/Admin/Campaigns/CreateCampaignModal";
 import VolunteerListAction from "@/src/Components/UI/Admin/Campaigns/VolunteerListAction";
 import PendingVolunteersApproved from "@/src/Components/UI/Admin/Volunteers/PendingVolunteersApproved";
@@ -8,6 +7,7 @@ import { useGetAllApprovedVolunteersQuery } from "@/src/redux/features/volunteer
 import { Table } from "antd";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
+import ActionModal from "./ActionModal";
 
 const ApproveVolunteerTable = () => {
   const router = useRouter();
@@ -81,6 +81,11 @@ const ApproveVolunteerTable = () => {
             key !== "userType" &&
             key !== "lastDonationTime" &&
             key !== "profilePicture" &&
+            key !== "district" &&
+            key !== "fatherName" &&
+            key !== "upazila" &&
+            key !== "union" &&
+            key !== "motherName" &&
             key !== "bloodDonationCount" &&
             key !== "imageUrl"
         )
@@ -134,11 +139,11 @@ const ApproveVolunteerTable = () => {
         }))
     : [];
 
-  //! Add action column
+  //! Add Details column
   if (tableData?.length) {
     columns.push({
-      title: "Action",
-      key: "action",
+      title: "Details",
+      key: "view",
       render: (_, record) => <ActionModal record={record} />,
     });
   }

@@ -1,7 +1,10 @@
 import { Card, Image } from "antd";
 import React from "react";
 
-const Volunteer = () => {
+const Volunteer = ({ record }) => {
+  console.log(record);
+
+  const { fullName, address, bloodGroup } = record;
   return (
     <div>
       <Card
@@ -9,7 +12,7 @@ const Volunteer = () => {
         className="bg-white border-[1px] border-gray-200 shadow-md p-5"
       >
         <div className="flex items-end justify-end">
-          <h1 className="text-4xl font-bold text-primary">AB+</h1>
+          <h1 className="text-4xl font-bold text-primary">{bloodGroup}</h1>
         </div>
 
         <div className="flex items-center justify-center gap-2 flex-wrap">
@@ -24,10 +27,8 @@ const Volunteer = () => {
           ></Image>
         </div>
         <div className="text-center mt-5">
-          <h1 className=" gap-1 text-lg font-semibold">Michael Smith</h1>
-          <span className="text-sm text-accent">
-            64167 Keanu Throughway, North Jackland,
-          </span>
+          <h1 className=" gap-1 text-lg font-semibold">{fullName}</h1>
+          <span className="text-sm text-accent">{address}</span>
         </div>
       </Card>
     </div>

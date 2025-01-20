@@ -3,6 +3,7 @@ import bloodBank from "@/src/assets/Image/bloodBank.png";
 import Image from "next/image";
 import Initiators from "@/src/Components/UI/Volunteers/Initiators/Initiators";
 import Volunteers from "@/src/Components/UI/Volunteers/Volunteers/Volunteers";
+import { useGetAllApprovedVolunteersQuery } from "@/src/redux/features/volunteers/volunteers";
 
 const VolunteerPage = () => {
   return (

@@ -52,7 +52,16 @@ const UserProfileModal = ({ handleClose, clicked, record }) => {
         <div>
           <div className="flex items-center justify-between">
             <h1 className="text-xl font-semibold tracking-tight">
-              User Profile
+              User Profile{" "}
+              {isApproved ? (
+                <button className="text-green-500 bg-green-50 text-[14px] px-2 py-[1px] font-semibold rounded-md">
+                  Approved
+                </button>
+              ) : (
+                <button className="text-red-500 bg-soft text-[14px] px-2 py-[1px] font-semibold rounded-md">
+                  Pending
+                </button>
+              )}
             </h1>
             <IoMdCloseCircleOutline
               onClick={handleClose}
@@ -85,7 +94,7 @@ const UserProfileModal = ({ handleClose, clicked, record }) => {
                       {userType}
                     </h2>
                     <h2 className="text-capitalize text-accent text-sm">
-                      {union}, {upazila}, Nilphamari
+                      {address}
                     </h2>
                   </div>
                 </div>
