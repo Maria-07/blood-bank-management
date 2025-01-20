@@ -22,7 +22,7 @@ const ApproveVolunteerTable = () => {
     undefined,
     {
       refetchOnMountOrArgChange: true,
-      pollingInterval: 8000,
+      // pollingInterval: 8000,
     }
   );
 

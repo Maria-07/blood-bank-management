@@ -7,6 +7,7 @@ import ApproveVolunteerTable from "@/src/Components/UI/Admin/Volunteers/ApproveV
 import PendingVolunteersApproved from "@/src/Components/UI/Admin/Volunteers/PendingVolunteersApproved";
 import { useGetAllVolunteersQuery } from "@/src/redux/features/volunteers/volunteers";
 import { Table } from "antd";
+import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
@@ -22,7 +23,7 @@ const VolunteerList = () => {
   //! Get all volunteers using RTK Query
   const { data, isLoading, isError } = useGetAllVolunteersQuery(undefined, {
     refetchOnMountOrArgChange: true,
-    pollingInterval: 8000,
+    // pollingInterval: 8000,
   });
 
   //! Update table data when data is fetched
@@ -156,7 +157,11 @@ const VolunteerList = () => {
         ) : isError ? (
           <div>
             Error loading volunteers
-            {(toast.error("Session expired"), router.push("/login"))}
+            {
+              (toast.error("Session expired"),
+              // Cookies.remove("accessToken"),
+              router.push("/login"))
+            }
           </div>
         ) : (
           <Table

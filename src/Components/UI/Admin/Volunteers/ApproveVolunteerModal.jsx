@@ -24,7 +24,6 @@ const ApproveVolunteerModal = ({ handleClose, clicked, record }) => {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
-            Accept: "application/json",
             Authorization: `Bearer ${accessToken}`,
           },
           body: JSON.stringify({ id: id }),
