@@ -15,21 +15,12 @@ const ContactPage = () => {
   return (
     <div>
       {" "}
-      {/* <div style={{ textAlign: "center", marginTop: "20px" }}>
-        <h1>Counter: {counter}</h1>
-        <button
-          onClick={() => dispatch(increment())}
-          style={{ margin: "5px", padding: "10px" }}
-        >
-          Increment
-        </button>
-        <button
-          onClick={() => dispatch(decrement())}
-          style={{ margin: "5px", padding: "10px" }}
-        >
-          Decrement
-        </button>
-      </div> */}
+      <div className="bg-soft w-[40%]">
+        <div>
+          <div>contact</div>
+          <div>form</div>
+        </div>
+      </div>
     </div>
   );
 };

@@ -11,15 +11,25 @@ import { toast } from "react-toastify";
 
 const CampaignEditModal = ({ handleClose, clicked, record }) => {
   const router = useRouter();
-
   const id = record?.id;
   const { address, endDate, startDate, banner, name, volunteerList } = record;
 
-  console.log("volunteerList", volunteerList);
+  // Parse volunteerList
+  const parsedVolunteerList = (() => {
+    try {
+      return typeof volunteerList === "string"
+        ? JSON.parse(volunteerList)
+        : volunteerList;
+    } catch (error) {
+      console.error("Error parsing volunteerList:", error.message);
+      return [];
+    }
+  })();
 
   const [selectedVolunteers, setSelectedVolunteers] = useState(
-    volunteerList?.map((v) => v.id) || []
+    parsedVolunteerList || []
   );
+
   const [allVolunteers, setAllVolunteers] = useState([]);
   const accessToken = Cookies.get("accessToken");
 
@@ -30,7 +40,6 @@ const CampaignEditModal = ({ handleClose, clicked, record }) => {
     reset,
   } = useForm();
 
-  //! Get all Volunteers
   const {
     data: volunteers,
     isLoading,
@@ -47,6 +56,13 @@ const CampaignEditModal = ({ handleClose, clicked, record }) => {
     }
   }, [volunteers, isLoading, isError]);
 
+  // Map IDs to names
+  const idNameMapping = parsedVolunteerList.map((id) => {
+    const volunteer = allVolunteers.find((v) => v.id === id);
+    return { id, name: volunteer?.fullName || "Unknown" };
+  });
+
+  // Volunteer options for selection
   const volunteerOptions = allVolunteers?.map((volunteer) => ({
     label: volunteer.fullName,
     value: volunteer.id,
@@ -58,8 +74,6 @@ const CampaignEditModal = ({ handleClose, clicked, record }) => {
 
   const onSubmit = async (data) => {
     const formData = new FormData();
-
-    //! Add form fields
     Object.entries(data).forEach(([key, value]) => {
       if (key === "banner" && value?.length > 0) {
         formData.append(key, value[0]); // Append file
@@ -68,7 +82,6 @@ const CampaignEditModal = ({ handleClose, clicked, record }) => {
       }
     });
 
-    //! Add selectedVolunteers and ID
     formData.append("VolunteerList", JSON.stringify(selectedVolunteers));
     formData.append("id", id);
 
@@ -127,6 +140,21 @@ const CampaignEditModal = ({ handleClose, clicked, record }) => {
         </div>
 
         <div className="bg-gray-200 pt-[1px] mt-3"></div>
+
+        {/* Render sections for IDs and Names */}
+        <div>
+          <h2 className="mt-3 font-semibold">Assigned Volunteers:</h2>
+          {idNameMapping.map(({ id, name }) => (
+            <div key={id} className="p-2 border-b">
+              <p>
+                <strong>ID:</strong> {id}
+              </p>
+              <p>
+                <strong>Name:</strong> {name}
+              </p>
+            </div>
+          ))}
+        </div>
 
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="grid grid-cols-1 lg:grid-cols-2 my-3 mr-2 gap-x-2 gap-y-3">
@@ -189,26 +217,24 @@ const CampaignEditModal = ({ handleClose, clicked, record }) => {
             </div>
           </div>
           <div className="flex items-end justify-end gap-2 mt-2">
-            <div className="flex items-end justify-end gap-2 mt-2">
-              <button
-                type="submit"
-                className="border-sky-600 flex items-center border rounded-sm"
-              >
-                <MdDone className="text-white bg-sky-700 px-1 py-[2px] text-[28px]" />
-                <span className="px-2 py-[6px] bg-sky-500 transition-all hover:bg-sky-600 text-white text-xs">
-                  Edit Campaign
-                </span>
-              </button>
-              <button
-                onClick={handleClose}
-                className="border-secondary flex items-center border rounded-sm"
-              >
-                <MdDeleteOutline className="text-white bg-secondary px-1 py-[2px] text-[28px]" />
-                <span className="px-2 py-[6px] bg-primary transition-all hover:bg-secondary text-white text-xs">
-                  Cancel
-                </span>
-              </button>
-            </div>
+            <button
+              type="submit"
+              className="border-sky-600 flex items-center border rounded-sm"
+            >
+              <MdDone className="text-white bg-sky-700 px-1 py-[2px] text-[28px]" />
+              <span className="px-2 py-[6px] bg-sky-500 transition-all hover:bg-sky-600 text-white text-xs">
+                Edit Campaign
+              </span>
+            </button>
+            <button
+              onClick={handleClose}
+              className="border-secondary flex items-center border rounded-sm"
+            >
+              <MdDeleteOutline className="text-white bg-secondary px-1 py-[2px] text-[28px]" />
+              <span className="px-2 py-[6px] bg-primary transition-all hover:bg-secondary text-white text-xs">
+                Cancel
+              </span>
+            </button>
           </div>
         </form>
       </div>

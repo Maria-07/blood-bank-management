@@ -1,4 +1,4 @@
-const apiRequest = async (
+export const apiRequest = async (
   endpoint,
   header = "application/json",
   method = "GET",

@@ -61,6 +61,7 @@ const CampaignList = () => {
             key !== "lastModifiedTime" &&
             key !== "lastModifiedBy" &&
             key !== "createdBy" &&
+            key !== "volunteerList" &&
             key !== "isDeleted"
         )
         .map((key, index) => ({
@@ -86,12 +87,7 @@ const CampaignList = () => {
           },
           sortOrder: sortedInfo.columnKey === key ? sortedInfo.order : null,
           render: (text, record) =>
-            key === "VolunteerList" ? (
-              <FaPeopleCarryBox
-                className="mx-auto hover:text-primary"
-                onClick={handleAllVolunteers}
-              />
-            ) : key === "startDate" || key === "endDate" ? (
+            key === "startDate" || key === "endDate" ? (
               <div>{new Date(text).toLocaleDateString()}</div>
             ) : (
               <div key={index}>{text || "N/A"}</div>

@@ -77,9 +77,7 @@ const UserProfileModal = ({ handleClose, clicked, record }) => {
                 <div className="flex items-center flex-wrap gap-3">
                   <Image
                     className="border rounded-full"
-                    src={
-                      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTDJzEaxLN-jGRYYUO65pWu7Q9GXoNt4LUSSA&s"
-                    }
+                    src={`${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}/${imageUrl}`}
                     // src={profilePicture}
                     width={80}
                     height={80}

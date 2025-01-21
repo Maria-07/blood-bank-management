@@ -32,12 +32,13 @@ const Campaign = ({ campaign }) => {
   return (
     <div>
       {" "}
-      <Card hoverable className="mb-16 min-h-[500px] ">
+      <Card hoverable className="mb-16 min-h-[580px] ">
         <div>
-          <div className="h-[250px] overflow-hidden rounded-t-lg shadow-lg">
+          <div className="h-[250px] overflow-hidden rounded-t-lg shadow-lg relative">
             {" "}
             <Image
-              src={bannerUrl}
+              // src={bannerUrl}
+              src={`${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}/${bannerUrl}`}
               width={"100%"}
               height={"100%"}
               alt="Picture of the author"
@@ -63,6 +64,15 @@ const Campaign = ({ campaign }) => {
             <div className="flex items-center justify-between gap-2 my-3">
               <div className="flex items-center gap-1">
                 <MdOutlineDateRange className="text-primary text-lg" />{" "}
+                <h1 className="text-base font-semibold">Start at:</h1>
+              </div>
+              <div className="text-sm text-accent text-right">
+                {formatDate(startDate)}
+              </div>
+            </div>
+            <div className="flex items-center justify-between gap-2 my-3">
+              <div className="flex items-center gap-1">
+                <MdOutlineDateRange className="text-primary text-lg" />{" "}
                 <h1 className="text-base font-semibold">Ends at:</h1>
               </div>
               <div className="text-sm text-accent text-right">
@@ -78,7 +88,7 @@ const Campaign = ({ campaign }) => {
             </div>
           </div>
 
-          <button className="bg-primary w-full text-white  hover:bg-secondary py-[1px] shadow-md transition-all">
+          <button className="bg-primary w-full text-white  hover:bg-secondary py-[1px] shadow-md transition-all absolute bottom-0">
             Learn more
           </button>
         </div>

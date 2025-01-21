@@ -4,7 +4,7 @@ import React from "react";
 const Volunteer = ({ record }) => {
   console.log(record);
 
-  const { fullName, address, bloodGroup } = record;
+  const { fullName, address, bloodGroup, imageUrl } = record;
   return (
     <div>
       <Card
@@ -18,9 +18,7 @@ const Volunteer = ({ record }) => {
         <div className="flex items-center justify-center gap-2 flex-wrap">
           <Image
             className="border rounded-full"
-            src={
-              "https://static.vecteezy.com/system/resources/thumbnails/004/607/791/small_2x/man-face-emotive-icon-smiling-male-character-in-blue-shirt-flat-illustration-isolated-on-white-happy-human-psychological-portrait-positive-emotions-user-avatar-for-app-web-design-vector.jpg"
-            }
+            src={`${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}/${imageUrl}`}
             width={200}
             height={200}
             alt="Picture of the author"

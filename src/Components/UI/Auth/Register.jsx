@@ -1,18 +1,64 @@
 "use client";
 
+import { apiRequest } from "@/src/Utils/Fetch";
 import { useRouter } from "next/navigation";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 
 const Register = () => {
+  const [upazilas, setUpazilas] = useState([]); // State for Upazilas
+  const [unions, setUnions] = useState([]); // State for Unions
+
   const router = useRouter();
   const {
     register,
     handleSubmit,
     reset,
+    watch,
+    setValue,
     formState: { errors },
   } = useForm();
+
+  //! Fetch Upazila and Union data
+  const fetchData = async (id = 1, type = "upazila") => {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/location/GetByParentId/${id}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      const data = await response.json();
+      if (type === "upazila") {
+        setUpazilas(data || []); // Assign fetched Upazilas
+      } else {
+        setUnions(data || []); // Assign fetched Unions
+      }
+    } catch (error) {
+      console.error(`Error fetching ${type}:`, error.message);
+    }
+  };
+
+  //! Fetch Upazilas on mount
+  useEffect(() => {
+    fetchData(1, "upazila");
+  }, []);
+
+  //! Watch for Upazila selection
+  const selectedUpazilaId = watch("Upazila");
+
+  //! Fetch Unions when Upazila changes
+  useEffect(() => {
+    if (selectedUpazilaId) {
+      fetchData(selectedUpazilaId, "union");
+      setValue("Union", ""); // Reset the Union value
+    }
+  }, [selectedUpazilaId, setValue]);
 
   const onSubmit = async (data) => {
     console.log("Create user data =", data);
@@ -178,6 +224,7 @@ const Register = () => {
                 District <span className="text-red-600">*</span>
               </h1>
               <select
+                defaultValue={1}
                 {...register("District", {
                   required: {
                     value: true,
@@ -186,9 +233,12 @@ const Register = () => {
                 })}
                 className="input-select-border w-full  mb-2"
               >
-                <option className="py-3" value=""></option>
-                <option value="customer">Customer</option>
-                <option value="bookShopOwner">Shop Owner</option>
+                <option className="py-3" value="">
+                  Select District
+                </option>
+                <option d value="1">
+                  Nilphamari
+                </option>
               </select>
               <label className="label">
                 {errors.District && (
@@ -196,7 +246,7 @@ const Register = () => {
                 )}
               </label>
             </div>
-
+            {/* Upazila Dropdown */}
             <div>
               <h1 className="input-title">
                 Upazila <span className="text-red-600">*</span>
@@ -209,24 +259,25 @@ const Register = () => {
                     message: "Upazila is required",
                   },
                 })}
-                className="input-select-border w-full  mb-2"
+                className="input-select-border w-full mb-2"
               >
-                <option className="py-3" value=""></option>
-                <option value="customer">Customer</option>
-                <option value="bookShopOwner">Shop Owner</option>
+                <option value="">Select Upazila</option>
+                {upazilas.map((upazila) => (
+                  <option key={upazila.id} value={upazila.id}>
+                    {upazila.name}
+                  </option>
+                ))}
               </select>
               <label className="label">
                 <span className="text-sm">
-                  {" "}
-                  {errors.Upazila?.type === "required" && (
-                    <p className=" text-red-500">{errors.Upazila.message}</p>
-                  )}
-                  {errors.Upazila?.type === "pattern" && (
-                    <p className=" text-red-500">{errors.Upazila.message}</p>
+                  {errors.Upazila && (
+                    <p className="text-red-500">{errors.Upazila.message}</p>
                   )}
                 </span>
               </label>
             </div>
+
+            {/* Union Dropdown */}
             <div>
               <h1 className="input-title">
                 Union <span className="text-red-600">*</span>
@@ -239,20 +290,19 @@ const Register = () => {
                     message: "Union is required",
                   },
                 })}
-                className="input-select-border w-full  mb-2"
+                className="input-select-border w-full mb-2"
               >
-                <option className="py-3" value=""></option>
-                <option value="customer">Customer</option>
-                <option value="bookShopOwner">Shop Owner</option>
+                <option value="">Select Union</option>
+                {unions.map((union) => (
+                  <option key={union.id} value={union.name}>
+                    {union.name}
+                  </option>
+                ))}
               </select>
               <label className="label">
                 <span className="text-sm">
-                  {" "}
-                  {errors.Union?.type === "required" && (
-                    <p className=" text-red-500">{errors.Union.message}</p>
-                  )}
-                  {errors.Union?.type === "pattern" && (
-                    <p className=" text-red-500">{errors.Union.message}</p>
+                  {errors.Union && (
+                    <p className="text-red-500">{errors.Union.message}</p>
                   )}
                 </span>
               </label>
