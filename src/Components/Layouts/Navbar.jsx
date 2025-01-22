@@ -1,5 +1,5 @@
 import Image from "next/image";
-import logo from "@/src/assets/Image/bbLogo.png";
+import logo from "@/src/assets/Image/logo/darkLogo.png";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { Dropdown } from "antd";
@@ -33,18 +33,29 @@ const Navbar = () => {
   return (
     <div>
       {" "}
-      <div className="hidden lg:block sticky top-0  my-5">
-        <div className="sm:w-[90%]  sm:mx-auto py-5 flex justify-between border-[1px] shadow-md px-2 rounded-xl">
-          <div>
-            <Link href={"/"}>
-              <Image
-                src={logo}
-                width={150}
-                height={150}
-                alt="Picture of the author"
-              />
+      <div className="hidden lg:block sticky top-0 ">
+        {/* <div className="sm:w-[90%]  sm:mx-auto py-5 flex justify-between border-[1px] shadow-md px-2 rounded-xl"> */}
+        <div className="bg-primary py-3">
+          {" "}
+          {!token && (
+            <Link href={"/register/"}>
+              <button className="bb-input-button">Register</button>
             </Link>
-          </div>
+          )}
+          {!token && (
+            <Link href={"/login/"}>
+              <button className="bb-input-button">Login</button>
+            </Link>
+          )}
+          {token && (
+            <div>
+              <button onClick={handleLogout} className="bb-input-button">
+                Logout
+              </button>
+            </div>
+          )}
+        </div>
+        <div className="sm:w-[90%]  sm:mx-auto flex items-center justify-center">
           <div className="flex items-center gap-5">
             <Link
               className={
@@ -84,6 +95,16 @@ const Navbar = () => {
             >
               Campaigns
             </Link>
+            <div className="mt-[-44px]">
+              <Link href={"/"}>
+                <Image
+                  src={logo}
+                  width={80}
+                  height={80}
+                  alt="Picture of the author"
+                />
+              </Link>
+            </div>
             <Link
               className={
                 currentRoute === "/media" ? "active custom_link" : "custom_link"
@@ -92,6 +113,7 @@ const Navbar = () => {
             >
               Media
             </Link>
+
             <Link
               className={
                 currentRoute === "/about" ? "active custom_link" : "custom_link"
@@ -122,23 +144,7 @@ const Navbar = () => {
                 Dashboard
               </Link>
             )}
-            {!token && (
-              <Link href={"/register/"}>
-                <button className="bb-input-button">Register</button>
-              </Link>
-            )}
-            {!token && (
-              <Link href={"/login/"}>
-                <button className="bb-input-button">Login</button>
-              </Link>
-            )}
-            {token && (
-              <div>
-                <button onClick={handleLogout} className="bb-input-button">
-                  Logout
-                </button>
-              </div>
-            )}
+
             {/* <Link
               className={
                 currentRoute === "/books"
@@ -200,7 +206,7 @@ const Navbar = () => {
             {/* <button onClick={() => setSearch(!search)} className="">
               <BiSearchAlt2 className="text-2xl hover:text-primary" />
             </button> */}
-            <Dropdown
+            {/* <Dropdown
               overlay={
                 <div className="bg-white p-8 w-[280px] border shadow-md rounded-sm">
                   <div>
@@ -208,73 +214,7 @@ const Navbar = () => {
                       My Account
                     </h1>
                     <hr></hr>
-                    {/* <div className="mx-5">
-                      {accessToken ? (
-                        <>
-                          <Link href={"/myProfile"}>
-                            <button className="hover:text-primary my-2">
-                              My Profile
-                            </button>
-                          </Link>
-                          <br />
-                          <button
-                            className="hover:text-primary"
-                            onClick={handleLogOut}
-                          >
-                            Log Out
-                          </button>
-                        </>
-                      ) : (
-                        <>
-                          <Link href={"/login"}>
-                            <button className="hover:text-primary my-2">
-                              Log In
-                            </button>
-                          </Link>
-                          <br />
-                          <Link href={"/signup"}>
-                            <button className="hover:text-primary ">
-                              Create Account
-                            </button>
-                          </Link>
-                        </>
-                      )}
-                    </div> */}
                   </div>
-                  {/* {accessToken && (
-                    <div>
-                      <h1 className="text-[15px] font-semibold text-dark mb-2 mt-4">
-                        My Items
-                      </h1>
-                      <hr></hr>
-                      <div className="mx-5">
-                        {userInfo?.role === "bookShopOwner" ? (
-                          <>
-                            <Link href={"/myItems/shop"}>
-                              <h1 className="hover:text-primary my-2">
-                                My Shop
-                              </h1>
-                            </Link>
-                            <Link href={"/myItems/book"}>
-                              <h1 className="hover:text-primary my-2">
-                                My Books
-                              </h1>
-                            </Link>
-                          </>
-                        ) : (
-                          <>
-                            <Link href={"/myItems/oldBooks"}>
-                              <h1 className="hover:text-primary my-2">
-                                My Old Books
-                              </h1>
-                            </Link>
-                          </>
-                        )}
-
-                        
-                      </div>
-                    </div>
-                  )} */}
                   <Link href={"/my-profile"}>
                     <h1 className="hover:text-primary my-2">My Profile</h1>
                   </Link>
@@ -287,7 +227,7 @@ const Navbar = () => {
               <button className="border p-1">
                 <AiOutlineMenu className="text-xl hover:text-primary" />
               </button>
-            </Dropdown>
+            </Dropdown> */}
           </div>
         </div>
       </div>

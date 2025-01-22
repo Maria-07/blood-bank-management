@@ -1,6 +1,7 @@
 "use client";
 
 import { apiRequest } from "@/src/Utils/Fetch";
+import { DatePicker } from "antd";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -9,6 +10,8 @@ import { toast } from "react-toastify";
 const Register = () => {
   const [upazilas, setUpazilas] = useState([]); // State for Upazilas
   const [unions, setUnions] = useState([]); // State for Unions
+  const [dob, setDob] = useState("");
+  const [donationDate, setDonationDate] = useState("");
 
   const router = useRouter();
   const {
@@ -19,6 +22,16 @@ const Register = () => {
     setValue,
     formState: { errors },
   } = useForm();
+
+  const handleDob = (date, dateString) => {
+    console.log(dateString);
+    setDob(dateString);
+  };
+
+  const handleDonationDate = (date, dateString) => {
+    console.log(dateString);
+    setDonationDate(dateString);
+  };
 
   //! Fetch Upazila and Union data
   const fetchData = async (id = 1, type = "upazila") => {
@@ -78,6 +91,11 @@ const Register = () => {
       console.log(`${key}: ${value}`);
     }
 
+    if (dob && donationDate) {
+      formData.append("DateOfBirth", dob);
+      formData.append("LastDonationTime", donationDate);
+    }
+
     try {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_BASE_URL}/user/registration`,
@@ -112,9 +130,13 @@ const Register = () => {
 
   return (
     <div>
-      <div className="mt-5">
+      <div className="mt-3">
+        <h3 className="text-lg font-normal text-gray-500 mb-1">
+          Create your account
+        </h3>
+        <hr />
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="grid sm:grid-cols-3 grid-cols-1 gap-3">
+          <div className="grid 2xl:grid-cols-4 lg:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-3 my-5">
             <div className="sm:col-span-2">
               {" "}
               <div>
@@ -141,39 +163,32 @@ const Register = () => {
                 </label>
               </div>
             </div>
-            <div>
-              <h1 className="input-title">Blood Group</h1>
-              <input
-                type="text"
-                className="input-border w-full  mb-2"
-                {...register("BloodGroup")}
-              />
-            </div>
+
             <div className="">
               <h1 className="input-title flex items-center gap-1">
                 Date of Birth
                 <span className="text-red-600">*</span>
               </h1>
-              <input
-                type="date"
-                className="input-border w-full sm:w-[100%] mb-2"
-                {...register("DateOfBirth", {
-                  required: {
-                    value: true,
-                    message: "Date Of Birth is required",
-                  },
-                })}
+              <DatePicker
+                className="w-full"
+                format={{
+                  format: "YYYY-MM-DD",
+                  type: "mask",
+                }}
+                onChange={handleDob}
               />
-              <label className="label">
-                <span className="text-sm">
-                  {" "}
-                  {errors.DateOfBirth?.type === "required" && (
-                    <p className=" text-red-500">
-                      {errors.DateOfBirth.message}
-                    </p>
-                  )}
-                </span>
-              </label>
+            </div>
+            <div>
+              <h1 className="input-title">Last Donation Time</h1>
+
+              <DatePicker
+                className="w-full"
+                format={{
+                  format: "YYYY-MM-DD",
+                  type: "mask",
+                }}
+                onChange={handleDonationDate}
+              />
             </div>
             <div>
               <h1 className="input-title flex items-center gap-1">
@@ -218,7 +233,14 @@ const Register = () => {
                 {...register("BloodDonationCount")}
               />
             </div>
-
+            <div className="sm:col-span-2">
+              <h1 className="input-title">Address</h1>
+              <input
+                type="text"
+                className="input-border w-full mb-2"
+                {...register("Address")}
+              />
+            </div>
             <div>
               <h1 className="input-title">
                 District <span className="text-red-600">*</span>
@@ -307,15 +329,30 @@ const Register = () => {
                 </span>
               </label>
             </div>
-
-            <div className="sm:col-span-2">
-              <h1 className="input-title">Address</h1>
-              <input
-                type="text"
-                className="input-border w-full mb-2"
-                {...register("Address")}
-              />
+            <div>
+              <h1 className="input-title">
+                User Type <span className="text-red-600">*</span>
+              </h1>
+              <select
+                className="input-select-border w-full mb-2"
+                {...register("UserType", {
+                  required: {
+                    value: true,
+                    message: "User Type is required",
+                  },
+                })}
+              >
+                <option value="">Select</option>
+                <option value="Donor">Donor</option>
+                <option value="Volunteer">Volunteer</option>
+              </select>
+              <label className="label">
+                {errors.UserType && (
+                  <p className="text-red-500">{errors.UserType.message}</p>
+                )}
+              </label>
             </div>
+
             <div>
               <h1 className="input-title">Father&apos;s Name</h1>
               <input
@@ -333,13 +370,25 @@ const Register = () => {
                 {...register("MotherName")}
               />
             </div>
+            <div className="sm:col-span-2">
+              <h1 className="input-title">Profile Picture</h1>
+              <input
+                type="file"
+                className=" w-full mb-2"
+                {...register("ProfilePicture")}
+              />
+            </div>
 
             <div>
               <h1 className="input-title">Last Donation Time</h1>
-              <input
-                type="date"
-                className="input-border w-full mb-2"
-                {...register("LastDonationTime")}
+
+              <DatePicker
+                className="w-full"
+                format={{
+                  format: "YYYY-MM-DD",
+                  type: "mask",
+                }}
+                onChange={handleDonationDate}
               />
             </div>
 
@@ -392,43 +441,39 @@ const Register = () => {
                 )}
               </label>
             </div>
-
             <div>
-              <h1 className="input-title">
-                User Type <span className="text-red-600">*</span>
-              </h1>
+              <h1 className="input-title">Blood Group</h1>
+
               <select
                 className="input-select-border w-full mb-2"
-                {...register("UserType", {
+                {...register("BloodGroup", {
                   required: {
                     value: true,
-                    message: "User Type is required",
+                    message: "Blood Group is required",
                   },
                 })}
               >
                 <option value="">Select</option>
-                <option value="Donor">Donor</option>
-                <option value="Volunteer">Volunteer</option>
+                <option value="O+">O+</option>
+                <option value="O-">O-</option>
+                <option value="A+">A+</option>
+                <option value="A-">A-</option>
+                <option value="B+">B+</option>
+                <option value="B-">B-</option>
+                <option value="AB+">AB+</option>
+                <option value="AB-">AB-</option>
               </select>
+
               <label className="label">
-                {errors.UserType && (
-                  <p className="text-red-500">{errors.UserType.message}</p>
+                {errors.BloodGroup && (
+                  <p className="text-red-500">{errors.BloodGroup.message}</p>
                 )}
               </label>
             </div>
-
-            <div>
-              <h1 className="input-title">Profile Picture</h1>
-              <input
-                type="file"
-                className=" w-full mb-2"
-                {...register("ProfilePicture")}
-              />
-            </div>
           </div>
 
-          <button type="submit" className="input-button w-full my-5  ">
-            Submit
+          <button type="submit" className="input-button my-5">
+            Register
           </button>
         </form>
       </div>

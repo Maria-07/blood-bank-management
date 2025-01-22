@@ -6,7 +6,7 @@ import { BsThreeDots } from "react-icons/bs";
 import CampaignEditModal from "./CampaignEditModal";
 import CampaignDeleteModal from "./CampaignDeleteModal";
 
-const ActionModal = ({ record }) => {
+const ActionModal = ({ record, refetch }) => {
   // console.log(record, "record");
 
   const [EditCampaign, setEditCampaign] = useState(false);
@@ -51,6 +51,7 @@ const ActionModal = ({ record }) => {
 
       {EditCampaign && (
         <CampaignEditModal
+          refetch={refetch}
           record={record}
           handleClose={handleEditCampaign}
           clicked={EditCampaign}
@@ -60,6 +61,7 @@ const ActionModal = ({ record }) => {
       {DeleteCampaign && (
         <CampaignDeleteModal
           record={record}
+          refetch={refetch}
           handleClose={handleDeleteCampaign}
           clicked={DeleteCampaign}
         ></CampaignDeleteModal>

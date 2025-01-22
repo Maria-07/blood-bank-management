@@ -12,7 +12,6 @@ export const api = createApi({
     baseUrl: process.env.NEXT_PUBLIC_BASE_URL,
     prepareHeaders: (headers, {}) => {
       const token = getAccessToken();
-      console.log("token", token);
 
       if (token) {
         headers.set("Authorization", `Bearer ${token}`);

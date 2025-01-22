@@ -1,7 +1,7 @@
 import Image from "next/image";
 import React from "react";
 import register from "@/src/assets/video/register.gif";
-import blood from "@/src/assets/Image/bloodDrop.png";
+import blood from "@/src/assets/Image/logo/darkLogo.png";
 import Link from "next/link";
 import Register from "../../src/Components/UI/Auth/Register";
 
@@ -9,38 +9,44 @@ const RegistrationPage = () => {
   return (
     <div>
       {" "}
-      <div className="sm:w-[70%]  sm:mx-auto my-16 px-5">
-        <div className="grid lg:grid-cols-2 grid-cols-1">
-          <div className="mx-auto my-auto">
-            <Image
-              src={register}
-              width={"auto"}
-              height={"auto"}
-              alt="Picture of the author"
-            />
+      <div className="sm:w-[90%]  sm:mx-auto my-16 px-5">
+        <div className="grid lg:grid-cols-3 grid-cols-1">
+          <div className="flex items-center justify-center">
+            {" "}
+            <div className="mx-auto my-auto p-5">
+              <Image
+                src={blood}
+                // src={register}
+                width={"auto"}
+                height={"auto"}
+                alt="Picture of the author"
+              />
+              <div className="text-center my-7">
+                {" "}
+                <h1 className="font-primary text-2xl font-bold text-primary mb-2">
+                  WELCOME To হিমোগ্লোবিন
+                </h1>
+                <span>মানবতার শ্রেষ্ঠ দান, রক্ত দিয়ে বাচাই প্রাণ</span>
+              </div>
+            </div>
           </div>
-          <div className="sm:mx-auto">
-            <div className="mb-3">
+          <div className="lg:mx-auto sm:col-span-2">
+            {/* <div className="mb-3">
               {" "}
               <Image
                 src={blood}
-                width={40}
-                height={40}
+                width={50}
+                height={50}
                 alt="Picture of the author"
               />
-            </div>
-            <h1 className="font-primary text-2xl font-bold text-primary">
-              WELCOME To Blood Bank Management
-            </h1>
-            <h3 className="text-base font-normal text-gray-500">
-              Create your account
-            </h3>
+            </div> */}
+
             <div>
               {" "}
               <Register></Register>{" "}
             </div>
 
-            <div className="text-sm font-medium text-gray-600 justify-center items-center flex gap-2 my-5">
+            <div className="text-sm font-medium text-gray-600 items-center flex gap-2 mb-5">
               Already have an account ?
               <Link href={"/login"}>
                 <button className="text-primary font-semibold"> Login </button>

@@ -9,7 +9,7 @@ import { useGetAllVolunteersQuery } from "@/src/redux/features/volunteers/volunt
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
-const CreateCampaignModal = ({ handleClose, clicked }) => {
+const CreateCampaignModal = ({ handleClose, clicked, refetch }) => {
   const router = useRouter();
   const [selectedVolunteers, setSelectedVolunteers] = useState([]);
   const [allVolunteers, setAllVolunteers] = useState([]);
@@ -67,8 +67,8 @@ const CreateCampaignModal = ({ handleClose, clicked }) => {
       }
     });
 
-    //! Add selectedVolunteers as JSON string
-    formData.append("VolunteerList", JSON.stringify(selectedVolunteers));
+    //! Add selectedVolunteers
+    formData.append("VolunteerList", selectedVolunteers);
 
     //! Log FormData entries for debugging
     for (const [key, value] of formData.entries()) {
@@ -112,6 +112,7 @@ const CreateCampaignModal = ({ handleClose, clicked }) => {
         toast.success(
           responseData?.message || "Campaign created successfully!"
         );
+        refetch();
         reset();
         handleClose(); // Close modal after successful creation
       }

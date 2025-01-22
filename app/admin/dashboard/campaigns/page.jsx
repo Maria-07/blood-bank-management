@@ -18,10 +18,8 @@ const CampaignList = () => {
   const [sortedInfo, setSortedInfo] = useState({});
 
   //! Get all Campaigns Data
-  const { data, isLoading, isError } = useGetAllCampaignsQuery(undefined, {
-    // refetchOnMountOrArgChange: true,
-    pollingInterval: 8000,
-  });
+  const { data, isLoading, isError, refetch } =
+    useGetAllCampaignsQuery(undefined);
 
   //! Update table data when data is fetched
   useEffect(() => {
@@ -62,6 +60,7 @@ const CampaignList = () => {
             key !== "lastModifiedBy" &&
             key !== "createdBy" &&
             key !== "volunteerList" &&
+            key !== "banner" &&
             key !== "isDeleted"
         )
         .map((key, index) => ({
@@ -102,7 +101,9 @@ const CampaignList = () => {
       title: "Action",
       key: "action",
       width: 50,
-      render: (text, record) => <ActionModal record={record}></ActionModal>,
+      render: (text, record) => (
+        <ActionModal refetch={refetch} record={record}></ActionModal>
+      ),
     });
   }
 
@@ -144,6 +145,7 @@ const CampaignList = () => {
       )}
       {createCampaign && (
         <CreateCampaignModal
+          refetch={refetch}
           handleClose={handleCreateCampaign}
           clicked={createCampaign}
         />

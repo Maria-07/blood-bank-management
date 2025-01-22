@@ -1,5 +1,6 @@
 "use client";
 
+import { DatePicker } from "antd";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
@@ -14,6 +15,13 @@ const Login = () => {
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [userType, setUserType] = useState("User");
+  const [dob, setDob] = useState("");
+
+  const handleDob = (date, dateString) => {
+    console.log(dateString);
+    setDob(dateString);
+  };
+
   const {
     register,
     handleSubmit,
@@ -53,7 +61,7 @@ const Login = () => {
   const handleLogin = async (data, isAdmin = false) => {
     const payload = {
       MobileNumber: data.MobileNumber,
-      DateOfBirth: data.DateOfBirth,
+      DateOfBirth: dob,
       ...(isAdmin && { Password: data.Password }), // Include password for Admin login
     };
 
@@ -82,19 +90,20 @@ const Login = () => {
    */
   const onSubmit = async (data) => {
     try {
-      const userTypeResponse = await fetchData(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/Auth/usertype`,
-        { MobileNumber: data.MobileNumber, DateOfBirth: data.DateOfBirth }
-      );
+      if (dob) {
+        const userTypeResponse = await fetchData(
+          `${process.env.NEXT_PUBLIC_BASE_URL}/Auth/usertype`,
+          { MobileNumber: data.MobileNumber, DateOfBirth: dob }
+        );
+        const detectedUserType = userTypeResponse?.userType || "User";
+        setUserType(detectedUserType);
 
-      const detectedUserType = userTypeResponse?.userType || "User";
-      setUserType(detectedUserType);
-
-      if (detectedUserType === "Admin") {
-        // Wait for admin login on button click
-        toast.info("Admin detected, please enter your password.");
-      } else {
-        await handleLogin(data); // Non-admin login
+        if (detectedUserType === "Admin") {
+          // Wait for admin login on button click
+          toast.info("Admin detected, please enter your password.");
+        } else {
+          await handleLogin(data); // Non-admin login
+        }
       }
     } catch (error) {
       console.error("Error detecting user type:", error.message);
@@ -132,16 +141,14 @@ const Login = () => {
             <MdOutlineDateRange className="text-primary" /> Date of Birth{" "}
             <span className="text-red-600">*</span>
           </h1>
-          <input
-            type="date"
-            className="input-border w-full sm:w-[150%] mb-2"
-            {...register("DateOfBirth", {
-              required: "Date of Birth is required",
-            })}
+          <DatePicker
+            className="w-full sm:w-[150%]"
+            format={{
+              format: "YYYY-MM-DD",
+              type: "mask",
+            }}
+            onChange={handleDob}
           />
-          {errors.DateOfBirth && (
-            <p className="text-red-500">{errors.DateOfBirth.message}</p>
-          )}
         </div>
 
         {/* Password Input for Admin */}

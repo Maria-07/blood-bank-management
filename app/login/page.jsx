@@ -1,7 +1,7 @@
 import Image from "next/image";
 import React from "react";
 import loginLogo from "@/src/assets/video/loginLogo.gif";
-import blood from "@/src/assets/Image/bloodDrop.png";
+import blood from "@/src/assets/Image/logo/darkLogo.png";
 import Link from "next/link";
 import Login from "../../src/Components/UI/Auth/Login";
 
@@ -24,17 +24,15 @@ const LoginPage = () => {
               {" "}
               <Image
                 src={blood}
-                width={40}
-                height={40}
+                width={70}
+                height={70}
                 alt="Picture of the author"
               />
             </div>
-            <h1 className="font-primary text-2xl font-bold text-primary flex items-center">
-              WELCOME BACK{" "}
+            <h1 className="font-primary text-2xl font-bold text-primary mb-2">
+              WELCOME To হিমোগ্লোবিন
             </h1>
-            <h3 className="text-base font-normal text-gray-500">
-              Login to continue
-            </h3>
+            <span>মানবতার শ্রেষ্ঠ দান, রক্ত দিয়ে বাচাই প্রাণ</span>
             <div>
               {" "}
               <Login></Login>{" "}

@@ -8,7 +8,7 @@ import { IoMdCloseCircleOutline } from "react-icons/io";
 import { MdDeleteOutline, MdDone } from "react-icons/md";
 import { toast } from "react-toastify";
 
-const CampaignDeleteModal = ({ handleClose, clicked, record }) => {
+const CampaignDeleteModal = ({ handleClose, clicked, record, refetch }) => {
   const router = useRouter();
   const id = record?.id;
   console.log("record", record?.id);
@@ -54,7 +54,7 @@ const CampaignDeleteModal = ({ handleClose, clicked, record }) => {
         toast.success(
           responseData?.message || "Campaign deleted successfully!"
         );
-        // onSuccess?.(); // Call the success callback if provided
+        refetch();
         handleClose();
       }
     } catch (error) {

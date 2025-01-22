@@ -1,6 +1,6 @@
 "use client";
 import { useGetAllVolunteersQuery } from "@/src/redux/features/volunteers/volunteers";
-import { Modal, Select } from "antd";
+import { Image, Modal, Select } from "antd";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -8,28 +8,30 @@ import { useForm } from "react-hook-form";
 import { IoMdCloseCircleOutline } from "react-icons/io";
 import { MdDeleteOutline, MdDone } from "react-icons/md";
 import { toast } from "react-toastify";
+import { FiEdit } from "react-icons/fi";
 
-const CampaignEditModal = ({ handleClose, clicked, record }) => {
+const CampaignEditModal = ({ handleClose, clicked, record, refetch }) => {
+  const [bannerEdit, setBannerEdit] = useState(false);
   const router = useRouter();
   const id = record?.id;
-  const { address, endDate, startDate, banner, name, volunteerList } = record;
+  const {
+    address,
+    endDate,
+    startDate,
+    banner,
+    bannerUrl,
+    name,
+    volunteerList,
+  } = record;
+  console.log(volunteerList);
 
   // Parse volunteerList
-  const parsedVolunteerList = (() => {
-    try {
-      return typeof volunteerList === "string"
-        ? JSON.parse(volunteerList)
-        : volunteerList;
-    } catch (error) {
-      console.error("Error parsing volunteerList:", error.message);
-      return [];
-    }
-  })();
+  const parsedVolunteerList = volunteerList || [];
 
-  const [selectedVolunteers, setSelectedVolunteers] = useState(
-    parsedVolunteerList || []
-  );
+  const [selectedVolunteers, setSelectedVolunteers] =
+    useState(parsedVolunteerList);
 
+  //! get all volunteerList
   const [allVolunteers, setAllVolunteers] = useState([]);
   const accessToken = Cookies.get("accessToken");
 
@@ -37,7 +39,6 @@ const CampaignEditModal = ({ handleClose, clicked, record }) => {
     register,
     handleSubmit,
     formState: { errors },
-    reset,
   } = useForm();
 
   const {
@@ -56,12 +57,6 @@ const CampaignEditModal = ({ handleClose, clicked, record }) => {
     }
   }, [volunteers, isLoading, isError]);
 
-  // Map IDs to names
-  const idNameMapping = parsedVolunteerList.map((id) => {
-    const volunteer = allVolunteers.find((v) => v.id === id);
-    return { id, name: volunteer?.fullName || "Unknown" };
-  });
-
   // Volunteer options for selection
   const volunteerOptions = allVolunteers?.map((volunteer) => ({
     label: volunteer.fullName,
@@ -69,6 +64,8 @@ const CampaignEditModal = ({ handleClose, clicked, record }) => {
   }));
 
   const handleChange = (selectedValues) => {
+    console.log("selected v", selectedValues);
+
     setSelectedVolunteers(selectedValues);
   };
 
@@ -82,7 +79,7 @@ const CampaignEditModal = ({ handleClose, clicked, record }) => {
       }
     });
 
-    formData.append("VolunteerList", JSON.stringify(selectedVolunteers));
+    formData.append("VolunteerList", selectedVolunteers);
     formData.append("id", id);
 
     try {
@@ -90,6 +87,8 @@ const CampaignEditModal = ({ handleClose, clicked, record }) => {
         toast.error("Unauthorized. Please log in again.");
         return;
       }
+
+      console.log("after select", selectedVolunteers);
 
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_BASE_URL}/campaign/update`,
@@ -112,6 +111,7 @@ const CampaignEditModal = ({ handleClose, clicked, record }) => {
         toast.success(
           responseData?.message || "Campaign updated successfully!"
         );
+        refetch();
         handleClose();
       }
     } catch (error) {
@@ -140,21 +140,6 @@ const CampaignEditModal = ({ handleClose, clicked, record }) => {
         </div>
 
         <div className="bg-gray-200 pt-[1px] mt-3"></div>
-
-        {/* Render sections for IDs and Names */}
-        <div>
-          <h2 className="mt-3 font-semibold">Assigned Volunteers:</h2>
-          {idNameMapping.map(({ id, name }) => (
-            <div key={id} className="p-2 border-b">
-              <p>
-                <strong>ID:</strong> {id}
-              </p>
-              <p>
-                <strong>Name:</strong> {name}
-              </p>
-            </div>
-          ))}
-        </div>
 
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="grid grid-cols-1 lg:grid-cols-2 my-3 mr-2 gap-x-2 gap-y-3">
@@ -209,11 +194,36 @@ const CampaignEditModal = ({ handleClose, clicked, record }) => {
             </div>
             <div className="sm:col-span-2">
               <label className="label">Campaign Banner</label>
-              <input
-                type="file"
-                className="modal-input-field w-full"
-                {...register("banner")}
-              />
+              {bannerEdit && (
+                <input
+                  type="file"
+                  defaultValue={banner}
+                  className="modal-input-field w-full"
+                  {...register("banner")}
+                />
+              )}
+            </div>
+            <div className=" sm:col-span-2">
+              <button
+                type="button"
+                onClick={() => setBannerEdit(!bannerEdit)}
+                className="flex items-center gap-2"
+              >
+                {" "}
+                <FiEdit className="" /> Edit Banner
+              </button>
+              <div className="overflow-hidden h-[200px] w-[500px]">
+                {" "}
+                {!bannerEdit && (
+                  <Image
+                    className="border "
+                    src={`${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}/${bannerUrl}`}
+                    width={400}
+                    height={200}
+                    alt="Picture of the author"
+                  ></Image>
+                )}{" "}
+              </div>
             </div>
           </div>
           <div className="flex items-end justify-end gap-2 mt-2">
