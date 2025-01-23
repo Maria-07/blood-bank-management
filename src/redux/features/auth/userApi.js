@@ -2,24 +2,17 @@ import { api } from "../../api/apiSlice";
 
 const userApi = api.injectEndpoints({
   endpoints: (builder) => ({
-    login: builder.mutation({
-      query: (userInfo) => ({
-        url: "/Auth/token",
-        method: "POST",
-        body: userInfo,
-      }),
-    }),
-    signup: builder.mutation({
-      query: (formData) => ({
-        url: "/user/registration",
-        method: "POST",
-        body: formData,
-      }),
-    }),
     getUserType: builder.query({
       query: () => ({
         url: "/Auth/usertype",
         method: "GET",
+      }),
+    }),
+    getAllUser: builder.mutation({
+      query: (data) => ({
+        url: "/user/getall",
+        method: "POST",
+        body: data,
       }),
     }),
     getProfile: builder.query({
@@ -36,21 +29,12 @@ const userApi = api.injectEndpoints({
         body: updatedData,
       }),
     }),
-
-    getAllUserData: builder.query({
-      query: () => ({
-        url: "/users",
-        method: "GET",
-        // providesTags: ["profile"],
-      }),
-    }),
   }),
 });
 
 export const {
-  useLoginMutation,
-  useSignupMutation,
   useGetUserTypeQuery,
+  useGetAllUserMutation,
   useGetProfileQuery,
   useUpdateProfileMutation,
 } = userApi;

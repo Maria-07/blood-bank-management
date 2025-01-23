@@ -2,6 +2,7 @@
 import { FaUsersCog } from "react-icons/fa";
 import { MdOutlineAssignmentReturned } from "react-icons/md";
 import { FaPeopleCarryBox } from "react-icons/fa6";
+import { BsChatSquareText } from "react-icons/bs";
 
 export const settingsSidebar = [
   {
@@ -18,5 +19,10 @@ export const settingsSidebar = [
     icon: <MdOutlineAssignmentReturned />,
     link_name: "Blood Bank",
     link: "/admin/dashboard/blood-banks",
+  },
+  {
+    icon: <BsChatSquareText />,
+    link_name: "Contacts",
+    link: "/admin/dashboard/contacts",
   },
 ];

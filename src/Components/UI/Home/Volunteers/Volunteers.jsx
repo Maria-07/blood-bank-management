@@ -12,6 +12,8 @@ const Volunteers = () => {
       // pollingInterval: 8000,
     }
   );
+  console.log(data);
+
   return (
     <div className="my-32">
       <h1 className=" text-6xl font-semibold  text-center my-10">

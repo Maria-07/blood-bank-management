@@ -16,7 +16,7 @@ export const api = createApi({
       if (token) {
         headers.set("Authorization", `Bearer ${token}`);
       }
-      // headers.set("Content-Type", "application/json");
+      headers.set("Content-Type", "application/json");
       // headers.set("Content-Type", "multipart/form-data");
       return headers;
     },

@@ -15,6 +15,7 @@ const UserProfileModal = ({ handleClose, clicked, record }) => {
     bloodGroup,
     dateOfBirth,
     district,
+    districtName,
     fatherName,
     fullName,
     gender,
@@ -28,7 +29,9 @@ const UserProfileModal = ({ handleClose, clicked, record }) => {
     password,
     profilePicture,
     union,
+    unionName,
     upazila,
+    upazilaName,
     userType,
   } = record;
 
@@ -45,7 +48,7 @@ const UserProfileModal = ({ handleClose, clicked, record }) => {
         open={clicked}
         centered
         footer={null}
-        width={700}
+        width={600}
         closable={false}
         className="box"
       >
@@ -98,9 +101,10 @@ const UserProfileModal = ({ handleClose, clicked, record }) => {
                 </div>
               </div>
               <div className="border-[1px] p-5 rounded-md mb-5">
-                <h1 className="font-semibold text-lg mb-5">
+                <h1 className="font-semibold text-lg mb-2 text-primary2">
                   Personal information
                 </h1>
+
                 <div className="grid grid-cols-1 lg:grid-cols-2 my-3 mr-2 gap-x-2 gap-y-3">
                   <div>
                     <h1 className="text-xs text-accent">Full Name</h1>
@@ -143,7 +147,7 @@ const UserProfileModal = ({ handleClose, clicked, record }) => {
                     </h1>
                     <h6 className="text-base mt-[4px]">
                       {" "}
-                      {bloodDonationStatus === "interested" ? (
+                      {bloodDonationStatus === "Interested" ? (
                         <span className="">
                           {" "}
                           <Tooltip
@@ -152,7 +156,7 @@ const UserProfileModal = ({ handleClose, clicked, record }) => {
                             color={"#c71919"}
                             key={1}
                           >
-                            <FaHandHoldingHeart className="text-base" />{" "}
+                            <FaHandHoldingHeart className="text-base text-secondary" />{" "}
                           </Tooltip>
                         </span>
                       ) : (
@@ -164,7 +168,7 @@ const UserProfileModal = ({ handleClose, clicked, record }) => {
                             color={"#a78017"}
                             key={1}
                           >
-                            <FaRegHandBackFist className="text-base" />{" "}
+                            <FaRegHandBackFist className="text-base " />{" "}
                           </Tooltip>
                         </span>
                       )}{" "}
@@ -180,19 +184,22 @@ const UserProfileModal = ({ handleClose, clicked, record }) => {
                 </div>
               </div>
               <div className="border-[1px] p-5 rounded-md mb-5">
-                <h1 className="font-semibold text-lg mb-5">Address</h1>
-                <div className="grid grid-cols-1 lg:grid-cols-2 my-3 mr-2 gap-x-2 gap-y-3">
+                <h1 className="font-semibold text-primary2 text-lg mb-2">
+                  Address
+                </h1>
+                <div>{address}</div>
+                <div className="grid grid-cols-1 lg:grid-cols-3 my-3 mr-2 gap-x-2 gap-y-3">
                   <div>
                     <h1 className="text-xs text-accent">District</h1>
-                    <h6 className="text-base font-semibold"> {district}</h6>
+                    <h6 className="text-base font-semibold"> {districtName}</h6>
                   </div>
                   <div>
                     <h1 className="text-xs text-accent">Union</h1>
-                    <h6 className="text-base font-semibold"> {union}</h6>
+                    <h6 className="text-base font-semibold"> {unionName}</h6>
                   </div>
                   <div>
                     <h1 className="text-xs text-accent">Upazila</h1>
-                    <h6 className="text-base font-semibold"> {upazila}</h6>
+                    <h6 className="text-base font-semibold"> {upazilaName}</h6>
                   </div>
                 </div>
               </div>

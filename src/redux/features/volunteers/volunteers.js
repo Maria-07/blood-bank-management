@@ -4,13 +4,13 @@ const VolunteerApi = api.injectEndpoints({
   endpoints: (builder) => ({
     getAllVolunteers: builder.query({
       query: () => ({
-        url: "/user/unapprovedVolunteer",
+        url: "/user/getUnapprovedVolunteer",
         method: "GET",
       }),
     }),
     getAllApprovedVolunteers: builder.query({
       query: () => ({
-        url: "/user/getallapprovedvolunteer",
+        url: "/user/getApprovedVolunteer",
         method: "GET",
       }),
     }),

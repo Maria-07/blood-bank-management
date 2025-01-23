@@ -20,21 +20,25 @@ const Count = () => {
   return (
     <div className="gap-2 grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 2xl:grid-cols-7">
       <div>
-        <h1 className="text-3xl font-extrabold">{CountedData?.volunteer}+</h1>
+        <h1 className="text-3xl font-extrabold">
+          {CountedData?.data?.volunteer}+
+        </h1>
         <p className="text-base text-accent my-1">10005 Volunteer</p>
       </div>
       <div>
-        <h1 className="text-3xl font-extrabold">{CountedData?.donor}+</h1>
+        <h1 className="text-3xl font-extrabold">{CountedData?.data?.donor}+</h1>
         <p className="text-base text-accent my-1">Happy Donors</p>
       </div>
       <div>
         <h1 className="text-3xl font-extrabold">
-          {CountedData?.registeredDonor}+
+          {CountedData?.data?.registeredDonor}+
         </h1>
         <p className="text-base text-accent my-1">Registered donors</p>
       </div>
       <div>
-        <h1 className="text-3xl font-extrabold">{CountedData?.campaign}+</h1>
+        <h1 className="text-3xl font-extrabold">
+          {CountedData?.data?.campaign}+
+        </h1>
         <p className="text-base text-accent my-1">Active campaigns</p>
       </div>
     </div>

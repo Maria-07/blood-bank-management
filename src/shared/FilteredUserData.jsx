@@ -1,0 +1,80 @@
+import React, { useState } from "react";
+import {
+  ageRange,
+  bloodGroups,
+  unionsOfNilphamari,
+  upazilasOfNilphamari,
+} from "@/src/shared/constance";
+import CustomSearchOption from "@/src/shared/CustomSearchOption";
+import { MdBloodtype } from "react-icons/md";
+import { LuMapPinned } from "react-icons/lu";
+import { TiPin } from "react-icons/ti";
+import { FaPeopleArrows } from "react-icons/fa6";
+
+const FilteredUserData = () => {
+  const [bloodType, setBloodType] = useState("");
+  const [Upazila, setUpazila] = useState("");
+  const [union, setUnion] = useState("");
+  const [age, setAge] = useState({});
+
+  const [UpazilaArray, setUpazilaArray] = useState([]);
+  const [unionArray, setUnionArray] = useState([]);
+  return (
+    <div>
+      <div className="my-10">
+        <div className="gap-5 grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 2xl:grid-cols-4  py-5 ">
+          <div className="">
+            <h1 className="flex items-center gap-1 font-semibold text-base mb-2 text-black">
+              <MdBloodtype className="text-secondary text-lg" /> Blood Group
+            </h1>
+            <div>
+              {" "}
+              <CustomSearchOption
+                item={bloodGroups}
+                option={setBloodType}
+              ></CustomSearchOption>
+            </div>
+          </div>
+          <div className="">
+            <h1 className="flex items-center gap-1 font-semibold text-base mb-2 text-black">
+              <LuMapPinned className="text-secondary text-lg" /> Upazila
+            </h1>
+            <div>
+              {" "}
+              <CustomSearchOption
+                item={upazilasOfNilphamari}
+                option={setUpazila}
+              ></CustomSearchOption>
+            </div>
+          </div>
+          <div className="">
+            <h1 className="flex items-center gap-1 font-semibold text-base mb-2 text-black">
+              <TiPin className="text-secondary text-lg" /> Union
+            </h1>
+            <div>
+              {" "}
+              <CustomSearchOption
+                item={unionsOfNilphamari}
+                option={setUnion}
+              ></CustomSearchOption>
+            </div>
+          </div>
+          <div className="">
+            <h1 className="flex items-center gap-1 font-semibold text-base mb-2 text-black">
+              <FaPeopleArrows className="text-secondary text-lg" /> Age
+            </h1>
+            <div>
+              {" "}
+              <CustomSearchOption
+                item={ageRange}
+                option={setBloodType}
+              ></CustomSearchOption>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default FilteredUserData;

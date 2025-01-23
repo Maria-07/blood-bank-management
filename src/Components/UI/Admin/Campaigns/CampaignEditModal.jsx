@@ -40,7 +40,7 @@ const CampaignEditModal = ({ handleClose, clicked, record, refetch }) => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-
+  // debugger;
   const {
     data: volunteers,
     isLoading,
@@ -48,6 +48,8 @@ const CampaignEditModal = ({ handleClose, clicked, record, refetch }) => {
   } = useGetAllVolunteersQuery(undefined, {
     refetchOnMountOrArgChange: true,
   });
+
+  console.log(volunteers?.data);
 
   useEffect(() => {
     if (!isLoading && !isError) {

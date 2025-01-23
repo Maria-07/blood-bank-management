@@ -1,26 +1,33 @@
 "use client";
-
-import { Campaigns } from "@/src/Components/Data/Data";
 import Loader from "@/src/Components/Layouts/Loader";
-// import { Campaigns } from "@/src/Components/Data/Data";
-import ActionModal from "@/src/Components/UI/Admin/Campaigns/ActionModal";
-import CreateCampaignModal from "@/src/Components/UI/Admin/Campaigns/CreateCampaignModal";
-import VolunteerListAction from "@/src/Components/UI/Admin/Campaigns/VolunteerListAction";
-import { useGetAllCampaignsQuery } from "@/src/redux/features/campaign/campaignApi";
-import { Switch, Table } from "antd";
+import { useGetAllContactsQuery } from "@/src/redux/features/contacts/contact";
+import { Pagination, Table } from "antd";
 import React, { useEffect, useState } from "react";
-import { FaPeopleCarryBox, FaPlus } from "react-icons/fa6";
 
-const CampaignList = () => {
+const Contact = () => {
+  const [page, setPage] = useState(1);
+  const [size, setSize] = useState(10);
+
+  //! table data
   const [tableData, setTableData] = useState([]);
-  const [allVolunteers, setAllVolunteers] = useState(false);
-  const [createCampaign, setCreateCampaign] = useState(false);
   const [filteredInfo, setFilteredInfo] = useState({});
   const [sortedInfo, setSortedInfo] = useState({});
 
-  //! Get all Campaigns Data
-  const { data, isLoading, isError, refetch } =
-    useGetAllCampaignsQuery(undefined);
+  //! get all Contacts Data
+  const { data, isLoading, isError, refetch } = useGetAllContactsQuery({
+    pageNo: page,
+    pageSize: size,
+    contactType: "Complain",
+  });
+  console.log(data);
+
+  useEffect(() => {
+    if (!isLoading && !isError) {
+      console.log("All Data", data);
+    } else {
+      console.log(data);
+    }
+  }, [data, isLoading, isError]);
 
   //! Update table data when data is fetched
   useEffect(() => {
@@ -28,6 +35,14 @@ const CampaignList = () => {
       setTableData(data?.data);
     }
   }, [data, isLoading, isError]);
+
+  //! Table Pagination change
+  const onShowSizeChange = (page, pageSize) => {
+    console.log(page, pageSize);
+    setPage(page);
+    setSize(pageSize);
+    refetch();
+  };
 
   //! Dynamic filter generation
   const generateFilterValues = (data, columnKey) => {
@@ -44,25 +59,16 @@ const CampaignList = () => {
   //! Clear filters
   const clearFilters = () => setFilteredInfo({});
 
-  //! Handle modals
-  const handleAllVolunteers = () => setAllVolunteers(!allVolunteers);
-  const handleCreateCampaign = () => setCreateCampaign(!createCampaign);
-
   //! Construct columns only when tableData is available
   const columns = tableData.length
     ? Object.keys(tableData[0])
         .filter(
           (key) =>
             key !== "id" &&
-            key !== "bannerUrl" &&
-            key !== "Banner" &&
             key !== "createTime" &&
             key !== "lastModifiedTime" &&
             key !== "lastModifiedBy" &&
-            key !== "createdBy" &&
-            key !== "volunteerList" &&
-            key !== "banner" &&
-            key !== "isDeleted"
+            key !== "userData"
         )
         .map((key, index) => ({
           title: key
@@ -86,12 +92,12 @@ const CampaignList = () => {
               : aValue - bValue;
           },
           sortOrder: sortedInfo.columnKey === key ? sortedInfo.order : null,
-          render: (text, record) =>
-            key === "startDate" || key === "endDate" ? (
-              <div>{new Date(text).toLocaleDateString()}</div>
-            ) : (
-              <div key={index}>{text || "N/A"}</div>
-            ),
+          render: (text, record) => (
+            // key === "startDate" || key === "endDate" ? (
+            //   <div>{new Date(text).toLocaleDateString()}</div>
+            // ) :
+            <div key={index}>{text || "N/A"}</div>
+          ),
           ellipsis: true,
         }))
     : [];
@@ -103,7 +109,8 @@ const CampaignList = () => {
       key: "action",
       width: 50,
       render: (text, record) => (
-        <ActionModal refetch={refetch} record={record}></ActionModal>
+        // <ActionModal refetch={refetch} record={record}></ActionModal>
+        <></>
       ),
     });
   }
@@ -111,15 +118,7 @@ const CampaignList = () => {
   return (
     <div>
       <div className="flex items-center justify-between gap-2 flex-wrap mb-4">
-        <h1 className="text-orange-500 text-base">Campaigns</h1>
-        <div className="flex items-center gap-2">
-          <button
-            onClick={handleCreateCampaign}
-            className="bbm-button flex items-center gap-2"
-          >
-            <FaPlus /> Create Campaign
-          </button>
-        </div>
+        <h1 className="text-orange-500 text-base">Contacts</h1>
       </div>
       <div className="overflow-scroll pb-4">
         {isLoading ? (
@@ -129,32 +128,27 @@ const CampaignList = () => {
         ) : isError ? (
           <div>Somthing went wrong </div>
         ) : (
-          <Table
-            pagination={false}
-            size="small"
-            className="text-xs font-normal"
-            columns={columns}
-            bordered
-            dataSource={tableData}
-            onChange={handleChange}
-          />
+          <>
+            <Table
+              pagination={false}
+              size="small"
+              className="text-xs font-normal"
+              columns={columns}
+              bordered
+              dataSource={tableData}
+              onChange={handleChange}
+            />
+            <Pagination
+              showSizeChanger
+              onChange={onShowSizeChange}
+              defaultCurrent={1}
+              total={500}
+            />
+          </>
         )}
       </div>
-      {allVolunteers && (
-        <VolunteerListAction
-          handleClose={handleAllVolunteers}
-          clicked={allVolunteers}
-        />
-      )}
-      {createCampaign && (
-        <CreateCampaignModal
-          refetch={refetch}
-          handleClose={handleCreateCampaign}
-          clicked={createCampaign}
-        />
-      )}
     </div>
   );
 };
 
-export default CampaignList;
+export default Contact;

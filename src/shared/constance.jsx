@@ -1,4 +1,15 @@
 export const bloodGroups = ["A+", "A-", "B+", "B-", "O+", "O-", "AB+", "AB-"];
+export const ageRange = [
+  "18-22",
+  "23-27",
+  "28-32",
+  "33-37",
+  "38-42",
+  "43-47",
+  "48-52",
+  "53-57",
+  "58-62",
+];
 
 export const upazilasOfNilphamari = [
   "Nilphamari Sadar",

@@ -67,10 +67,10 @@ const Login = () => {
       const url = `${process.env.NEXT_PUBLIC_BASE_URL}/Auth/token`;
       const responseLoginData = await fetchData(url, payload);
 
-      if (responseLoginData?.isSuccess) {
+      if (responseLoginData?.data?.isSuccess) {
         toast.success(responseLoginData?.data?.message || "Login successful!");
 
-        const accessToken = responseLoginData?.content?.token;
+        const accessToken = responseLoginData?.data?.content?.token;
         if (accessToken) {
           login(accessToken); // Update AuthContext with the token
           router.push("/"); // Redirect to the homepage
@@ -92,7 +92,7 @@ const Login = () => {
           `${process.env.NEXT_PUBLIC_BASE_URL}/Auth/usertype`,
           { MobileNumber: data.MobileNumber, DateOfBirth: dob }
         );
-        const detectedUserType = userTypeResponse?.userType || "User";
+        const detectedUserType = userTypeResponse?.data?.userType || "User";
         setUserType(detectedUserType);
 
         if (detectedUserType === "Admin") {
