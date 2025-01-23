@@ -1,14 +1,17 @@
+"use client";
+
 import React from "react";
 // import { motion } from "motion/react";
 import Image from "next/image";
 import banner from "@/src/assets/Image/banner.png";
 import Count from "./Count";
-import Filters from "./Home/Filter/Filters";
+import { useAuth } from "@/src/Hook/AuthContext";
 
 const HeroBanner = () => {
+  const { token } = useAuth();
   return (
     <div className="hero-bg">
-      <div className="pt-8 px-3">
+      <div className="pt-8">
         <div className="md:w-[100%] sm:mx-auto flex sm:flex-nowrap flex-wrap gap-3 items-center justify-between">
           <div
             initial={{ opacity: 0, x: -30 }}
@@ -25,11 +28,13 @@ const HeroBanner = () => {
               Register now to access donor contact information and help save
               lives today.
             </p>
-            <div className="my-3">
-              <button className="bb-input-button">
-                Register to Save Lives
-              </button>
-            </div>
+            {!token && (
+              <div className="my-3">
+                <button className="bb-input-button">
+                  Register to Save Lives
+                </button>
+              </div>
+            )}
             <div className="my-7">
               <Count></Count>
             </div>

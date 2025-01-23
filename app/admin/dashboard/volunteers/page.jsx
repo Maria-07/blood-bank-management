@@ -1,5 +1,6 @@
 "use client";
 
+import Loader from "@/src/Components/Layouts/Loader";
 import CreateCampaignModal from "@/src/Components/UI/Admin/Campaigns/CreateCampaignModal";
 import VolunteerListAction from "@/src/Components/UI/Admin/Campaigns/VolunteerListAction";
 import ActionModal from "@/src/Components/UI/Admin/Volunteers/ActionModal";
@@ -158,10 +159,12 @@ const VolunteerList = () => {
       {/* Table Section */}
       <div className="overflow-scroll pb-4">
         {isLoading ? (
-          <div>Loading...</div>
+          <div>
+            <Loader></Loader>
+          </div>
         ) : isError ? (
           <div>
-            Error loading volunteers
+            Somthing went wrong
             {
               (toast.error("Session expired"),
               // Cookies.remove("accessToken"),

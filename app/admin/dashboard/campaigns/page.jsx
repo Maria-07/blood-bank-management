@@ -1,6 +1,7 @@
 "use client";
 
 import { Campaigns } from "@/src/Components/Data/Data";
+import Loader from "@/src/Components/Layouts/Loader";
 // import { Campaigns } from "@/src/Components/Data/Data";
 import ActionModal from "@/src/Components/UI/Admin/Campaigns/ActionModal";
 import CreateCampaignModal from "@/src/Components/UI/Admin/Campaigns/CreateCampaignModal";
@@ -122,9 +123,11 @@ const CampaignList = () => {
       </div>
       <div className="overflow-scroll pb-4">
         {isLoading ? (
-          <div>Loading...</div>
+          <div>
+            <Loader></Loader>
+          </div>
         ) : isError ? (
-          <div>Error loading campaigns</div>
+          <div>Somthing went wrong </div>
         ) : (
           <Table
             pagination={false}

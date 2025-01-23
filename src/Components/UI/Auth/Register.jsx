@@ -316,7 +316,7 @@ const Register = () => {
               >
                 <option value="">Select Union</option>
                 {unions.map((union) => (
-                  <option key={union.id} value={union.name}>
+                  <option key={union.id} value={union.id}>
                     {union.name}
                   </option>
                 ))}

@@ -160,7 +160,7 @@ const ApproveVolunteerTable = () => {
         {isLoading ? (
           <div>Loading...</div>
         ) : isError ? (
-          <div>Error loading volunteers</div>
+          <div>Somthing went wrong </div>
         ) : (
           <Table
             pagination={false}

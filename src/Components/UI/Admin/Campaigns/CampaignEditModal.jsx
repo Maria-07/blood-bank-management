@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { IoMdCloseCircleOutline } from "react-icons/io";
-import { MdDeleteOutline, MdDone } from "react-icons/md";
+import { MdCancel, MdDeleteOutline, MdDone } from "react-icons/md";
 import { toast } from "react-toastify";
 import { FiEdit } from "react-icons/fi";
 
@@ -204,16 +204,25 @@ const CampaignEditModal = ({ handleClose, clicked, record, refetch }) => {
               )}
             </div>
             <div className=" sm:col-span-2">
-              <button
-                type="button"
-                onClick={() => setBannerEdit(!bannerEdit)}
-                className="flex items-center gap-2"
-              >
-                {" "}
-                <FiEdit className="" /> Edit Banner
-              </button>
+              {!bannerEdit ? (
+                <button
+                  type="button"
+                  onClick={() => setBannerEdit(!bannerEdit)}
+                  className="flex items-center gap-2"
+                >
+                  <FiEdit className="" /> Edit Banner
+                </button>
+              ) : (
+                <button
+                  onClick={() => setBannerEdit(!bannerEdit)}
+                  type="button"
+                  className="flex items-center gap-2 text-secondary"
+                >
+                  <MdCancel className="" />
+                  Cancel Banner Upload
+                </button>
+              )}
               <div className="overflow-hidden h-[200px] w-[500px]">
-                {" "}
                 {!bannerEdit && (
                   <Image
                     className="border "

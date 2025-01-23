@@ -1,32 +1,20 @@
 import Image from "next/image";
 import logo from "@/src/assets/Image/logo/darkLogo.png";
+import mlogo from "@/src/assets/Image/logo/mbLogo.png";
+import bluLogo from "@/src/assets/Image/logo/bluLogo.png";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { Dropdown } from "antd";
-import { AiOutlineMenu } from "react-icons/ai";
 import { GiHamburgerMenu } from "react-icons/gi";
-import Cookies from "js-cookie";
-import { getUserType } from "@/src/Hook/authUtils";
-import { useEffect, useState } from "react";
+import { useAuth } from "@/src/Hook/AuthContext";
 
 const Navbar = () => {
+  const { token, userType, logout } = useAuth();
+
   const currentRoute = usePathname();
   const router = useRouter();
 
-  const [token, setToken] = useState(null);
-  const [userType, setUserType] = useState(null);
-
-  useEffect(() => {
-    // Ensure this logic runs on the client
-    const accessToken = Cookies.get("accessToken");
-    setToken(accessToken);
-
-    const type = getUserType();
-    setUserType(type);
-  }, []);
-
   const handleLogout = () => {
-    Cookies.remove("accessToken");
+    logout(); // Update context
     router.push("/login");
   };
 
@@ -35,25 +23,55 @@ const Navbar = () => {
       {" "}
       <div className="hidden lg:block sticky top-0 ">
         {/* <div className="sm:w-[90%]  sm:mx-auto py-5 flex justify-between border-[1px] shadow-md px-2 rounded-xl"> */}
+
         <div className="bg-primary py-3">
           {" "}
-          {!token && (
-            <Link href={"/register/"}>
-              <button className="bb-input-button">Register</button>
-            </Link>
-          )}
-          {!token && (
-            <Link href={"/login/"}>
-              <button className="bb-input-button">Login</button>
-            </Link>
-          )}
-          {token && (
+          <div className="md:w-[90%] sm:mx-auto flex items-center justify-between">
             <div>
-              <button onClick={handleLogout} className="bb-input-button">
-                Logout
-              </button>
+              <Link href={"/"}>
+                <Image
+                  src={bluLogo}
+                  width={130}
+                  height={100}
+                  alt="Picture of the author"
+                />
+              </Link>
             </div>
-          )}
+            <div className="flex items-center gap-2">
+              <Link
+                className="text-white font-semibold hover:text-primary2 transition-all mr-3 border-r-[2px] px-3"
+                href={"/contact/"}
+              >
+                Contact Us
+              </Link>{" "}
+              {token && userType === "Admin" && (
+                <Link
+                  className="bg-primary2 text-white text-[0.9rem] px-4 py-[3px] rounded-md shadow-lg "
+                  href={"/admin/dashboard/campaigns/"}
+                >
+                  Dashboard
+                </Link>
+              )}
+              {!token && (
+                <>
+                  <Link href={"/register/"}>
+                    <button className="head-input-button mr-3">Register</button>
+                  </Link>
+
+                  <Link href={"/login/"}>
+                    <button className="head-input-button">Login</button>
+                  </Link>
+                </>
+              )}
+              {token && (
+                <div>
+                  <button onClick={handleLogout} className="head-input-button">
+                    Logout
+                  </button>
+                </div>
+              )}
+            </div>
+          </div>
         </div>
         <div className="sm:w-[90%]  sm:mx-auto flex items-center justify-center">
           <div className="flex items-center gap-5">
@@ -85,16 +103,6 @@ const Navbar = () => {
             >
               Blood Bank
             </Link>
-            <Link
-              className={
-                currentRoute === "/campaigns"
-                  ? "active custom_link"
-                  : "custom_link"
-              }
-              href={"/campaigns/"}
-            >
-              Campaigns
-            </Link>
             <div className="mt-[-44px]">
               <Link href={"/"}>
                 <Image
@@ -105,6 +113,17 @@ const Navbar = () => {
                 />
               </Link>
             </div>
+            <Link
+              className={
+                currentRoute === "/campaigns"
+                  ? "active custom_link"
+                  : "custom_link"
+              }
+              href={"/campaigns/"}
+            >
+              Campaigns
+            </Link>
+
             <Link
               className={
                 currentRoute === "/media" ? "active custom_link" : "custom_link"
@@ -122,112 +141,6 @@ const Navbar = () => {
             >
               About
             </Link>
-            <Link
-              className={
-                currentRoute === "/contact"
-                  ? "active custom_link"
-                  : "custom_link"
-              }
-              href={"/contact/"}
-            >
-              Contact
-            </Link>
-            {token && userType === "Admin" && (
-              <Link
-                className={
-                  currentRoute === "/admin/dashboard/campaigns"
-                    ? "active custom_link"
-                    : "custom_link"
-                }
-                href={"/admin/dashboard/campaigns/"}
-              >
-                Dashboard
-              </Link>
-            )}
-
-            {/* <Link
-              className={
-                currentRoute === "/books"
-                  ? "active custom_link font-medium"
-                  : "custom_link font-medium"
-              }
-              href={"/books"}
-            >
-              <Dropdown
-                overlay={
-                  <div className="bg-white p-2 w-[180px] border shadow-md rounded-sm">
-                    <div>
-                      <div className="mx-5">
-                        <>
-                          <Link href={"/books"}>
-                            <button className="hover:text-primary my-2">
-                              Regular Books
-                            </button>
-                          </Link>
-                          <br />
-                          <Link href={"/oldBooks"}>
-                            <button className="hover:text-primary my-2">
-                              Old Books
-                            </button>
-                          </Link>
-                        </>
-                      </div>
-                    </div>
-                  </div>
-                }
-                placement="bottomRight"
-                arrow
-              >
-                <button>Books</button>
-              </Dropdown>
-            </Link> */}
-            {/* <Link
-              className={
-                currentRoute === "/blogs"
-                  ? "active custom_link font-medium"
-                  : "custom_link font-medium"
-              }
-              href={"/blogs"}
-            >
-              Blogs
-            </Link> */}
-            {/* {userInfo?.role === "admin" && (
-              <Link
-                className={
-                  currentRoute === "/admin"
-                    ? "active custom_link font-medium"
-                    : "custom_link font-medium"
-                }
-                href={"/admin"}
-              >
-                Dashboard
-              </Link>
-            )} */}
-            {/* <button onClick={() => setSearch(!search)} className="">
-              <BiSearchAlt2 className="text-2xl hover:text-primary" />
-            </button> */}
-            {/* <Dropdown
-              overlay={
-                <div className="bg-white p-8 w-[280px] border shadow-md rounded-sm">
-                  <div>
-                    <h1 className="text-[15px] font-semibold text-dark mb-2">
-                      My Account
-                    </h1>
-                    <hr></hr>
-                  </div>
-                  <Link href={"/my-profile"}>
-                    <h1 className="hover:text-primary my-2">My Profile</h1>
-                  </Link>
-                </div>
-              }
-              placement="bottomRight"
-              arrow
-              st
-            >
-              <button className="border p-1">
-                <AiOutlineMenu className="text-xl hover:text-primary" />
-              </button>
-            </Dropdown> */}
           </div>
         </div>
       </div>
@@ -245,23 +158,17 @@ const Navbar = () => {
             <Link href={"/"}>
               {" "}
               <Image
-                src={logo}
+                src={mlogo}
                 width={100}
                 height={100}
                 alt="Picture of the author"
               />
             </Link>
           </div>
-          <button
-            onClick={() => setSearch(!search)}
-            className="bb-input-button "
-          >
-            Search
-          </button>
+          <button className="">User</button>
         </div>
         {/* <NavbarSmallDevice isOpen={open} setOpen={setOpen}></NavbarSmallDevice> */}
       </div>
-      {/* {search && <SearchBox isOpen={search} setOpen={setSearch}></SearchBox>} */}
     </div>
   );
 };

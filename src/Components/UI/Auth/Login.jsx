@@ -1,7 +1,7 @@
 "use client";
 
+import { useAuth } from "@/src/Hook/AuthContext";
 import { DatePicker } from "antd";
-import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -12,13 +12,13 @@ import { RiLockPasswordLine } from "react-icons/ri";
 import { toast } from "react-toastify";
 
 const Login = () => {
+  const { login } = useAuth(); // Use login from AuthContext
   const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
   const [userType, setUserType] = useState("User");
   const [dob, setDob] = useState("");
 
   const handleDob = (date, dateString) => {
-    console.log(dateString);
     setDob(dateString);
   };
 
@@ -27,7 +27,6 @@ const Login = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-
   /**
    * Utility function to handle API requests with error handling.
    */
@@ -54,7 +53,6 @@ const Login = () => {
       throw error;
     }
   };
-
   /**
    * Handles the login process for both Admin and regular users.
    */
@@ -74,7 +72,7 @@ const Login = () => {
 
         const accessToken = responseLoginData?.content?.token;
         if (accessToken) {
-          Cookies.set("accessToken", accessToken);
+          login(accessToken); // Update AuthContext with the token
           router.push("/"); // Redirect to the homepage
         }
       } else {
@@ -84,7 +82,6 @@ const Login = () => {
       console.error("Login Error:", error.message);
     }
   };
-
   /**
    * Handles form submission and determines user type before proceeding to login.
    */
@@ -102,7 +99,7 @@ const Login = () => {
           // Wait for admin login on button click
           toast.info("Admin detected, please enter your password.");
         } else {
-          await handleLogin(data); // Non-admin login
+          await handleLogin(data);
         }
       }
     } catch (error) {
@@ -113,7 +110,6 @@ const Login = () => {
   return (
     <div className="mt-5">
       <form onSubmit={handleSubmit(onSubmit)}>
-        {/* Mobile Number Input */}
         <div>
           <h1 className="input-title flex items-center gap-1">
             <FaMobileScreen className="text-primary" /> Contact{" "}
@@ -134,8 +130,6 @@ const Login = () => {
             <p className="text-red-500">{errors.MobileNumber.message}</p>
           )}
         </div>
-
-        {/* Date of Birth Input */}
         <div>
           <h1 className="input-title flex items-center gap-1">
             <MdOutlineDateRange className="text-primary" /> Date of Birth{" "}
@@ -150,8 +144,6 @@ const Login = () => {
             onChange={handleDob}
           />
         </div>
-
-        {/* Password Input for Admin */}
         {userType === "Admin" && (
           <div>
             <h1 className="input-title flex items-center gap-1">
@@ -187,8 +179,6 @@ const Login = () => {
             )}
           </div>
         )}
-
-        {/* Submit Button */}
         {userType !== "Admin" ? (
           <button
             type="submit"

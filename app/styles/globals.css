@@ -8,7 +8,7 @@
 
 :root {
   --primary-font: 14px;
-  /* --primary-color: #30A7DF; */
+  --primary-color2: #30A7DF;
   --primary-color: #a40000;
   /* --secondary-shade: #ED1C24; */
   --secondary-shade: #dc0000;
@@ -172,6 +172,24 @@ body {
   transition: ease-in-out 0.3s;
 }
 
+.head-input-button {
+  background-color: #fff;
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  font-size: 0.8rem;
+  line-height: 2em;
+  letter-spacing: 0.3px;
+  color: var(--primary-color);
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 2px;
+  padding-bottom: 1px;
+  border-width: 0px;
+  border-radius: 4px;
+  box-shadow: 1px 1px 4px 0px #000000;
+  transition: ease-in-out 0.3s;
+}
+
 .bb-modal-red-button {
   font-family: "Poppins", sans-serif;
   font-weight: 500;
@@ -215,6 +233,12 @@ body {
 .bb-input-button:hover {
   color: #fff;
   background-color: #dc0000;
+  box-shadow: 1px 1px 4px 0px #000000;
+}
+
+.head-input-button:hover {
+  color: #fff;
+  background-color: var(--primary-color2);
   box-shadow: 1px 1px 4px 0px #000000;
 }
 

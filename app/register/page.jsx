@@ -1,6 +1,5 @@
 import Image from "next/image";
 import React from "react";
-import register from "@/src/assets/video/register.gif";
 import blood from "@/src/assets/Image/logo/darkLogo.png";
 import Link from "next/link";
 import Register from "../../src/Components/UI/Auth/Register";
@@ -31,16 +30,6 @@ const RegistrationPage = () => {
             </div>
           </div>
           <div className="lg:mx-auto sm:col-span-2">
-            {/* <div className="mb-3">
-              {" "}
-              <Image
-                src={blood}
-                width={50}
-                height={50}
-                alt="Picture of the author"
-              />
-            </div> */}
-
             <div>
               {" "}
               <Register></Register>{" "}
