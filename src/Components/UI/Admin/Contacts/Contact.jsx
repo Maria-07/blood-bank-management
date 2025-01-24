@@ -3,10 +3,22 @@ import Loader from "@/src/Components/Layouts/Loader";
 import { useGetAllContactsQuery } from "@/src/redux/features/contacts/contact";
 import { Pagination, Table } from "antd";
 import React, { useEffect, useState } from "react";
+import ActionModal from "../Volunteers/ActionModal";
+import {
+  MdOutlineMarkEmailRead,
+  MdOutlineMarkEmailUnread,
+} from "react-icons/md";
+import MessageModal from "./MessageModal";
+import { CiRead, CiUnread } from "react-icons/ci";
 
 const Contact = () => {
+  const [userData, setUserData] = useState();
+  const [message, setMessage] = useState(false);
   const [page, setPage] = useState(1);
   const [size, setSize] = useState(10);
+
+  //! Toggle modals
+  const handleMessageModal = () => setMessage(!message);
 
   //! table data
   const [tableData, setTableData] = useState([]);
@@ -44,10 +56,15 @@ const Contact = () => {
     refetch();
   };
 
-  //! Dynamic filter generation
+  //! Generate filter values (handles booleans, strings, and other types)
   const generateFilterValues = (data, columnKey) => {
-    const uniqueValues = [...new Set(data?.map((d) => d[columnKey]))];
-    return uniqueValues.map((value) => ({ text: value, value }));
+    const uniqueValues = [...new Set(data.map((d) => d[columnKey]))];
+    return uniqueValues.map((value) => {
+      if (typeof value === "boolean") {
+        return { text: value ? "True" : "False", value: value.toString() };
+      }
+      return { text: value || "N/A", value: value?.toString() || "N/A" };
+    });
   };
 
   //! Handle table state changes
@@ -92,12 +109,40 @@ const Contact = () => {
               : aValue - bValue;
           },
           sortOrder: sortedInfo.columnKey === key ? sortedInfo.order : null,
-          render: (text, record) => (
-            // key === "startDate" || key === "endDate" ? (
-            //   <div>{new Date(text).toLocaleDateString()}</div>
-            // ) :
-            <div key={index}>{text || "N/A"}</div>
-          ),
+          render: (text, record) =>
+            key === "isRead" ? (
+              <div className="flex items-center justify-center">
+                {record?.isRead ? (
+                  <>
+                    <CiRead className="text-green-600" />
+                  </>
+                ) : (
+                  <>
+                    <CiUnread className="text-rose-600" />
+                  </>
+                )}
+              </div>
+            ) : key === "message" ? (
+              <div className="flex items-center justify-center">
+                {record?.isRead ? (
+                  <>
+                    <MdOutlineMarkEmailRead />
+                  </>
+                ) : (
+                  <>
+                    <MdOutlineMarkEmailUnread
+                      onClick={() => {
+                        setUserData(record);
+                        handleMessageModal();
+                      }}
+                      className="text-primary"
+                    />
+                  </>
+                )}
+              </div>
+            ) : (
+              <div key={index}>{text || "N/A"}</div>
+            ),
           ellipsis: true,
         }))
     : [];
@@ -109,8 +154,7 @@ const Contact = () => {
       key: "action",
       width: 50,
       render: (text, record) => (
-        // <ActionModal refetch={refetch} record={record}></ActionModal>
-        <></>
+        <ActionModal record={record?.userData}></ActionModal>
       ),
     });
   }
@@ -142,11 +186,19 @@ const Contact = () => {
               showSizeChanger
               onChange={onShowSizeChange}
               defaultCurrent={1}
-              total={500}
+              total={data?.rowCount}
             />
           </>
         )}
       </div>
+      {/* Modals */}
+      {message && (
+        <MessageModal
+          record={userData}
+          handleClose={handleMessageModal}
+          clicked={message}
+        />
+      )}
     </div>
   );
 };

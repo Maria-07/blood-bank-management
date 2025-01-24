@@ -31,6 +31,14 @@ export const ageRange = [
   { label: "53-57", value: "53-57", startAge: 53, endAge: 57 },
   { label: "58-62", value: "58-62", startAge: 58, endAge: 62 },
 ];
+export const userTypes = [
+  { label: "Volunteer", value: "Volunteer" },
+  { label: "Donor", value: "Donor" },
+];
+export const DonationStatus = [
+  { label: "Interested", value: "Interested" },
+  { label: "NotInterested", value: "NotInterested" },
+];
 
 export const upazilasOfNilphamari = [
   "Nilphamari Sadar",

@@ -25,6 +25,7 @@ const CustomSearchOption = ({ item, option }) => {
         style={{ width: "100%" }}
         onChange={onChange}
         onSearch={onSearch}
+        allowClear
         options={items.map((item) => ({
           label: item.label,
           value: item.label,

@@ -2,23 +2,25 @@ import React, { useEffect, useState } from "react";
 import { MdBloodtype } from "react-icons/md";
 import { LuMapPinned } from "react-icons/lu";
 import { TiPin } from "react-icons/ti";
-import { FaPeopleArrows } from "react-icons/fa6";
+import { FaPeopleArrows, FaRegUser } from "react-icons/fa6";
 import CustomSearchOption from "@/src/shared/CustomSearchOption";
-import { ageRange, bloodGroups } from "@/src/shared/constance";
+import {
+  ageRange,
+  bloodGroups,
+  DonationStatus,
+  userTypes,
+} from "@/src/shared/constance";
+import { BiSolidDonateHeart } from "react-icons/bi";
 
-const FilteredUserData = ({ setFilteredData, handleFilteredData }) => {
-  const [bloodType, setBloodType] = useState("");
+const FilteredUserData = ({ handleFilteredData }) => {
+  // const [userType, setUserType] = useState("");
+  // const [bloodType, setBloodType] = useState("");
   const [upazilaId, setUpazilaId] = useState();
-  const [unionId, setUnionId] = useState(null);
-  const [age, setAge] = useState({ startAge: null, endAge: null });
+  // const [unionId, setUnionId] = useState(null);
+  // const [age, setAge] = useState({ startAge: null, endAge: null });
 
   const [upazilas, setUpazilas] = useState([]);
   const [unions, setUnions] = useState([]);
-
-  console.log("Selected Blood Type:", bloodType.label);
-  console.log("Selected Age Range:", age?.startAge, age?.endAge);
-  console.log("Selected Upazila ID:", upazilaId?.key);
-  console.log("Selected Union ID:", unionId?.key);
 
   //! Fetch Upazila and Union data
   const fetchData = async (id = 1, type = "upazila") => {
@@ -39,6 +41,17 @@ const FilteredUserData = ({ setFilteredData, handleFilteredData }) => {
     }
   };
 
+  //! Handle Filter Updates
+  const updateFilters = (key, value) => {
+    console.log(key, value);
+
+    handleFilteredData(key, value); // Call the parent handler
+
+    if (key === "upazila") {
+      setUpazilaId(value);
+    }
+  };
+
   //! Fetch Upazilas on component mount
   useEffect(() => {
     fetchData(1, "upazila");
@@ -46,24 +59,21 @@ const FilteredUserData = ({ setFilteredData, handleFilteredData }) => {
 
   //! Fetch Unions when an Upazila is selected
   useEffect(() => {
-    if (upazilaId?.key) {
-      fetchData(upazilaId?.key, "union");
+    if (upazilaId) {
+      fetchData(upazilaId, "union");
     }
   }, [upazilaId]);
 
   //! Handle Age Selection
   const handleAgeSelection = (selectedAgeRange) => {
-    setAge({
-      startAge: selectedAgeRange.startAge,
-      endAge: selectedAgeRange.endAge,
-    });
+    setAge(selectedAgeRange);
+    updateFilters("startAge", selectedAgeRange?.startAge);
+    updateFilters("endAge", selectedAgeRange?.endAge);
   };
 
-  // handleFilteredData();
-
   return (
-    <div className="my-10">
-      <div className="gap-5 grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 2xl:grid-cols-4 py-5">
+    <div className="">
+      <div className="gap-5 grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 2xl:grid-cols-5 ">
         {/* Blood Group Filter */}
         <div>
           <h1 className="flex items-center gap-1 font-semibold text-base mb-2 text-black">
@@ -71,7 +81,37 @@ const FilteredUserData = ({ setFilteredData, handleFilteredData }) => {
           </h1>
           <CustomSearchOption
             item={bloodGroups}
-            option={(selectedBloodType) => setBloodType(selectedBloodType)}
+            option={(selectedBloodType) => {
+              // setBloodType(selectedBloodType);
+              updateFilters("bloodGroup", selectedBloodType?.label);
+            }}
+          />
+        </div>
+        {/* User Type Filter */}
+        <div>
+          <h1 className="flex items-center gap-1 font-semibold text-base mb-2 text-black">
+            <FaRegUser className="text-secondary text-lg" /> User Type
+          </h1>
+          <CustomSearchOption
+            item={userTypes}
+            option={(selectedUserType) => {
+              // setBloodType(selectedUserType);
+              updateFilters("userType", selectedUserType?.label);
+            }}
+          />
+        </div>
+        {/* User Type Filter */}
+        <div>
+          <h1 className="flex items-center gap-1 font-semibold text-base mb-2 text-black">
+            <BiSolidDonateHeart className="text-secondary text-lg" /> Blood
+            Donation Status
+          </h1>
+          <CustomSearchOption
+            item={DonationStatus}
+            option={(selectedbdStatus) => {
+              // setBloodType(selectedbdStatus);
+              updateFilters("bloodDonationStatus", selectedbdStatus?.label);
+            }}
           />
         </div>
 
@@ -82,7 +122,10 @@ const FilteredUserData = ({ setFilteredData, handleFilteredData }) => {
           </h1>
           <CustomSearchOption
             item={upazilas.map((u) => ({ label: u.name, value: u.id }))}
-            option={setUpazilaId}
+            option={(selectedUpazila) => {
+              // setUpazilaId(selectedUpazila);
+              updateFilters("upazila", selectedUpazila?.key);
+            }}
           />
         </div>
 
@@ -93,7 +136,10 @@ const FilteredUserData = ({ setFilteredData, handleFilteredData }) => {
           </h1>
           <CustomSearchOption
             item={unions.map((u) => ({ label: u.name, value: u.id }))}
-            option={setUnionId}
+            option={(selectedUnion) => {
+              // setUnionId(selectedUnion);
+              updateFilters("union", selectedUnion?.key);
+            }}
           />
         </div>
 
@@ -105,20 +151,6 @@ const FilteredUserData = ({ setFilteredData, handleFilteredData }) => {
           <CustomSearchOption item={ageRange} option={handleAgeSelection} />
         </div>
       </div>
-      <button
-        onClick={() => {
-          setFilteredData({
-            bloodGroup: bloodType.label,
-            upazila: upazilaId?.key,
-            union: unionId?.key,
-            // bloodDonationStatus: "string",
-            startAge: age?.startAge,
-            endAge: age?.endAge,
-          });
-        }}
-      >
-        Filter
-      </button>
     </div>
   );
 };

@@ -40,12 +40,6 @@ const VolunteerList = () => {
 
   console.log("data", data);
 
-  // //! Generate filters dynamically for table
-  // const generateFilterValues = (data, columnKey) => {
-  //   const uniqueValues = [...new Set(data.map((d) => d[columnKey] || "N/A"))];
-  //   return uniqueValues.map((value) => ({ text: value, value }));
-  // };
-
   //! Generate filter values (handles booleans, strings, and other types)
   const generateFilterValues = (data, columnKey) => {
     const uniqueValues = [...new Set(data.map((d) => d[columnKey]))];

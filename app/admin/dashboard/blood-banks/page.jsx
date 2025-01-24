@@ -5,85 +5,67 @@ import ActionModal from "@/src/Components/UI/Admin/Volunteers/ActionModal";
 import { useGetAllUserMutation } from "@/src/redux/features/auth/userApi";
 import FilteredUserData from "@/src/shared/FilteredUserData";
 import { Pagination, Table } from "antd";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
+import { LuFilter, LuFilterX } from "react-icons/lu";
 
 const BloodBanks = () => {
+  const [filterShow, setFilterShow] = useState(false);
   const [rowCount, setRowCount] = useState(0);
-  const [page, setPage] = useState(1); // Current page number
-  const [size, setSize] = useState(10); // Number of items per page
+  const [page, setPage] = useState(1);
+  const [size, setSize] = useState(10);
 
-  //! Mutation hook for getting all users
   const [getAllUsers, { data, isLoading, isError }] = useGetAllUserMutation();
 
-  //! Table data
   const [tableData, setTableData] = useState([]);
+  const [filteredData, setFilteredData] = useState({});
   const [filteredInfo, setFilteredInfo] = useState({});
   const [sortedInfo, setSortedInfo] = useState({});
 
-  //! Fetch data when page or size changes
-  const [filteredData, setFilteredData] = useState({});
-
-  //! Update Filters Function
-  const handleFilteredData = () => {
-    // setFilteredData((prev) => ({
-    //   ...prev,
-    //   [key]: value, // Update specific filter dynamically
-    // }));
+  const handleFilteredData = (key, value) => {
+    setFilteredData((prev) => ({
+      ...prev,
+      [key]: value,
+    }));
   };
-
-  console.log(filteredData);
 
   useEffect(() => {
     const fetchUsers = async () => {
       try {
         const response = await getAllUsers({
-          ...filteredData, // Include dynamic filters
+          ...filteredData,
           pageNo: page,
           pageSize: size,
-        }).unwrap(); // Use `.unwrap()` to handle the promise properly
-        // console.log("Fetched Data:", response);
-        setRowCount(response?.rowCount);
-        setTableData(response?.data || []); // Update table data
+        }).unwrap();
+        setRowCount(response?.rowCount || 0);
+        setTableData(response?.data || []);
       } catch (error) {
         console.error("Error fetching users:", error);
       }
     };
 
     fetchUsers();
-  }, [getAllUsers, filteredData, page, size]); // Trigger only on `getAllUsers`, `page`, or `size` change
+  }, [getAllUsers, filteredData, page, size]);
 
-  // console.log(rowCount, parseInt(rowCount / size) + 1);
+  const tableDataWithKeys = useMemo(
+    () =>
+      tableData.map((item) => ({
+        ...item,
+        key: item.id || item.mobileNumber,
+      })),
+    [tableData]
+  );
 
-  //! Table Pagination change
-  const onShowSizeChange = (currentPage, pageSize) => {
-    // console.log("Page:", currentPage, "PageSize:", pageSize);
-    setPage(currentPage); // Update current page
-
-    setSize(pageSize); // Update page size
-  };
-
-  //! Dynamic filter generation
   const generateFilterValues = (data, columnKey) => {
-    const uniqueValues = [...new Set(data?.map((d) => d[columnKey]))];
+    if (!data || !data.length || !columnKey) return [];
+    const uniqueValues = [...new Set(data.map((d) => d[columnKey]))];
     return uniqueValues.map((value) => ({ text: value, value }));
   };
 
-  //! Handle table state changes
   const handleChange = (pagination, filters, sorter) => {
     setFilteredInfo(filters);
     setSortedInfo(sorter);
   };
 
-  //! Clear filters
-  const clearFilters = () => setFilteredInfo({});
-
-  //! Ensure tableData has a unique `key` for each row
-  const tableDataWithKeys = tableData.map((item) => ({
-    ...item,
-    key: item.id || item.mobileNumber,
-  }));
-
-  //! Construct columns only when tableData is available
   const columns = tableData.length
     ? Object.keys(tableData[0])
         .filter(
@@ -109,76 +91,70 @@ const BloodBanks = () => {
         ) // Exclude unnecessary keys
         .map((key, index) => ({
           title: key
-            .replace(/([a-z])([A-Z])/g, "$1 $2") // Add spaces between camelCase
-            .replace(/([A-Z])([A-Z])/, "$1 $2") // Handle uppercase sequences
-            .replace(/^./, (char) => char.toUpperCase()), // Capitalize the first letter
-
+            .replace(/([a-z])([A-Z])/g, "$1 $2")
+            .replace(/^./, (char) => char.toUpperCase()),
           dataIndex: key,
           key,
-          width: index === 3 ? 130 : 100,
           filters: generateFilterValues(tableData, key),
-          filterSearch: true,
           filteredValue: filteredInfo[key] || null,
           onFilter: (value, record) =>
             record[key]?.toString().toLowerCase().includes(value.toLowerCase()),
-          sorter: (a, b) => {
-            const aValue = a[key];
-            const bValue = b[key];
-            return typeof aValue === "string" && typeof bValue === "string"
-              ? aValue.localeCompare(bValue)
-              : aValue - bValue;
-          },
+          sorter: (a, b) => (a[key] || "").localeCompare(b[key] || ""),
           sortOrder: sortedInfo.columnKey === key ? sortedInfo.order : null,
-          render: (text, record) => <div key={index}>{text || "N/A"}</div>,
           ellipsis: true,
         }))
     : [];
 
-  //! Add action column if data exists
   if (tableData.length) {
     columns.push({
       title: "Action",
       key: "action",
-      width: 50,
-      render: (text, record) => (
-        // Add any action buttons or modals here
-        <ActionModal record={record} />
-      ),
+      render: (text, record) => <ActionModal record={record} />,
     });
   }
 
-  if (isLoading) return <Loader />;
-  if (isError) return <div>Error loading users!</div>;
-
   return (
     <div>
-      <div className="flex items-center justify-between gap-2 flex-wrap mb-4">
+      <div className="flex items-center justify-between gap-2 mb-5">
+        {" "}
         <h1 className="text-orange-500 text-base">Blood Banks</h1>
+        <button
+          className="border p-1 rounded-sm"
+          onClick={() => {
+            setFilterShow(!filterShow);
+          }}
+        >
+          {!filterShow ? <LuFilter /> : <LuFilterX />}
+        </button>
       </div>
-      <div>
-        <FilteredUserData
-          handleFilteredData={handleFilteredData}
-          setFilteredData={setFilteredData}
-        ></FilteredUserData>
-      </div>
-      <div className="overflow-scroll pb-4">
-        <Table
-          pagination={false}
-          size="small"
-          className="text-xs font-normal"
-          columns={columns}
-          bordered
-          dataSource={tableDataWithKeys}
-          onChange={handleChange}
-        />
-      </div>
-      <div className="my-3">
+
+      {filterShow && (
+        <div className=" border px-5 py-5 rounded-md shadow-md mt-5 mb-10">
+          {" "}
+          <FilteredUserData handleFilteredData={handleFilteredData} />
+        </div>
+      )}
+
+      {isLoading && <Loader />}
+      {isError && <div className="text-red-500">Error loading users!</div>}
+      <Table
+        pagination={false}
+        size="small"
+        columns={columns}
+        dataSource={tableDataWithKeys}
+        onChange={handleChange}
+      />
+      <div className="my-5">
         {" "}
         <Pagination
           showSizeChanger
-          onChange={onShowSizeChange}
+          onChange={(currentPage, pageSize) => {
+            setPage(currentPage);
+            setSize(pageSize);
+          }}
+          align="end"
           current={page}
-          total={rowCount} // Assuming total records is tableData.length * pageSize
+          total={rowCount}
           pageSize={size}
         />
       </div>
