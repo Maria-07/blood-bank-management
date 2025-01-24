@@ -3,37 +3,33 @@ import { useEffect, useState } from "react";
 
 const CustomSearchOption = ({ item, option }) => {
   const [items, setItems] = useState([]);
-  // console.log("item", item);
 
   useEffect(() => {
     const uniqueArray = [...new Set(item)];
-    if (uniqueArray) {
-      setItems(uniqueArray);
-    }
+    if (uniqueArray) setItems(uniqueArray);
   }, [item]);
 
   const onSearch = (value) => {
-    console.log("search:", value);
+    console.log("Search:", value);
   };
 
-  const onChange = (value) => {
-    console.log(`selected ${value}`);
-    option(value);
+  const onChange = (value, data) => {
+    console.log("Selected:", data);
+    option(data); // Pass the full selected object to the parent
   };
 
   return (
     <div>
-      {" "}
       <Select
         showSearch
-        style={{
-          width: "100%",
-        }}
+        style={{ width: "100%" }}
         onChange={onChange}
         onSearch={onSearch}
         options={items.map((item) => ({
-          label: item,
-          value: item,
+          label: item.label,
+          value: item.label,
+          key: item.value,
+          ...item, // Spread other properties like startAge, endAge, etc.
         }))}
       />
     </div>

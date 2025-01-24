@@ -89,7 +89,6 @@ const VolunteerList = () => {
             key !== "upazilaName" &&
             key !== "union" &&
             key !== "unionName" &&
-            key !== "isApproved" &&
             key !== "motherName" &&
             key !== "bloodDonationCount" &&
             key !== "imageUrl"

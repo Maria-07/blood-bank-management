@@ -82,9 +82,12 @@ const ApproveVolunteerTable = () => {
             key !== "lastDonationTime" &&
             key !== "profilePicture" &&
             key !== "district" &&
+            key !== "districtName" &&
             key !== "fatherName" &&
             key !== "upazila" &&
+            key !== "upazilaName" &&
             key !== "union" &&
+            key !== "unionName" &&
             key !== "motherName" &&
             key !== "bloodDonationCount" &&
             key !== "imageUrl"

@@ -21,19 +21,27 @@ const BloodBanks = () => {
   const [sortedInfo, setSortedInfo] = useState({});
 
   //! Fetch data when page or size changes
-  const [filteredData, setFilteredData] = useState({
-    startAge: 0,
-    pageNo: page,
-    pageSize: size,
-  });
-  const handleFilteredData = ({ data }) => {
-    console.log(data);
+  const [filteredData, setFilteredData] = useState({});
+
+  //! Update Filters Function
+  const handleFilteredData = () => {
+    // setFilteredData((prev) => ({
+    //   ...prev,
+    //   [key]: value, // Update specific filter dynamically
+    // }));
   };
+
+  console.log(filteredData);
+
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await getAllUsers(filteredData).unwrap(); // Use `.unwrap()` to handle the promise properly
-        console.log("Fetched Data:", response);
+        const response = await getAllUsers({
+          ...filteredData, // Include dynamic filters
+          pageNo: page,
+          pageSize: size,
+        }).unwrap(); // Use `.unwrap()` to handle the promise properly
+        // console.log("Fetched Data:", response);
         setRowCount(response?.rowCount);
         setTableData(response?.data || []); // Update table data
       } catch (error) {
@@ -44,11 +52,11 @@ const BloodBanks = () => {
     fetchUsers();
   }, [getAllUsers, filteredData, page, size]); // Trigger only on `getAllUsers`, `page`, or `size` change
 
-  console.log(rowCount, parseInt(rowCount / size) + 1);
+  // console.log(rowCount, parseInt(rowCount / size) + 1);
 
   //! Table Pagination change
   const onShowSizeChange = (currentPage, pageSize) => {
-    console.log("Page:", currentPage, "PageSize:", pageSize);
+    // console.log("Page:", currentPage, "PageSize:", pageSize);
     setPage(currentPage); // Update current page
 
     setSize(pageSize); // Update page size
@@ -68,6 +76,12 @@ const BloodBanks = () => {
 
   //! Clear filters
   const clearFilters = () => setFilteredInfo({});
+
+  //! Ensure tableData has a unique `key` for each row
+  const tableDataWithKeys = tableData.map((item) => ({
+    ...item,
+    key: item.id || item.mobileNumber,
+  }));
 
   //! Construct columns only when tableData is available
   const columns = tableData.length
@@ -142,7 +156,10 @@ const BloodBanks = () => {
         <h1 className="text-orange-500 text-base">Blood Banks</h1>
       </div>
       <div>
-        <FilteredUserData></FilteredUserData>
+        <FilteredUserData
+          handleFilteredData={handleFilteredData}
+          setFilteredData={setFilteredData}
+        ></FilteredUserData>
       </div>
       <div className="overflow-scroll pb-4">
         <Table
@@ -151,7 +168,7 @@ const BloodBanks = () => {
           className="text-xs font-normal"
           columns={columns}
           bordered
-          dataSource={tableData}
+          dataSource={tableDataWithKeys}
           onChange={handleChange}
         />
       </div>
