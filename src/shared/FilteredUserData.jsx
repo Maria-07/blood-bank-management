@@ -17,7 +17,7 @@ const FilteredUserData = ({ handleFilteredData }) => {
   // const [bloodType, setBloodType] = useState("");
   const [upazilaId, setUpazilaId] = useState();
   // const [unionId, setUnionId] = useState(null);
-  // const [age, setAge] = useState({ startAge: null, endAge: null });
+  const [age, setAge] = useState({ startAge: null, endAge: null });
 
   const [upazilas, setUpazilas] = useState([]);
   const [unions, setUnions] = useState([]);
@@ -76,7 +76,7 @@ const FilteredUserData = ({ handleFilteredData }) => {
       <div className="gap-5 grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 2xl:grid-cols-5 ">
         {/* Blood Group Filter */}
         <div>
-          <h1 className="flex items-center gap-1 font-semibold text-base mb-2 text-black">
+          <h1 className="flex items-center gap-1 font-semibold text-sm mb-2 text-black">
             <MdBloodtype className="text-secondary text-lg" /> Blood Group
           </h1>
           <CustomSearchOption
@@ -89,7 +89,7 @@ const FilteredUserData = ({ handleFilteredData }) => {
         </div>
         {/* User Type Filter */}
         <div>
-          <h1 className="flex items-center gap-1 font-semibold text-base mb-2 text-black">
+          <h1 className="flex items-center gap-1 font-semibold text-sm mb-2 text-black">
             <FaRegUser className="text-secondary text-lg" /> User Type
           </h1>
           <CustomSearchOption
@@ -102,7 +102,7 @@ const FilteredUserData = ({ handleFilteredData }) => {
         </div>
         {/* User Type Filter */}
         <div>
-          <h1 className="flex items-center gap-1 font-semibold text-base mb-2 text-black">
+          <h1 className="flex items-center gap-1 font-semibold text-sm mb-2 text-black">
             <BiSolidDonateHeart className="text-secondary text-lg" /> Blood
             Donation Status
           </h1>
@@ -117,7 +117,7 @@ const FilteredUserData = ({ handleFilteredData }) => {
 
         {/* Upazila Filter */}
         <div>
-          <h1 className="flex items-center gap-1 font-semibold text-base mb-2 text-black">
+          <h1 className="flex items-center gap-1 font-semibold text-sm mb-2 text-black">
             <LuMapPinned className="text-secondary text-lg" /> Upazila
           </h1>
           <CustomSearchOption
@@ -131,7 +131,7 @@ const FilteredUserData = ({ handleFilteredData }) => {
 
         {/* Union Filter */}
         <div>
-          <h1 className="flex items-center gap-1 font-semibold text-base mb-2 text-black">
+          <h1 className="flex items-center gap-1 font-semibold text-sm mb-2 text-black">
             <TiPin className="text-secondary text-lg" /> Union
           </h1>
           <CustomSearchOption
@@ -145,7 +145,7 @@ const FilteredUserData = ({ handleFilteredData }) => {
 
         {/* Age Filter */}
         <div>
-          <h1 className="flex items-center gap-1 font-semibold text-base mb-2 text-black">
+          <h1 className="flex items-center gap-1 font-semibold text-sm mb-2 text-black">
             <FaPeopleArrows className="text-secondary text-lg" /> Age
           </h1>
           <CustomSearchOption item={ageRange} option={handleAgeSelection} />

@@ -8,7 +8,15 @@ const ContactsApi = api.injectEndpoints({
         method: "GET",
       }),
     }),
+    getMessageRead: builder.mutation({
+      query: (data) => ({
+        url: "/contact/read",
+        method: "POST",
+        body: data,
+      }),
+    }),
   }),
 });
 
-export const { useGetAllContactsQuery } = ContactsApi;
+export const { useGetAllContactsQuery, useGetMessageReadMutation } =
+  ContactsApi;

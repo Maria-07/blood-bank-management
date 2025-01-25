@@ -28,6 +28,8 @@ const BloodBanks = () => {
     }));
   };
 
+  console.log(filteredData);
+
   useEffect(() => {
     const fetchUsers = async () => {
       try {
@@ -67,7 +69,7 @@ const BloodBanks = () => {
   };
 
   const columns = tableData.length
-    ? Object.keys(tableData[0])
+    ? Object.keys(tableData[0] || {})
         .filter(
           (key) =>
             key !== "id" &&
@@ -91,25 +93,53 @@ const BloodBanks = () => {
         ) // Exclude unnecessary keys
         .map((key, index) => ({
           title: key
-            .replace(/([a-z])([A-Z])/g, "$1 $2")
-            .replace(/^./, (char) => char.toUpperCase()),
+            .replace(/([a-z])([A-Z])/g, "$1 $2") // Add spaces between camelCase
+            .replace(/^./, (char) => char.toUpperCase()), // Capitalize the first letter
           dataIndex: key,
           key,
           filters: generateFilterValues(tableData, key),
+          filterSearch: true,
           filteredValue: filteredInfo[key] || null,
-          onFilter: (value, record) =>
-            record[key]?.toString().toLowerCase().includes(value.toLowerCase()),
-          sorter: (a, b) => (a[key] || "").localeCompare(b[key] || ""),
+          onFilter: (value, record) => {
+            const recordValue = record[key];
+            if (typeof recordValue === "boolean") {
+              console.log(`Filtering boolean for ${key}:`, {
+                value,
+                recordValue,
+              });
+              return recordValue === (value === "true");
+            }
+            console.log(`Filtering non-boolean for ${key}:`, {
+              value,
+              recordValue,
+            });
+            return recordValue
+              ?.toString()
+              ?.toLowerCase()
+              ?.includes(value.toLowerCase());
+          },
+          sorter: (a, b) => {
+            const aValue = a[key] || ""; // Default empty string for null
+            const bValue = b[key] || "";
+            if (typeof aValue === "boolean" && typeof bValue === "boolean") {
+              return aValue === bValue ? 0 : aValue ? -1 : 1;
+            }
+            return typeof aValue === "string" && typeof bValue === "string"
+              ? aValue.localeCompare(bValue)
+              : aValue - bValue;
+          },
           sortOrder: sortedInfo.columnKey === key ? sortedInfo.order : null,
+          render: (text, record) => <div key={index}>{text || "N/A"}</div>,
           ellipsis: true,
         }))
     : [];
 
-  if (tableData.length) {
+  //! Add Details column
+  if (tableData?.length) {
     columns.push({
-      title: "Action",
-      key: "action",
-      render: (text, record) => <ActionModal record={record} />,
+      title: "Details",
+      key: "view",
+      render: (_, record) => <ActionModal record={record} />,
     });
   }
 
@@ -137,13 +167,17 @@ const BloodBanks = () => {
 
       {isLoading && <Loader />}
       {isError && <div className="text-red-500">Error loading users!</div>}
+
       <Table
         pagination={false}
         size="small"
+        className="text-xs font-normal"
         columns={columns}
+        bordered
         dataSource={tableDataWithKeys}
         onChange={handleChange}
       />
+
       <div className="my-5">
         {" "}
         <Pagination

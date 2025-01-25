@@ -108,9 +108,9 @@ const CreateCampaignModal = ({ handleClose, clicked, refetch }) => {
       const responseData = await response.json();
       console.log("Response Data:", responseData);
 
-      if (responseData?.isSuccess) {
+      if (responseData?.data?.isSuccess) {
         toast.success(
-          responseData?.message || "Campaign created successfully!"
+          responseData?.data?.message || "Campaign created successfully!"
         );
         refetch();
         reset();

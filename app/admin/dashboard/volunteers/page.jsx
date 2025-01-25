@@ -8,9 +8,8 @@ import ApproveVolunteerTable from "@/src/Components/UI/Admin/Volunteers/ApproveV
 import PendingVolunteersApproved from "@/src/Components/UI/Admin/Volunteers/PendingVolunteersApproved";
 import { useGetAllVolunteersQuery } from "@/src/redux/features/volunteers/volunteers";
 import { Table } from "antd";
-import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { toast } from "react-toastify";
 
 const VolunteerList = () => {
@@ -22,10 +21,13 @@ const VolunteerList = () => {
   const [sortedInfo, setSortedInfo] = useState({}); // Sorting state
 
   //! Get all volunteers using RTK Query
-  const { data, isLoading, isError } = useGetAllVolunteersQuery(undefined, {
-    refetchOnMountOrArgChange: true,
-    // pollingInterval: 8000,
-  });
+  const { data, isLoading, isError, refetch } = useGetAllVolunteersQuery(
+    undefined,
+    {
+      refetchOnMountOrArgChange: true,
+      // pollingInterval: 8000,
+    }
+  );
 
   //! Update table data when data is fetched
   useEffect(() => {
@@ -63,6 +65,15 @@ const VolunteerList = () => {
   //! Toggle modals
   const handleAllVolunteers = () => setAllVolunteers(!allVolunteers);
   const handleCreateCampaign = () => setCreateCampaign(!createCampaign);
+
+  const tableDataWithKeys = useMemo(
+    () =>
+      tableData.map((item) => ({
+        ...item,
+        key: item.id || item.mobileNumber,
+      })),
+    [tableData]
+  );
 
   //! Define columns for the table
   const columns = tableData?.length
@@ -128,6 +139,7 @@ const VolunteerList = () => {
           render: (text, record) =>
             key === "isApproved" ? (
               <PendingVolunteersApproved
+                refetch={refetch}
                 record={record}
               ></PendingVolunteersApproved>
             ) : (
@@ -175,7 +187,7 @@ const VolunteerList = () => {
             className="text-xs font-normal"
             columns={columns}
             bordered
-            dataSource={tableData}
+            dataSource={tableDataWithKeys}
             onChange={handleChange}
           />
         )}

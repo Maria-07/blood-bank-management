@@ -45,12 +45,13 @@ const Register = () => {
           },
         }
       );
+      console.log(response);
 
       const data = await response.json();
       if (type === "upazila") {
-        setUpazilas(data || []); // Assign fetched Upazilas
+        setUpazilas(data?.data || []); // Assign fetched Upazilas
       } else {
-        setUnions(data || []); // Assign fetched Unions
+        setUnions(data?.data || []); // Assign fetched Unions
       }
     } catch (error) {
       console.error(`Error fetching ${type}:`, error.message);
@@ -284,7 +285,7 @@ const Register = () => {
                 className="input-select-border w-full mb-2"
               >
                 <option value="">Select Upazila</option>
-                {upazilas.map((upazila) => (
+                {upazilas?.map((upazila) => (
                   <option key={upazila.id} value={upazila.id}>
                     {upazila.name}
                   </option>
@@ -315,7 +316,7 @@ const Register = () => {
                 className="input-select-border w-full mb-2"
               >
                 <option value="">Select Union</option>
-                {unions.map((union) => (
+                {unions?.map((union) => (
                   <option key={union.id} value={union.id}>
                     {union.name}
                   </option>

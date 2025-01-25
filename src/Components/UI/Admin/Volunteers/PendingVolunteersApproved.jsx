@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import ApproveVolunteerModal from "./ApproveVolunteerModal";
 import DisApproveVolunteerModal from "./DisApproveVolunteerModal";
 
-const PendingVolunteersApproved = ({ record }) => {
+const PendingVolunteersApproved = ({ record, refetch }) => {
   const [ApproveVolunteer, setApproveVolunteer] = useState(false);
   const handleApproveVolunteer = () => {
     setApproveVolunteer(!ApproveVolunteer);
@@ -30,6 +30,7 @@ const PendingVolunteersApproved = ({ record }) => {
       )}
       {ApproveVolunteer && (
         <ApproveVolunteerModal
+          refetch={refetch}
           record={record}
           handleClose={handleApproveVolunteer}
           clicked={ApproveVolunteer}
@@ -37,6 +38,7 @@ const PendingVolunteersApproved = ({ record }) => {
       )}
       {DisApproveVolunteer && (
         <DisApproveVolunteerModal
+          refetch={refetch}
           record={record}
           handleClose={handleDisApproveVolunteer}
           clicked={DisApproveVolunteer}

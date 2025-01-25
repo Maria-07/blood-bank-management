@@ -22,6 +22,7 @@ const CustomSearchOption = ({ item, option }) => {
     <div>
       <Select
         showSearch
+        size="small"
         style={{ width: "100%" }}
         onChange={onChange}
         onSearch={onSearch}

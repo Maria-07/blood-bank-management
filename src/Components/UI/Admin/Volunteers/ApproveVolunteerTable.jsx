@@ -6,7 +6,7 @@ import PendingVolunteersApproved from "@/src/Components/UI/Admin/Volunteers/Pend
 import { useGetAllApprovedVolunteersQuery } from "@/src/redux/features/volunteers/volunteers";
 import { Table } from "antd";
 import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import ActionModal from "./ActionModal";
 
 const ApproveVolunteerTable = () => {
@@ -18,13 +18,15 @@ const ApproveVolunteerTable = () => {
   const [sortedInfo, setSortedInfo] = useState({}); // Sorting state
 
   //! Get all volunteers using RTK Query
-  const { data, isLoading, isError } = useGetAllApprovedVolunteersQuery(
-    undefined,
-    {
-      refetchOnMountOrArgChange: true,
-      // pollingInterval: 8000,
-    }
-  );
+  const {
+    data,
+    isLoading,
+    isError,
+    refetch: reload,
+  } = useGetAllApprovedVolunteersQuery(undefined, {
+    refetchOnMountOrArgChange: true,
+    // pollingInterval: 8000,
+  });
 
   //! Update table data when data is fetched
   useEffect(() => {
@@ -68,6 +70,15 @@ const ApproveVolunteerTable = () => {
   //! Toggle modals
   const handleAllVolunteers = () => setAllVolunteers(!allVolunteers);
   const handleCreateCampaign = () => setCreateCampaign(!createCampaign);
+
+  const tableDataWithKeys = useMemo(
+    () =>
+      tableData.map((item) => ({
+        ...item,
+        key: item.id || item.mobileNumber,
+      })),
+    [tableData]
+  );
 
   //! Define columns for the table
   const columns = tableData?.length
@@ -134,6 +145,7 @@ const ApproveVolunteerTable = () => {
             key === "isApproved" ? (
               <PendingVolunteersApproved
                 record={record}
+                refetch={reload}
               ></PendingVolunteersApproved>
             ) : (
               <div key={index}>{text || "N/A"}</div>
@@ -171,7 +183,7 @@ const ApproveVolunteerTable = () => {
             className="text-xs font-normal"
             columns={columns}
             bordered
-            dataSource={tableData}
+            dataSource={tableDataWithKeys}
             onChange={handleChange}
           />
         )}
@@ -182,6 +194,7 @@ const ApproveVolunteerTable = () => {
         <VolunteerListAction
           handleClose={handleAllVolunteers}
           clicked={allVolunteers}
+          refetch={reload}
         />
       )}
       {createCampaign && (

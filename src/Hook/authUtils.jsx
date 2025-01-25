@@ -9,7 +9,7 @@ export const getUserType = () => {
       const decodedPayload = atob(tokenPayload);
       const payloadObj = JSON.parse(decodedPayload);
 
-      console.log("User type:", payloadObj?.UserType);
+      // console.log("User type:", payloadObj?.UserType);
 
       return payloadObj?.UserType || null; // Return userType or null if not present
     } catch (error) {

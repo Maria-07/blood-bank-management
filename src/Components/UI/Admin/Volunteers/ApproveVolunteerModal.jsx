@@ -5,7 +5,7 @@ import { IoMdCloseCircleOutline } from "react-icons/io";
 import { MdDeleteOutline, MdDone } from "react-icons/md";
 import { toast } from "react-toastify";
 
-const ApproveVolunteerModal = ({ handleClose, clicked, record }) => {
+const ApproveVolunteerModal = ({ handleClose, clicked, record, refetch }) => {
   const id = record?.id;
   console.log("record", record?.id);
 
@@ -47,19 +47,17 @@ const ApproveVolunteerModal = ({ handleClose, clicked, record }) => {
 
       const responseData = await response.json();
       console.log("Approved Response:", responseData);
-
+      // debugger;
       if (responseData?.data?.isSuccess) {
         toast.success(
           responseData?.data?.message || "Volunteer approved successfully!"
         );
-        // onSuccess?.(); // Call the success callback if provided
         handleClose();
-        // window.location.reload();
+        refetch();
       }
     } catch (error) {
       console.error("Network or server error:", error);
       toast.error("An unexpected error occurred. Please try again.");
-      onFailure?.(error); // Call the failure callback if provided
     }
   };
   return (

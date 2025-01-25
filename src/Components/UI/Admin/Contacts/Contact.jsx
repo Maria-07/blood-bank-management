@@ -1,202 +1,213 @@
 "use client";
-import Loader from "@/src/Components/Layouts/Loader";
-import { useGetAllContactsQuery } from "@/src/redux/features/contacts/contact";
+import React, { useEffect, useMemo, useState } from "react";
 import { Pagination, Table } from "antd";
-import React, { useEffect, useState } from "react";
-import ActionModal from "../Volunteers/ActionModal";
+import { CiRead, CiUnread } from "react-icons/ci";
 import {
   MdOutlineMarkEmailRead,
   MdOutlineMarkEmailUnread,
 } from "react-icons/md";
+import Loader from "@/src/Components/Layouts/Loader";
+import ActionModal from "../Volunteers/ActionModal";
 import MessageModal from "./MessageModal";
-import { CiRead, CiUnread } from "react-icons/ci";
+import {
+  useGetAllContactsQuery,
+  useGetMessageReadMutation,
+} from "@/src/redux/features/contacts/contact";
 
 const Contact = () => {
-  const [userData, setUserData] = useState();
-  const [message, setMessage] = useState(false);
+  const [userData, setUserData] = useState(null);
+  const [messageModalVisible, setMessageModalVisible] = useState(false);
   const [page, setPage] = useState(1);
   const [size, setSize] = useState(10);
-
-  //! Toggle modals
-  const handleMessageModal = () => setMessage(!message);
-
-  //! table data
   const [tableData, setTableData] = useState([]);
   const [filteredInfo, setFilteredInfo] = useState({});
   const [sortedInfo, setSortedInfo] = useState({});
 
-  //! get all Contacts Data
+  //! Fetch contacts
   const { data, isLoading, isError, refetch } = useGetAllContactsQuery({
     pageNo: page,
     pageSize: size,
-    contactType: "Complain",
+    contactType: "Contact",
   });
-  console.log(data);
 
+  //! Handle message read mutation
+  const [readMessage, { isLoading: isReadingMessage }] =
+    useGetMessageReadMutation();
+
+  //! Update table data when fetching completes
   useEffect(() => {
-    if (!isLoading && !isError) {
-      console.log("All Data", data);
-    } else {
-      console.log(data);
-    }
-  }, [data, isLoading, isError]);
+    if (data?.data) setTableData(data.data);
+  }, [data]);
 
-  //! Update table data when data is fetched
-  useEffect(() => {
-    if (!isLoading && !isError && data) {
-      setTableData(data?.data);
-    }
-  }, [data, isLoading, isError]);
+  //! Handle message read
 
-  //! Table Pagination change
-  const onShowSizeChange = (page, pageSize) => {
-    console.log(page, pageSize);
-    setPage(page);
-    setSize(pageSize);
-    refetch();
+  const handleReadMessageModal = () => {
+    setMessageModalVisible(!messageModalVisible);
   };
 
-  //! Generate filter values (handles booleans, strings, and other types)
-  const generateFilterValues = (data, columnKey) => {
-    const uniqueValues = [...new Set(data.map((d) => d[columnKey]))];
-    return uniqueValues.map((value) => {
-      if (typeof value === "boolean") {
-        return { text: value ? "True" : "False", value: value.toString() };
-      }
-      return { text: value || "N/A", value: value?.toString() || "N/A" };
-    });
+  const handleReadMessage = async (id, record) => {
+    // debugger;
+    try {
+      await readMessage({ id: id }).unwrap();
+      refetch(); // Refresh the table after marking as read
+    } catch (error) {
+      console.error("Error reading message:", error);
+    }
   };
 
-  //! Handle table state changes
-  const handleChange = (pagination, filters, sorter) => {
+  //! Handle table filter and sort changes
+  const handleTableChange = (pagination, filters, sorter) => {
     setFilteredInfo(filters);
     setSortedInfo(sorter);
   };
 
-  //! Clear filters
+  //! Clear all filters
   const clearFilters = () => setFilteredInfo({});
 
-  //! Construct columns only when tableData is available
+  //! Generate filter values
+  const generateFilterValues = (data, key) => {
+    const uniqueValues = [...new Set(data.map((item) => item[key]))];
+    return uniqueValues.map((value) => ({
+      text:
+        value === true ? "True" : value === false ? "False" : value || "N/A",
+      value: value?.toString() || "N/A",
+    }));
+  };
+
+  const tableDataWithKeys = useMemo(
+    () =>
+      tableData.map((item) => ({
+        ...item,
+        key: item.id || item.mobileNumber,
+      })),
+    [tableData]
+  );
+
   const columns = tableData.length
     ? Object.keys(tableData[0])
         .filter(
           (key) =>
-            key !== "id" &&
-            key !== "createTime" &&
-            key !== "lastModifiedTime" &&
-            key !== "lastModifiedBy" &&
-            key !== "userData"
+            ![
+              "id",
+              "lastModifiedTime",
+              "createTime",
+              "lastModifiedBy",
+              "userData",
+            ].includes(key)
         )
         .map((key, index) => ({
           title: key
-            .replace(/([a-z])([A-Z])/g, "$1 $2") // Add spaces between camelCase
-            .replace(/([A-Z])([A-Z])/, "$1 $2") // Handle uppercase sequences
-            .replace(/^./, (char) => char.toUpperCase()), // Capitalize the first letter
-
+            .replace(/([a-z])([A-Z])/g, "$1 $2")
+            .replace(/^./, (char) => char.toUpperCase()),
           dataIndex: key,
           key,
-          width: index === 3 ? 130 : 100,
           filters: generateFilterValues(tableData, key),
-          filterSearch: true,
           filteredValue: filteredInfo[key] || null,
+          filterSearch: true,
           onFilter: (value, record) =>
             record[key]?.toString().toLowerCase().includes(value.toLowerCase()),
           sorter: (a, b) => {
-            const aValue = a[key];
-            const bValue = b[key];
-            return typeof aValue === "string" && typeof bValue === "string"
-              ? aValue.localeCompare(bValue)
-              : aValue - bValue;
+            const aVal = a[key];
+            const bVal = b[key];
+            return typeof aVal === "string" && typeof bVal === "string"
+              ? aVal.localeCompare(bVal)
+              : aVal - bVal;
           },
           sortOrder: sortedInfo.columnKey === key ? sortedInfo.order : null,
-          render: (text, record) =>
-            key === "isRead" ? (
-              <div className="flex items-center justify-center">
-                {record?.isRead ? (
-                  <>
-                    <CiRead className="text-green-600" />
-                  </>
-                ) : (
-                  <>
-                    <CiUnread className="text-rose-600" />
-                  </>
-                )}
-              </div>
-            ) : key === "message" ? (
-              <div className="flex items-center justify-center">
-                {record?.isRead ? (
-                  <>
-                    <MdOutlineMarkEmailRead />
-                  </>
-                ) : (
-                  <>
+          // Set default sort order for createTime
+          ...(key === "createTime" && { defaultSortOrder: "descend" }),
+          render: (text, record) => {
+            if (key === "isRead") {
+              return (
+                <div className="flex justify-center">
+                  {record.isRead ? (
+                    <CiRead title="Read" className="text-green-600" />
+                  ) : (
+                    <CiUnread title="Unread" className="text-rose-600" />
+                  )}
+                </div>
+              );
+            }
+            if (key === "message") {
+              return (
+                <div className="flex justify-center">
+                  {record.isRead ? (
+                    <MdOutlineMarkEmailRead
+                      onClick={() => {
+                        handleReadMessageModal();
+                        setUserData(record);
+                      }}
+                    />
+                  ) : (
                     <MdOutlineMarkEmailUnread
                       onClick={() => {
                         setUserData(record);
-                        handleMessageModal();
+                        handleReadMessage(record.id, record);
+                        handleReadMessageModal();
                       }}
-                      className="text-primary"
+                      className="text-primary cursor-pointer"
                     />
-                  </>
-                )}
-              </div>
-            ) : (
-              <div key={index}>{text || "N/A"}</div>
-            ),
-          ellipsis: true,
+                  )}
+                </div>
+              );
+            }
+            return <div key={index}>{text || "N/A"}</div>;
+          },
         }))
     : [];
 
-  //! Add action column if data exists
+  // Add Action column
   if (tableData.length) {
     columns.push({
       title: "Action",
       key: "action",
-      width: 50,
-      render: (text, record) => (
-        <ActionModal record={record?.userData}></ActionModal>
-      ),
+      render: (_, record) => <ActionModal record={record?.userData} />,
     });
   }
+
+  //! Handle pagination changes
+  const handlePaginationChange = (page, pageSize) => {
+    setPage(page);
+    setSize(pageSize);
+    refetch();
+  };
 
   return (
     <div>
       <div className="flex items-center justify-between gap-2 flex-wrap mb-4">
         <h1 className="text-orange-500 text-base">Contacts</h1>
       </div>
-      <div className="overflow-scroll pb-4">
+      <div className="overflow-auto pb-4">
         {isLoading ? (
-          <div>
-            <Loader></Loader>
-          </div>
+          <Loader />
         ) : isError ? (
-          <div>Somthing went wrong </div>
+          <div>Something went wrong</div>
         ) : (
           <>
             <Table
               pagination={false}
               size="small"
-              className="text-xs font-normal"
               columns={columns}
+              dataSource={tableDataWithKeys}
+              onChange={handleTableChange}
               bordered
-              dataSource={tableData}
-              onChange={handleChange}
             />
             <Pagination
               showSizeChanger
-              onChange={onShowSizeChange}
-              defaultCurrent={1}
+              onChange={handlePaginationChange}
+              current={page}
+              align="end"
+              className="my-5"
               total={data?.rowCount}
             />
           </>
         )}
       </div>
-      {/* Modals */}
-      {message && (
+      {messageModalVisible && (
         <MessageModal
           record={userData}
-          handleClose={handleMessageModal}
-          clicked={message}
+          clicked={messageModalVisible}
+          handleClose={handleReadMessageModal}
         />
       )}
     </div>

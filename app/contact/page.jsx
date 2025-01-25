@@ -29,6 +29,7 @@ const ContactPage = () => {
     }
 
     try {
+      // debugger;
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_BASE_URL}/contact/create`,
         {
@@ -41,34 +42,22 @@ const ContactPage = () => {
         }
       );
 
-      if (response.status === 302) {
-        toast.warning("Session expired. Redirecting to login...");
-        Cookies.remove("accessToken"); // Clear the token
-        router.push("/login"); // Redirect to login page
-        return;
-      }
-
-      if (!response.ok) {
-        const errorText = await response.text();
-        toast.error(errorText || "Failed to approve volunteer.");
-        Cookies.remove("accessToken");
-        router.push("/login");
-        return;
-      }
-
       const responseData = await response.json();
       console.log("Approved Response:", responseData);
 
-      if (responseData?.isSuccess) {
+      if (responseData?.data?.isSuccess) {
         toast.success(
-          responseData?.message || "Volunteer approved successfully!"
+          responseData?.data?.message || "Your Message Successfully Send"
         );
         reset();
+      }
+      if (!responseData?.data?.isSuccess) {
+        const errorText = await response?.data?.text();
+        return;
       }
     } catch (error) {
       console.error("Network or server error:", error);
       toast.error("An unexpected error occurred. Please try again.");
-      onFailure?.(error); // Call the failure callback if provided
     }
   };
 
