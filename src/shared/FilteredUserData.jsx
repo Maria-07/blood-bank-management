@@ -73,7 +73,7 @@ const FilteredUserData = ({ handleFilteredData }) => {
 
   return (
     <div className="">
-      <div className="gap-5 grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 2xl:grid-cols-5 ">
+      <div className="gap-5 grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 2xl:grid-cols-6 ">
         {/* Blood Group Filter */}
         <div>
           <h1 className="flex items-center gap-1 font-semibold text-sm mb-2 text-black">

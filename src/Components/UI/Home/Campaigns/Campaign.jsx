@@ -7,7 +7,7 @@ import { IoIosPeople } from "react-icons/io";
 import formatDate from "@/src/shared/ReusedFunctions";
 
 const Campaign = ({ campaign }) => {
-  console.log("single campaign", campaign);
+  // console.log("single campaign", campaign);
 
   // function formatDate(dateString) {
   //   const date = new Date(dateString);

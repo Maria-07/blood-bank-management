@@ -11,10 +11,7 @@ const HomePage = () => {
     <div>
       <div className="md:w-[90%] sm:mx-auto py-2">
         <HeroBanner></HeroBanner>
-        <div className=" p-5  mb-10 bg-[#F3F3F3] border-[1px] shadow-md px-2 rounded-xl">
-          <Filters></Filters>
-        </div>
-        <div className="my-10">
+        <div className="mb-10">
           <DonarCards></DonarCards>
         </div>
       </div>

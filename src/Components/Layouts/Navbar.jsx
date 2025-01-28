@@ -21,7 +21,7 @@ const Navbar = () => {
   return (
     <div>
       {" "}
-      <div className="hidden lg:block sticky top-0 ">
+      <div className="hidden lg:block sticky top-0 mb-10">
         {/* <div className="sm:w-[90%]  sm:mx-auto py-5 flex justify-between border-[1px] shadow-md px-2 rounded-xl"> */}
 
         <div className="bg-primary py-3">
@@ -85,47 +85,6 @@ const Navbar = () => {
             </Link>
             <Link
               className={
-                currentRoute === "/volunteers"
-                  ? "active custom_link"
-                  : "custom_link"
-              }
-              href={"/volunteers/"}
-            >
-              Volunteers
-            </Link>
-            <Link
-              className={
-                currentRoute === "/blood-bank"
-                  ? "active custom_link"
-                  : "custom_link"
-              }
-              href={"/blood-bank/"}
-            >
-              Blood Bank
-            </Link>
-            <div className="mt-[-44px]">
-              <Link href={"/"}>
-                <Image
-                  src={logo}
-                  width={80}
-                  height={80}
-                  alt="Picture of the author"
-                />
-              </Link>
-            </div>
-            <Link
-              className={
-                currentRoute === "/campaigns"
-                  ? "active custom_link"
-                  : "custom_link"
-              }
-              href={"/campaigns/"}
-            >
-              Campaigns
-            </Link>
-
-            <Link
-              className={
                 currentRoute === "/media" ? "active custom_link" : "custom_link"
               }
               href={"/media/"}
@@ -139,7 +98,48 @@ const Navbar = () => {
               }
               href={"/about/"}
             >
-              About
+              About us
+            </Link>
+
+            <div className="mt-[-44px]">
+              <Link href={"/"}>
+                <Image
+                  src={logo}
+                  width={100}
+                  height={100}
+                  alt="Picture of the author"
+                />
+              </Link>
+            </div>
+            <Link
+              className={
+                currentRoute === "/blood-bank"
+                  ? "active custom_link"
+                  : "custom_link"
+              }
+              href={"/blood-bank/"}
+            >
+              Blood Bank
+            </Link>
+            <Link
+              className={
+                currentRoute === "/campaigns"
+                  ? "active custom_link"
+                  : "custom_link"
+              }
+              href={"/campaigns/"}
+            >
+              Campaigns
+            </Link>
+            <Link
+              className={
+                currentRoute === "/volunteers"
+                  ? "active custom_link"
+                  : "custom_link"
+              }
+              href={"/volunteers/"}
+            >
+              Volunteers
             </Link>
           </div>
         </div>
