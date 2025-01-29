@@ -96,7 +96,7 @@ const CreateCampaignModal = ({ handleClose, clicked, refetch }) => {
 
       console.log("response", response);
 
-      if (!response.ok) {
+      if (!response?.data?.ok) {
         const errorText = await response.text();
         toast.error(errorText);
         console.error("Error response:", errorText);

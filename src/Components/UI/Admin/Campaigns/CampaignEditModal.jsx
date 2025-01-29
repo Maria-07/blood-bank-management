@@ -109,9 +109,9 @@ const CampaignEditModal = ({ handleClose, clicked, record, refetch }) => {
         return;
       }
       const responseData = await response.json();
-      if (responseData?.isSuccess) {
+      if (responseData?.data?.isSuccess) {
         toast.success(
-          responseData?.message || "Campaign updated successfully!"
+          responseData?.data?.message || "Campaign updated successfully!"
         );
         refetch();
         handleClose();

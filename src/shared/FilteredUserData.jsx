@@ -12,7 +12,7 @@ import {
 } from "@/src/shared/constance";
 import { BiSolidDonateHeart } from "react-icons/bi";
 
-const FilteredUserData = ({ handleFilteredData }) => {
+const FilteredUserData = ({ role, handleFilteredData }) => {
   // const [userType, setUserType] = useState("");
   // const [bloodType, setBloodType] = useState("");
   const [upazilaId, setUpazilaId] = useState();
@@ -73,7 +73,11 @@ const FilteredUserData = ({ handleFilteredData }) => {
 
   return (
     <div className="">
-      <div className="gap-5 grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 2xl:grid-cols-6 ">
+      <div
+        className={`gap-5 grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 ${
+          role === "admin" ? "2xl:grid-cols-6" : "2xl:grid-cols-4"
+        }`}
+      >
         {/* Blood Group Filter */}
         <div>
           <h1 className="flex items-center gap-1 font-semibold text-sm mb-2 text-black">
@@ -88,32 +92,36 @@ const FilteredUserData = ({ handleFilteredData }) => {
           />
         </div>
         {/* User Type Filter */}
-        <div>
-          <h1 className="flex items-center gap-1 font-semibold text-sm mb-2 text-black">
-            <FaRegUser className="text-secondary text-lg" /> User Type
-          </h1>
-          <CustomSearchOption
-            item={userTypes}
-            option={(selectedUserType) => {
-              // setBloodType(selectedUserType);
-              updateFilters("userType", selectedUserType?.label);
-            }}
-          />
-        </div>
+        {role === "admin" && (
+          <div>
+            <h1 className="flex items-center gap-1 font-semibold text-sm mb-2 text-black">
+              <FaRegUser className="text-secondary text-lg" /> User Type
+            </h1>
+            <CustomSearchOption
+              item={userTypes}
+              option={(selectedUserType) => {
+                // setBloodType(selectedUserType);
+                updateFilters("userType", selectedUserType?.label);
+              }}
+            />
+          </div>
+        )}
         {/* User Type Filter */}
-        <div>
-          <h1 className="flex items-center gap-1 font-semibold text-sm mb-2 text-black">
-            <BiSolidDonateHeart className="text-secondary text-lg" /> Blood
-            Donation Status
-          </h1>
-          <CustomSearchOption
-            item={DonationStatus}
-            option={(selectedbdStatus) => {
-              // setBloodType(selectedbdStatus);
-              updateFilters("bloodDonationStatus", selectedbdStatus?.label);
-            }}
-          />
-        </div>
+        {role === "admin" && (
+          <div>
+            <h1 className="flex items-center gap-1 font-semibold text-sm mb-2 text-black">
+              <BiSolidDonateHeart className="text-secondary text-lg" /> Blood
+              Donation Status
+            </h1>
+            <CustomSearchOption
+              item={DonationStatus}
+              option={(selectedbdStatus) => {
+                // setBloodType(selectedbdStatus);
+                updateFilters("bloodDonationStatus", selectedbdStatus?.label);
+              }}
+            />
+          </div>
+        )}
 
         {/* Upazila Filter */}
         <div>

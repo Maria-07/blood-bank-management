@@ -1,5 +1,5 @@
 import { Avatar, Card, Image, Tooltip } from "antd";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { LuCrown } from "react-icons/lu";
 import { IoLocationOutline } from "react-icons/io5";
 import { FaPhoneAlt } from "react-icons/fa";
@@ -10,12 +10,16 @@ import {
 } from "react-icons/bi";
 import { formatDistanceToNow, parseISO } from "date-fns";
 import UserProfileModal from "../../User/UserProfileModal";
+import { useAnimation } from "framer-motion";
 
 const DonarCard = ({ record = {} }) => {
   const [UserDetails, setUserDetails] = useState(false);
   const handleUserDetails = () => {
     setUserDetails(!UserDetails);
   };
+
+  const controls = useAnimation();
+  const ref = useRef(null);
 
   const {
     address,

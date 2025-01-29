@@ -161,7 +161,10 @@ const BloodBanks = () => {
       {filterShow && (
         <div className=" border px-5 py-5 rounded-md shadow-md mt-5 mb-10">
           {" "}
-          <FilteredUserData handleFilteredData={handleFilteredData} />
+          <FilteredUserData
+            role={"admin"}
+            handleFilteredData={handleFilteredData}
+          />
         </div>
       )}
 

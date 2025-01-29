@@ -50,9 +50,9 @@ const CampaignDeleteModal = ({ handleClose, clicked, record, refetch }) => {
       const responseData = await response.json();
       console.log("Delete Response:", responseData);
 
-      if (responseData?.isSuccess) {
+      if (responseData?.data?.isSuccess) {
         toast.success(
-          responseData?.message || "Campaign deleted successfully!"
+          responseData?.data?.message || "Campaign deleted successfully!"
         );
         refetch();
         handleClose();

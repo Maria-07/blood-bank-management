@@ -15,6 +15,13 @@ const userApi = api.injectEndpoints({
         body: data,
       }),
     }),
+    getAllDonor: builder.mutation({
+      query: (data) => ({
+        url: "/bloodbank/getbloodbankdata",
+        method: "POST",
+        body: data,
+      }),
+    }),
     getProfile: builder.query({
       query: () => ({
         url: "/users/my-profile",
@@ -34,6 +41,7 @@ const userApi = api.injectEndpoints({
 
 export const {
   useGetUserTypeQuery,
+  useGetAllDonorMutation,
   useGetAllUserMutation,
   useGetProfileQuery,
   useUpdateProfileMutation,
