@@ -27,7 +27,8 @@ const Campaign = ({ campaign }) => {
   //   return `${dayWithSuffix} ${month}, ${year}`;
   // }
 
-  const { address, bannerUrl, startDate, endDate, name } = campaign;
+  const { address, bannerUrl, startDate, endDate, name, volunteerList } =
+    campaign;
 
   return (
     <div>
@@ -84,7 +85,9 @@ const Campaign = ({ campaign }) => {
                 <IoIosPeople className="text-primary text-lg" />{" "}
                 <h1 className="text-base font-semibold">Volunteers : </h1>
               </div>
-              <div className="text-sm text-accent text-right">10</div>
+              <div className="text-sm text-accent text-right">
+                {volunteerList?.length || 0}
+              </div>
             </div>
           </div>
 

@@ -9,7 +9,15 @@ const campaignApi = api.injectEndpoints({
         method: "GET",
       }),
     }),
+    //* Get all running and upcoming Campaign :
+    getAllRunningCampaigns: builder.query({
+      query: ({ pageNo, pageSize }) => ({
+        url: `/campaign/getRunningAndUpcomingCampaign?pageNo=${pageNo}&pageSize=${pageSize}`,
+        method: "GET",
+      }),
+    }),
   }),
 });
 
-export const { useGetAllCampaignsQuery } = campaignApi;
+export const { useGetAllCampaignsQuery, useGetAllRunningCampaignsQuery } =
+  campaignApi;

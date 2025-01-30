@@ -7,17 +7,17 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import Campaign from "./Campaign";
-import { useGetAllCampaignsQuery } from "@/src/redux/features/campaign/campaignApi";
+import { useGetAllRunningCampaignsQuery } from "@/src/redux/features/campaign/campaignApi";
 
 const Campaigns = () => {
   const [page, setPage] = useState(1);
-  const [size, setSize] = useState(10);
+  const [size, setSize] = useState(100);
   //! get all Campaigns Data
   const {
     data: Campaigns,
     isLoading,
     isError,
-  } = useGetAllCampaignsQuery({ pageNo: page, pageSize: size });
+  } = useGetAllRunningCampaignsQuery({ pageNo: page, pageSize: size });
   // debugger;
   console.log(Campaigns);
   useEffect(() => {
