@@ -2,6 +2,7 @@
 
 import Loader from "@/src/Components/Layouts/Loader";
 import ActionModal from "@/src/Components/UI/Admin/Volunteers/ActionModal";
+import PendingVolunteersApproved from "@/src/Components/UI/Admin/Volunteers/PendingVolunteersApproved";
 import { useGetAllUserMutation } from "@/src/redux/features/auth/userApi";
 import FilteredUserData from "@/src/shared/FilteredUserData";
 import { Pagination, Table } from "antd";
@@ -30,23 +31,25 @@ const BloodBanks = () => {
 
   console.log(filteredData);
 
-  useEffect(() => {
-    const fetchUsers = async () => {
-      try {
-        const response = await getAllUsers({
-          ...filteredData,
-          pageNo: page,
-          pageSize: size,
-        }).unwrap();
-        setRowCount(response?.rowCount || 0);
-        setTableData(response?.data || []);
-      } catch (error) {
-        console.error("Error fetching users:", error);
-      }
-    };
+  // ✅ Define a manual refetch function
+  const refetch = async () => {
+    try {
+      const response = await getAllUsers({
+        ...filteredData,
+        pageNo: page,
+        pageSize: size,
+      }).unwrap();
+      setRowCount(response?.rowCount || 0);
+      setTableData(response?.data || []);
+    } catch (error) {
+      console.error("Error fetching users:", error);
+    }
+  };
 
-    fetchUsers();
-  }, [getAllUsers, filteredData, page, size]);
+  useEffect(() => {
+    refetch();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [filteredData, page, size]);
 
   const tableDataWithKeys = useMemo(
     () =>
@@ -86,7 +89,6 @@ const BloodBanks = () => {
             key !== "upazilaName" &&
             key !== "union" &&
             key !== "unionName" &&
-            key !== "isApproved" &&
             key !== "motherName" &&
             key !== "bloodDonationCount" &&
             key !== "imageUrl"
@@ -129,7 +131,15 @@ const BloodBanks = () => {
               : aValue - bValue;
           },
           sortOrder: sortedInfo.columnKey === key ? sortedInfo.order : null,
-          render: (text, record) => <div key={index}>{text || "N/A"}</div>,
+          render: (text, record) =>
+            key === "isApproved" ? (
+              <PendingVolunteersApproved
+                refetch={refetch}
+                record={record}
+              ></PendingVolunteersApproved>
+            ) : (
+              <div key={index}>{text || "N/A"}</div>
+            ),
           ellipsis: true,
         }))
     : [];

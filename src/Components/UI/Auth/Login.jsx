@@ -112,7 +112,7 @@ const Login = () => {
       <form onSubmit={handleSubmit(onSubmit)}>
         <div>
           <h1 className="input-title flex items-center gap-1">
-            <FaMobileScreen className="text-primary" /> Contact{" "}
+            <FaMobileScreen className="text-primary" /> Mobile Number{" "}
             <span className="text-red-600">*</span>
           </h1>
           <input

@@ -8,6 +8,10 @@ export const bloodGroups = [
   { label: "AB+", value: "AB+" },
   { label: "AB-", value: "AB-" },
 ];
+export const gender = [
+  { label: "Male", value: "male" },
+  { label: "Female", value: "female" },
+];
 
 // export const ageRange = [
 //   "18-22",

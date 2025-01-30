@@ -1,7 +1,7 @@
 import Image from "next/image";
 import logo from "@/src/assets/Image/logo/darkLogo.png";
 import mlogo from "@/src/assets/Image/logo/mbLogo.png";
-import bluLogo from "@/src/assets/Image/logo/bluLogo.png";
+import Logo from "@/src/assets/Image/logo/logo.png";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { GiHamburgerMenu } from "react-icons/gi";
@@ -30,7 +30,7 @@ const Navbar = () => {
             <div>
               <Link href={"/"}>
                 <Image
-                  src={bluLogo}
+                  src={Logo}
                   width={130}
                   height={100}
                   alt="Picture of the author"

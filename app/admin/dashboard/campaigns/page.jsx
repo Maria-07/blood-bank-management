@@ -7,7 +7,7 @@ import ActionModal from "@/src/Components/UI/Admin/Campaigns/ActionModal";
 import CreateCampaignModal from "@/src/Components/UI/Admin/Campaigns/CreateCampaignModal";
 import VolunteerListAction from "@/src/Components/UI/Admin/Campaigns/VolunteerListAction";
 import { useGetAllCampaignsQuery } from "@/src/redux/features/campaign/campaignApi";
-import { Switch, Table } from "antd";
+import { Pagination, Switch, Table } from "antd";
 import React, { useEffect, useState } from "react";
 import { FaPeopleCarryBox, FaPlus } from "react-icons/fa6";
 
@@ -17,14 +17,20 @@ const CampaignList = () => {
   const [createCampaign, setCreateCampaign] = useState(false);
   const [filteredInfo, setFilteredInfo] = useState({});
   const [sortedInfo, setSortedInfo] = useState({});
+  const [rowCount, setRowCount] = useState(0);
+  const [page, setPage] = useState(1);
+  const [size, setSize] = useState(10);
 
   //! Get all Campaigns Data
-  const { data, isLoading, isError, refetch } =
-    useGetAllCampaignsQuery(undefined);
+  const { data, isLoading, isError, refetch } = useGetAllCampaignsQuery({
+    pageNo: page,
+    pageSize: size,
+  });
 
   //! Update table data when data is fetched
   useEffect(() => {
     if (!isLoading && !isError && data) {
+      setRowCount(data?.rowCount || 0);
       setTableData(data?.data);
     }
   }, [data, isLoading, isError]);
@@ -139,6 +145,20 @@ const CampaignList = () => {
             onChange={handleChange}
           />
         )}
+      </div>
+      <div className="my-5">
+        {" "}
+        <Pagination
+          showSizeChanger
+          onChange={(currentPage, pageSize) => {
+            setPage(currentPage);
+            setSize(pageSize);
+          }}
+          align="end"
+          current={page}
+          total={rowCount}
+          pageSize={size}
+        />
       </div>
       {allVolunteers && (
         <VolunteerListAction

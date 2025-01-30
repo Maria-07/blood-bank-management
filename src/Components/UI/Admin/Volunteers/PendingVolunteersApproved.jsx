@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import ApproveVolunteerModal from "./ApproveVolunteerModal";
 import DisApproveVolunteerModal from "./DisApproveVolunteerModal";
+import { FaCheckSquare, FaRegCheckSquare } from "react-icons/fa";
 
 const PendingVolunteersApproved = ({ record, refetch }) => {
   const [ApproveVolunteer, setApproveVolunteer] = useState(false);
@@ -16,16 +17,16 @@ const PendingVolunteersApproved = ({ record, refetch }) => {
       {record?.isApproved ? (
         <button
           onClick={handleDisApproveVolunteer}
-          className="text-green-500 bg-green-50 text-[11px] px-2 py-[1px] font-semibold rounded-md"
+          className="text-green-500  text-[11px] px-2 py-[1px] font-semibold rounded-md"
         >
-          Approved
+          <FaCheckSquare />
         </button>
       ) : (
         <button
           onClick={handleApproveVolunteer}
-          className="text-red-500 bg-soft text-[11px] px-2 py-[1px] font-semibold rounded-md"
+          className="text-red-500  text-[11px] px-2 py-[1px] font-semibold rounded-md"
         >
-          Pending
+          <FaRegCheckSquare />
         </button>
       )}
       {ApproveVolunteer && (

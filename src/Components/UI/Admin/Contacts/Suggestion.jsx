@@ -89,6 +89,7 @@ const Suggestion = () => {
           (key) =>
             ![
               "id",
+              "isRead",
               "lastModifiedTime",
               "createTime",
               "lastModifiedBy",
@@ -117,17 +118,6 @@ const Suggestion = () => {
           // Set default sort order for createTime
           ...(key === "createTime" && { defaultSortOrder: "descend" }),
           render: (text, record) => {
-            if (key === "isRead") {
-              return (
-                <div className="flex justify-center">
-                  {record.isRead ? (
-                    <CiRead title="Read" className="text-green-600" />
-                  ) : (
-                    <CiUnread title="Unread" className="text-rose-600" />
-                  )}
-                </div>
-              );
-            }
             if (key === "message") {
               return (
                 <div className="flex justify-center">

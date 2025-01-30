@@ -2,15 +2,17 @@ import React, { useEffect, useState } from "react";
 import { MdBloodtype } from "react-icons/md";
 import { LuMapPinned } from "react-icons/lu";
 import { TiPin } from "react-icons/ti";
-import { FaPeopleArrows, FaRegUser } from "react-icons/fa6";
+import { FaPeopleArrows, FaRegUser, FaTransgender } from "react-icons/fa6";
 import CustomSearchOption from "@/src/shared/CustomSearchOption";
 import {
   ageRange,
   bloodGroups,
   DonationStatus,
+  gender,
   userTypes,
 } from "@/src/shared/constance";
 import { BiSolidDonateHeart } from "react-icons/bi";
+import { BsGenderAmbiguous } from "react-icons/bs";
 
 const FilteredUserData = ({ role, handleFilteredData }) => {
   // const [userType, setUserType] = useState("");
@@ -18,7 +20,6 @@ const FilteredUserData = ({ role, handleFilteredData }) => {
   const [upazilaId, setUpazilaId] = useState();
   // const [unionId, setUnionId] = useState(null);
   const [age, setAge] = useState({ startAge: null, endAge: null });
-
   const [upazilas, setUpazilas] = useState([]);
   const [unions, setUnions] = useState([]);
 
@@ -75,7 +76,7 @@ const FilteredUserData = ({ role, handleFilteredData }) => {
     <div className="">
       <div
         className={`gap-5 grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 ${
-          role === "admin" ? "2xl:grid-cols-6" : "2xl:grid-cols-4"
+          role === "admin" ? "2xl:grid-cols-6" : "2xl:grid-cols-5"
         }`}
       >
         {/* Blood Group Filter */}
@@ -88,6 +89,19 @@ const FilteredUserData = ({ role, handleFilteredData }) => {
             option={(selectedBloodType) => {
               // setBloodType(selectedBloodType);
               updateFilters("bloodGroup", selectedBloodType?.label);
+            }}
+          />
+        </div>
+        {/* Blood Group Filter */}
+        <div>
+          <h1 className="flex items-center gap-1 font-semibold text-sm mb-2 text-black">
+            <FaTransgender className="text-secondary text-lg" /> Gender
+          </h1>
+          <CustomSearchOption
+            item={gender}
+            option={(selectedGenderType) => {
+              // setBloodType(selectedBloodType);
+              updateFilters("gender", selectedGenderType?.label);
             }}
           />
         </div>

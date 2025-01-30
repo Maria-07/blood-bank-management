@@ -146,48 +146,60 @@ const CampaignEditModal = ({ handleClose, clicked, record, refetch }) => {
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="grid grid-cols-1 lg:grid-cols-2 my-3 mr-2 gap-x-2 gap-y-3">
             <div className="sm:col-span-2">
-              <label className="label">Campaign Name</label>
+              <label className="modal-label-name">Campaign Name</label>
               <input
                 defaultValue={name}
                 type="text"
-                className="modal-input-field w-full"
+                className="modal-input-field ml-1 w-full"
                 {...register("Name")}
               />
             </div>
+            <div className="sm:col-span-2">
+              <label className="label flex items-center">
+                <div className="modal-label-name">Institution Name</div>
+              </label>
+              <input
+                type="text"
+                name="InstitutionName"
+                className="modal-input-field ml-1 w-full"
+                {...register("InstitutionName")}
+              />
+            </div>
             <div>
-              <label className="label">Start Date</label>
+              <label className="modal-label-name">Start Date</label>
               <input
                 defaultValue={startDate?.slice(0, 10)}
                 type="date"
-                className="modal-input-field w-full"
+                className="modal-input-field ml-1 w-full"
                 {...register("startDate")}
               />
             </div>
             <div>
-              <label className="label">End Date</label>
+              <label className="modal-label-name">End Date</label>
               <input
                 defaultValue={endDate?.slice(0, 10)}
                 type="date"
-                className="modal-input-field w-full"
+                className="modal-input-field ml-1 w-full"
                 {...register("endDate")}
               />
             </div>
             <div className="sm:col-span-2">
-              <label className="label">Address</label>
+              <label className="modal-label-name">Address</label>
               <input
                 defaultValue={address}
                 type="text"
-                className="modal-input-field w-full"
+                className="modal-input-field ml-1 w-full"
                 {...register("address")}
               />
             </div>
             <div className="sm:col-span-2">
-              <label className="label">Select Volunteers</label>
+              <label className="modal-label-name">Select Volunteers</label>
               <Select
                 mode="multiple"
                 maxTagCount="responsive"
                 allowClear
                 style={{ width: "100%" }}
+                className="ml-1 w-full"
                 placeholder="Please select"
                 onChange={handleChange}
                 options={volunteerOptions}
@@ -195,12 +207,12 @@ const CampaignEditModal = ({ handleClose, clicked, record, refetch }) => {
               />
             </div>
             <div className="sm:col-span-2">
-              <label className="label">Campaign Banner</label>
+              <label className="modal-label-name">Campaign Banner</label>
               {bannerEdit && (
                 <input
                   type="file"
                   defaultValue={banner}
-                  className="modal-input-field w-full"
+                  className="modal-input-field ml-1 w-full"
                   {...register("banner")}
                 />
               )}

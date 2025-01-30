@@ -150,7 +150,7 @@ const CreateCampaignModal = ({ handleClose, clicked, refetch }) => {
             <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 my-3 mr-2 gap-x-2 gap-y-3">
               <div className="sm:col-span-2">
                 <label className="label flex items-center">
-                  <div className="modal-label-name">Enter Campaign Name</div>
+                  <div className="modal-label-name">Campaign Name</div>
                 </label>
                 <input
                   type="text"
@@ -158,6 +158,19 @@ const CreateCampaignModal = ({ handleClose, clicked, refetch }) => {
                   className="modal-input-field ml-1 w-full"
                   {...register("Name", {
                     required: "Campaign name is required",
+                  })}
+                />
+              </div>
+              <div className="sm:col-span-2">
+                <label className="label flex items-center">
+                  <div className="modal-label-name">Institution Name</div>
+                </label>
+                <input
+                  type="text"
+                  name="InstitutionName"
+                  className="modal-input-field ml-1 w-full"
+                  {...register("InstitutionName", {
+                    required: "Campaign Institution Name is required",
                   })}
                 />
               </div>

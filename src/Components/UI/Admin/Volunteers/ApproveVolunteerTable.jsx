@@ -4,7 +4,7 @@ import CreateCampaignModal from "@/src/Components/UI/Admin/Campaigns/CreateCampa
 import VolunteerListAction from "@/src/Components/UI/Admin/Campaigns/VolunteerListAction";
 import PendingVolunteersApproved from "@/src/Components/UI/Admin/Volunteers/PendingVolunteersApproved";
 import { useGetAllApprovedVolunteersQuery } from "@/src/redux/features/volunteers/volunteers";
-import { Table } from "antd";
+import { Pagination, Table } from "antd";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useMemo, useState } from "react";
 import ActionModal from "./ActionModal";
@@ -16,22 +16,22 @@ const ApproveVolunteerTable = () => {
   const [createCampaign, setCreateCampaign] = useState(false); // Campaign modal state
   const [filteredInfo, setFilteredInfo] = useState({}); // Filters for table
   const [sortedInfo, setSortedInfo] = useState({}); // Sorting state
+  const [rowCount, setRowCount] = useState(0);
+  const [page, setPage] = useState(1);
+  const [size, setSize] = useState(10);
 
   //! Get all volunteers using RTK Query
-  const {
-    data,
-    isLoading,
-    isError,
-    refetch: reload,
-  } = useGetAllApprovedVolunteersQuery(undefined, {
-    refetchOnMountOrArgChange: true,
-    // pollingInterval: 8000,
-  });
+  const { data, isLoading, isError, refetch } =
+    useGetAllApprovedVolunteersQuery({
+      pageNo: page,
+      pageSize: size,
+    });
 
   //! Update table data when data is fetched
   useEffect(() => {
     if (!isLoading && !isError && data) {
       console.log("Fetched Volunteers Data:", data);
+      setRowCount(data?.rowCount || 0);
       setTableData(data?.data || []); // Adjust based on API response structure
     } else {
       // toast.error("Session expired");
@@ -145,7 +145,7 @@ const ApproveVolunteerTable = () => {
             key === "isApproved" ? (
               <PendingVolunteersApproved
                 record={record}
-                refetch={reload}
+                refetch={refetch}
               ></PendingVolunteersApproved>
             ) : (
               <div key={index}>{text || "N/A"}</div>
@@ -189,20 +189,20 @@ const ApproveVolunteerTable = () => {
         )}
       </div>
 
-      {/* Modals */}
-      {allVolunteers && (
-        <VolunteerListAction
-          handleClose={handleAllVolunteers}
-          clicked={allVolunteers}
-          refetch={reload}
+      <div className="my-5">
+        {" "}
+        <Pagination
+          showSizeChanger
+          onChange={(currentPage, pageSize) => {
+            setPage(currentPage);
+            setSize(pageSize);
+          }}
+          align="end"
+          current={page}
+          total={rowCount}
+          pageSize={size}
         />
-      )}
-      {createCampaign && (
-        <CreateCampaignModal
-          handleClose={handleCreateCampaign}
-          clicked={createCampaign}
-        />
-      )}
+      </div>
     </div>
   );
 };

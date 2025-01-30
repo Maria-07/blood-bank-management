@@ -7,7 +7,7 @@ import ActionModal from "@/src/Components/UI/Admin/Volunteers/ActionModal";
 import ApproveVolunteerTable from "@/src/Components/UI/Admin/Volunteers/ApproveVolunteerTable";
 import PendingVolunteersApproved from "@/src/Components/UI/Admin/Volunteers/PendingVolunteersApproved";
 import { useGetAllVolunteersQuery } from "@/src/redux/features/volunteers/volunteers";
-import { Table } from "antd";
+import { Pagination, Table } from "antd";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useMemo, useState } from "react";
 import { toast } from "react-toastify";
@@ -19,20 +19,21 @@ const VolunteerList = () => {
   const [createCampaign, setCreateCampaign] = useState(false); // Campaign modal state
   const [filteredInfo, setFilteredInfo] = useState({}); // Filters for table
   const [sortedInfo, setSortedInfo] = useState({}); // Sorting state
+  const [rowCount, setRowCount] = useState(0);
+  const [page, setPage] = useState(1);
+  const [size, setSize] = useState(10);
 
   //! Get all volunteers using RTK Query
-  const { data, isLoading, isError, refetch } = useGetAllVolunteersQuery(
-    undefined,
-    {
-      refetchOnMountOrArgChange: true,
-      // pollingInterval: 8000,
-    }
-  );
+  const { data, isLoading, isError, refetch } = useGetAllVolunteersQuery({
+    pageNo: page,
+    pageSize: size,
+  });
 
   //! Update table data when data is fetched
   useEffect(() => {
     if (!isLoading && !isError && data) {
       console.log("Fetched Volunteers Data:", data);
+      setRowCount(data?.rowCount || 0);
       setTableData(data?.data || []); // Adjust based on API response structure
     } else {
       // toast.error("Session expired");
@@ -191,6 +192,21 @@ const VolunteerList = () => {
             onChange={handleChange}
           />
         )}
+      </div>
+
+      <div className="my-5">
+        {" "}
+        <Pagination
+          showSizeChanger
+          onChange={(currentPage, pageSize) => {
+            setPage(currentPage);
+            setSize(pageSize);
+          }}
+          align="end"
+          current={page}
+          total={rowCount}
+          pageSize={size}
+        />
       </div>
 
       <div>
