@@ -9,21 +9,10 @@ export const bloodGroups = [
   { label: "AB-", value: "AB-" },
 ];
 export const gender = [
-  { label: "Male", value: "male" },
-  { label: "Female", value: "female" },
+  { label: "Male", value: "Male" },
+  { label: "Female", value: "Female" },
 ];
 
-// export const ageRange = [
-//   "18-22",
-//   "23-27",
-//   "28-32",
-//   "33-37",
-//   "38-42",
-//   "43-47",
-//   "48-52",
-//   "53-57",
-//   "58-62",
-// ];
 export const ageRange = [
   { label: "18-22", value: "18-22", startAge: 18, endAge: 22 },
   { label: "23-27", value: "23-27", startAge: 23, endAge: 27 },
@@ -41,72 +30,10 @@ export const userTypes = [
 ];
 export const DonationStatus = [
   { label: "Interested", value: "Interested" },
-  { label: "NotInterested", value: "NotInterested" },
+  { label: "Not Interested", value: "NotInterested" },
+  { label: "Not Sure", value: "NotSure" },
 ];
-
-export const upazilasOfNilphamari = [
-  "Nilphamari Sadar",
-  "Saidpur",
-  "Domar",
-  "Jaldhaka",
-  "Kishoreganj",
-  "Dimla",
-];
-
-export const unionsOfNilphamari = [
-  // Nilphamari Sadar
-  "Charaikhola",
-  "Kachukata",
-  "Khalisha Chapani",
-  "Itakhola",
-  "Panchapukur",
-  "Garagram",
-  "Tepa Kharibari",
-  "Sangalshi",
-  "Ramnagar",
-  "Chaora Bargachha",
-
-  // Saidpur
-  "Kamarpara",
-  "Botlagari",
-  "Bangali Pur",
-  "Kanchan",
-  "Khata Madhupur",
-  "Saidpur Municipality",
-
-  // Domar
-  "Bhogdaburi",
-  "Harinchara",
-  "Gomnati",
-  "Ketkibari",
-  "Sonarai",
-  "Boragari",
-  "Jorabari",
-
-  // Jaldhaka
-  "Shimulbari",
-  "Mirganj",
-  "Kathali",
-  "Kaimari",
-  "Bhadurganj",
-  "Khutamara",
-  "Golna",
-
-  // Kishoreganj
-  "Barabhita",
-  "Chhatnai",
-  "Garagram",
-  "Magura",
-  "Bahagili",
-  "Ranachandi",
-  "Putimari",
-
-  // Dimla
-  "Balapara",
-  "Tepa Kharibari",
-  "Jhunagach Chapani",
-  "Gayabari",
-  "Khagakharibari",
-  "Purbo Chhatnai",
-  "Dimla Municipality",
+export const ApprovalStatus = [
+  { label: "Approved", value: true },
+  { label: "Not Approved", value: false },
 ];

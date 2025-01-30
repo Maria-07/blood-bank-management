@@ -157,7 +157,7 @@ const BloodBanks = () => {
     <div>
       <div className="flex items-center justify-between gap-2 mb-5">
         {" "}
-        <h1 className="text-orange-500 text-base">Blood Banks</h1>
+        <h1 className="text-orange-500 text-base">All Users in Blood Bank</h1>
         <button
           className="border p-1 rounded-sm"
           onClick={() => {

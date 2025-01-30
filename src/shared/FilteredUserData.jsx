@@ -6,6 +6,7 @@ import { FaPeopleArrows, FaRegUser, FaTransgender } from "react-icons/fa6";
 import CustomSearchOption from "@/src/shared/CustomSearchOption";
 import {
   ageRange,
+  ApprovalStatus,
   bloodGroups,
   DonationStatus,
   gender,
@@ -88,7 +89,7 @@ const FilteredUserData = ({ role, handleFilteredData }) => {
             item={bloodGroups}
             option={(selectedBloodType) => {
               // setBloodType(selectedBloodType);
-              updateFilters("bloodGroup", selectedBloodType?.label);
+              updateFilters("bloodGroup", selectedBloodType?.value);
             }}
           />
         </div>
@@ -101,7 +102,7 @@ const FilteredUserData = ({ role, handleFilteredData }) => {
             item={gender}
             option={(selectedGenderType) => {
               // setBloodType(selectedBloodType);
-              updateFilters("gender", selectedGenderType?.label);
+              updateFilters("gender", selectedGenderType?.value);
             }}
           />
         </div>
@@ -115,7 +116,23 @@ const FilteredUserData = ({ role, handleFilteredData }) => {
               item={userTypes}
               option={(selectedUserType) => {
                 // setBloodType(selectedUserType);
-                updateFilters("userType", selectedUserType?.label);
+                updateFilters("userType", selectedUserType?.value);
+              }}
+            />
+          </div>
+        )}
+        {/* User Type Filter */}
+        {role === "admin" && (
+          <div>
+            <h1 className="flex items-center gap-1 font-semibold text-sm mb-2 text-black">
+              <FaRegUser className="text-secondary text-lg" /> User Approval
+              Status
+            </h1>
+            <CustomSearchOption
+              item={ApprovalStatus}
+              option={(selectedApprovalStatus) => {
+                // setBloodType(selectedUserType);
+                updateFilters("isApproved", selectedApprovalStatus?.value);
               }}
             />
           </div>
@@ -131,7 +148,7 @@ const FilteredUserData = ({ role, handleFilteredData }) => {
               item={DonationStatus}
               option={(selectedbdStatus) => {
                 // setBloodType(selectedbdStatus);
-                updateFilters("bloodDonationStatus", selectedbdStatus?.label);
+                updateFilters("bloodDonationStatus", selectedbdStatus?.value);
               }}
             />
           </div>
@@ -145,7 +162,6 @@ const FilteredUserData = ({ role, handleFilteredData }) => {
           <CustomSearchOption
             item={upazilas.map((u) => ({ label: u.name, value: u.id }))}
             option={(selectedUpazila) => {
-              // setUpazilaId(selectedUpazila);
               updateFilters("upazila", selectedUpazila?.key);
             }}
           />
@@ -159,7 +175,6 @@ const FilteredUserData = ({ role, handleFilteredData }) => {
           <CustomSearchOption
             item={unions.map((u) => ({ label: u.name, value: u.id }))}
             option={(selectedUnion) => {
-              // setUnionId(selectedUnion);
               updateFilters("union", selectedUnion?.key);
             }}
           />

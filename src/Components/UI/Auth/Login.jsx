@@ -76,7 +76,7 @@ const Login = () => {
           router.push("/"); // Redirect to the homepage
         }
       } else {
-        toast.error(responseLoginData?.message || "Login failed!");
+        toast.error(responseLoginData?.data?.message || "Login failed!");
       }
     } catch (error) {
       console.error("Login Error:", error.message);

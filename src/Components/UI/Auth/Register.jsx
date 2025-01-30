@@ -409,6 +409,7 @@ const Register = () => {
                 <option value="">Select</option>
                 <option value="Interested">Interested</option>
                 <option value="NotInterested">Not Interested</option>
+                <option value="NotSure">Not Sure</option>
               </select>
               <label className="label">
                 {errors.BloodDonationStatus && (
@@ -469,6 +470,31 @@ const Register = () => {
                 {errors.BloodGroup && (
                   <p className="text-red-500">{errors.BloodGroup.message}</p>
                 )}
+              </label>
+            </div>
+            <div className="sm:col-span-3">
+              <h1 className="input-title">NID (both sides)</h1>
+              <input
+                type="file"
+                accept="image/*" // Only allows image files
+                multiple // Allows multiple files
+                className="w-full mb-2"
+                {...register("Nid")}
+              />
+            </div>
+
+            <div className="flex items-center sm:col-span-2">
+              <input
+                type="checkbox"
+                id="PhysicalComplexity"
+                className="mr-2"
+                {...register("PhysicalComplexity")}
+              />
+              <label htmlFor="PhysicalComplexity" className="input-title">
+                Any Physical Complexity?{" "}
+                <span className="text-xs text-accent">
+                  (like : Diabetics / Cancer / thyroid.... etc.)
+                </span>
               </label>
             </div>
           </div>

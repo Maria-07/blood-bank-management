@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 // Swiper components, modules and styles
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -10,9 +10,16 @@ import Campaign from "./Campaign";
 import { useGetAllCampaignsQuery } from "@/src/redux/features/campaign/campaignApi";
 
 const Campaigns = () => {
+  const [page, setPage] = useState(1);
+  const [size, setSize] = useState(10);
   //! get all Campaigns Data
-  const { data: Campaigns, isLoading, isError } = useGetAllCampaignsQuery();
-
+  const {
+    data: Campaigns,
+    isLoading,
+    isError,
+  } = useGetAllCampaignsQuery({ pageNo: page, pageSize: size });
+  // debugger;
+  console.log(Campaigns);
   useEffect(() => {
     if (!isLoading && !isError) {
       console.log("All Data", Campaigns);
