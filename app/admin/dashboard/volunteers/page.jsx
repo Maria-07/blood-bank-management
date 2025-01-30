@@ -95,6 +95,9 @@ const VolunteerList = () => {
             key !== "upazilaName" &&
             key !== "union" &&
             key !== "unionName" &&
+            key !== "nid" &&
+            key !== "nidUrls" &&
+            key !== "physicalComplexity" &&
             key !== "motherName" &&
             key !== "bloodDonationCount" &&
             key !== "imageUrl"
@@ -173,14 +176,7 @@ const VolunteerList = () => {
             <Loader></Loader>
           </div>
         ) : isError ? (
-          <div>
-            Somthing went wrong
-            {
-              (toast.error("Session expired"),
-              // Cookies.remove("accessToken"),
-              router.push("/login"))
-            }
-          </div>
+          <div>Something went wrong</div>
         ) : (
           <Table
             pagination={false}

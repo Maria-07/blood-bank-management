@@ -97,6 +97,9 @@ const ApproveVolunteerTable = () => {
             key !== "fatherName" &&
             key !== "upazila" &&
             key !== "upazilaName" &&
+            key !== "nid" &&
+            key !== "nidUrls" &&
+            key !== "physicalComplexity" &&
             key !== "union" &&
             key !== "unionName" &&
             key !== "motherName" &&

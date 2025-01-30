@@ -192,14 +192,14 @@ const UserProfileModal = ({ handleClose, clicked, record }) => {
                   <div>
                     <h1 className="text-xs text-accent">District</h1>
                     <h6 className="text-base font-semibold"> {districtName}</h6>
+                  </div>{" "}
+                  <div>
+                    <h1 className="text-xs text-accent">Upazila</h1>
+                    <h6 className="text-base font-semibold"> {upazilaName}</h6>
                   </div>
                   <div>
                     <h1 className="text-xs text-accent">Union</h1>
                     <h6 className="text-base font-semibold"> {unionName}</h6>
-                  </div>
-                  <div>
-                    <h1 className="text-xs text-accent">Upazila</h1>
-                    <h6 className="text-base font-semibold"> {upazilaName}</h6>
                   </div>
                 </div>
               </div>
