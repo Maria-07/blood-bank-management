@@ -8,7 +8,7 @@ import CreateCampaignModal from "@/src/Components/UI/Admin/Campaigns/CreateCampa
 import VolunteerListAction from "@/src/Components/UI/Admin/Campaigns/VolunteerListAction";
 import { useGetAllCampaignsQuery } from "@/src/redux/features/campaign/campaignApi";
 import { Pagination, Switch, Table } from "antd";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { FaPeopleCarryBox, FaPlus } from "react-icons/fa6";
 
 const CampaignList = () => {
@@ -53,6 +53,15 @@ const CampaignList = () => {
   //! Handle modals
   const handleAllVolunteers = () => setAllVolunteers(!allVolunteers);
   const handleCreateCampaign = () => setCreateCampaign(!createCampaign);
+
+  const tableDataWithKeys = useMemo(
+    () =>
+      tableData.map((item) => ({
+        ...item,
+        key: item.id || item.mobileNumber,
+      })),
+    [tableData]
+  );
 
   //! Construct columns only when tableData is available
   const columns = tableData.length
@@ -141,7 +150,7 @@ const CampaignList = () => {
             className="text-xs font-normal"
             columns={columns}
             bordered
-            dataSource={tableData}
+            dataSource={tableDataWithKeys}
             onChange={handleChange}
           />
         )}

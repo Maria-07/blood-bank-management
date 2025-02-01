@@ -1,6 +1,6 @@
 "use client";
 import Cookies from "js-cookie";
-import { Modal, Select } from "antd";
+import { DatePicker, Modal, Select } from "antd";
 import { useForm } from "react-hook-form";
 import { IoMdCloseCircleOutline } from "react-icons/io";
 import { MdDeleteOutline, MdDone } from "react-icons/md";
@@ -14,6 +14,18 @@ const CreateCampaignModal = ({ handleClose, clicked, refetch }) => {
   const [selectedVolunteers, setSelectedVolunteers] = useState([]);
   const [allVolunteers, setAllVolunteers] = useState([]);
   const accessToken = Cookies.get("accessToken");
+  const [page, setPage] = useState(1);
+  const [size, setSize] = useState(100);
+  const [StartDate, setStartDate] = useState("");
+  const [EndDate, setEndDate] = useState("");
+
+  const handleStartDate = (date, dateString) => {
+    setStartDate(dateString);
+  };
+
+  const handleEndDate = (date, dateString) => {
+    setEndDate(dateString);
+  };
 
   const {
     register,
@@ -27,9 +39,9 @@ const CreateCampaignModal = ({ handleClose, clicked, refetch }) => {
     data: volunteers,
     isLoading,
     isError,
-  } = useGetAllVolunteersQuery(undefined, {
-    refetchOnMountOrArgChange: true,
-    // pollingInterval: 5000,
+  } = useGetAllVolunteersQuery({
+    pageNo: page,
+    pageSize: size,
   });
   console.log("allVolunteers", allVolunteers);
 
@@ -70,6 +82,11 @@ const CreateCampaignModal = ({ handleClose, clicked, refetch }) => {
     //! Add selectedVolunteers
     formData.append("VolunteerList", selectedVolunteers);
 
+    if (StartDate && EndDate) {
+      formData.append("StartDate", StartDate);
+      formData.append("EndDate", EndDate);
+    }
+
     //! Log FormData entries for debugging
     for (const [key, value] of formData.entries()) {
       console.log(`${key}: ${value}`);
@@ -93,17 +110,17 @@ const CreateCampaignModal = ({ handleClose, clicked, refetch }) => {
           body: formData,
         }
       );
-
+      // debugger;
       console.log("response", response);
 
-      if (!response?.data?.ok) {
-        const errorText = await response.text();
-        toast.error(errorText);
-        console.error("Error response:", errorText);
-        Cookies.remove("accessToken");
-        router.push("/login");
-        return;
-      }
+      // if (!response?.data?.ok) {
+      //   const errorText = await response.text();
+      //   toast.error(errorText);
+      //   console.error("Error response:", errorText);
+      //   // Cookies.remove("accessToken");
+      //   // router.push("/login");
+      //   return;
+      // }
 
       const responseData = await response.json();
       console.log("Response Data:", responseData);
@@ -150,65 +167,92 @@ const CreateCampaignModal = ({ handleClose, clicked, refetch }) => {
             <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 my-3 mr-2 gap-x-2 gap-y-3">
               <div className="sm:col-span-2">
                 <label className="label flex items-center">
-                  <div className="modal-label-name">Campaign Name</div>
+                  <div className="modal-label-name">
+                    Campaign Name<span className="text-red-600">*</span>
+                  </div>
                 </label>
                 <input
                   type="text"
-                  name="Name"
                   className="modal-input-field ml-1 w-full"
                   {...register("Name", {
                     required: "Campaign name is required",
                   })}
                 />
+                {errors.Name && (
+                  <p className="text-red-500 text-sm">{errors.Name.message}</p>
+                )}
               </div>
+
               <div className="sm:col-span-2">
                 <label className="label flex items-center">
-                  <div className="modal-label-name">Institution Name</div>
+                  <div className="modal-label-name">
+                    Institution Name <span className="text-red-600">*</span>
+                  </div>
                 </label>
                 <input
                   type="text"
-                  name="InstitutionName"
                   className="modal-input-field ml-1 w-full"
                   {...register("InstitutionName", {
-                    required: "Campaign Institution Name is required",
+                    required: "Institution name is required",
                   })}
                 />
+                {errors.InstitutionName && (
+                  <p className="text-red-500 text-sm">
+                    {errors.InstitutionName.message}
+                  </p>
+                )}
               </div>
+
               <div>
                 <label className="label flex items-center">
-                  <div className="modal-label-name">Start Date</div>
+                  <div className="modal-label-name">
+                    Start Date <span className="text-red-600">*</span>
+                  </div>
                 </label>
-                <input
-                  type="date"
-                  name="StartDate"
-                  className="modal-input-field ml-1 w-full"
-                  {...register("StartDate", {
-                    required: "Start date is required",
-                  })}
+                <DatePicker
+                  className="w-full ml-1"
+                  format={{
+                    format: "YYYY-MM-DD",
+                    type: "mask",
+                  }}
+                  onChange={handleStartDate}
                 />
               </div>
+
               <div>
                 <label className="label flex items-center">
-                  <div className="modal-label-name">End Date</div>
+                  <div className="modal-label-name">
+                    End Date <span className="text-red-600">*</span>
+                  </div>
                 </label>
-                <input
-                  type="date"
-                  name="EndDate"
-                  className="modal-input-field ml-1 w-full"
-                  {...register("EndDate", { required: "End date is required" })}
+                <DatePicker
+                  className="w-full ml-1"
+                  format={{
+                    format: "YYYY-MM-DD",
+                    type: "mask",
+                  }}
+                  onChange={handleEndDate}
                 />
               </div>
+
               <div className="sm:col-span-2">
                 <label className="label flex items-center">
-                  <div className="modal-label-name">Address</div>
+                  <div className="modal-label-name">
+                    Address <span className="text-red-600">*</span>
+                  </div>
                 </label>
                 <input
                   type="text"
-                  name="Address"
                   className="modal-input-field ml-1 w-full"
                   {...register("Address", { required: "Address is required" })}
                 />
+                {errors.Address && (
+                  <p className="text-red-500 text-sm">
+                    {errors.Address.message}
+                  </p>
+                )}
               </div>
+
               <div className="sm:col-span-2">
                 <label className="label flex items-center">
                   <div className="modal-label-name">Select Volunteers</div>
@@ -222,21 +266,23 @@ const CreateCampaignModal = ({ handleClose, clicked, refetch }) => {
                   placeholder="Please select"
                   onChange={handleChange}
                   className="ml-1"
-                  options={volunteerOptions} // Use the mapped options here
+                  options={volunteerOptions}
                 />
               </div>
+
               <div className="sm:col-span-2">
                 <label className="label flex items-center">
                   <div className="modal-label-name">Campaign Banner</div>
                 </label>
                 <input
                   type="file"
-                  name="Banner"
+                  accept="image/*"
                   className="modal-input-field ml-1 w-full"
                   {...register("Banner")}
                 />
               </div>
             </div>
+
             <div className="bg-gray-200 py-[1px] mt-10"></div>
             <div className="flex items-end justify-end gap-2 mt-2">
               <button

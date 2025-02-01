@@ -15,3 +15,7 @@ export default function formatDate(dateString) {
 
   return `${dayWithSuffix} ${month}, ${year}`;
 }
+
+// export const normalFormatDate = (dateString) => {
+//   return new Date(dateString).toISOString().split("T")[0];
+// };

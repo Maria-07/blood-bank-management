@@ -1,6 +1,6 @@
 "use client";
 import { useGetAllVolunteersQuery } from "@/src/redux/features/volunteers/volunteers";
-import { Image, Modal, Select } from "antd";
+import { DatePicker, Image, Modal, Select } from "antd";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -9,9 +9,14 @@ import { IoMdCloseCircleOutline } from "react-icons/io";
 import { MdCancel, MdDeleteOutline, MdDone } from "react-icons/md";
 import { toast } from "react-toastify";
 import { FiEdit } from "react-icons/fi";
+import { normalFormatDate } from "@/src/shared/ReusedFunctions";
 
 const CampaignEditModal = ({ handleClose, clicked, record, refetch }) => {
+  // debugger;
+  console.log(record);
   const [bannerEdit, setBannerEdit] = useState(false);
+  const [page, setPage] = useState(1);
+  const [size, setSize] = useState(100);
   const router = useRouter();
   const id = record?.id;
   const {
@@ -23,7 +28,19 @@ const CampaignEditModal = ({ handleClose, clicked, record, refetch }) => {
     name,
     volunteerList,
   } = record;
-  console.log(volunteerList);
+
+  const [StartDateEdit, setStartDateEdit] = useState(
+    Date(startDate).toString().split("T")[0]
+  );
+  const [EndDateEdit, setEndDateEdit] = useState("");
+
+  const handleStartDateEdit = (date, dateString) => {
+    setStartDateEdit(dateString);
+  };
+
+  const handleEndDateEdit = (date, dateString) => {
+    setEndDateEdit(dateString);
+  };
 
   // Parse volunteerList
   const parsedVolunteerList = volunteerList || [];
@@ -45,8 +62,9 @@ const CampaignEditModal = ({ handleClose, clicked, record, refetch }) => {
     data: volunteers,
     isLoading,
     isError,
-  } = useGetAllVolunteersQuery(undefined, {
-    refetchOnMountOrArgChange: true,
+  } = useGetAllVolunteersQuery({
+    pageNo: page,
+    pageSize: size,
   });
 
   console.log(volunteers?.data);
@@ -83,6 +101,11 @@ const CampaignEditModal = ({ handleClose, clicked, record, refetch }) => {
 
     formData.append("VolunteerList", selectedVolunteers);
     formData.append("id", id);
+
+    if (StartDateEdit && EndDateEdit) {
+      formData.append("StartDate", StartDateEdit);
+      formData.append("EndDate", EndDateEdit);
+    }
 
     try {
       if (!accessToken) {
@@ -167,20 +190,26 @@ const CampaignEditModal = ({ handleClose, clicked, record, refetch }) => {
             </div>
             <div>
               <label className="modal-label-name">Start Date</label>
-              <input
-                defaultValue={startDate?.slice(0, 10)}
-                type="date"
-                className="modal-input-field ml-1 w-full"
-                {...register("startDate")}
+              <DatePicker
+                className="w-full ml-1"
+                format={{
+                  format: "YYYY-MM-DD",
+                  type: "mask",
+                }}
+                // defaultValue={startDate}
+                onChange={handleStartDateEdit}
               />
             </div>
             <div>
               <label className="modal-label-name">End Date</label>
-              <input
-                defaultValue={endDate?.slice(0, 10)}
-                type="date"
-                className="modal-input-field ml-1 w-full"
-                {...register("endDate")}
+              <DatePicker
+                className="w-full ml-1"
+                format={{
+                  format: "YYYY-MM-DD",
+                  type: "mask",
+                }}
+                // defaultValue={endDate}
+                onChange={handleEndDateEdit}
               />
             </div>
             <div className="sm:col-span-2">
