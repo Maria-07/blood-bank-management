@@ -2,9 +2,10 @@
 import React, { useState } from "react";
 import { FaRegEye } from "react-icons/fa6";
 import UserProfileModal from "../../User/UserProfileModal";
+import { useAuth } from "@/src/Hook/AuthContext";
 
 const ActionModal = ({ record }) => {
-  // console.log(record, "record");
+  const { userType } = useAuth();
 
   const [UserDetails, setUserDetails] = useState(false);
   const handleUserDetails = () => {
@@ -24,6 +25,7 @@ const ActionModal = ({ record }) => {
           record={record}
           handleClose={handleUserDetails}
           clicked={UserDetails}
+          admin={userType === "Admin" ? true : false}
         ></UserProfileModal>
       )}
     </div>

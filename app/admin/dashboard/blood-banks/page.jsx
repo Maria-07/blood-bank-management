@@ -3,17 +3,26 @@
 import Loader from "@/src/Components/Layouts/Loader";
 import ActionModal from "@/src/Components/UI/Admin/Volunteers/ActionModal";
 import PendingVolunteersApproved from "@/src/Components/UI/Admin/Volunteers/PendingVolunteersApproved";
+import UserDeleteModal from "@/src/Components/UI/User/UserDeleteModal";
 import { useGetAllUserMutation } from "@/src/redux/features/auth/userApi";
 import FilteredUserData from "@/src/shared/FilteredUserData";
 import { Pagination, Table } from "antd";
 import React, { useEffect, useState, useMemo } from "react";
 import { LuFilter, LuFilterX } from "react-icons/lu";
+import { MdDeleteForever } from "react-icons/md";
 
 const BloodBanks = () => {
   const [filterShow, setFilterShow] = useState(false);
   const [rowCount, setRowCount] = useState(0);
   const [page, setPage] = useState(1);
   const [size, setSize] = useState(10);
+  const [deleteModal, setDeleteModal] = useState(false);
+  const [id, setId] = useState();
+
+  const handleDeleteModal = (record) => {
+    setDeleteModal(!deleteModal);
+    setId(record);
+  };
 
   const [getAllUsers, { data, isLoading, isError }] = useGetAllUserMutation();
 
@@ -90,13 +99,19 @@ const BloodBanks = () => {
             key !== "union" &&
             key !== "unionName" &&
             key !== "motherName" &&
+            key !== "physicalComplexity" &&
+            key !== "nid" &&
+            key !== "nidUrls" &&
             key !== "bloodDonationCount" &&
             key !== "imageUrl"
         ) // Exclude unnecessary keys
         .map((key, index) => ({
-          title: key
-            .replace(/([a-z])([A-Z])/g, "$1 $2") // Add spaces between camelCase
-            .replace(/^./, (char) => char.toUpperCase()), // Capitalize the first letter
+          title:
+            key === "isApproved"
+              ? "Action"
+              : key // Rename column title
+                  .replace(/([a-z])([A-Z])/g, "$1 $2") // Add spaces between camelCase
+                  .replace(/^./, (char) => char.toUpperCase()), // Capitalize first letter
           dataIndex: key,
           key,
           filters: generateFilterValues(tableData, key),
@@ -151,13 +166,25 @@ const BloodBanks = () => {
       key: "view",
       render: (_, record) => <ActionModal record={record} />,
     });
+    columns.push({
+      title: "Delete",
+      key: "view",
+      render: (_, record) => (
+        <div
+          onClick={() => handleDeleteModal(record)}
+          className="flex items-center justify-center text-secondary"
+        >
+          <MdDeleteForever />
+        </div>
+      ),
+    });
   }
 
   return (
     <div>
       <div className="flex items-center justify-between gap-2 mb-5">
         {" "}
-        <h1 className="text-orange-500 text-base">All Users in Blood Bank</h1>
+        <h1 className="text-orange-500 text-base">User Management</h1>
         <button
           className="border p-1 rounded-sm"
           onClick={() => {
@@ -205,6 +232,15 @@ const BloodBanks = () => {
           pageSize={size}
         />
       </div>
+
+      {deleteModal && (
+        <UserDeleteModal
+          record={id}
+          refetch={refetch}
+          clicked={deleteModal}
+          handleClose={handleDeleteModal}
+        />
+      )}
     </div>
   );
 };

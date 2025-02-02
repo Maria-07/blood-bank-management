@@ -1,11 +1,12 @@
 import { Image, Modal, Tooltip } from "antd";
+import dayjs from "dayjs";
 import React from "react";
 import { useForm } from "react-hook-form";
 import { FaHandHoldingHeart, FaRegHandBackFist } from "react-icons/fa6";
 import { IoMdCloseCircleOutline } from "react-icons/io";
 import { MdDeleteOutline, MdDone } from "react-icons/md";
 
-const UserProfileModal = ({ handleClose, clicked, record }) => {
+const UserProfileModal = ({ handleClose, clicked, record, admin }) => {
   console.log(record);
 
   const {
@@ -78,14 +79,16 @@ const UserProfileModal = ({ handleClose, clicked, record }) => {
             <div>
               <div className="border-[1px] p-5 rounded-md mb-5">
                 <div className="flex items-center flex-wrap gap-3">
-                  <Image
-                    className="border rounded-full"
-                    src={`${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}/${imageUrl}`}
-                    // src={profilePicture}
-                    width={80}
-                    height={80}
-                    alt="Picture of the author"
-                  ></Image>
+                  <div className="h-[80px] w-[80px] overflow-hidden rounded-full">
+                    <Image
+                      className="border object-cover w-full h-full"
+                      src={`${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}/${imageUrl}`}
+                      width={80}
+                      height={80}
+                      alt="Picture of the author"
+                    />
+                  </div>
+
                   <div>
                     <h1 className="text-capitalize font-semibold text-lg">
                       {fullName}
@@ -130,7 +133,8 @@ const UserProfileModal = ({ handleClose, clicked, record }) => {
                   <div>
                     <h1 className="text-xs text-accent">Last Donation Date</h1>
                     <h6 className="text-base font-semibold">
-                      {lastDonationTime}
+                      {/* {dayjs(lastDonationTime, "YYYY-MM-DD")} */}
+                      {lastDonationTime?.split("T")[0]}
                     </h6>
                   </div>
                   <div>
@@ -180,6 +184,22 @@ const UserProfileModal = ({ handleClose, clicked, record }) => {
                       {" "}
                       {bloodDonationCount} times
                     </h6>
+                  </div>
+                  <div>
+                    <h1 className="text-xs text-accent">NID details</h1>
+                    <div className="flex items-center mt-2">
+                      {record?.nidUrls?.map((n, i) => {
+                        <Image
+                          key={i}
+                          className="border "
+                          src={`${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}/${n}`}
+                          // src={profilePicture}
+                          width={100}
+                          height={50}
+                          alt="Picture of the author"
+                        ></Image>;
+                      })}{" "}
+                    </div>
                   </div>
                 </div>
               </div>

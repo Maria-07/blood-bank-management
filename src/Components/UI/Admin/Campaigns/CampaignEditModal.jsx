@@ -10,6 +10,8 @@ import { MdCancel, MdDeleteOutline, MdDone } from "react-icons/md";
 import { toast } from "react-toastify";
 import { FiEdit } from "react-icons/fi";
 import { normalFormatDate } from "@/src/shared/ReusedFunctions";
+import { format, parseISO } from "date-fns";
+import dayjs from "dayjs";
 
 const CampaignEditModal = ({ handleClose, clicked, record, refetch }) => {
   // debugger;
@@ -28,19 +30,16 @@ const CampaignEditModal = ({ handleClose, clicked, record, refetch }) => {
     name,
     volunteerList,
   } = record;
+  const dateFormat = "yyyy-MM-dd";
 
-  const [StartDateEdit, setStartDateEdit] = useState(
-    Date(startDate).toString().split("T")[0]
+  // Convert initial string dates to dayjs objects
+  const [StartDateEdit, setStartDateEdit] =
+    useState();
+    // startDate ? dayjs(startDate).format("YYYY-MM-DD") : null
+    // startDate?.split("T")[0]
+  const [EndDateEdit, setEndDateEdit] = useState(
+    endDate ? dayjs(endDate, "YYYY-MM-DD") : null
   );
-  const [EndDateEdit, setEndDateEdit] = useState("");
-
-  const handleStartDateEdit = (date, dateString) => {
-    setStartDateEdit(dateString);
-  };
-
-  const handleEndDateEdit = (date, dateString) => {
-    setEndDateEdit(dateString);
-  };
 
   // Parse volunteerList
   const parsedVolunteerList = volunteerList || [];
@@ -128,10 +127,12 @@ const CampaignEditModal = ({ handleClose, clicked, record, refetch }) => {
       if (!response.ok) {
         const errorText = await response.text();
         toast.error(errorText || "Failed to update campaign.");
-        router.push("/login");
         return;
       }
       const responseData = await response.json();
+      // debugger;
+      console.log(responseData);
+
       if (responseData?.data?.isSuccess) {
         toast.success(
           responseData?.data?.message || "Campaign updated successfully!"
@@ -183,33 +184,27 @@ const CampaignEditModal = ({ handleClose, clicked, record, refetch }) => {
               </label>
               <input
                 type="text"
-                name="InstitutionName"
+                name="Institute"
                 className="modal-input-field ml-1 w-full"
-                {...register("InstitutionName")}
+                {...register("Institute")}
               />
             </div>
             <div>
               <label className="modal-label-name">Start Date</label>
               <DatePicker
                 className="w-full ml-1"
-                format={{
-                  format: "YYYY-MM-DD",
-                  type: "mask",
-                }}
-                // defaultValue={startDate}
-                onChange={handleStartDateEdit}
+                format={dateFormat}
+                defaultValue={StartDateEdit} // dayjs object
+                onChange={(date) => setStartDateEdit(date)}
               />
             </div>
             <div>
               <label className="modal-label-name">End Date</label>
               <DatePicker
                 className="w-full ml-1"
-                format={{
-                  format: "YYYY-MM-DD",
-                  type: "mask",
-                }}
-                // defaultValue={endDate}
-                onChange={handleEndDateEdit}
+                format={dateFormat}
+                defaultValue={EndDateEdit} // dayjs object
+                onChange={(date) => setEndDateEdit(date)}
               />
             </div>
             <div className="sm:col-span-2">

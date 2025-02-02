@@ -113,15 +113,6 @@ const CreateCampaignModal = ({ handleClose, clicked, refetch }) => {
       // debugger;
       console.log("response", response);
 
-      // if (!response?.data?.ok) {
-      //   const errorText = await response.text();
-      //   toast.error(errorText);
-      //   console.error("Error response:", errorText);
-      //   // Cookies.remove("accessToken");
-      //   // router.push("/login");
-      //   return;
-      // }
-
       const responseData = await response.json();
       console.log("Response Data:", responseData);
 
@@ -192,7 +183,7 @@ const CreateCampaignModal = ({ handleClose, clicked, refetch }) => {
                 <input
                   type="text"
                   className="modal-input-field ml-1 w-full"
-                  {...register("InstitutionName", {
+                  {...register("Institute", {
                     required: "Institution name is required",
                   })}
                 />
