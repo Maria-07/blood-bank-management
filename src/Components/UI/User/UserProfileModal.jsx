@@ -101,7 +101,7 @@ const UserProfileModal = ({ handleClose, clicked, record, admin }) => {
                   Personal information
                 </h1>
 
-                <div className="grid grid-cols-1 lg:grid-cols-2 my-3 mr-2 gap-x-2 gap-y-3">
+                <div className="grid grid-cols-1 lg:grid-cols-2 mt-3 mr-2 gap-x-2 gap-y-3">
                   <div>
                     <h1 className="text-xs text-accent">Full Name</h1>
                     <h6 className="text-base font-semibold"> {fullName}</h6>
@@ -178,21 +178,27 @@ const UserProfileModal = ({ handleClose, clicked, record, admin }) => {
                       {bloodDonationCount} times
                     </h6>
                   </div>
-                  {admin && (
+                  {admin && record?.nidUrls?.length > 0 && (
                     <div>
                       <h1 className="text-xs text-accent">NID details</h1>
-                      <div className="flex items-center mt-2">
-                        {record?.nidUrls?.map((n, i) => {
-                          <Image
-                            key={i}
-                            className="border "
-                            src={`${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}/${n}`}
-                            // src={profilePicture}
-                            width={100}
-                            height={50}
-                            alt="Picture of the author"
-                          ></Image>;
-                        })}{" "}
+                      <div className="flex items-center mt-2 gap-2">
+                        {record.nidUrls.map((n, i) => {
+                          console.log(
+                            `${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}/${n}`
+                          );
+
+                          return (
+                            <div key={i} className="overflow-hidden">
+                              <Image
+                                className="border object-cover w-full h-full"
+                                src={`${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}/${n}`}
+                                width={100}
+                                height={80}
+                                alt="NID image"
+                              />
+                            </div>
+                          );
+                        })}
                       </div>
                     </div>
                   )}

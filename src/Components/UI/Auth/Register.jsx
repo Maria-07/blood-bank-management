@@ -79,9 +79,23 @@ const Register = () => {
 
     //! Create FormData from input data
     const formData = new FormData();
+
     Object.entries(data).forEach(([key, value]) => {
-      if (key === "ProfilePicture" && value.length > 0) {
-        formData.append(key, value[0]); // Append file
+      if (
+        key === "ProfilePicture" &&
+        value instanceof FileList &&
+        value.length > 0
+      ) {
+        formData.append(key, value[0]); // Append single file
+      } else if (
+        key === "Nid" &&
+        value instanceof FileList &&
+        value.length > 0
+      ) {
+        // Ensure value is a FileList before looping
+        Array.from(value).forEach((file, index) => {
+          formData.append("Nid", file);
+        });
       } else {
         formData.append(key, value);
       }
@@ -377,19 +391,6 @@ const Register = () => {
                 type="file"
                 className=" w-full mb-2"
                 {...register("ProfilePicture")}
-              />
-            </div>
-
-            <div>
-              <h1 className="input-title">Last Donation Time</h1>
-
-              <DatePicker
-                className="w-full"
-                format={{
-                  format: "YYYY-MM-DD",
-                  type: "mask",
-                }}
-                onChange={handleDonationDate}
               />
             </div>
 

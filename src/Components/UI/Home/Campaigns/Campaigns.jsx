@@ -40,7 +40,7 @@ const Campaigns = () => {
         </p>
       </div>
 
-      <div className="mt-16 mx-auto px-4">
+      <div className="mt-16 mx-auto px-4 md:w-[90%] sm:mx-auto">
         <Swiper
           slidesPerView={1}
           spaceBetween={20}
@@ -55,7 +55,7 @@ const Campaigns = () => {
             768: { slidesPerView: 2, spaceBetween: 30 },
             1024: { slidesPerView: 3, spaceBetween: 40 },
           }}
-          modules={[Autoplay, Navigation]} // Ensure Autoplay module is included
+          modules={[Autoplay]} // Ensure Autoplay module is included
           className="mySwiper"
         >
           {campaigns?.data?.map((campaign, index) => (

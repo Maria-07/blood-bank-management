@@ -5,21 +5,25 @@ import Loader from "@/src/Components/Layouts/Loader";
 // import { Campaigns } from "@/src/Components/Data/Data";
 import ActionModal from "@/src/Components/UI/Admin/Campaigns/ActionModal";
 import CreateCampaignModal from "@/src/Components/UI/Admin/Campaigns/CreateCampaignModal";
+import MediaUploadAndDeleteModal from "@/src/Components/UI/Admin/Campaigns/MediaUploadAndDeleteModal";
 import VolunteerListAction from "@/src/Components/UI/Admin/Campaigns/VolunteerListAction";
 import { useGetAllCampaignsQuery } from "@/src/redux/features/campaign/campaignApi";
 import { Pagination, Switch, Table } from "antd";
 import React, { useEffect, useMemo, useState } from "react";
 import { FaPeopleCarryBox, FaPlus } from "react-icons/fa6";
+import { MdPermMedia } from "react-icons/md";
 
 const CampaignList = () => {
   const [tableData, setTableData] = useState([]);
   const [allVolunteers, setAllVolunteers] = useState(false);
   const [createCampaign, setCreateCampaign] = useState(false);
+  const [media, setMedia] = useState(false);
   const [filteredInfo, setFilteredInfo] = useState({});
   const [sortedInfo, setSortedInfo] = useState({});
   const [rowCount, setRowCount] = useState(0);
   const [page, setPage] = useState(1);
   const [size, setSize] = useState(10);
+  const [record, setRecord] = useState({});
 
   //! Get all Campaigns Data
   const { data, isLoading, isError, refetch } = useGetAllCampaignsQuery({
@@ -53,6 +57,7 @@ const CampaignList = () => {
   //! Handle modals
   const handleAllVolunteers = () => setAllVolunteers(!allVolunteers);
   const handleCreateCampaign = () => setCreateCampaign(!createCampaign);
+  const handleMedia = () => setMedia(!media);
 
   const tableDataWithKeys = useMemo(
     () =>
@@ -113,6 +118,22 @@ const CampaignList = () => {
 
   //! Add action column if data exists
   if (tableData.length) {
+    columns.push({
+      title: "Media",
+      key: "media",
+      width: 50,
+      render: (text, record) => (
+        <div
+          onClick={() => {
+            setRecord(record);
+            handleMedia();
+          }}
+          className="flex items-center justify-center hover:text-secondary"
+        >
+          <MdPermMedia />
+        </div>
+      ),
+    });
     columns.push({
       title: "Action",
       key: "action",
@@ -180,6 +201,14 @@ const CampaignList = () => {
           refetch={refetch}
           handleClose={handleCreateCampaign}
           clicked={createCampaign}
+        />
+      )}
+      {media && (
+        <MediaUploadAndDeleteModal
+          refetch={refetch}
+          handleClose={handleMedia}
+          clicked={media}
+          record={record}
         />
       )}
     </div>
