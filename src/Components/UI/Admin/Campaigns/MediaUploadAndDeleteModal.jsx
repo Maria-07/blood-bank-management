@@ -36,13 +36,11 @@ const MediaUploadAndDeleteModal = ({
     const formData = new FormData();
 
     Object.entries(data).forEach(([key, value]) => {
-      //   if (key === "Images" && value instanceof FileList && value.length > 0) {
-      //     Array.from(value).forEach((file) => {
-      //       formData.append("Images", file);
-      //     });
-      //   } else
-
-      if (key === "VideoUrls" && Array.isArray(value)) {
+      if (key === "Images" && value instanceof FileList && value.length > 0) {
+        Array.from(value).forEach((file) => {
+          formData.append("Images", file);
+        });
+      } else if (key === "VideoUrls" && Array.isArray(value)) {
         formData.append("VideoUrls", JSON.stringify(value)); // ✅ Send as JSON string if backend expects an array
       } else {
         formData.append(key, value);
@@ -126,7 +124,7 @@ const MediaUploadAndDeleteModal = ({
                 accept="image/*" // Only allows image files
                 multiple // Allows multiple files
                 className="w-full mb-2"
-                {...register("Nid")}
+                {...register("Images")}
               />
             </div>
             <div className="text-center text-base my-4">
