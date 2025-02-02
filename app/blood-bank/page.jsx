@@ -4,6 +4,7 @@ import { useGetAllDonorMutation } from "@/src/redux/features/auth/userApi";
 import FilteredUserData from "@/src/shared/FilteredUserData";
 import DonarCard from "@/src/Components/UI/Home/DonarCards/DonarCard";
 import { Pagination } from "antd";
+import Loader from "@/src/Components/Layouts/Loader";
 
 const BloodBankPage = () => {
   const [page, setPage] = useState(1);
@@ -62,6 +63,7 @@ const BloodBankPage = () => {
               handleFilteredData={handleFilteredData}
             />
           </div>
+          {isLoading && <Loader></Loader>}
           <div className="gap-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 2xl:grid-cols-4 mt-20">
             {donors?.map((data, i) => (
               <DonarCard record={data} key={i}></DonarCard>

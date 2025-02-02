@@ -7,26 +7,6 @@ import { IoIosPeople } from "react-icons/io";
 import formatDate from "@/src/shared/ReusedFunctions";
 
 const Campaign = ({ campaign }) => {
-  // console.log("single campaign", campaign);
-
-  // function formatDate(dateString) {
-  //   const date = new Date(dateString);
-
-  //   // Get day, month, and year
-  //   const day = date.getDate();
-  //   const month = date.toLocaleString("default", { month: "long" });
-  //   const year = date.getFullYear();
-
-  //   // Add ordinal suffix to the day
-  //   const dayWithSuffix =
-  //     day +
-  //     ["th", "st", "nd", "rd"][
-  //       day % 10 > 3 || Math.floor((day % 100) / 10) === 1 ? 0 : day % 10
-  //     ];
-
-  //   return `${dayWithSuffix} ${month}, ${year}`;
-  // }
-
   const { address, bannerUrl, startDate, endDate, name, volunteerList } =
     campaign;
 

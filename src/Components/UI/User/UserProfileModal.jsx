@@ -36,13 +36,6 @@ const UserProfileModal = ({ handleClose, clicked, record, admin }) => {
     userType,
   } = record;
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-  } = useForm();
-  const onSubmit = async (data) => {};
   return (
     <div>
       <Modal
@@ -75,7 +68,7 @@ const UserProfileModal = ({ handleClose, clicked, record, admin }) => {
 
           <div className="bg-gray-200 pt-[1px] my-3"></div>
 
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <form>
             <div>
               <div className="border-[1px] p-5 rounded-md mb-5">
                 <div className="flex items-center flex-wrap gap-3">
@@ -185,22 +178,24 @@ const UserProfileModal = ({ handleClose, clicked, record, admin }) => {
                       {bloodDonationCount} times
                     </h6>
                   </div>
-                  <div>
-                    <h1 className="text-xs text-accent">NID details</h1>
-                    <div className="flex items-center mt-2">
-                      {record?.nidUrls?.map((n, i) => {
-                        <Image
-                          key={i}
-                          className="border "
-                          src={`${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}/${n}`}
-                          // src={profilePicture}
-                          width={100}
-                          height={50}
-                          alt="Picture of the author"
-                        ></Image>;
-                      })}{" "}
+                  {admin && (
+                    <div>
+                      <h1 className="text-xs text-accent">NID details</h1>
+                      <div className="flex items-center mt-2">
+                        {record?.nidUrls?.map((n, i) => {
+                          <Image
+                            key={i}
+                            className="border "
+                            src={`${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}/${n}`}
+                            // src={profilePicture}
+                            width={100}
+                            height={50}
+                            alt="Picture of the author"
+                          ></Image>;
+                        })}{" "}
+                      </div>
                     </div>
-                  </div>
+                  )}
                 </div>
               </div>
               <div className="border-[1px] p-5 rounded-md mb-5">

@@ -1,82 +1,69 @@
 "use client";
 import React, { useEffect, useState } from "react";
-// Swiper components, modules and styles
-import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
-import "swiper/css/navigation";
 import "swiper/css/pagination";
-import Campaign from "./Campaign";
+import "swiper/css/navigation";
 import { useGetAllRunningCampaignsQuery } from "@/src/redux/features/campaign/campaignApi";
+import CampaignCard from "../../Campaigns/CampaignCard";
+import { Autoplay, Pagination, Navigation } from "swiper/modules";
 
 const Campaigns = () => {
-  const [page, setPage] = useState(1);
-  const [size, setSize] = useState(100);
-  //! get all Campaigns Data
+  const [page] = useState(1);
+  const [size] = useState(100);
+
+  //! Fetch all running campaigns
   const {
-    data: Campaigns,
+    data: campaigns,
     isLoading,
     isError,
-  } = useGetAllRunningCampaignsQuery({ pageNo: page, pageSize: size });
-  // debugger;
-  console.log(Campaigns);
+  } = useGetAllRunningCampaignsQuery({
+    pageNo: page,
+    pageSize: size,
+  });
+
   useEffect(() => {
     if (!isLoading && !isError) {
-      console.log("All Data", Campaigns);
-    } else {
-      console.log(Campaigns);
+      console.log("All Data", campaigns);
     }
-  }, [Campaigns, isLoading, isError]);
+  }, [campaigns, isLoading, isError]);
+
   return (
-    <div className="bg-[#ffe8e8]  ">
-      {" "}
-      <div className=" py-20 my-24 px-4 md:w-[90%] sm:mx-auto ">
-        <h1 className=" text-6xl font-semibold text-primary text-center">
+    <div className="bg-[#ffe8e8] py-16">
+      <div className="max-w-6xl mx-auto px-6 text-center">
+        <h1 className="text-4xl md:text-6xl font-bold text-primary">
           Campaigns
         </h1>
-        <p className="text-xl font-secondary text-accent text-center lg:px-[200px] my-5">
+        <p className="text-lg md:text-xl text-accent font-secondary mt-4 lg:px-24">
           Dive into our latest blogs, explore the fascinating world of
-          literature, and let the words ignite your imagination. BookLink&apos;s
-          latest blogs are your gateway to endless literary discoveries and a
-          source of inspiration for your reading journey.
+          literature, and let the words ignite your imagination.
         </p>
-        <div className="mt-24">
-          <>
-            <Swiper
-              slidesPerView={1}
-              spaceBetween={30}
-              pagination={{
-                clickable: true,
-              }}
-              breakpoints={{
-                640: {
-                  slidesPerView: 2,
-                  spaceBetween: 20,
-                },
-                768: {
-                  slidesPerView: 2,
-                  spaceBetween: 40,
-                },
-                1024: {
-                  slidesPerView: 2,
-                  spaceBetween: 50,
-                },
-                1080: {
-                  slidesPerView: 4,
-                  spaceBetween: 50,
-                },
-              }}
-              modules={[Pagination]}
-              className="mySwiper"
-            >
-              {Campaigns?.data?.map((campaign, i) => (
-                <SwiperSlide key={i}>
-                  <Campaign campaign={campaign}></Campaign>
-                </SwiperSlide>
-              ))}
-            </Swiper>
-          </>
-        </div>
+      </div>
+
+      <div className="mt-16 mx-auto px-4">
+        <Swiper
+          slidesPerView={1}
+          spaceBetween={20}
+          autoplay={{
+            delay: 3000, // 3 seconds delay
+            disableOnInteraction: false, // Keep autoplay even after user interaction
+          }}
+          navigation={true} // Enables navigation arrows
+          pagination={{ clickable: true }}
+          breakpoints={{
+            640: { slidesPerView: 2, spaceBetween: 20 },
+            768: { slidesPerView: 2, spaceBetween: 30 },
+            1024: { slidesPerView: 3, spaceBetween: 40 },
+          }}
+          modules={[Autoplay, Navigation]} // Ensure Autoplay module is included
+          className="mySwiper"
+        >
+          {campaigns?.data?.map((campaign, index) => (
+            <SwiperSlide key={index}>
+              <CampaignCard campaign={campaign} />
+            </SwiperSlide>
+          ))}
+        </Swiper>
       </div>
     </div>
   );
