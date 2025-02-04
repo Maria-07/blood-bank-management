@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import { MdDeleteOutline } from "react-icons/md";
 
 const DynamicAdd = ({ setVideoUrls }) => {
   const [fields, setFields] = useState([""]);
@@ -27,24 +28,24 @@ const DynamicAdd = ({ setVideoUrls }) => {
 
   return (
     <div className="">
-      <h1 className="text-xl font-bold mb-4">Dynamic Input Fields</h1>
+      <h1 className="input-title">Campaign&apos;s youtube links</h1>
 
       {fields.map((field, index) => (
-        <div key={index} className="flex items-center gap-2 mb-3">
+        <div key={index} className="flex items-center gap-1 mb-3">
           <input
             type="text"
             value={field}
             onChange={(e) => handleInputChange(index, e.target.value)}
             placeholder={`Enter value ${index + 1}`}
-            className="border p-2 rounded w-full"
+            className="modal-input-field w-full"
           />
           <button
             type="button"
             onClick={() => handleRemoveField(index)}
-            className="bg-red-500 text-white px-3 py-1 rounded"
+            className="bg-primary text-white text-lg px-3 py-2 rounded"
             disabled={fields.length === 1} // Prevent removing last field
           >
-            ✖
+            <MdDeleteOutline />
           </button>
         </div>
       ))}
@@ -52,7 +53,7 @@ const DynamicAdd = ({ setVideoUrls }) => {
       <button
         type="button"
         onClick={handleAddField}
-        className="mt-2 bg-blue-500 text-white px-4 py-2 rounded"
+        className="input-button mt-1"
       >
         ➕ Add Field
       </button>

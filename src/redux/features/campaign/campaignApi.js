@@ -16,8 +16,19 @@ const campaignApi = api.injectEndpoints({
         method: "GET",
       }),
     }),
+    // get all images
+    getAllImages: builder.mutation({
+      query: (data) => ({
+        url: "/media/getcampaignmedia",
+        method: "POST",
+        body: data,
+      }),
+    }),
   }),
 });
 
-export const { useGetAllCampaignsQuery, useGetAllRunningCampaignsQuery } =
-  campaignApi;
+export const {
+  useGetAllCampaignsQuery,
+  useGetAllRunningCampaignsQuery,
+  useGetAllImagesMutation,
+} = campaignApi;

@@ -1,24 +1,45 @@
 import DynamicAdd from "@/src/shared/DynamicAdd";
-import { Modal } from "antd";
+import { Modal, Tabs } from "antd";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { IoMdCloseCircleOutline } from "react-icons/io";
 import { MdDeleteOutline, MdDone } from "react-icons/md";
 import { toast } from "react-toastify";
+import Images from "./Images";
+import { useGetAllImagesMutation } from "@/src/redux/features/campaign/campaignApi";
 
-const MediaUploadAndDeleteModal = ({
-  handleClose,
-  clicked,
-  record,
-  refetch,
-}) => {
+const MediaUploadAndDeleteModal = ({ handleClose, clicked, record }) => {
   const [VideoUrls, setVideoUrls] = useState([]);
   const accessToken = Cookies.get("accessToken");
   const router = useRouter();
   const id = record?.id;
   console.log("record", record?.id);
+
+  //! Get all Images Data
+  const [getAllImages, { data, isLoading, isError }] =
+    useGetAllImagesMutation();
+
+  const refetch = async () => {
+    try {
+      const response = await getAllImages({
+        imagePageNo: 1,
+        imagePageSize: 10,
+        videoPageNo: 0,
+        videoPageSize: 0,
+      }).unwrap();
+      console.log(data);
+    } catch (error) {
+      console.error("Error fetching users:", error);
+    }
+  };
+
+  useEffect(() => {
+    refetch();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const {
     register,
     handleSubmit,
@@ -30,6 +51,41 @@ const MediaUploadAndDeleteModal = ({
 
   console.log("VideoUrls", VideoUrls);
 
+  const tabItems = [
+    {
+      label: <h1 className="text-dark text-base hover:text-primary">Images</h1>,
+      key: 1,
+      children: (
+        <>
+          <div>
+            <h1 className="input-title">Images</h1>
+            <input
+              type="file"
+              accept="image/*" // Only allows image files
+              multiple // Allows multiple files
+              className="w-full mb-2"
+              {...register("Images")}
+            />
+            <hr />
+            <Images></Images>
+          </div>
+        </>
+      ),
+    },
+    {
+      label: <h1 className="text-dark text-base hover:text-primary">Videos</h1>,
+      key: 2,
+      children: (
+        <>
+          {" "}
+          <div className="">
+            <DynamicAdd setVideoUrls={setVideoUrls}></DynamicAdd>
+          </div>
+        </>
+      ),
+    },
+  ];
+
   const onSubmit = async (data) => {
     console.log("Create Media data =", data);
 
@@ -40,8 +96,6 @@ const MediaUploadAndDeleteModal = ({
         Array.from(value).forEach((file) => {
           formData.append("Images", file);
         });
-      } else if (key === "VideoUrls" && Array.isArray(value)) {
-        formData.append("VideoUrls", JSON.stringify(value)); // ✅ Send as JSON string if backend expects an array
       } else {
         formData.append(key, value);
       }
@@ -49,6 +103,13 @@ const MediaUploadAndDeleteModal = ({
 
     if (record) {
       formData.append("ModelId", record?.id);
+    }
+
+    // ✅ Ensure VideoUrls is an array of strings and append correctly
+    if (Array.isArray(VideoUrls) && VideoUrls.length > 0) {
+      VideoUrls.forEach((url) => {
+        formData.append("VideoUrls", url); // Append each URL separately
+      });
     }
 
     //! Log FormData entries for debugging
@@ -82,6 +143,7 @@ const MediaUploadAndDeleteModal = ({
         toast.success(
           responseData?.data?.message || "Media Uploaded successfully!"
         );
+        handleClose();
       } else {
         toast.error(responseData?.data?.message);
       }
@@ -92,13 +154,13 @@ const MediaUploadAndDeleteModal = ({
   };
 
   return (
-    <div>
+    <div className="">
       {" "}
       <Modal
         open={clicked}
         centered
         footer={null}
-        width={700}
+        width={900}
         closable={false}
         className="box"
       >
@@ -115,25 +177,20 @@ const MediaUploadAndDeleteModal = ({
           </div>
 
           <div className="bg-gray-200 pt-[1px] mt-3"></div>
-
           <form onSubmit={handleSubmit(onSubmit)}>
-            <div>
-              <h1 className="input-title">Images</h1>
-              <input
-                type="file"
-                accept="image/*" // Only allows image files
-                multiple // Allows multiple files
-                className="w-full mb-2"
-                {...register("Images")}
-              />
-            </div>
-            <div className="text-center text-base my-4">
-              <DynamicAdd setVideoUrls={setVideoUrls}></DynamicAdd>
+            <div className="my-5 min-h-[200px]">
+              <Tabs type="card" items={tabItems} />
             </div>
             <div className="bg-gray-200 py-[1px] mt-10"></div>
             <div className="flex items-end justify-end gap-2 mt-2">
-              <button type="submit" className="input-button my-5">
-                Upload
+              <button
+                type="submit"
+                className="border-sky-600 flex items-center border rounded-sm"
+              >
+                <MdDone className="text-white bg-sky-700 px-1 py-[2px] text-[28px]" />
+                <span className="px-2 py-[6px] bg-sky-500 transition-all hover:bg-sky-600 text-white text-xs">
+                  Upload
+                </span>
               </button>
               <button
                 className=" border-rose-600 flex items-center border rounded-sm"
