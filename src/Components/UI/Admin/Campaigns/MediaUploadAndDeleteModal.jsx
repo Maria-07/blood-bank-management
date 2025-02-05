@@ -8,7 +8,7 @@ import { IoMdCloseCircleOutline } from "react-icons/io";
 import { MdDeleteOutline, MdDone } from "react-icons/md";
 import { toast } from "react-toastify";
 import Images from "./Images";
-import { useGetAllImagesMutation } from "@/src/redux/features/campaign/campaignApi";
+import { useGetAllCampaignMediaQuery } from "@/src/redux/features/campaign/campaignApi";
 
 const MediaUploadAndDeleteModal = ({ handleClose, clicked, record }) => {
   const [VideoUrls, setVideoUrls] = useState([]);
@@ -17,28 +17,20 @@ const MediaUploadAndDeleteModal = ({ handleClose, clicked, record }) => {
   const id = record?.id;
   console.log("record", record?.id);
 
-  //! Get all Images Data
-  const [getAllImages, { data, isLoading, isError }] =
-    useGetAllImagesMutation();
-
-  const refetch = async () => {
-    try {
-      const response = await getAllImages({
-        imagePageNo: 1,
-        imagePageSize: 10,
-        videoPageNo: 0,
-        videoPageSize: 0,
-      }).unwrap();
-      console.log(data);
-    } catch (error) {
-      console.error("Error fetching users:", error);
-    }
-  };
+  const {
+    data: campaignMedia,
+    isLoading,
+    isError,
+    refetch,
+  } = useGetAllCampaignMediaQuery({
+    campaignId: id,
+  });
 
   useEffect(() => {
-    refetch();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    if (!isLoading && !isError) {
+      console.log("All campaignMedia", campaignMedia);
+    }
+  }, [campaignMedia, isLoading, isError]);
 
   const {
     register,
@@ -144,6 +136,7 @@ const MediaUploadAndDeleteModal = ({ handleClose, clicked, record }) => {
           responseData?.data?.message || "Media Uploaded successfully!"
         );
         handleClose();
+        refetch();
       } else {
         toast.error(responseData?.data?.message);
       }

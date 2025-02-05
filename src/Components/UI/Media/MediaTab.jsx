@@ -1,94 +1,82 @@
 "use client";
 import { Tabs } from "antd";
 import React, { useEffect, useState } from "react";
-import News from "./News/News";
 import Videos from "./Videos/Videos";
 import Images from "./Images/Images";
-import { useGetAllImagesMutation } from "@/src/redux/features/campaign/campaignApi";
+import { useGetAllMediaMutation } from "@/src/redux/features/campaign/campaignApi";
 
 const MediaTab = () => {
-  const [imageMedia, setImageMedia] = useState(true);
-  const [videoMedia, setVideoMedia] = useState(false);
+  const [activeTab, setActiveTab] = useState("1");
+  const [media, setMedia] = useState({ images: [], videos: [] });
+  const [getAllMedia] = useGetAllMediaMutation();
+  const [size, setSize] = useState(10);
 
-  const [images, setImages] = useState([]);
-  const [Video, setVideo] = useState([]);
-  //! Get all Images Data
-  const [getAllImages, { data, isLoading, isError }] =
-    useGetAllImagesMutation();
-
-  const refetch = async () => {
+  //! Fetch Media based on Active Tab & Page Size
+  const fetchMedia = async () => {
     try {
-      // if (imageMedia) {
-      //   const response = await getAllImages({
-      //     imagePageNo: 1,
-      //     imagePageSize: 10,
-      //     videoPageNo: 0,
-      //     videoPageSize: 0,
-      //   }).unwrap();
-      //   console.log(response?.data?.imageUrls);
-      //   setImages(response?.data?.imageUrls);
-      // }
-      if (videoMedia) {
-        const response = await getAllImages({
-          imagePageNo: 0,
-          imagePageSize: 0,
-          videoPageNo: 1,
-          videoPageSize: 10,
-        }).unwrap();
-        console.log(response?.data?.videoUrls);
-        setVideo(response?.data?.videoUrls);
-      }
+      const isImageTab = activeTab === "1";
+      const params = {
+        imagePageNo: isImageTab ? 1 : 0,
+        imagePageSize: isImageTab ? size : 0,
+        videoPageNo: isImageTab ? 0 : 1,
+        videoPageSize: isImageTab ? 0 : size,
+      };
+
+      console.log("Fetching media with params:", params);
+      const response = await getAllMedia(params).unwrap();
+      console.log("API Response:", response);
+
+      setMedia((prev) => ({
+        ...prev,
+        images: isImageTab
+          ? response?.data?.imageUrls || prev.images
+          : prev.images,
+        videos: !isImageTab
+          ? response?.data?.videoUrls || prev.videos
+          : prev.videos,
+      }));
     } catch (error) {
-      console.error("Error fetching users:", error);
+      console.error("Error fetching media:", error);
     }
   };
+
+  //! Fetch Data when activeTab or size changes
   useEffect(() => {
-    refetch();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    fetchMedia();
+  }, [activeTab, size]); // Added `size` as dependency
+
+  //! Reusable Tab Configuration
   const tabItems = [
     {
-      label: (
-        <h1
-          onClick={() => {
-            setImageMedia(true);
-            setVideoMedia(false);
-            refetch();
-          }}
-          className="text-dark text-base hover:text-primary"
-        >
-          Image
-        </h1>
-      ),
-      key: 1,
-      children: <Images images={images}></Images>,
+      label: "Images",
+      key: "1",
+      children: <Images images={media.images} />,
     },
     {
-      label: (
-        <h1
-          onClick={() => {
-            setVideoMedia(true);
-            setImageMedia(false);
-            refetch();
-          }}
-          className="text-dark text-base hover:text-primary"
-        >
-          Video
-        </h1>
-      ),
-      key: 2,
-      children: <Videos videos={Video}></Videos>,
+      label: "Videos",
+      key: "2",
+      children: <Videos videos={media.videos} />,
     },
-    // {
-    //   label: <h1 className="text-dark text-base hover:text-primary">News</h1>,
-    //   key: 3,
-    //   children: <News></News>,
-    // },
   ];
+
   return (
-    <div>
-      <div className="my-20">
-        <Tabs centered type="card" items={tabItems} />
+    <div className="my-20">
+      <Tabs
+        centered
+        type="card"
+        activeKey={activeTab}
+        onChange={setActiveTab}
+        items={tabItems}
+      />
+
+      {/* Load More Button */}
+      <div className="flex justify-end mt-4">
+        <button
+          onClick={() => setSize((prev) => prev + 10)} // Only update state
+          className="px-3 py-1 bg-primary2 text-sm text-white rounded-md shadow-md hover:bg-blue-600"
+        >
+          Load More
+        </button>
       </div>
     </div>
   );

@@ -16,10 +16,17 @@ const campaignApi = api.injectEndpoints({
         method: "GET",
       }),
     }),
+    //* Get all running and upcoming Campaign :
+    getAllCampaignMedia: builder.query({
+      query: ({ campaignId }) => ({
+        url: `/media/getcampaignmedia?campaignId=${campaignId}`,
+        method: "GET",
+      }),
+    }),
     // get all images
-    getAllImages: builder.mutation({
+    getAllMedia: builder.mutation({
       query: (data) => ({
-        url: "/media/getcampaignmedia",
+        url: "/media/getallmedia",
         method: "POST",
         body: data,
       }),
@@ -30,5 +37,6 @@ const campaignApi = api.injectEndpoints({
 export const {
   useGetAllCampaignsQuery,
   useGetAllRunningCampaignsQuery,
-  useGetAllImagesMutation,
+  useGetAllMediaMutation,
+  useGetAllCampaignMediaQuery,
 } = campaignApi;
