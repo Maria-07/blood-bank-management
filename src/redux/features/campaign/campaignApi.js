@@ -23,11 +23,20 @@ const campaignApi = api.injectEndpoints({
         method: "GET",
       }),
     }),
-    // get all images
+    // get all media
     getAllMedia: builder.mutation({
       query: (data) => ({
         url: "/media/getallmedia",
         method: "POST",
+        body: data,
+      }),
+    }),
+
+    //* Delete a Media
+    deleteMedia: builder.mutation({
+      query: ({ data }) => ({
+        url: `/media/deletecampaignmedia`,
+        method: "DELETE",
         body: data,
       }),
     }),
@@ -39,4 +48,5 @@ export const {
   useGetAllRunningCampaignsQuery,
   useGetAllMediaMutation,
   useGetAllCampaignMediaQuery,
+  useDeleteMediaMutation,
 } = campaignApi;

@@ -3,6 +3,7 @@ import { FaUsersCog } from "react-icons/fa";
 import { MdOutlineAssignmentReturned } from "react-icons/md";
 import { FaPeopleCarryBox } from "react-icons/fa6";
 import { BsChatSquareText } from "react-icons/bs";
+import { IoDocumentAttachSharp } from "react-icons/io5";
 
 export const settingsSidebar = [
   {
@@ -24,5 +25,10 @@ export const settingsSidebar = [
     icon: <BsChatSquareText />,
     link_name: "Contacts",
     link: "/admin/dashboard/contacts",
+  },
+  {
+    icon: <IoDocumentAttachSharp />,
+    link_name: "Notice",
+    link: "/admin/dashboard/notices",
   },
 ];

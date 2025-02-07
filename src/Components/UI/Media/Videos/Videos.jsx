@@ -1,12 +1,13 @@
 import React from "react";
 
 const formatYouTubeUrl = (url) => {
-  if (!url) return "";
-  if (url.includes("youtube.com/watch?v=")) {
-    const videoId = url.split("v=")[1]?.split("&")[0];
-    return `https://www.youtube.com/embed/${videoId}`;
+  if (url.includes("shorts/")) {
+    return url.replace("youtube.com/shorts/", "www.youtube.com/embed/");
   }
-  return url;
+  if (url.includes("youtu.be/")) {
+    return url.replace("youtu.be/", "www.youtube.com/embed/");
+  }
+  return url.replace("watch?v=", "embed/");
 };
 
 const Videos = ({ videos = [] }) => {
@@ -22,6 +23,7 @@ const Videos = ({ videos = [] }) => {
                 width="100%"
                 height="100%"
                 src={formatYouTubeUrl(video)}
+                title={`Video ${index}`}
                 frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen

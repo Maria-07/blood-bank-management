@@ -1,5 +1,5 @@
 import DynamicAdd from "@/src/shared/DynamicAdd";
-import { Modal, Tabs } from "antd";
+import { Image, Modal, Tabs } from "antd";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
@@ -8,15 +8,33 @@ import { IoMdCloseCircleOutline } from "react-icons/io";
 import { MdDeleteOutline, MdDone } from "react-icons/md";
 import { toast } from "react-toastify";
 import Images from "./Images";
-import { useGetAllCampaignMediaQuery } from "@/src/redux/features/campaign/campaignApi";
+import {
+  useDeleteMediaMutation,
+  useGetAllCampaignMediaQuery,
+} from "@/src/redux/features/campaign/campaignApi";
+import { RiDeleteBin6Line } from "react-icons/ri";
+import Loader from "@/src/Components/Layouts/Loader";
+
+const formatYouTubeUrl = (url) => {
+  if (url.includes("shorts/")) {
+    return url.replace("youtube.com/shorts/", "www.youtube.com/embed/");
+  }
+  if (url.includes("youtu.be/")) {
+    return url.replace("youtu.be/", "www.youtube.com/embed/");
+  }
+  return url.replace("watch?v=", "embed/");
+};
 
 const MediaUploadAndDeleteModal = ({ handleClose, clicked, record }) => {
   const [VideoUrls, setVideoUrls] = useState([]);
+  const [videos, setVideos] = useState([]);
+  const [images, setImages] = useState([]);
   const accessToken = Cookies.get("accessToken");
   const router = useRouter();
   const id = record?.id;
   console.log("record", record?.id);
 
+  //! All Media get
   const {
     data: campaignMedia,
     isLoading,
@@ -26,11 +44,36 @@ const MediaUploadAndDeleteModal = ({ handleClose, clicked, record }) => {
     campaignId: id,
   });
 
+  //! Delete Media :
+  const [mediaDelete, { isLoading2 }] = useDeleteMediaMutation();
+
   useEffect(() => {
     if (!isLoading && !isError) {
       console.log("All campaignMedia", campaignMedia);
+      setImages(campaignMedia?.data?.imageUrls);
+      setVideos(campaignMedia?.data?.videoUrls);
     }
   }, [campaignMedia, isLoading, isError]);
+
+  const handleDelete = async (url) => {
+    console.log("url", url);
+    debugger;
+    try {
+      const response = await mediaDelete({ id: id, fileUrl: url });
+      if (isLoading2) {
+        <Loader></Loader>;
+      }
+      console.log("response", response);
+      if (response?.data?.statusCode === 200) {
+        // router.push("/books");
+        toast.success(response?.data?.message);
+      } else {
+        toast.error(response?.error?.data?.message);
+      }
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
 
   const {
     register,
@@ -58,8 +101,33 @@ const MediaUploadAndDeleteModal = ({ handleClose, clicked, record }) => {
               className="w-full mb-2"
               {...register("Images")}
             />
-            <hr />
-            <Images></Images>
+            <hr className="my-3" />
+            <div>
+              {" "}
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4  max-h-[450px] overflow-y-scroll relative">
+                {images?.map((image, index) => (
+                  <div key={index} className="relative">
+                    <div className="overflow-hidden h-[180px] rounded-lg shadow-lg relative">
+                      <Image
+                        src={`${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}/${image}`}
+                        alt=""
+                        preview={true}
+                        height={180}
+                        className="transition-transform duration-300 hover:scale-105"
+                      />
+                      {/* Delete Button */}
+                      <button
+                        type="button"
+                        className="absolute top-1 right-1 bg-primary text-white p-1 rounded-full hover:bg-red-600"
+                        onClick={() => handleDelete(image)}
+                      >
+                        <RiDeleteBin6Line className="w-4 h-4" />
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </>
       ),
@@ -72,6 +140,30 @@ const MediaUploadAndDeleteModal = ({ handleClose, clicked, record }) => {
           {" "}
           <div className="">
             <DynamicAdd setVideoUrls={setVideoUrls}></DynamicAdd>
+            <hr className="mt-5" />
+
+            <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2  gap-10  max-h-[300px] overflow-y-scroll">
+              {videos?.length > 0 ? (
+                videos?.map((video, index) => (
+                  <div
+                    key={index}
+                    className="h-[270px] w-[100%] overflow-hidden"
+                  >
+                    <iframe
+                      width="100%"
+                      height="100%"
+                      src={formatYouTubeUrl(video)}
+                      title={`Video ${index}`}
+                      frameBorder="0"
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                    ></iframe>
+                  </div>
+                ))
+              ) : (
+                <p className="text-center text-gray-500">No videos available</p>
+              )}
+            </div>
           </div>
         </>
       ),
@@ -135,7 +227,7 @@ const MediaUploadAndDeleteModal = ({ handleClose, clicked, record }) => {
         toast.success(
           responseData?.data?.message || "Media Uploaded successfully!"
         );
-        handleClose();
+        // handleClose();
         refetch();
       } else {
         toast.error(responseData?.data?.message);
@@ -173,6 +265,7 @@ const MediaUploadAndDeleteModal = ({ handleClose, clicked, record }) => {
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="my-5 min-h-[200px]">
               <Tabs type="card" items={tabItems} />
+              {isLoading && <Loader></Loader>}
             </div>
             <div className="bg-gray-200 py-[1px] mt-10"></div>
             <div className="flex items-end justify-end gap-2 mt-2">

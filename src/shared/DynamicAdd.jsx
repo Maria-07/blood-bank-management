@@ -36,7 +36,7 @@ const DynamicAdd = ({ setVideoUrls }) => {
             type="text"
             value={field}
             onChange={(e) => handleInputChange(index, e.target.value)}
-            placeholder={`Enter value ${index + 1}`}
+            placeholder={`Enter campaign's youtube video link ${index + 1}`}
             className="modal-input-field w-full"
           />
           <button
@@ -55,7 +55,7 @@ const DynamicAdd = ({ setVideoUrls }) => {
         onClick={handleAddField}
         className="input-button mt-1"
       >
-        ➕ Add Field
+        ➕ Add More Link
       </button>
     </div>
   );
