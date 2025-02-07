@@ -50,16 +50,16 @@ const MediaUploadAndDeleteModal = ({ handleClose, clicked, record }) => {
   useEffect(() => {
     if (!isLoading && !isError) {
       console.log("All campaignMedia", campaignMedia);
-      setImages(campaignMedia?.data?.imageUrls);
-      setVideos(campaignMedia?.data?.videoUrls);
+      setImages(campaignMedia?.data?.imageData);
+      setVideos(campaignMedia?.data?.videoData);
     }
   }, [campaignMedia, isLoading, isError]);
 
-  const handleDelete = async (url) => {
-    console.log("url", url);
+  const handleDelete = async (mId) => {
+    console.log("url", mId);
     debugger;
     try {
-      const response = await mediaDelete({ id: id, fileUrl: url });
+      const response = await mediaDelete({ campaignId: id, mediaId: mId });
       if (isLoading2) {
         <Loader></Loader>;
       }
@@ -109,7 +109,7 @@ const MediaUploadAndDeleteModal = ({ handleClose, clicked, record }) => {
                   <div key={index} className="relative">
                     <div className="overflow-hidden h-[180px] rounded-lg shadow-lg relative">
                       <Image
-                        src={`${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}/${image}`}
+                        src={`${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}/${image?.imageUrl}`}
                         alt=""
                         preview={true}
                         height={180}
@@ -119,7 +119,7 @@ const MediaUploadAndDeleteModal = ({ handleClose, clicked, record }) => {
                       <button
                         type="button"
                         className="absolute top-1 right-1 bg-primary text-white p-1 rounded-full hover:bg-red-600"
-                        onClick={() => handleDelete(image)}
+                        onClick={() => handleDelete(image?.id)}
                       >
                         <RiDeleteBin6Line className="w-4 h-4" />
                       </button>
@@ -152,7 +152,7 @@ const MediaUploadAndDeleteModal = ({ handleClose, clicked, record }) => {
                     <iframe
                       width="100%"
                       height="100%"
-                      src={formatYouTubeUrl(video)}
+                      src={formatYouTubeUrl(video?.videoUrl)}
                       title={`Video ${index}`}
                       frameBorder="0"
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
