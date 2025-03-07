@@ -34,7 +34,7 @@ const campaignApi = api.injectEndpoints({
 
     //* Delete a Media
     deleteMedia: builder.mutation({
-      query: ({ data }) => ({
+      query: (data) => ({
         url: `/media/deletecampaignmedia`,
         method: "DELETE",
         body: data,

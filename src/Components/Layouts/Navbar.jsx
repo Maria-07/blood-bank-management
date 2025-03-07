@@ -39,7 +39,13 @@ const Navbar = () => {
             </div>
             <div className="flex items-center gap-2">
               <Link
-                className="text-white font-semibold hover:text-primary2 transition-all mr-3 border-r-[2px] px-3"
+                className="text-white font-semibold hover:text-primary2 transition-all  border-r-[2px] px-3"
+                href={"/notice/"}
+              >
+                Notices
+              </Link>{" "}
+              <Link
+                className="text-white font-semibold hover:text-primary2 transition-all mr-2 border-r-[2px] pr-2"
                 href={"/contact/"}
               >
                 Contact Us

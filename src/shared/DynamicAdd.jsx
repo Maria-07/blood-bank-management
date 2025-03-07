@@ -1,25 +1,25 @@
-"use client";
+import { useEffect, useState } from "react";
 
-import React, { useState } from "react";
-import { MdDeleteOutline } from "react-icons/md";
+const { MdDeleteOutline } = require("react-icons/md");
 
-const DynamicAdd = ({ setVideoUrls }) => {
+const DynamicAdd = ({ setVideoUrls, resetTrigger }) => {
   const [fields, setFields] = useState([""]);
 
-  // console.log("fields", fields);
+  // ✅ Reset fields when resetTrigger changes
+  useEffect(() => {
+    setFields([""]);
+  }, [resetTrigger]);
+
   setVideoUrls(fields);
 
-  // ✅ Add New Input Field
   const handleAddField = () => {
     setFields([...fields, ""]);
   };
 
-  // ✅ Remove Input Field
   const handleRemoveField = (index) => {
     setFields(fields.filter((_, i) => i !== index));
   };
 
-  // ✅ Handle Input Change
   const handleInputChange = (index, value) => {
     const updatedFields = [...fields];
     updatedFields[index] = value;
@@ -53,7 +53,7 @@ const DynamicAdd = ({ setVideoUrls }) => {
       <button
         type="button"
         onClick={handleAddField}
-        className="input-button mt-1"
+        className="input-button mt-1 mb-3"
       >
         ➕ Add More Link
       </button>

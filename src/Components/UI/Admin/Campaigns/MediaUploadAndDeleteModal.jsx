@@ -7,7 +7,6 @@ import { useForm } from "react-hook-form";
 import { IoMdCloseCircleOutline } from "react-icons/io";
 import { MdDeleteOutline, MdDone } from "react-icons/md";
 import { toast } from "react-toastify";
-import Images from "./Images";
 import {
   useDeleteMediaMutation,
   useGetAllCampaignMediaQuery,
@@ -26,6 +25,7 @@ const formatYouTubeUrl = (url) => {
 };
 
 const MediaUploadAndDeleteModal = ({ handleClose, clicked, record }) => {
+  const [resetTrigger, setResetTrigger] = useState(false); // ✅ Reset trigger
   const [VideoUrls, setVideoUrls] = useState([]);
   const [videos, setVideos] = useState([]);
   const [images, setImages] = useState([]);
@@ -57,16 +57,17 @@ const MediaUploadAndDeleteModal = ({ handleClose, clicked, record }) => {
 
   const handleDelete = async (mId) => {
     console.log("url", mId);
-    debugger;
+    // debugger;
     try {
       const response = await mediaDelete({ campaignId: id, mediaId: mId });
       if (isLoading2) {
         <Loader></Loader>;
       }
       console.log("response", response);
-      if (response?.data?.statusCode === 200) {
+      if (response?.data?.data?.isSuccess) {
         // router.push("/books");
-        toast.success(response?.data?.message);
+        toast.success(response?.data?.data?.message);
+        refetch();
       } else {
         toast.error(response?.error?.data?.message);
       }
@@ -101,6 +102,15 @@ const MediaUploadAndDeleteModal = ({ handleClose, clicked, record }) => {
               className="w-full mb-2"
               {...register("Images")}
             />
+            <button
+              type="submit"
+              className="border-sky-600 flex items-center border rounded-sm"
+            >
+              <MdDone className="text-white bg-sky-700 px-1 py-[2px] text-[28px]" />
+              <span className="px-2 py-[6px] bg-sky-500 transition-all hover:bg-sky-600 text-white text-xs">
+                Upload
+              </span>
+            </button>
             <hr className="my-3" />
             <div>
               {" "}
@@ -137,18 +147,31 @@ const MediaUploadAndDeleteModal = ({ handleClose, clicked, record }) => {
       key: 2,
       children: (
         <>
-          {" "}
           <div className="">
-            <DynamicAdd setVideoUrls={setVideoUrls}></DynamicAdd>
+            <DynamicAdd
+              setVideoUrls={setVideoUrls}
+              resetTrigger={resetTrigger}
+            />
+
+            <button
+              type="submit"
+              className="border-sky-600 flex items-center border rounded-sm "
+            >
+              <MdDone className="text-white bg-sky-700 px-1 py-[2px] text-[28px]" />
+              <span className="px-2 py-[6px] bg-sky-500 transition-all hover:bg-sky-600 text-white text-xs">
+                Upload
+              </span>
+            </button>
             <hr className="mt-5" />
 
-            <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2  gap-10  max-h-[300px] overflow-y-scroll">
+            <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 gap-10 max-h-[300px] overflow-y-scroll">
               {videos?.length > 0 ? (
                 videos?.map((video, index) => (
                   <div
                     key={index}
-                    className="h-[270px] w-[100%] overflow-hidden"
+                    className="relative h-[270px] w-full overflow-hidden"
                   >
+                    {/* Video Player */}
                     <iframe
                       width="100%"
                       height="100%"
@@ -158,6 +181,15 @@ const MediaUploadAndDeleteModal = ({ handleClose, clicked, record }) => {
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                       allowFullScreen
                     ></iframe>
+
+                    {/* Delete Button */}
+                    <button
+                      type="button"
+                      className="absolute top-2 right-2 bg-primary text-white p-1 rounded-full hover:bg-red-600"
+                      onClick={() => handleDelete(video?.id)} // ✅ Delete video
+                    >
+                      <RiDeleteBin6Line className="w-4 h-4" />
+                    </button>
                   </div>
                 ))
               ) : (
@@ -227,7 +259,7 @@ const MediaUploadAndDeleteModal = ({ handleClose, clicked, record }) => {
         toast.success(
           responseData?.data?.message || "Media Uploaded successfully!"
         );
-        // handleClose();
+        setResetTrigger(!resetTrigger); // ✅ Toggle reset trigger to clear fields
         refetch();
       } else {
         toast.error(responseData?.data?.message);
@@ -262,6 +294,8 @@ const MediaUploadAndDeleteModal = ({ handleClose, clicked, record }) => {
           </div>
 
           <div className="bg-gray-200 pt-[1px] mt-3"></div>
+
+          {isLoading && <Loader></Loader>}
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="my-5 min-h-[200px]">
               <Tabs type="card" items={tabItems} />
@@ -269,15 +303,6 @@ const MediaUploadAndDeleteModal = ({ handleClose, clicked, record }) => {
             </div>
             <div className="bg-gray-200 py-[1px] mt-10"></div>
             <div className="flex items-end justify-end gap-2 mt-2">
-              <button
-                type="submit"
-                className="border-sky-600 flex items-center border rounded-sm"
-              >
-                <MdDone className="text-white bg-sky-700 px-1 py-[2px] text-[28px]" />
-                <span className="px-2 py-[6px] bg-sky-500 transition-all hover:bg-sky-600 text-white text-xs">
-                  Upload
-                </span>
-              </button>
               <button
                 className=" border-rose-600 flex items-center border rounded-sm"
                 onClick={handleClose}

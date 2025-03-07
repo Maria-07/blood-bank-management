@@ -11,8 +11,10 @@ import {
 import { formatDistanceToNow, parseISO } from "date-fns";
 import UserProfileModal from "../../User/UserProfileModal";
 import { useAnimation } from "framer-motion";
+import { useAuth } from "@/src/Hook/AuthContext";
 
 const DonarCard = ({ record = {} }) => {
+  const { token, logout } = useAuth();
   const [UserDetails, setUserDetails] = useState(false);
   const handleUserDetails = () => {
     setUserDetails(!UserDetails);
@@ -95,41 +97,38 @@ const DonarCard = ({ record = {} }) => {
             </div>
           </div>
           <hr className="my-5" />
-          <div>
+          <div
+            className={`${
+              token ? "" : "blur-sm pointer-events-none opacity-50"
+            }`}
+          >
             <div className="flex items-center justify-between gap-2 my-3">
               <div className="flex items-center gap-1">
-                <IoLocationOutline className="text-primary text-lg" />{" "}
+                <IoLocationOutline className="text-primary text-lg" />
                 <h1 className="text-base font-semibold">Address</h1>
               </div>
               <div className="text-sm text-accent text-right">{address}</div>
             </div>
+
             <div className="flex items-center justify-between gap-2 my-3">
               <div className="flex items-center gap-1">
-                <FaPhoneAlt className="text-primary text-lg" />{" "}
+                <FaPhoneAlt className="text-primary text-lg" />
                 <h1 className="text-base font-semibold">Contact</h1>
               </div>
               <div className="text-sm text-accent text-right">
                 {mobileNumber}
               </div>
             </div>
+
             <div className="flex items-center justify-between gap-2 my-3">
               <div className="flex items-center gap-1">
-                <BiDonateBlood className="text-primary text-lg" />{" "}
+                <BiDonateBlood className="text-primary text-lg" />
                 <h1 className="text-base font-semibold">Donations</h1>
               </div>
               <div className="text-sm text-accent text-right">
                 {bloodDonationCount}
               </div>
             </div>
-            {/* <div className="flex items-center justify-between gap-2 my-3">
-              <div className="flex items-center gap-1">
-                <BiSolidDonateHeart className="text-primary text-lg" />{" "}
-                <h1 className="text-base font-semibold">Last donated</h1>
-              </div>
-              <div className="text-sm text-accent text-right">
-                {lastDonationTime}
-              </div>
-            </div> */}
           </div>
         </div>
       </Card>

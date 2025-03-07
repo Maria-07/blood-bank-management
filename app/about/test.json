@@ -1,0 +1,61 @@
+{
+  "termId": 1002509305,
+  "accountId": 6191399,
+  "insuredAddress": {
+    "mailStop": "",
+    "street": "123 HULL ST",
+    "city": "BOYDTON",
+    "stateProvinceId": "45",
+    "stateProvinceAbbreviation": "VA",
+    "postalCode": "239170000",
+    "countryIso": "840",
+    "countryName": "UNITED STATES"
+  },
+  "countryIso": "840",
+  "companyId": 4,
+  "contactDetails": [
+    {
+      "contactId": 216142,
+      "contactTypeId": "COR",
+      "email": "abbie.hocker@rtib.net",
+      "firstName": "ABBIE",
+      "lastName": "HOCKER",
+      "phone": "8188152631",
+      "receives": null,
+      "termContactId": 12147
+    },
+    {
+      "contactId": 216142,
+      "contactTypeId": "EPD",
+      "email": "abbie.hocker@rtib.net",
+      "firstName": "ABBIE",
+      "lastName": "HOCKER",
+      "phone": "8188152631",
+      "receives": null,
+      "termContactId": 12146
+    }
+  ],
+  "decDescription": "",
+  "dominantStateCd": "45",
+  "isInternational": false,
+  "legalEntityId": 1,
+  "naicsCodeId": 999999,
+  "producerCode": "3104279",
+  "productLevelId": 0,
+  "productTypeId": "1",
+  "programTypeId": 282,
+  "reportingUnitId": 441,
+  "isRush": false,
+  "billingPlanId": 2,
+  "installmentPlanId": 1,
+  "paymentPlan": 1,
+  "paymentTerm": 1,
+  "sicCodeId": 9999,
+  "statusComment": "",
+  "submissionName": "Jacob ML Testing",
+  "underwriterAssistantId": "",
+  "effectiveDate": "2025-02-28T00:00:00",
+  "expirationDate": "2026-02-28T00:00:00",
+  "underwriterId": "AXMARIN",
+  "isAdmitted": "true"
+}

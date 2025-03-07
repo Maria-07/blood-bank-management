@@ -7,10 +7,12 @@ import ActionModal from "@/src/Components/UI/Admin/Campaigns/ActionModal";
 import MediaUploadAndDeleteModal from "@/src/Components/UI/Admin/Campaigns/MediaUploadAndDeleteModal";
 import VolunteerListAction from "@/src/Components/UI/Admin/Campaigns/VolunteerListAction";
 import CreateNoticeModal from "@/src/Components/UI/Admin/Notices/CreateNoticeModal";
+import NoticeActionModal from "@/src/Components/UI/Admin/Notices/NoticeActionModal";
 import { useGetAllCampaignsQuery } from "@/src/redux/features/campaign/campaignApi";
 import { useGetAllNoticesQuery } from "@/src/redux/features/notice/notice";
 import formatDate from "@/src/shared/ReusedFunctions";
 import { Pagination, Switch, Table } from "antd";
+import Link from "next/link";
 import React, { useEffect, useMemo, useState } from "react";
 import { FaPeopleCarryBox, FaPlus, FaRegFilePdf } from "react-icons/fa6";
 import { MdPermMedia } from "react-icons/md";
@@ -122,15 +124,15 @@ const NoticePage = () => {
       key: "pdf",
       width: 50,
       render: (text, record) => (
-        <div
-          onClick={() => {
-            setRecord(record);
-            handleMedia();
-          }}
-          className="flex items-center justify-center hover:text-secondary"
+        <Link
+          href={`${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}/${record?.fileUrls[0]}`}
+          target="_blank"
+          rel="noopener noreferrer"
         >
-          <FaRegFilePdf />
-        </div>
+          <div className="flex items-center justify-center hover:text-secondary">
+            <FaRegFilePdf />
+          </div>
+        </Link>
       ),
     });
     columns.push({
@@ -138,7 +140,10 @@ const NoticePage = () => {
       key: "action",
       width: 50,
       render: (text, record) => (
-        <ActionModal refetch={refetch} record={record}></ActionModal>
+        <NoticeActionModal
+          refetch={refetch}
+          record={record}
+        ></NoticeActionModal>
       ),
     });
   }
