@@ -166,25 +166,25 @@ const BloodBanks = () => {
       key: "view",
       render: (_, record) => <ActionModal record={record} />,
     });
-    columns.push({
-      title: "Delete",
-      key: "view",
-      render: (_, record) => (
-        <div
-          onClick={() => handleDeleteModal(record)}
-          className="flex items-center justify-center text-secondary"
-        >
-          <MdDeleteForever />
-        </div>
-      ),
-    });
+    // columns.push({
+    //   title: "Delete",
+    //   key: "view",
+    //   render: (_, record) => (
+    //     <div
+    //       onClick={() => handleDeleteModal(record)}
+    //       className="flex items-center justify-center text-secondary"
+    //     >
+    //       <MdDeleteForever />
+    //     </div>
+    //   ),
+    // });
   }
 
   return (
     <div>
-      <div className="flex items-center justify-between gap-2 mb-5">
+      <div className="flex items-center justify-between gap-2 mb-2">
         {" "}
-        <h1 className="text-orange-500 text-base">User Management</h1>
+        <h1 className="text-primary2 font-semibold text-lg">User Management</h1>
         <button
           className="border p-1 rounded-sm"
           onClick={() => {

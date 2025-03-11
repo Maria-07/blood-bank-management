@@ -59,7 +59,7 @@ const DisApproveVolunteerModal = ({
           responseData?.data?.message || "Volunteer dismissed successfully!"
         );
         handleClose();
-        refetch();
+        window.location.reload();
       }
     } catch (error) {
       console.error("Network or server error:", error);

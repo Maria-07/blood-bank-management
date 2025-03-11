@@ -190,22 +190,32 @@ const CampaignEditModal = ({ handleClose, clicked, record, refetch }) => {
             </div>
             <div>
               <label className="modal-label-name">Start Date</label>
-              <DatePicker
-                className="w-full ml-1"
-                format={dateFormat}
-                defaultValue={StartDateEdit} // dayjs object
-                onChange={(date) => setStartDateEdit(date)}
+              <input
+                type="date"
+                name="startDate"
+                defaultValue={
+                  startDate ? dayjs(startDate).format("YYYY-MM-DD") : ""
+                }
+                className="modal-input-field ml-1 w-full"
+                // onChange={(e) => setStartDateEdit(e.target.value)}
+                {...register("startDate")}
               />
             </div>
+
             <div>
               <label className="modal-label-name">End Date</label>
-              <DatePicker
-                className="w-full ml-1"
-                format={dateFormat}
-                defaultValue={EndDateEdit} // dayjs object
-                onChange={(date) => setEndDateEdit(date)}
+              <input
+                type="date"
+                name="endDate"
+                defaultValue={
+                  endDate ? dayjs(endDate).format("YYYY-MM-DD") : ""
+                }
+                className="modal-input-field ml-1 w-full"
+                // onChange={(e) => setEndDateEdit(e.target.value)}
+                {...register("endDate")}
               />
             </div>
+
             <div className="sm:col-span-2">
               <label className="modal-label-name">Address</label>
               <input

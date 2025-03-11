@@ -33,7 +33,10 @@ const CampaignCard = ({ campaign }) => {
                 alt="Picture of the author"
               />
             </div>
-            <div onClick={() => handleCampaignDetailModal()} className="my-1">
+            <div
+              onClick={() => handleCampaignDetailModal()}
+              className="my-1 p-2"
+            >
               <h1 className="mb-4 mt-2 text-lg font-semibold">{name}</h1>
               <div className="flex gap-2 my-3">
                 <FaMapLocationDot className="text-primary text-xl" />{" "}

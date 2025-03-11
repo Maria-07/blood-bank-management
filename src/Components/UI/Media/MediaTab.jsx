@@ -43,6 +43,7 @@ const MediaTab = () => {
   //! Fetch Data when activeTab or size changes
   useEffect(() => {
     fetchMedia();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeTab, size]); // Added `size` as dependency
 
   //! Reusable Tab Configuration

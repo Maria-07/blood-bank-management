@@ -32,6 +32,7 @@ const UserProfileModal = ({ handleClose, clicked, record, admin }) => {
     union,
     unionName,
     upazila,
+    PhysicalComplexity,
     upazilaName,
     userType,
   } = record;
@@ -70,7 +71,7 @@ const UserProfileModal = ({ handleClose, clicked, record, admin }) => {
 
           <form>
             <div>
-              <div className="border-[1px] p-5 rounded-md mb-5">
+              <div className="border-[1px] p-3 rounded-md mb-3">
                 <div className="flex items-center flex-wrap gap-3">
                   <div className="h-[80px] w-[80px] overflow-hidden rounded-full">
                     <Image
@@ -96,7 +97,7 @@ const UserProfileModal = ({ handleClose, clicked, record, admin }) => {
                   </div>
                 </div>
               </div>
-              <div className="border-[1px] p-5 rounded-md mb-5">
+              <div className="border-[1px] p-3 rounded-md mb-3">
                 <h1 className="font-semibold text-lg mb-2 text-primary2">
                   Personal information
                 </h1>
@@ -114,22 +115,12 @@ const UserProfileModal = ({ handleClose, clicked, record, admin }) => {
                     <h1 className="text-xs text-accent">Date of Birth</h1>
                     <h6 className="text-base font-semibold"> {dateOfBirth}</h6>
                   </div>
-                  <div>
-                    <h1 className="text-xs text-accent">Blood Group</h1>
-                    <h6 className="text-base font-semibold"> {bloodGroup}</h6>
-                  </div>
 
                   <div>
                     <h1 className="text-xs text-accent">Gender</h1>
                     <h6 className="text-base font-semibold"> {gender}</h6>
                   </div>
-                  <div>
-                    <h1 className="text-xs text-accent">Last Donation Date</h1>
-                    <h6 className="text-base font-semibold">
-                      {/* {dayjs(lastDonationTime, "YYYY-MM-DD")} */}
-                      {lastDonationTime?.split("T")[0]}
-                    </h6>
-                  </div>
+
                   <div>
                     <h1 className="text-xs text-accent">Father&apos;s Name</h1>
                     <h6 className="text-base font-semibold"> {fatherName}</h6>
@@ -137,6 +128,92 @@ const UserProfileModal = ({ handleClose, clicked, record, admin }) => {
                   <div>
                     <h1 className="text-xs text-accent">Mother&apos;s Name</h1>
                     <h6 className="text-base font-semibold"> {motherName}</h6>
+                  </div>
+
+                  {admin && record?.nidUrls?.length > 0 && (
+                    <div>
+                      <h1 className="text-xs text-accent">NID details</h1>
+                      <div className="flex items-center mt-2 gap-2">
+                        {record.nidUrls.map((n, i) => {
+                          console.log(
+                            `${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}/${n}`
+                          );
+
+                          return (
+                            <div key={i} className="overflow-hidden">
+                              <Image
+                                className="border object-cover w-full h-full"
+                                src={`${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}/${n}`}
+                                width={100}
+                                height={80}
+                                alt="NID image"
+                              />
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  )}
+                  <div className="flex items-center sm:col-span-2">
+                    <input
+                      defaultChecked={PhysicalComplexity}
+                      type="checkbox"
+                      id="PhysicalComplexity"
+                      className="mr-2"
+                      disabled
+                    />
+                    <label htmlFor="PhysicalComplexity" className="input-title">
+                      Any Physical Complexity?{" "}
+                      <span className="text-xs text-accent">
+                        (like : Diabetics / Cancer / thyroid.... etc.)
+                      </span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div className="border-[1px] p-3 rounded-md mb-3">
+                <h1 className="font-semibold text-primary2 text-lg mb-2">
+                  Address
+                </h1>
+
+                <div className="grid grid-cols-1 lg:grid-cols-3 my-3 mr-2 gap-x-2 gap-y-3">
+                  <div>
+                    <h1 className="text-xs text-accent">District</h1>
+                    <h6 className="text-base font-semibold"> {districtName}</h6>
+                  </div>{" "}
+                  <div>
+                    <h1 className="text-xs text-accent">Upazila</h1>
+                    <h6 className="text-base font-semibold"> {upazilaName}</h6>
+                  </div>
+                  <div>
+                    <h1 className="text-xs text-accent">Union</h1>
+                    <h6 className="text-base font-semibold"> {unionName}</h6>
+                  </div>
+                </div>
+              </div>
+              <div className="border-[1px] p-3 rounded-md mb-3">
+                <h1 className="font-semibold text-primary2 text-lg mb-2">
+                  Blood Donation Details
+                </h1>
+
+                <div className="grid grid-cols-1 lg:grid-cols-3 my-3 mr-2 gap-x-2 gap-y-3">
+                  <div>
+                    <h1 className="text-xs text-accent">Blood Group</h1>
+                    <h6 className="text-base font-semibold"> {bloodGroup}</h6>
+                  </div>
+                  <div>
+                    <h1 className="text-xs text-accent">Donation Count</h1>
+                    <h6 className="text-base font-semibold">
+                      {" "}
+                      {bloodDonationCount} times
+                    </h6>
+                  </div>
+                  <div>
+                    <h1 className="text-xs text-accent">Last Donation Date</h1>
+                    <h6 className="text-base font-semibold">
+                      {/* {dayjs(lastDonationTime, "YYYY-MM-DD")} */}
+                      {lastDonationTime?.split("T")[0]}
+                    </h6>
                   </div>
                   <div>
                     <h1 className="text-xs text-accent">
@@ -170,57 +247,6 @@ const UserProfileModal = ({ handleClose, clicked, record, admin }) => {
                         </span>
                       )}{" "}
                     </h6>
-                  </div>
-                  <div>
-                    <h1 className="text-xs text-accent">Donation Count</h1>
-                    <h6 className="text-base font-semibold">
-                      {" "}
-                      {bloodDonationCount} times
-                    </h6>
-                  </div>
-                  {admin && record?.nidUrls?.length > 0 && (
-                    <div>
-                      <h1 className="text-xs text-accent">NID details</h1>
-                      <div className="flex items-center mt-2 gap-2">
-                        {record.nidUrls.map((n, i) => {
-                          console.log(
-                            `${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}/${n}`
-                          );
-
-                          return (
-                            <div key={i} className="overflow-hidden">
-                              <Image
-                                className="border object-cover w-full h-full"
-                                src={`${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}/${n}`}
-                                width={100}
-                                height={80}
-                                alt="NID image"
-                              />
-                            </div>
-                          );
-                        })}
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </div>
-              <div className="border-[1px] p-5 rounded-md mb-5">
-                <h1 className="font-semibold text-primary2 text-lg mb-2">
-                  Address
-                </h1>
-                <div>{address}</div>
-                <div className="grid grid-cols-1 lg:grid-cols-3 my-3 mr-2 gap-x-2 gap-y-3">
-                  <div>
-                    <h1 className="text-xs text-accent">District</h1>
-                    <h6 className="text-base font-semibold"> {districtName}</h6>
-                  </div>{" "}
-                  <div>
-                    <h1 className="text-xs text-accent">Upazila</h1>
-                    <h6 className="text-base font-semibold"> {upazilaName}</h6>
-                  </div>
-                  <div>
-                    <h1 className="text-xs text-accent">Union</h1>
-                    <h6 className="text-base font-semibold"> {unionName}</h6>
                   </div>
                 </div>
               </div>

@@ -6,6 +6,11 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { useAuth } from "@/src/Hook/AuthContext";
+import { Dropdown } from "antd";
+import { MdDashboard } from "react-icons/md";
+import { CgProfile } from "react-icons/cg";
+import { FaFileDownload } from "react-icons/fa";
+import { FaIdBadge } from "react-icons/fa6";
 
 const Navbar = () => {
   const { token, userType, logout } = useAuth();
@@ -24,7 +29,7 @@ const Navbar = () => {
       <div className="hidden lg:block sticky top-0 mb-10">
         {/* <div className="sm:w-[90%]  sm:mx-auto py-5 flex justify-between border-[1px] shadow-md px-2 rounded-xl"> */}
 
-        <div className="bg-primary py-3">
+        <div className="bg-primary ">
           {" "}
           <div className="md:w-[90%] sm:mx-auto flex items-center justify-between">
             <div>
@@ -50,14 +55,6 @@ const Navbar = () => {
               >
                 Contact Us
               </Link>{" "}
-              {token && userType === "Admin" && (
-                <Link
-                  className="bg-primary2 text-white text-[0.9rem] px-4 py-[3px] rounded-md shadow-lg "
-                  href={"/admin/dashboard/campaigns/"}
-                >
-                  Dashboard
-                </Link>
-              )}
               {!token && (
                 <>
                   <Link href={"/register/"}>
@@ -71,9 +68,73 @@ const Navbar = () => {
               )}
               {token && (
                 <div>
-                  <button onClick={handleLogout} className="head-input-button">
-                    Logout
-                  </button>
+                  <Dropdown
+                    overlay={
+                      <div className="bg-primary py-3 px-4 w-[200px] border shadow-md rounded-sm mt-1">
+                        <div>
+                          <button>
+                            {" "}
+                            {token && userType === "Admin" && (
+                              <Link
+                                className="text-white hover:text-white font-semibold flex items-center gap-2"
+                                href={"/admin/dashboard/campaigns/"}
+                              >
+                                <MdDashboard /> Dashboard
+                              </Link>
+                            )}
+                          </button>
+                          <br />
+                          <button>
+                            <Link
+                              className="text-white hover:text-white font-semibold flex items-center gap-2"
+                              href={"/my-profile"}
+                            >
+                              <CgProfile /> My Profile
+                            </Link>
+                          </button>
+                          <button>
+                            <Link
+                              className="text-white hover:text-white font-semibold flex items-center gap-2"
+                              href={"/download-id"}
+                            >
+                              <FaIdBadge /> Download Id Card
+                            </Link>
+                          </button>
+                          <button>
+                            <Link
+                              className="text-white hover:text-white font-semibold flex items-center gap-2"
+                              href={"/download-report"}
+                            >
+                              <FaFileDownload /> Download Report
+                            </Link>
+                          </button>
+                          <hr className="mt-5 mb-3" />
+                          <div className="">
+                            <>
+                              <button
+                                onClick={handleLogout}
+                                className="head-input-button"
+                              >
+                                Logout
+                              </button>
+                            </>
+                          </div>
+                        </div>
+                      </div>
+                    }
+                    placement="bottomRight"
+                  >
+                    <button className="mt-2">
+                      {" "}
+                      <Image
+                        src={logo}
+                        width={40}
+                        height={40}
+                        className="rounded-full"
+                        alt="Picture of the author"
+                      />
+                    </button>
+                  </Dropdown>
                 </div>
               )}
             </div>
@@ -88,16 +149,7 @@ const Navbar = () => {
               href={"/"}
             >
               Home
-            </Link>
-            <Link
-              className={
-                currentRoute === "/media" ? "active custom_link" : "custom_link"
-              }
-              href={"/media/"}
-            >
-              Media
-            </Link>
-
+            </Link>{" "}
             <Link
               className={
                 currentRoute === "/about" ? "active custom_link" : "custom_link"
@@ -106,7 +158,16 @@ const Navbar = () => {
             >
               About us
             </Link>
-
+            <Link
+              className={
+                currentRoute === "/campaigns"
+                  ? "active custom_link"
+                  : "custom_link"
+              }
+              href={"/campaigns/"}
+            >
+              Campaigns
+            </Link>
             <div className="mt-[-44px]">
               <Link href={"/"}>
                 <Image
@@ -129,16 +190,6 @@ const Navbar = () => {
             </Link>
             <Link
               className={
-                currentRoute === "/campaigns"
-                  ? "active custom_link"
-                  : "custom_link"
-              }
-              href={"/campaigns/"}
-            >
-              Campaigns
-            </Link>
-            <Link
-              className={
                 currentRoute === "/volunteers"
                   ? "active custom_link"
                   : "custom_link"
@@ -146,6 +197,14 @@ const Navbar = () => {
               href={"/volunteers/"}
             >
               Volunteers
+            </Link>
+            <Link
+              className={
+                currentRoute === "/media" ? "active custom_link" : "custom_link"
+              }
+              href={"/media/"}
+            >
+              Media
             </Link>
           </div>
         </div>

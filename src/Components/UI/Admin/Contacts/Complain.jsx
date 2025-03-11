@@ -165,7 +165,7 @@ const Complain = () => {
   return (
     <div>
       <div className="flex items-center justify-between gap-2 flex-wrap mb-4">
-        <h1 className="text-orange-500 text-base">Complain</h1>
+        <h1 className="text-primary2 font-semibold text-lg">Complain</h1>
       </div>
       <div className="overflow-auto pb-4">
         {isLoading ? (

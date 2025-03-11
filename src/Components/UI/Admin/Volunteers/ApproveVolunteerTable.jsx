@@ -169,8 +169,10 @@ const ApproveVolunteerTable = () => {
   return (
     <div>
       {/* Header Section */}
-      <div className="flex items-center justify-between gap-2 flex-wrap mb-4">
-        <h1 className="text-orange-500 text-base">Approved Volunteers</h1>
+      <div className="flex items-center justify-between gap-2 flex-wrap mb-3 px-1">
+        <h1 className="text-primary2 font-semibold text-lg">
+          Approved Volunteers
+        </h1>
       </div>
 
       {/* Table Section */}

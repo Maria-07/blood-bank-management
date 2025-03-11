@@ -146,8 +146,8 @@ const CampaignList = () => {
 
   return (
     <div>
-      <div className="flex items-center justify-between gap-2 flex-wrap mb-4">
-        <h1 className="text-orange-500 text-base">Campaigns</h1>
+      <div className="flex items-center justify-between gap-2 flex-wrap mb-3 px-1">
+        <h1 className="text-primary2 font-semibold text-lg">Campaigns</h1>
         <div className="flex items-center gap-2">
           <button
             onClick={handleCreateCampaign}
@@ -163,7 +163,7 @@ const CampaignList = () => {
             <Loader></Loader>
           </div>
         ) : isError ? (
-          <div>Somthing went wrong </div>
+          <div>Something went wrong </div>
         ) : (
           <Table
             pagination={false}

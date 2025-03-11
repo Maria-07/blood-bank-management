@@ -1,11 +1,13 @@
 import { Modal } from "antd";
 import Cookies from "js-cookie";
+import { useRouter } from "next/navigation";
 import React from "react";
 import { IoMdCloseCircleOutline } from "react-icons/io";
 import { MdDeleteOutline, MdDone } from "react-icons/md";
 import { toast } from "react-toastify";
 
 const ApproveVolunteerModal = ({ handleClose, clicked, record, refetch }) => {
+  const router = useRouter();
   const id = record?.id;
   console.log("record", record?.id);
 
@@ -53,7 +55,8 @@ const ApproveVolunteerModal = ({ handleClose, clicked, record, refetch }) => {
           responseData?.data?.message || "Volunteer approved successfully!"
         );
         handleClose();
-        refetch();
+        // router.replace(router.asPath);
+        window.location.reload();
       }
     } catch (error) {
       console.error("Network or server error:", error);

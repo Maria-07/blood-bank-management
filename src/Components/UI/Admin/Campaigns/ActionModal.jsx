@@ -20,7 +20,7 @@ const ActionModal = ({ record, refetch }) => {
   };
   return (
     <div>
-      <Dropdown
+      {/* <Dropdown
         overlay={
           <div className="bg-white shadow-md p-2 rounded-sm border-[1px]">
             <button
@@ -47,7 +47,21 @@ const ActionModal = ({ record, refetch }) => {
             <BsThreeDots />
           </>
         </button>
-      </Dropdown>
+      </Dropdown> */}
+
+      <div className="flex items-center justify-center gap-2">
+        <MdEdit
+          onClick={handleEditCampaign}
+          className="text-lime-700"
+          title="edit"
+        />
+
+        <MdDeleteOutline
+          onClick={handleDeleteCampaign}
+          className="text-rose-500"
+          title="delete"
+        />
+      </div>
 
       {EditCampaign && (
         <CampaignEditModal

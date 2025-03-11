@@ -23,7 +23,7 @@ const Count = () => {
         <h1 className="text-3xl font-extrabold">
           {CountedData?.data?.volunteer}+
         </h1>
-        <p className="text-base text-accent my-1">10005 Volunteer</p>
+        <p className="text-base text-accent my-1">Total Volunteer</p>
       </div>
       <div>
         <h1 className="text-3xl font-extrabold">
@@ -35,13 +35,7 @@ const Count = () => {
         <h1 className="text-3xl font-extrabold">
           {CountedData?.data?.campaign}+
         </h1>
-        <p className="text-base text-accent my-1">Active campaigns</p>
-      </div>
-      <div>
-        <h1 className="text-3xl font-extrabold">
-          {CountedData?.data?.campaign}+
-        </h1>
-        <p className="text-base text-accent my-1">Upcoming campaigns</p>
+        <p className="text-base text-accent my-1">campaigns</p>
       </div>
     </div>
   );
