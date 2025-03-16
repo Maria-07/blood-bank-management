@@ -80,9 +80,7 @@ const DisApproveVolunteerModal = ({
         >
           <div className="">
             <div className="flex items-center justify-between">
-              <h1 className="text-xl  font-semibold tracking-tight">
-                Remove As Volunteer
-              </h1>
+              <h1 className="text-xl  font-semibold tracking-tight">Remove</h1>
 
               <IoMdCloseCircleOutline
                 onClick={handleClose}
@@ -94,7 +92,7 @@ const DisApproveVolunteerModal = ({
 
             <form>
               <div className="text-center text-base my-4">
-                Do you want to Remove this volunteer ?
+                Do you want to Remove this {record?.userType} ?
               </div>
               <div className="bg-gray-200 py-[1px] mt-10"></div>
               <div className="flex items-end justify-end gap-2 mt-2">
@@ -105,7 +103,7 @@ const DisApproveVolunteerModal = ({
                 >
                   <MdDone className=" text-white bg-green-700  px-1 py-[2px] text-[28px]" />
                   <span className="px-2 py-[6px] bg-green-600 transition-all hover:bg-green-700 text-white text-xs">
-                    DisApprove
+                    Remove
                   </span>
                 </button>
                 <button

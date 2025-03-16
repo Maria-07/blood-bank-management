@@ -29,7 +29,7 @@ const RegistrationPage = () => {
                 <h2 className="text-center">
                   Join Our Life-Saving Mission – Register Today! 🩸❤️
                 </h2>
-                <p className="text-sm text-gray-600 my-5">
+                <div className="text-sm text-gray-600 my-5">
                   Every drop of blood has the power to save a life. By creating
                   an account with our blood bank, you are taking a step toward
                   becoming a real-life hero. Thousands of people, including
@@ -48,7 +48,7 @@ const RegistrationPage = () => {
                   <p className="text-base font-semibold my-1">
                     Donate Blood. Save Lives. Make an Impact.
                   </p>
-                </p>
+                </div>
               </div>
             </div>
           </div>

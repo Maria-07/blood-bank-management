@@ -1,3 +1,4 @@
+import { useAuth } from "@/src/Hook/AuthContext";
 import { Image, Modal, Tooltip } from "antd";
 import dayjs from "dayjs";
 import React from "react";
@@ -8,7 +9,7 @@ import { MdDeleteOutline, MdDone } from "react-icons/md";
 
 const UserProfileModal = ({ handleClose, clicked, record, admin }) => {
   console.log(record);
-
+  const { token } = useAuth();
   const {
     address,
     bloodDonationCount,
@@ -49,17 +50,24 @@ const UserProfileModal = ({ handleClose, clicked, record, admin }) => {
       >
         <div>
           <div className="flex items-center justify-between">
-            <h1 className="text-xl font-semibold tracking-tight">
+            <h1 className="text-xl flex items-center gap-2 font-semibold tracking-tight">
               User Profile{" "}
-              {isApproved ? (
-                <button className="text-green-500 bg-green-50 text-[14px] px-2 py-[1px] font-semibold rounded-md">
-                  Approved
-                </button>
-              ) : (
-                <button className="text-red-500 bg-soft text-[14px] px-2 py-[1px] font-semibold rounded-md">
-                  Pending
-                </button>
-              )}
+              <div
+                className={`${
+                  token ? "" : "blur-sm pointer-events-none opacity-50"
+                }`}
+              >
+                {" "}
+                {isApproved ? (
+                  <button className="text-green-500 bg-green-50 text-[14px] px-2 py-[1px] font-semibold rounded-md">
+                    Approved
+                  </button>
+                ) : (
+                  <button className="text-red-500 bg-soft text-[14px] px-2 py-[1px] font-semibold rounded-md">
+                    Pending
+                  </button>
+                )}
+              </div>
             </h1>
             <IoMdCloseCircleOutline
               onClick={handleClose}
@@ -70,7 +78,11 @@ const UserProfileModal = ({ handleClose, clicked, record, admin }) => {
           <div className="bg-gray-200 pt-[1px] my-3"></div>
 
           <form>
-            <div>
+            <div
+              className={`${
+                token ? "" : "blur-sm pointer-events-none opacity-50"
+              }`}
+            >
               <div className="border-[1px] p-3 rounded-md mb-3">
                 <div className="flex items-center flex-wrap gap-3">
                   <div className="h-[80px] w-[80px] overflow-hidden rounded-full">

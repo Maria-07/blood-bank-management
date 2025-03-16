@@ -11,8 +11,11 @@ import { MdDashboard } from "react-icons/md";
 import { CgProfile } from "react-icons/cg";
 import { FaFileDownload } from "react-icons/fa";
 import { FaIdBadge } from "react-icons/fa6";
+import NavbarSmallDevice from "./NavbarSmallDevice";
+import { useState } from "react";
 
 const Navbar = () => {
+  const [open, setOpen] = useState(false);
   const { token, userType, logout } = useAuth();
 
   const currentRoute = usePathname();
@@ -26,10 +29,10 @@ const Navbar = () => {
   return (
     <div>
       {" "}
-      <div className="hidden lg:block sticky top-0 mb-10">
+      <div className={`hidden lg:block sticky top-0 mb-10`}>
         {/* <div className="sm:w-[90%]  sm:mx-auto py-5 flex justify-between border-[1px] shadow-md px-2 rounded-xl"> */}
 
-        <div className="bg-primary ">
+        <div className={token ? `bg-primary` : `bg-primary py-2`}>
           {" "}
           <div className="md:w-[90%] sm:mx-auto flex items-center justify-between">
             <div>
@@ -72,17 +75,18 @@ const Navbar = () => {
                     overlay={
                       <div className="bg-primary py-3 px-4 w-[200px] border shadow-md rounded-sm mt-1">
                         <div>
-                          <button>
-                            {" "}
-                            {token && userType === "Admin" && (
+                          {token && userType === "Admin" && (
+                            <button>
+                              {" "}
                               <Link
                                 className="text-white hover:text-white font-semibold flex items-center gap-2"
                                 href={"/admin/dashboard/campaigns/"}
                               >
                                 <MdDashboard /> Dashboard
-                              </Link>
-                            )}
-                          </button>
+                              </Link>{" "}
+                            </button>
+                          )}
+
                           <br />
                           <button>
                             <Link
@@ -230,9 +234,94 @@ const Navbar = () => {
               />
             </Link>
           </div>
-          <button className="">User</button>
+          <div className="">
+            {token ? (
+              <div>
+                <Dropdown
+                  overlay={
+                    <div className="bg-primary py-3 px-4 w-[200px] border shadow-md rounded-sm mt-1">
+                      <div>
+                        {token && userType === "Admin" && (
+                          <button>
+                            {" "}
+                            <Link
+                              className="text-white hover:text-white font-semibold flex items-center gap-2"
+                              href={"/admin/dashboard/campaigns/"}
+                            >
+                              <MdDashboard /> Dashboard
+                            </Link>{" "}
+                          </button>
+                        )}
+
+                        <br />
+                        <button>
+                          <Link
+                            className="text-white hover:text-white font-semibold flex items-center gap-2"
+                            href={"/my-profile"}
+                          >
+                            <CgProfile /> My Profile
+                          </Link>
+                        </button>
+                        <button>
+                          <Link
+                            className="text-white hover:text-white font-semibold flex items-center gap-2"
+                            href={"/download-id"}
+                          >
+                            <FaIdBadge /> Download Id Card
+                          </Link>
+                        </button>
+                        <button>
+                          <Link
+                            className="text-white hover:text-white font-semibold flex items-center gap-2"
+                            href={"/download-report"}
+                          >
+                            <FaFileDownload /> Download Report
+                          </Link>
+                        </button>
+                        <hr className="mt-5 mb-3" />
+                        <div className="">
+                          <>
+                            <button
+                              onClick={handleLogout}
+                              className="head-input-button"
+                            >
+                              Logout
+                            </button>
+                          </>
+                        </div>
+                      </div>
+                    </div>
+                  }
+                  placement="bottomRight"
+                >
+                  <button className="">
+                    {" "}
+                    <Image
+                      src={logo}
+                      width={40}
+                      height={40}
+                      className="rounded-full"
+                      alt="Picture of the author"
+                    />
+                  </button>
+                </Dropdown>
+              </div>
+            ) : (
+              <>
+                {" "}
+                <Link href={"/login/"}>
+                  <button className="head-input-button">Login</button>
+                </Link>
+              </>
+            )}
+          </div>
         </div>
-        {/* <NavbarSmallDevice isOpen={open} setOpen={setOpen}></NavbarSmallDevice> */}
+        <NavbarSmallDevice
+          token={token}
+          isOpen={open}
+          handleLogout={handleLogout}
+          setOpen={setOpen}
+        ></NavbarSmallDevice>
       </div>
     </div>
   );

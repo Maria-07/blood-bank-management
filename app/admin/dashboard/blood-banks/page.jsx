@@ -85,6 +85,8 @@ const BloodBanks = () => {
         .filter(
           (key) =>
             key !== "id" &&
+            key !== "serial" &&
+            key !== "code" &&
             key !== "isSuperAdmin" &&
             key !== "password" &&
             key !== "address" &&

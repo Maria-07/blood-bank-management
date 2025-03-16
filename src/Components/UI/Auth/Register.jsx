@@ -199,6 +199,20 @@ const Register = () => {
               <option value="Other">Other</option>
             </select>
           </div>
+          <div className="flex items-center sm:col-span-2">
+            <input
+              type="checkbox"
+              id="PhysicalComplexity"
+              className="mr-2"
+              disabled
+            />
+            <label htmlFor="PhysicalComplexity" className="input-title">
+              Any Physical Complexity?{" "}
+              <span className="text-xs text-accent">
+                (like : Diabetics / Cancer / thyroid.... etc.)
+              </span>
+            </label>
+          </div>
 
           {/* Blood Information */}
           <div className="sm:col-span-3">
@@ -218,7 +232,13 @@ const Register = () => {
             >
               <option value="">Select</option>
               <option value="O+">O+</option>
+              <option value="O+">O-</option>
               <option value="A+">A+</option>
+              <option value="A+">A-</option>
+              <option value="A+">B+</option>
+              <option value="A+">B-</option>
+              <option value="A+">AB+</option>
+              <option value="A+">AB-</option>
             </select>
           </div>
           <div>
@@ -231,6 +251,7 @@ const Register = () => {
             >
               <option value="">Select</option>
               <option value="Interested">Interested</option>
+              <option value="NotInterested">Not Interested</option>
             </select>
           </div>
           <div>

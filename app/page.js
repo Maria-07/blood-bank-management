@@ -14,7 +14,7 @@ const fadeInVariants = {
 
 const HomePage = () => {
   return (
-    <div>
+    <div className="px-2">
       <motion.div
         initial="hidden"
         whileInView="visible"

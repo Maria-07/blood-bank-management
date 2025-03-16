@@ -29,6 +29,7 @@ const CampaignEditModal = ({ handleClose, clicked, record, refetch }) => {
     bannerUrl,
     name,
     volunteerList,
+    institute,
   } = record;
   const dateFormat = "yyyy-MM-dd";
 
@@ -183,6 +184,7 @@ const CampaignEditModal = ({ handleClose, clicked, record, refetch }) => {
               </label>
               <input
                 type="text"
+                defaultValue={institute}
                 name="Institute"
                 className="modal-input-field ml-1 w-full"
                 {...register("Institute")}

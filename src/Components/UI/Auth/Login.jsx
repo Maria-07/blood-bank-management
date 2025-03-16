@@ -192,7 +192,7 @@ const Login = () => {
             onClick={handleSubmit((data) => handleLogin(data, true))}
             className="input-button w-full my-5 sm:w-[150%]"
           >
-            Admin Login
+            Login
           </button>
         )}
       </form>

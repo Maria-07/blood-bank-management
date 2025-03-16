@@ -95,22 +95,24 @@ const MediaUploadAndDeleteModal = ({ handleClose, clicked, record }) => {
         <>
           <div>
             <h1 className="input-title">Images</h1>
-            <input
-              type="file"
-              accept="image/*" // Only allows image files
-              multiple // Allows multiple files
-              className="w-full mb-2"
-              {...register("Images")}
-            />
-            <button
-              type="submit"
-              className="border-sky-600 flex items-center border rounded-sm"
-            >
-              <MdDone className="text-white bg-sky-700 px-1 py-[2px] text-[28px]" />
-              <span className="px-2 py-[6px] bg-sky-500 transition-all hover:bg-sky-600 text-white text-xs">
-                Upload
-              </span>
-            </button>
+            <div className="flex items-center justify-between">
+              <input
+                type="file"
+                accept="image/*" // Only allows image files
+                multiple // Allows multiple files
+                className="w-full mb-2"
+                {...register("Images")}
+              />
+              <button
+                type="submit"
+                className="border-sky-600 flex items-center border rounded-sm"
+              >
+                <MdDone className="text-white bg-sky-700 px-1 py-[2px] text-[28px]" />
+                <span className="px-2 py-[6px] bg-sky-500 transition-all hover:bg-sky-600 text-white text-xs">
+                  Upload
+                </span>
+              </button>
+            </div>
             <hr className="my-3" />
             <div>
               {" "}
