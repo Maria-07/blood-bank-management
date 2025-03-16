@@ -3,38 +3,52 @@ import { Tabs } from "antd";
 import React, { useEffect, useState } from "react";
 import Videos from "./Videos/Videos";
 import Images from "./Images/Images";
+import News from "./News/News";
 import { useGetAllMediaMutation } from "@/src/redux/features/campaign/campaignApi";
+import { useGetAllNewsQuery } from "@/src/redux/features/news/news";
 
 const MediaTab = () => {
   const [activeTab, setActiveTab] = useState("1");
   const [media, setMedia] = useState({ images: [], videos: [] });
-  const [getAllMedia] = useGetAllMediaMutation();
   const [size, setSize] = useState(10);
 
-  //! Fetch Media based on Active Tab & Page Size
+  //! Fetch Media Mutation
+  const [getAllMedia] = useGetAllMediaMutation();
+
+  //! Fetch News Query
+  const {
+    data: newsData,
+    error: newsError,
+    isLoading: newsLoading,
+  } = useGetAllNewsQuery({ pageNo: 1, pageSize: size });
+
+  console.log(newsData);
+
+  //! Fetch Media based on Active Tab
   const fetchMedia = async () => {
     try {
-      const isImageTab = activeTab === "1";
-      const params = {
-        imagePageNo: isImageTab ? 1 : 0,
-        imagePageSize: isImageTab ? size : 0,
-        videoPageNo: isImageTab ? 0 : 1,
-        videoPageSize: isImageTab ? 0 : size,
-      };
+      if (activeTab === "1" || activeTab === "2") {
+        const isImageTab = activeTab === "1";
+        const params = {
+          imagePageNo: isImageTab ? 1 : 0,
+          imagePageSize: isImageTab ? size : 0,
+          videoPageNo: isImageTab ? 0 : 1,
+          videoPageSize: isImageTab ? 0 : size,
+        };
 
-      console.log("Fetching media with params:", params);
-      const response = await getAllMedia(params).unwrap();
-      console.log("API Response:", response);
+        const response = await getAllMedia(params).unwrap();
+        console.log("API Response (Media):", response);
 
-      setMedia((prev) => ({
-        ...prev,
-        images: isImageTab
-          ? response?.data?.imageUrls || prev.images
-          : prev.images,
-        videos: !isImageTab
-          ? response?.data?.videoUrls || prev.videos
-          : prev.videos,
-      }));
+        setMedia((prev) => ({
+          ...prev,
+          images: isImageTab
+            ? response?.data?.imageUrls || prev.images
+            : prev.images,
+          videos: !isImageTab
+            ? response?.data?.videoUrls || prev.videos
+            : prev.videos,
+        }));
+      }
     } catch (error) {
       console.error("Error fetching media:", error);
     }
@@ -43,10 +57,9 @@ const MediaTab = () => {
   //! Fetch Data when activeTab or size changes
   useEffect(() => {
     fetchMedia();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [activeTab, size]); // Added `size` as dependency
+  }, [activeTab, size]);
 
-  //! Reusable Tab Configuration
+  //! Tab Configuration
   const tabItems = [
     {
       label: "Images",
@@ -57,6 +70,15 @@ const MediaTab = () => {
       label: "Videos",
       key: "2",
       children: <Videos videos={media.videos} />,
+    },
+    {
+      label: "News",
+      key: "3",
+      children: newsLoading ? (
+        <p>Loading News...</p>
+      ) : (
+        <News news={newsData?.data} />
+      ),
     },
   ];
 
@@ -73,7 +95,7 @@ const MediaTab = () => {
       {/* Load More Button */}
       <div className="flex justify-end mt-4">
         <button
-          onClick={() => setSize((prev) => prev + 10)} // Only update state
+          onClick={() => setSize((prev) => prev + 10)}
           className="px-3 py-1 bg-primary2 text-sm text-white rounded-md shadow-md hover:bg-blue-600"
         >
           Load More

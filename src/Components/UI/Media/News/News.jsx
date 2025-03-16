@@ -1,16 +1,18 @@
 import React from "react";
 import NewsCard from "./NewsCard";
+import Link from "next/link";
 
-const News = () => {
+const News = ({ news }) => {
+  console.log(news);
+
   return (
     <div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 px-2 gap-10 my-10">
-        <NewsCard></NewsCard>
-        <NewsCard></NewsCard>
-        <NewsCard></NewsCard>
-        <NewsCard></NewsCard>
-        <NewsCard></NewsCard>
-        <NewsCard></NewsCard>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 p-4">
+        {news?.map((n, index) => (
+          <div key={index}>
+            <NewsCard news={n}></NewsCard>
+          </div>
+        ))}
       </div>
     </div>
   );

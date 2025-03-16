@@ -14,6 +14,7 @@ const DonarCards = () => {
   const [size, setSize] = useState(4);
   const [filteredData, setFilteredData] = useState({});
   const [donors, setDonors] = useState([]);
+  console.log(donors);
 
   const handleFilteredData = (key, value) => {
     setFilteredData((prev) => ({
