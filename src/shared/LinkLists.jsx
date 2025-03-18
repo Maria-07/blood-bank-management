@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { FaUsersCog } from "react-icons/fa";
 import { MdOutlineAssignmentReturned } from "react-icons/md";
-import { FaPeopleCarryBox } from "react-icons/fa6";
+import { FaPeopleCarryBox, FaRegNewspaper } from "react-icons/fa6";
 import { BsChatSquareText } from "react-icons/bs";
 import { IoDocumentAttachSharp } from "react-icons/io5";
 
@@ -18,7 +18,7 @@ export const settingsSidebar = [
   },
   {
     icon: <MdOutlineAssignmentReturned />,
-    link_name: "Blood Bank",
+    link_name: "User Management",
     link: "/admin/dashboard/blood-banks",
   },
   {
@@ -30,5 +30,10 @@ export const settingsSidebar = [
     icon: <IoDocumentAttachSharp />,
     link_name: "Notice",
     link: "/admin/dashboard/notices",
+  },
+  {
+    icon: <FaRegNewspaper />,
+    link_name: "News",
+    link: "/admin/dashboard/news",
   },
 ];

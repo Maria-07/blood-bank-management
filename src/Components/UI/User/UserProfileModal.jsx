@@ -36,6 +36,7 @@ const UserProfileModal = ({ handleClose, clicked, record, admin }) => {
     PhysicalComplexity,
     upazilaName,
     userType,
+    code,
   } = record;
 
   return (
@@ -88,7 +89,11 @@ const UserProfileModal = ({ handleClose, clicked, record, admin }) => {
                   <div className="h-[80px] w-[80px] overflow-hidden rounded-full">
                     <Image
                       className="border object-cover w-full h-full"
-                      src={`${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}/${imageUrl}`}
+                      src={
+                        imageUrl
+                          ? `${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}/${imageUrl}`
+                          : "https://static.vecteezy.com/system/resources/thumbnails/004/607/791/small_2x/man-face-emotive-icon-smiling-male-character-in-blue-shirt-flat-illustration-isolated-on-white-happy-human-psychological-portrait-positive-emotions-user-avatar-for-app-web-design-vector.jpg"
+                      }
                       width={80}
                       height={80}
                       alt="Picture of the author"
@@ -99,7 +104,9 @@ const UserProfileModal = ({ handleClose, clicked, record, admin }) => {
                     <h1 className="text-capitalize font-semibold text-lg">
                       {fullName}
                     </h1>
-
+                    <h2 className="text-capitalize text-accent text-sm font-semibold">
+                      {code}
+                    </h2>
                     <h2 className="text-capitalize text-accent text-sm font-semibold">
                       {userType}
                     </h2>
@@ -127,21 +134,50 @@ const UserProfileModal = ({ handleClose, clicked, record, admin }) => {
                     <h1 className="text-xs text-accent">Date of Birth</h1>
                     <h6 className="text-base font-semibold"> {dateOfBirth}</h6>
                   </div>
-
                   <div>
                     <h1 className="text-xs text-accent">Gender</h1>
                     <h6 className="text-base font-semibold"> {gender}</h6>
                   </div>
-
                   <div>
                     <h1 className="text-xs text-accent">Father&apos;s Name</h1>
-                    <h6 className="text-base font-semibold"> {fatherName}</h6>
+                    <h6 className="text-base font-semibold">
+                      {" "}
+                      {fatherName ? fatherName : "N/A"}
+                    </h6>
                   </div>
                   <div>
                     <h1 className="text-xs text-accent">Mother&apos;s Name</h1>
-                    <h6 className="text-base font-semibold"> {motherName}</h6>
+                    <h6 className="text-base font-semibold">
+                      {" "}
+                      {motherName ? motherName : "N/A"}
+                    </h6>
                   </div>
-
+                  <div>
+                    <h1 className="text-xs text-accent">District</h1>
+                    <h6 className="text-base font-semibold">
+                      {" "}
+                      {districtName ? districtName : "N/A"}
+                    </h6>
+                  </div>{" "}
+                  <div>
+                    <h1 className="text-xs text-accent">Upazila</h1>
+                    <h6 className="text-base font-semibold">
+                      {" "}
+                      {upazilaName ? upazilaName : "N/A"}
+                    </h6>
+                  </div>
+                  <div>
+                    <h1 className="text-xs text-accent">Union</h1>
+                    <h6 className="text-base font-semibold">
+                      {" "}
+                      {unionName ? unionName : "N/A"}
+                    </h6>
+                  </div>
+                  {/* <div className="grid grid-cols-1 lg:grid-cols-3 my-3 mr-2 gap-x-2 gap-y-3">
+                    
+                  </div> */}
+                </div>
+                <div className="pt-3">
                   {admin && record?.nidUrls?.length > 0 && (
                     <div>
                       <h1 className="text-xs text-accent">NID details</h1>
@@ -166,41 +202,6 @@ const UserProfileModal = ({ handleClose, clicked, record, admin }) => {
                       </div>
                     </div>
                   )}
-                  <div className="flex items-center sm:col-span-2">
-                    <input
-                      defaultChecked={PhysicalComplexity}
-                      type="checkbox"
-                      id="PhysicalComplexity"
-                      className="mr-2"
-                      disabled
-                    />
-                    <label htmlFor="PhysicalComplexity" className="input-title">
-                      Any Physical Complexity?{" "}
-                      <span className="text-xs text-accent">
-                        (like : Diabetics / Cancer / thyroid.... etc.)
-                      </span>
-                    </label>
-                  </div>
-                </div>
-              </div>
-              <div className="border-[1px] p-3 rounded-md mb-3">
-                <h1 className="font-semibold text-primary2 text-lg mb-2">
-                  Address
-                </h1>
-
-                <div className="grid grid-cols-1 lg:grid-cols-3 my-3 mr-2 gap-x-2 gap-y-3">
-                  <div>
-                    <h1 className="text-xs text-accent">District</h1>
-                    <h6 className="text-base font-semibold"> {districtName}</h6>
-                  </div>{" "}
-                  <div>
-                    <h1 className="text-xs text-accent">Upazila</h1>
-                    <h6 className="text-base font-semibold"> {upazilaName}</h6>
-                  </div>
-                  <div>
-                    <h1 className="text-xs text-accent">Union</h1>
-                    <h6 className="text-base font-semibold"> {unionName}</h6>
-                  </div>
                 </div>
               </div>
               <div className="border-[1px] p-3 rounded-md mb-3">
@@ -260,6 +261,12 @@ const UserProfileModal = ({ handleClose, clicked, record, admin }) => {
                       )}{" "}
                     </h6>
                   </div>
+                  <div>
+                    <h1 className="text-xs text-accent">Physical Complexity</h1>
+                    <h6 className="text-base font-semibold">
+                      {PhysicalComplexity ? "Yes" : "No"}
+                    </h6>
+                  </div>
                 </div>
               </div>
             </div>
@@ -269,7 +276,6 @@ const UserProfileModal = ({ handleClose, clicked, record, admin }) => {
                 onClick={handleClose}
                 className="border-secondary flex items-center border rounded-sm"
               >
-                <MdDeleteOutline className="text-white bg-secondary px-1 py-[2px] text-[28px]" />
                 <span className="px-2 py-[6px] bg-primary transition-all hover:bg-secondary text-white text-xs">
                   Cancel
                 </span>

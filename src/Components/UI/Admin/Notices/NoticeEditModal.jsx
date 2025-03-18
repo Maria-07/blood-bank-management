@@ -1,16 +1,14 @@
 "use client";
 import Cookies from "js-cookie";
-import { DatePicker, Modal, Select } from "antd";
+import { Modal } from "antd";
 import { useForm } from "react-hook-form";
 import { IoMdCloseCircleOutline } from "react-icons/io";
 import { MdDeleteOutline, MdDone } from "react-icons/md";
 import { toast } from "react-toastify";
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 
 const NoticeEditModal = ({ handleClose, record, clicked, refetch }) => {
   console.log("record", record);
-  const { name, description } = record;
+  const { id, name, description } = record;
 
   const accessToken = Cookies.get("accessToken");
 
@@ -22,9 +20,9 @@ const NoticeEditModal = ({ handleClose, record, clicked, refetch }) => {
   } = useForm();
 
   const onSubmit = async (data) => {
-    console.log("Create Notice data =", data);
+    console.log("Update Notice data =", data);
 
-    //! Create FormData from input data
+    //! Update FormData from input data
     const formData = new FormData();
 
     //! Add form fields
@@ -35,6 +33,8 @@ const NoticeEditModal = ({ handleClose, record, clicked, refetch }) => {
         formData.append(key, value);
       }
     });
+
+    formData.append("id", id);
 
     //! Log FormData entries for debugging
     for (const [key, value] of formData.entries()) {
@@ -91,7 +91,7 @@ const NoticeEditModal = ({ handleClose, record, clicked, refetch }) => {
         <div>
           <div className="flex items-center justify-between">
             <h1 className="text-xl font-semibold tracking-tight">
-              Create a Notice
+              Update a Notice
             </h1>
 
             <IoMdCloseCircleOutline
@@ -135,7 +135,7 @@ const NoticeEditModal = ({ handleClose, record, clicked, refetch }) => {
                 />
               </div>
 
-              <div className="sm:col-span-2">
+              {/* <div className="sm:col-span-2">
                 <label className="label flex items-center">
                   <div className="modal-label-name">Upload your Notice</div>
                 </label>
@@ -143,6 +143,34 @@ const NoticeEditModal = ({ handleClose, record, clicked, refetch }) => {
                   type="file"
                   accept=".pdf, .doc, .docx, .ppt, .pptx"
                   className=" ml-1 w-full"
+                  {...register("Files")}
+                />
+              </div> */}
+
+              <div className="sm:col-span-2">
+                <label className="label flex items-center">
+                  <div className="modal-label-name">Upload your Notice</div>
+                </label>
+
+                {/* Show Existing File (If Available) */}
+                {record?.fileUrls && record?.fileUrls.length > 0 && (
+                  <div className="mb-2 text-sm text-blue-600">
+                    <a
+                      href={`${process.env.NEXT_PUBLIC_FILE_BASE_URL}/${record.fileUrls[0]}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="hover:underline"
+                    >
+                      Current File: {record.fileUrls[0].split("/").pop()}
+                    </a>
+                  </div>
+                )}
+
+                {/* File Upload Input */}
+                <input
+                  type="file"
+                  accept=".pdf, .doc, .docx, .ppt, .pptx"
+                  className="ml-1 w-full"
                   {...register("Files")}
                 />
               </div>
@@ -156,7 +184,7 @@ const NoticeEditModal = ({ handleClose, record, clicked, refetch }) => {
               >
                 <MdDone className="text-white bg-sky-700 px-1 py-[2px] text-[28px]" />
                 <span className="px-2 py-[6px] bg-sky-500 transition-all hover:bg-sky-600 text-white text-xs">
-                  Create Notice
+                  Update Notice
                 </span>
               </button>
               <button

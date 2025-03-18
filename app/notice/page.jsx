@@ -32,7 +32,7 @@ const NoticePage = () => {
         <div className="md:w-[90%] sm:mx-auto ">
           <div className="pt-8 bg-[#F2F2F2] rounded-xl shadow-md py-2  px-5 ">
             <div className="md:w-[100%] sm:mx-auto grid sm:grid-cols-2 grid-cols-1 gap-3 items-center justify-between">
-              <div
+              {/* <div
                 initial={{ opacity: 0, x: -30 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.4 }}
@@ -46,8 +46,10 @@ const NoticePage = () => {
                   Search for blood donors in your area quickly and conveniently.
                   Filter results by blood group.
                 </p>
-              </div>
-
+              </div> */}
+              <h1 className="font-bold lg:text-7xl text-4xl font-primary my-5">
+                Notice
+              </h1>
               <div
                 initial={{ opacity: 0, x: 30 }}
                 animate={{ opacity: 1, x: 0 }}

@@ -1,5 +1,8 @@
 "use client";
-import { useGetAllVolunteersQuery } from "@/src/redux/features/volunteers/volunteers";
+import {
+  useGetAllApprovedVolunteersQuery,
+  useGetAllVolunteersQuery,
+} from "@/src/redux/features/volunteers/volunteers";
 import { DatePicker, Image, Modal, Select } from "antd";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
@@ -61,7 +64,7 @@ const CampaignEditModal = ({ handleClose, clicked, record, refetch }) => {
     data: volunteers,
     isLoading,
     isError,
-  } = useGetAllVolunteersQuery({
+  } = useGetAllApprovedVolunteersQuery({
     pageNo: page,
     pageSize: size,
   });
@@ -78,7 +81,7 @@ const CampaignEditModal = ({ handleClose, clicked, record, refetch }) => {
 
   // Volunteer options for selection
   const volunteerOptions = allVolunteers?.map((volunteer) => ({
-    label: volunteer.fullName,
+    label: volunteer.fullName + " " + `(${volunteer.code})`,
     value: volunteer.id,
   }));
 

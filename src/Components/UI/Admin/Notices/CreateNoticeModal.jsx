@@ -114,7 +114,7 @@ const CreateNoticeModal = ({ handleClose, clicked, refetch }) => {
               <div className="sm:col-span-2">
                 <label className="label flex items-center">
                   <div className="modal-label-name">
-                    Notice Name<span className="text-red-600">*</span>
+                    Title<span className="text-red-600">*</span>
                   </div>
                 </label>
                 <input

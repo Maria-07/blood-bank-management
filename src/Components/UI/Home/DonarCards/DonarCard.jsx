@@ -3,6 +3,7 @@ import React, { useRef, useState } from "react";
 import { LuCrown } from "react-icons/lu";
 import { IoLocationOutline } from "react-icons/io5";
 import { FaPhoneAlt } from "react-icons/fa";
+import { FaHandHoldingHeart, FaRegHandBackFist } from "react-icons/fa6";
 import {
   BiDonateBlood,
   BiDonateHeart,
@@ -61,13 +62,21 @@ const DonarCard = ({ record = {} }) => {
 
   return (
     <div>
-      <Card onClick={handleUserDetails} hoverable className="bg-popover p-5">
+      <Card
+        // onClick={handleUserDetails}
+        hoverable
+        className="bg-popover p-5 h-[280px]"
+      >
         <div>
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2 flex-wrap">
               <Image
                 className="border rounded-full"
-                src={`${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}/${imageUrl}`}
+                src={
+                  imageUrl
+                    ? `${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}/${imageUrl}`
+                    : "https://static.vecteezy.com/system/resources/thumbnails/004/607/791/small_2x/man-face-emotive-icon-smiling-male-character-in-blue-shirt-flat-illustration-isolated-on-white-happy-human-psychological-portrait-positive-emotions-user-avatar-for-app-web-design-vector.jpg"
+                }
                 width={50}
                 height={50}
                 alt="Picture of the author"
@@ -88,7 +97,7 @@ const DonarCard = ({ record = {} }) => {
                   </span>{" "}
                 </h1>
                 <span className="text-xs text-accent">
-                  Last donated: {getLastDonationTime(lastDonationTime)}
+                  Last donated: {record.lastDonationDayCount} days ago
                 </span>
               </div>
             </div>
@@ -104,16 +113,8 @@ const DonarCard = ({ record = {} }) => {
           >
             <div className="flex items-center justify-between gap-2 my-3">
               <div className="flex items-center gap-1">
-                <IoLocationOutline className="text-primary text-lg" />
-                <h1 className="text-base font-semibold">Address</h1>
-              </div>
-              <div className="text-sm text-accent text-right">{address}</div>
-            </div>
-
-            <div className="flex items-center justify-between gap-2 my-3">
-              <div className="flex items-center gap-1">
                 <FaPhoneAlt className="text-primary text-lg" />
-                <h1 className="text-base font-semibold">Contact</h1>
+                <h1 className="ml-1 text-base font-semibold">Contact</h1>
               </div>
               <div className="text-sm text-accent text-right">
                 {mobileNumber}
@@ -123,10 +124,36 @@ const DonarCard = ({ record = {} }) => {
             <div className="flex items-center justify-between gap-2 my-3">
               <div className="flex items-center gap-1">
                 <BiDonateBlood className="text-primary text-lg" />
-                <h1 className="text-base font-semibold">Donations</h1>
+                <h1 className="ml-1 text-base font-semibold">
+                  Number of Donation
+                </h1>
               </div>
               <div className="text-sm text-accent text-right">
                 {bloodDonationCount}
+              </div>
+            </div>
+
+            <div className="flex items-center justify-between gap-2 my-3">
+              <div className="flex items-center gap-1">
+                <BiDonateBlood className="text-primary text-lg" />
+                <h1 className="ml-1 text-base font-semibold">
+                  Physical Complexity
+                </h1>
+              </div>
+              <div className="text-sm text-accent text-right">
+                {record.physicalComplexity ? "Yes" : "No"}
+              </div>
+            </div>
+
+            <div className="flex items-center justify-between gap-2 my-3">
+              <div className="flex items-center gap-1">
+                <FaHandHoldingHeart className="text-primary text-lg" />
+                <h1 className="ml-1 text-base font-semibold">
+                  Donation Status
+                </h1>
+              </div>
+              <div className="text-sm text-accent text-right">
+                {bloodDonationStatus}
               </div>
             </div>
           </div>

@@ -16,7 +16,8 @@ import { useState } from "react";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
-  const { token, userType, logout } = useAuth();
+  const { token, userType, logout, userId } = useAuth();
+  console.log(userId);
 
   const currentRoute = usePathname();
   const router = useRouter();

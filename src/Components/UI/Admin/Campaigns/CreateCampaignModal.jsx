@@ -5,7 +5,10 @@ import { useForm } from "react-hook-form";
 import { IoMdCloseCircleOutline } from "react-icons/io";
 import { MdDeleteOutline, MdDone } from "react-icons/md";
 import { toast } from "react-toastify";
-import { useGetAllVolunteersQuery } from "@/src/redux/features/volunteers/volunteers";
+import {
+  useGetAllApprovedVolunteersQuery,
+  useGetAllVolunteersQuery,
+} from "@/src/redux/features/volunteers/volunteers";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
@@ -39,7 +42,7 @@ const CreateCampaignModal = ({ handleClose, clicked, refetch }) => {
     data: volunteers,
     isLoading,
     isError,
-  } = useGetAllVolunteersQuery({
+  } = useGetAllApprovedVolunteersQuery({
     pageNo: page,
     pageSize: size,
   });
@@ -55,7 +58,7 @@ const CreateCampaignModal = ({ handleClose, clicked, refetch }) => {
   }, [volunteers, isLoading, isError, router]);
 
   const volunteerOptions = allVolunteers?.map((volunteer) => ({
-    label: volunteer.fullName,
+    label: volunteer.fullName + " " + `(${volunteer.code})`,
     value: volunteer.id,
   }));
 

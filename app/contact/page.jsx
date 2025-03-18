@@ -1,14 +1,15 @@
 "use client";
-import { getUserType } from "@/src/Hook/authUtils";
+
 import Image from "next/image";
 import React from "react";
 import contact from "@/src/assets/Image/contact.png";
 import { useForm } from "react-hook-form";
 import Cookies from "js-cookie";
 import { toast } from "react-toastify";
+import { getUserDetails } from "@/src/Hook/authUtils";
 
 const ContactPage = () => {
-  const type = getUserType();
+  const type = getUserDetails();
   console.log(type);
 
   const {

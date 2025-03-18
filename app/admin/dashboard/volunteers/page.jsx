@@ -83,7 +83,6 @@ const VolunteerList = () => {
           (key) =>
             key !== "id" &&
             key !== "serial" &&
-            key !== "code" &&
             key !== "isSuperAdmin" &&
             key !== "password" &&
             key !== "address" &&
@@ -105,9 +104,12 @@ const VolunteerList = () => {
             key !== "imageUrl"
         )
         .map((key, index) => ({
-          title: key
-            .replace(/([a-z])([A-Z])/g, "$1 $2") // Add spaces between camelCase
-            .replace(/^./, (char) => char.toUpperCase()), // Capitalize the first letter
+          title:
+            key === "isApproved"
+              ? "Action"
+              : key
+                  .replace(/([a-z])([A-Z])/g, "$1 $2") // Add spaces between camelCase
+                  .replace(/^./, (char) => char.toUpperCase()), // Capitalize the first letter
           dataIndex: key,
           key,
           filters: generateFilterValues(tableData, key),

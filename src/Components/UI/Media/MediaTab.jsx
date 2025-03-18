@@ -6,6 +6,7 @@ import Images from "./Images/Images";
 import News from "./News/News";
 import { useGetAllMediaMutation } from "@/src/redux/features/campaign/campaignApi";
 import { useGetAllNewsQuery } from "@/src/redux/features/news/news";
+import Loader from "../../Layouts/Loader";
 
 const MediaTab = () => {
   const [activeTab, setActiveTab] = useState("1");
@@ -75,7 +76,7 @@ const MediaTab = () => {
       label: "News",
       key: "3",
       children: newsLoading ? (
-        <p>Loading News...</p>
+        <Loader></Loader>
       ) : (
         <News news={newsData?.data} />
       ),

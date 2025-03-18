@@ -80,7 +80,9 @@ const DisApproveVolunteerModal = ({
         >
           <div className="">
             <div className="flex items-center justify-between">
-              <h1 className="text-xl  font-semibold tracking-tight">Remove</h1>
+              <h1 className="text-xl  font-semibold tracking-tight">
+                Remove {record?.userType}
+              </h1>
 
               <IoMdCloseCircleOutline
                 onClick={handleClose}

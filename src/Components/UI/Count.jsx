@@ -21,21 +21,21 @@ const Count = () => {
     <div className="gap-2 grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 2xl:grid-cols-7">
       <div>
         <h1 className="text-3xl font-extrabold">
-          {CountedData?.data?.volunteer}+
+          {CountedData?.data?.volunteer}
         </h1>
-        <p className="text-base text-accent my-1">Total Volunteer</p>
+        <p className="text-base text-accent my-1">Volunteer(s)</p>
       </div>
       <div>
         <h1 className="text-3xl font-extrabold">
-          {CountedData?.data?.registeredDonor}+
+          {CountedData?.data?.registeredDonor}
         </h1>
-        <p className="text-base text-accent my-1">Total donors</p>
+        <p className="text-base text-accent my-1">Donor(s)</p>
       </div>
       <div>
         <h1 className="text-3xl font-extrabold">
-          {CountedData?.data?.campaign}+
+          {CountedData?.data?.campaign}
         </h1>
-        <p className="text-base text-accent my-1">campaigns</p>
+        <p className="text-base text-accent my-1">Campaign(s)</p>
       </div>
     </div>
   );

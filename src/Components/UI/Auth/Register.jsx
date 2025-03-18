@@ -11,6 +11,7 @@ const Register = () => {
   const [upazilas, setUpazilas] = useState([]);
   const [unions, setUnions] = useState([]);
   const [dob, setDob] = useState("");
+  const [uType, setUType] = useState();
   const [donationDate, setDonationDate] = useState("");
 
   const router = useRouter();
@@ -59,9 +60,10 @@ const Register = () => {
       }
     });
 
-    if (dob && donationDate) {
+    if (dob && donationDate && uType) {
       formData.append("DateOfBirth", dob);
       formData.append("LastDonationTime", donationDate);
+      formData.append("UserType", uType);
     }
 
     try {
@@ -83,7 +85,7 @@ const Register = () => {
   };
 
   return (
-    <div className="mt-3">
+    <div className="mt-1">
       <h3 className="text-lg font-normal text-primary mb-1">
         Create your account
       </h3>
@@ -92,9 +94,14 @@ const Register = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 2xl:grid-cols-3 gap-3 my-5">
           {/* User Type Selection */}
           <div>
-            <label className="input-title">User Type *</label>
+            <label className="input-title">
+              User Type<span className="text-rose-600">*</span>
+            </label>
             <select
-              {...register("UserType", { required: "User Type is required" })}
+              // {...register("UserType", { required: "User Type is required" })}
+              onChange={(e) => {
+                setUType(e.target.value);
+              }}
               className="input-select-border w-full mb-2"
             >
               <option value="">Select</option>
@@ -115,7 +122,9 @@ const Register = () => {
             <hr />
           </div>
           <div>
-            <label className="input-title">Full Name *</label>
+            <label className="input-title">
+              Full Name<span className="text-rose-600">*</span>
+            </label>
             <input
               type="text"
               {...register("FullName", { required: "Full Name is required" })}
@@ -124,7 +133,9 @@ const Register = () => {
           </div>
 
           <div>
-            <label className="input-title">Date of Birth *</label>
+            <label className="input-title">
+              Date of Birth<span className="text-rose-600">*</span>
+            </label>
             <DatePicker
               className="w-full"
               format="YYYY-MM-DD"
@@ -132,7 +143,9 @@ const Register = () => {
             />
           </div>
           <div>
-            <label className="input-title">Mobile Number *</label>
+            <label className="input-title">
+              Mobile Number<span className="text-rose-600">*</span>
+            </label>
             <input
               type="number"
               {...register("MobileNumber", {
@@ -142,8 +155,35 @@ const Register = () => {
               className="input-border w-full mb-2"
             />
           </div>
+
           <div>
-            <label className="input-title">District *</label>
+            <label className="input-title">
+              Father Name<span className="text-rose-600">*</span>
+            </label>
+            <input
+              type="text"
+              className="input-border w-full mb-2"
+              {...register("FatherName", {
+                required: "Father name is required",
+              })}
+            />
+          </div>
+          <div>
+            <label className="input-title">
+              Mother Name<span className="text-rose-600">*</span>
+            </label>
+            <input
+              type="text"
+              {...register("MotherName", {
+                required: "Mother name is required",
+              })}
+              className="input-border w-full mb-2"
+            />
+          </div>
+          <div>
+            <label className="input-title">
+              District<span className="text-rose-600">*</span>
+            </label>
             <select
               {...register("District", { required: "District is required" })}
               className="input-select-border w-full mb-2"
@@ -152,7 +192,9 @@ const Register = () => {
             </select>
           </div>
           <div>
-            <label className="input-title">Upazila *</label>
+            <label className="input-title">
+              Upazila<span className="text-rose-600">*</span>
+            </label>
             <select
               {...register("Upazila", { required: "Upazila is required" })}
               className="input-select-border w-full mb-2"
@@ -166,7 +208,9 @@ const Register = () => {
             </select>
           </div>
           <div>
-            <label className="input-title">Union *</label>
+            <label className="input-title">
+              Union<span className="text-rose-600">*</span>
+            </label>
             <select
               {...register("Union", { required: "Union is required" })}
               className="input-select-border w-full mb-2"
@@ -179,16 +223,10 @@ const Register = () => {
               ))}
             </select>
           </div>
-          <div className="sm:col-span-2">
-            <label className="input-title">Address *</label>
-            <input
-              type="text"
-              {...register("Address", { required: "Address is required" })}
-              className="input-border w-full mb-2"
-            />
-          </div>
           <div>
-            <label className="input-title">Gender *</label>
+            <label className="input-title">
+              Gender<span className="text-rose-600">*</span>
+            </label>
             <select
               {...register("Gender", { required: "Gender is required" })}
               className="input-select-border w-full mb-2"
@@ -199,20 +237,28 @@ const Register = () => {
               <option value="Other">Other</option>
             </select>
           </div>
-          <div className="flex items-center sm:col-span-2">
-            <input
-              type="checkbox"
-              id="PhysicalComplexity"
-              className="mr-2"
-              disabled
-            />
-            <label htmlFor="PhysicalComplexity" className="input-title">
-              Any Physical Complexity?{" "}
-              <span className="text-xs text-accent">
-                (like : Diabetics / Cancer / thyroid.... etc.)
-              </span>
+          <div className="sm:col-span-2">
+            <label className="input-title">
+              Address<span className="text-rose-600">*</span>
             </label>
+            <input
+              type="text"
+              {...register("Address", { required: "Address is required" })}
+              className="input-border w-full mb-2"
+            />
           </div>
+          {uType === "Volunteer" && (
+            <div className="">
+              <label className="input-title">
+                Institution<span className="text-rose-600">*</span>
+              </label>
+              <input
+                type="text"
+                {...register("Address", { required: "Address is required" })}
+                className="input-border w-full mb-2"
+              />
+            </div>
+          )}
 
           {/* Blood Information */}
           <div className="sm:col-span-3">
@@ -222,8 +268,19 @@ const Register = () => {
             </h3>
             <hr />
           </div>
+          <div className="flex items-center sm:col-span-3">
+            <input type="checkbox" id="PhysicalComplexity" className="mr-2" />
+            <label htmlFor="PhysicalComplexity" className="input-title">
+              Any Physical Complexity?{" "}
+              <span className="text-xs text-accent">
+                (like : Diabetics / Cancer / thyroid.... etc.)
+              </span>
+            </label>
+          </div>
           <div>
-            <label className="input-title">Blood Group *</label>
+            <label className="input-title">
+              Blood Group<span className="text-rose-600">*</span>
+            </label>
             <select
               {...register("BloodGroup", {
                 required: "Blood Group is required",
@@ -242,7 +299,9 @@ const Register = () => {
             </select>
           </div>
           <div>
-            <label className="input-title">Donation Status *</label>
+            <label className="input-title">
+              Donation Status<span className="text-rose-600">*</span>
+            </label>
             <select
               {...register("BloodDonationStatus", {
                 required: "Status is required",
@@ -262,6 +321,16 @@ const Register = () => {
               onChange={(date, dateString) => setDonationDate(dateString)}
             />
           </div>
+          <div>
+            <label className="input-title">
+              Blood Donation Count<span className="text-rose-600">*</span>
+            </label>
+            <input
+              type="number"
+              {...register("BloodDonationCount")}
+              className="input-border w-full mb-2"
+            />
+          </div>
 
           {/* Documents */}
           <div>
@@ -273,7 +342,9 @@ const Register = () => {
             />
           </div>
           <div>
-            <label className="input-title">NID/Student ID *</label>
+            <label className="input-title">
+              NID/Student ID<span className="text-rose-600">*</span>
+            </label>
             <input
               type="file"
               multiple

@@ -20,10 +20,7 @@ const MessageModal = ({ record, handleClose, clicked }) => {
         <div className="">
           <div className="flex items-center justify-between">
             <h1 className="text-xl  font-semibold tracking-tight">
-              {record?.contactType} from{" "}
-              <span className="text-primary2">
-                {record?.userData?.fullName}
-              </span>
+              {record?.contactType}
             </h1>
 
             <IoMdCloseCircleOutline
@@ -34,19 +31,15 @@ const MessageModal = ({ record, handleClose, clicked }) => {
 
           <div className="bg-gray-200 pt-[1px] mt-3"></div>
           <div className="my-2">
-            <div>{record?.message}</div>
-          </div>
-          <div className="bg-gray-200 py-[1px] mt-10"></div>
-          <div className="flex items-end justify-end gap-2 mt-2">
-            <button
-              onClick={handleClose}
-              className=" border-secondary flex items-center border rounded-sm"
-            >
-              <MdDeleteOutline className=" text-white bg-secondary  px-1 py-[2px] text-[28px]" />
-              <span className="px-2 py-[6px] bg-primary transition-all hover:bg-secondary text-white text-xs">
-                Cancel
-              </span>
-            </button>
+            <div className="border p-3 rounded-md">
+              <h1>
+                {" "}
+                <span className="text-primary2">
+                  {record?.userData?.fullName}
+                </span>
+              </h1>
+              {record?.message}
+            </div>
           </div>
         </div>
       </Modal>

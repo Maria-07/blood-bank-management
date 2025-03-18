@@ -4,6 +4,7 @@ import DisApproveVolunteerModal from "./DisApproveVolunteerModal";
 import { FaCheckSquare, FaRegCheckSquare } from "react-icons/fa";
 import { MdDeleteForever } from "react-icons/md";
 import UserDeleteModal from "../../User/UserDeleteModal";
+import { FcDisapprove } from "react-icons/fc";
 
 const PendingVolunteersApproved = ({ record, refetch }) => {
   const [deleteModal, setDeleteModal] = useState(false);
@@ -28,12 +29,14 @@ const PendingVolunteersApproved = ({ record, refetch }) => {
         <div className="flex items-center justify-center gap-2">
           {" "}
           <button
+            title="Disapprove"
             onClick={handleDisApproveVolunteer}
-            className="text-green-500  text-[11px] px-2 py-[1px] font-semibold rounded-md"
+            className="text-green-500  text-[16px] px-2 py-[1px] font-semibold rounded-md"
           >
-            <FaCheckSquare />
+            <FcDisapprove />
           </button>
           <button
+            title="Delete"
             type="button"
             onClick={handleDeleteModal}
             className="flex items-center justify-center text-secondary"
@@ -44,12 +47,14 @@ const PendingVolunteersApproved = ({ record, refetch }) => {
       ) : (
         <div className="flex items-center justify-center gap-2">
           <button
+            title="Approve"
             onClick={handleApproveVolunteer}
-            className="text-red-500  text-[11px] px-2 py-[1px] font-semibold rounded-md"
+            className="text-green-500  text-[11px] px-2 py-[1px] font-semibold rounded-md"
           >
             <FaRegCheckSquare />
           </button>
           <button
+            title="Delete"
             type="button"
             onClick={handleDeleteModal}
             className="flex items-center justify-center text-secondary"

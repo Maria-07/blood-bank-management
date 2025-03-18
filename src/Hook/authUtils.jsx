@@ -1,21 +1,27 @@
 import Cookies from "js-cookie";
 
-export const getUserType = () => {
+export const getUserDetails = () => {
   const accessToken = Cookies.get("accessToken");
+
   if (accessToken) {
     try {
       const tokenParts = accessToken.split(".");
       const tokenPayload = tokenParts[1];
-      const decodedPayload = atob(tokenPayload);
-      const payloadObj = JSON.parse(decodedPayload);
+      const decodedPayload = atob(tokenPayload); // Decode base64
+      const payloadObj = JSON.parse(decodedPayload); // Convert to JSON
 
-      // console.log("User type:", payloadObj?.UserType);
+      // console.log(payloadObj?.UserId);
 
-      return payloadObj?.UserType || null; // Return userType or null if not present
+      // Extract `UserType` & `id`
+      return {
+        userType: payloadObj?.UserType || null,
+        id: payloadObj?.UserId || null,
+      };
     } catch (error) {
       console.error("Error decoding token:", error.message);
-      return null; // Handle invalid token
+      return { userType: null, id: null }; // Handle invalid token
     }
   }
-  return null; // No token found
+
+  return { userType: null, id: null }; // No token found
 };

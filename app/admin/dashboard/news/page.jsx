@@ -1,20 +1,18 @@
 "use client";
 
 import Loader from "@/src/Components/Layouts/Loader";
-import MediaUploadAndDeleteModal from "@/src/Components/UI/Admin/Campaigns/MediaUploadAndDeleteModal";
 import CreateNoticeModal from "@/src/Components/UI/Admin/Notices/CreateNoticeModal";
 import NoticeActionModal from "@/src/Components/UI/Admin/Notices/NoticeActionModal";
-import { useGetAllNoticesQuery } from "@/src/redux/features/notice/notice";
+import { useGetAllNewsQuery } from "@/src/redux/features/news/news";
 import formatDate from "@/src/shared/ReusedFunctions";
 import { Pagination, Table } from "antd";
 import Link from "next/link";
 import React, { useEffect, useMemo, useState } from "react";
-import { FaPlus, FaRegFilePdf } from "react-icons/fa6";
+import { FaPlus, FaRegNewspaper } from "react-icons/fa6";
 
-const NoticePage = () => {
+const NewsPage = () => {
   const [tableData, setTableData] = useState([]);
   const [createNotice, setCreateNotice] = useState(false);
-  const [media, setMedia] = useState(false);
   const [filteredInfo, setFilteredInfo] = useState({});
   const [sortedInfo, setSortedInfo] = useState({});
   const [rowCount, setRowCount] = useState(0);
@@ -23,7 +21,7 @@ const NoticePage = () => {
   const [record, setRecord] = useState({});
 
   //! Get all Campaigns Data
-  const { data, isLoading, isError, refetch } = useGetAllNoticesQuery({
+  const { data, isLoading, isError, refetch } = useGetAllNewsQuery({
     pageNo: page,
     pageSize: size,
   });
@@ -53,7 +51,6 @@ const NoticePage = () => {
 
   //! Handle modals
   const handleCreateNotice = () => setCreateNotice(!createNotice);
-  const handleMedia = () => setMedia(!media);
 
   const tableDataWithKeys = useMemo(
     () =>
@@ -70,8 +67,8 @@ const NoticePage = () => {
         .filter(
           (key) =>
             key !== "id" &&
-            key !== "fileUrls" &&
-            key !== "files" &&
+            key !== "url" &&
+            key !== "isDeleted" &&
             key !== "createTime" &&
             key !== "lastModifiedTime" &&
             key !== "lastModifiedBy" &&
@@ -112,17 +109,13 @@ const NoticePage = () => {
   //! Add action column if data exists
   if (tableData.length) {
     columns.push({
-      title: "Pdf",
-      key: "pdf",
+      title: "News",
+      key: "news",
       width: 50,
       render: (text, record) => (
-        <Link
-          href={`${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}/${record?.fileUrls[0]}`}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
+        <Link href={record?.url}>
           <div className="flex items-center justify-center hover:text-secondary">
-            <FaRegFilePdf />
+            <FaRegNewspaper />
           </div>
         </Link>
       ),
@@ -143,13 +136,13 @@ const NoticePage = () => {
   return (
     <div>
       <div className="flex items-center justify-between gap-2 flex-wrap mb-3 px-1">
-        <h1 className="text-primary2 font-semibold text-lg">Notices</h1>
+        <h1 className="text-primary2 font-semibold text-lg">News</h1>
         <div className="flex items-center gap-2">
           <button
             onClick={handleCreateNotice}
             className="bbm-button flex items-center gap-2"
           >
-            <FaPlus /> Create Notice
+            <FaPlus /> Create News
           </button>
         </div>
       </div>
@@ -193,16 +186,8 @@ const NoticePage = () => {
           clicked={createNotice}
         />
       )}
-      {media && (
-        <MediaUploadAndDeleteModal
-          refetch={refetch}
-          handleClose={handleMedia}
-          clicked={media}
-          record={record}
-        />
-      )}
     </div>
   );
 };
 
-export default NoticePage;
+export default NewsPage;
