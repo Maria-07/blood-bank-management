@@ -45,6 +45,8 @@ const MyProfilePage = () => {
     }
   };
 
+  console.log("unions", unions);
+
   useEffect(() => {
     if (user) {
       setValue("BloodGroup", user.bloodGroup || "");
@@ -66,6 +68,10 @@ const MyProfilePage = () => {
       setValue("Union", "");
     }
   }, [watch("Upazila"), setValue, user]);
+
+  const filteredUnion = unions.filter((d) => d.id == user?.union);
+  const filteredUpazila = upazilas.filter((d) => d.id == user?.upazila);
+  console.log(filteredUnion[0]?.name);
 
   const onSubmit = async (data) => {
     console.log("Sign up data =", data);
@@ -109,19 +115,6 @@ const MyProfilePage = () => {
                 />
               </div>
             </div>
-            {isEdit && (
-              <>
-                {" "}
-                <div className="mt-3">
-                  <h1 className="input-title ">Update Your Profile Picture</h1>
-                  <input
-                    type="file"
-                    className="border rounded-md w-full my-1"
-                    {...register("ProfilePicture")}
-                  />
-                </div>
-              </>
-            )}
             <hr className="mb-10 mt-5" />{" "}
             <div className="grid sm:grid-cols-3 grid-cols-1 gap-3">
               <div className="sm:col-span-2">
@@ -129,6 +122,7 @@ const MyProfilePage = () => {
                 <div>
                   <h1 className="input-title">Full Name</h1>
                   <input
+                    disabled={!isEdit}
                     defaultValue={user?.fullName}
                     type="text"
                     className="input-border w-full  mb-2"
@@ -136,30 +130,12 @@ const MyProfilePage = () => {
                   />
                 </div>
               </div>
-              <div>
-                <h1 className="input-title">Blood Group</h1>
-                <select
-                  {...register("BloodGroup")}
-                  className="input-select-border w-full mb-2"
-                  defaultValue={user?.bloodGroup}
-                >
-                  <option value="">Select</option>
-                  <option value="O+">O+</option>
-                  <option value="O-">O-</option>
-                  <option value="A+">A+</option>
-                  <option value="A-">A-</option>
-                  <option value="B+">B+</option>
-                  <option value="B-">B-</option>
-                  <option value="AB+">AB+</option>
-                  <option value="AB-">AB-</option>
-                </select>
-              </div>
-
               <div className="">
                 <h1 className="input-title flex items-center gap-1">
                   Date of Birth
                 </h1>
                 <input
+                  disabled={!isEdit}
                   defaultValue={user?.dateOfBirth}
                   type="date"
                   className="input-border w-full sm:w-[100%] mb-2"
@@ -169,76 +145,39 @@ const MyProfilePage = () => {
               <div>
                 <h1 className="input-title flex items-center gap-1">Contact</h1>
                 <input
+                  disabled
                   defaultValue={user?.mobileNumber}
                   type="number"
                   className="input-border w-full sm:w-[100%] mb-2"
                   {...register("MobileNumber")}
                 />
               </div>
-
               <div>
-                <h1 className="input-title">Blood Donation Count</h1>
-                <input
-                  type="number"
-                  className="input-border w-full mb-2"
-                  {...register("BloodDonationCount")}
-                />
-              </div>
-
-              <div>
-                <h1 className="input-title">District</h1>
-                <select
-                  defaultValue={user?.district}
-                  {...register("District")}
-                  className="input-select-border w-full mb-2"
-                >
-                  <option value="1">Nilphamari</option>
-                </select>
-              </div>
-
-              <div>
-                <label className="input-title">Upazila</label>
-                <select
-                  defaultValue={user?.upazila}
-                  {...register("Upazila")}
-                  className="input-select-border w-full mt-2"
-                >
-                  <option value="">Select</option>
-                  {upazilas.map((up) => (
-                    <option key={up.id} value={up.id}>
-                      {up.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div>
-                <label className="input-title">Union</label>
-                <select
-                  defaultValue={user?.union}
-                  {...register("Union")}
-                  className="input-select-border w-full my-2"
-                >
-                  <option value="">Select</option>
-                  {unions.map((un) => (
-                    <option key={un.id} value={un.id}>
-                      {un.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              <div className="sm:col-span-2">
-                <h1 className="input-title">Address</h1>
-                <input
-                  type="text"
-                  defaultValue={user?.address}
-                  className="input-border w-full mb-2"
-                  {...register("Address")}
-                />
+                <h1 className="input-title">Gender</h1>
+                {!isEdit ? (
+                  <input
+                    disabled
+                    type="text"
+                    defaultValue={user?.gender}
+                    className="input-border w-full mb-2"
+                  />
+                ) : (
+                  <select
+                    defaultValue={user?.gender}
+                    className="input-select-border w-full mb-2"
+                    {...register("Gender")}
+                  >
+                    <option value="">Select</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                  </select>
+                )}
               </div>
               <div>
                 <h1 className="input-title">Father&apos;s Name</h1>
                 <input
+                  disabled={!isEdit}
                   defaultValue={user?.fatherName}
                   type="text"
                   className="input-border w-full mb-2"
@@ -249,16 +188,155 @@ const MyProfilePage = () => {
               <div>
                 <h1 className="input-title">Mother&apos;s Name</h1>
                 <input
+                  disabled={!isEdit}
                   defaultValue={user?.motherName}
                   type="text"
                   className="input-border w-full mb-2"
                   {...register("MotherName")}
                 />
               </div>
+              <div className="sm:col-span-2">
+                <h1 className="input-title">Address</h1>
+                <input
+                  disabled={!isEdit}
+                  type="text"
+                  defaultValue={user?.address}
+                  className="input-border w-full mb-2"
+                  {...register("Address")}
+                />
+              </div>
+              <div>
+                <h1 className="input-title">District</h1>
+                {!isEdit ? (
+                  <input
+                    disabled
+                    type="text"
+                    defaultValue={"Nilphamari"}
+                    className="input-border w-full mb-2"
+                  />
+                ) : (
+                  <select
+                    defaultValue={user?.district}
+                    {...register("District")}
+                    className="input-select-border w-full mb-2"
+                  >
+                    <option value="1">Nilphamari</option>
+                  </select>
+                )}
+              </div>
+              <div>
+                <label className="input-title">Upazila</label>
 
+                {!isEdit ? (
+                  <input
+                    disabled={!isEdit}
+                    type="text"
+                    defaultValue={filteredUpazila[0]?.name}
+                    className="input-border w-full mb-2 mt-1"
+                  />
+                ) : (
+                  <select
+                    defaultValue={user?.upazila}
+                    {...register("Upazila")}
+                    className="input-select-border w-full mt-2"
+                  >
+                    <option value="">Select</option>
+                    {upazilas.map((up) => (
+                      <option key={up.id} value={up.id}>
+                        {up.name}
+                      </option>
+                    ))}
+                  </select>
+                )}
+              </div>
+              <div>
+                <label className="input-title">Union</label>{" "}
+                {!isEdit ? (
+                  <input
+                    disabled={!isEdit}
+                    type="text"
+                    defaultValue={filteredUnion[0]?.name}
+                    className="input-border w-full mb-2 mt-1"
+                  />
+                ) : (
+                  <select
+                    {...register("Union")}
+                    className="input-select-border w-full my-2 "
+                  >
+                    <option value="">Select</option>
+                    {unions.map((un) => (
+                      <option key={un.id} value={un.id}>
+                        {un.name}
+                      </option>
+                    ))}
+                  </select>
+                )}
+              </div>
+
+              {isEdit && (
+                <>
+                  {" "}
+                  <div className="mt-3">
+                    <h1 className="input-title ">Change profile</h1>
+                    <input
+                      disabled={!isEdit}
+                      type="file"
+                      className="border rounded-md w-full my-1"
+                      {...register("ProfilePicture")}
+                    />
+                  </div>
+                </>
+              )}
+
+              {/* Blood Information */}
+              <div className="sm:col-span-3">
+                {" "}
+                <h3 className="text-base font-normal text-gray-500 mb-1 mt-5">
+                  Blood Information
+                </h3>
+                <hr />
+              </div>
+              <div>
+                <h1 className="input-title">Blood Group</h1>
+                {!isEdit ? (
+                  <input
+                    disabled
+                    type="text"
+                    defaultValue={user?.bloodGroup}
+                    className="input-border w-full mb-2"
+                  />
+                ) : (
+                  <select
+                    {...register("BloodGroup")}
+                    className="input-select-border w-full mb-2"
+                    defaultValue={user?.bloodGroup}
+                  >
+                    <option value="">Select</option>
+                    <option value="O+">O+</option>
+                    <option value="O-">O-</option>
+                    <option value="A+">A+</option>
+                    <option value="A-">A-</option>
+                    <option value="B+">B+</option>
+                    <option value="B-">B-</option>
+                    <option value="AB+">AB+</option>
+                    <option value="AB-">AB-</option>
+                  </select>
+                )}
+              </div>
+              <div>
+                <h1 className="input-title">Blood Donation Count</h1>
+                <input
+                  disabled={!isEdit}
+                  defaultValue={user?.bloodDonationCount}
+                  type="number"
+                  className="input-border w-full mb-2"
+                  {...register("BloodDonationCount")}
+                />
+              </div>
               <div>
                 <h1 className="input-title">Last Donation Time</h1>
                 <input
+                  disabled={!isEdit}
                   type="date"
                   className="input-border w-full mb-2"
                   {...register("LastDonationTime")}
@@ -267,67 +345,38 @@ const MyProfilePage = () => {
 
               <div>
                 <h1 className="input-title">Blood Donation Status</h1>
-                <select
-                  defaultValue={user?.bloodDonationStatus}
-                  className="input-select-border w-full mb-2"
-                  {...register("BloodDonationStatus")}
-                >
-                  <option value="">Select</option>
-                  <option value="Interested">Interested</option>
-                  <option value="NotInterested">Not Interested</option>
-                </select>
+                {!isEdit ? (
+                  <input
+                    disabled
+                    type="text"
+                    defaultValue={user?.bloodDonationStatus}
+                    className="input-border w-full mb-2"
+                  />
+                ) : (
+                  <select
+                    defaultValue={user?.bloodDonationStatus}
+                    className="input-select-border w-full mb-2"
+                    {...register("BloodDonationStatus")}
+                  >
+                    <option value="">Select</option>
+                    <option value="Interested">Interested</option>
+                    <option value="NotInterested">Not Interested</option>
+                  </select>
+                )}
               </div>
-              <div>
-                <h1 className="input-title">Gender</h1>
-                <select
-                  defaultValue={user?.gender}
-                  className="input-select-border w-full mb-2"
-                  {...register("Gender")}
-                >
-                  <option value="">Select</option>
-                  <option value="Male">Male</option>
-                  <option value="Female">Female</option>
-                  <option value="Other">Other</option>
-                </select>
-                <label className="label">
-                  {errors.Gender && (
-                    <p className="text-red-500">{errors.Gender.message}</p>
-                  )}
-                </label>
-              </div>
-
-              <div className="">
-                <h1 className="input-title flex items-center gap-1">
-                  Last Donation Time
-                </h1>
+              <div className="flex items-center sm:col-span-3">
                 <input
-                  defaultValue={donationDate}
-                  type="date"
-                  name="lastDonationTime"
-                  className="input-border w-full sm:w-[100%] mb-2"
-                  {...register("LastDonationTime")}
+                  disabled={!isEdit}
+                  defaultChecked={user?.physicalComplexity}
+                  type="checkbox"
+                  id="PhysicalComplexity"
+                  className="mr-2"
                 />
-              </div>
-
-              <div>
-                <h1 className="input-title">User Type</h1>
-                <select
-                  className="input-select-border w-full mb-2"
-                  {...register("UserType", {
-                    required: {
-                      value: true,
-                      message: "User Type is required",
-                    },
-                  })}
-                >
-                  <option value="">Select</option>
-                  <option value="Donor">Donor</option>
-                  <option value="Volunteer">Volunteer</option>
-                </select>
-                <label className="label">
-                  {errors.UserType && (
-                    <p className="text-red-500">{errors.UserType.message}</p>
-                  )}
+                <label htmlFor="PhysicalComplexity" className="input-title">
+                  Any Physical Complexity?{" "}
+                  <span className="text-xs text-accent">
+                    (like : Diabetics / Cancer / thyroid.... etc.)
+                  </span>
                 </label>
               </div>
             </div>

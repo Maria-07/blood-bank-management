@@ -28,13 +28,18 @@ const NoticeEditModal = ({ handleClose, record, clicked, refetch }) => {
     //! Add form fields
     Object.entries(data).forEach(([key, value]) => {
       if (key === "Files" && value.length > 0) {
-        formData.append(key, value[0]); // Append file
-      } else {
-        formData.append(key, value);
+        formData.append(key, value[0]); // Append new file if provided
       }
     });
 
     formData.append("id", id);
+    formData.append("Name", data.Name || name); // Use old name if unchanged
+    formData.append("Description", data.Description || description); // Use old description if unchanged
+
+    //! If no new file is uploaded, send the previous file URL
+    if (!data.Files.length && record.fileUrls && record.fileUrls.length > 0) {
+      formData.append("fileUrls", record.fileUrls);
+    }
 
     //! Log FormData entries for debugging
     for (const [key, value] of formData.entries()) {
@@ -54,12 +59,12 @@ const NoticeEditModal = ({ handleClose, record, clicked, refetch }) => {
         {
           method: "PUT",
           headers: {
-            Authorization: `bearer ${accessToken}`,
+            Authorization: `Bearer ${accessToken}`,
           },
           body: formData,
         }
       );
-      // debugger;
+
       console.log("response", response);
 
       const responseData = await response.json();
@@ -67,10 +72,10 @@ const NoticeEditModal = ({ handleClose, record, clicked, refetch }) => {
 
       if (responseData?.data?.isSuccess) {
         toast.success(
-          responseData?.data?.message || "Notice Update successfully!"
+          responseData?.data?.message || "Notice updated successfully!"
         );
         refetch();
-        handleClose(); // Close modal after successful creation
+        handleClose(); // Close modal after successful update
       }
     } catch (error) {
       console.error("Network or server error:", error);

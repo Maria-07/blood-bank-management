@@ -3,7 +3,11 @@ import React, { useRef, useState } from "react";
 import { LuCrown } from "react-icons/lu";
 import { IoLocationOutline } from "react-icons/io5";
 import { FaPhoneAlt } from "react-icons/fa";
-import { FaHandHoldingHeart, FaRegHandBackFist } from "react-icons/fa6";
+import {
+  FaAccessibleIcon,
+  FaHandHoldingHeart,
+  FaRegHandBackFist,
+} from "react-icons/fa6";
 import {
   BiDonateBlood,
   BiDonateHeart,
@@ -11,18 +15,16 @@ import {
 } from "react-icons/bi";
 import { formatDistanceToNow, parseISO } from "date-fns";
 import UserProfileModal from "../../User/UserProfileModal";
-import { useAnimation } from "framer-motion";
 import { useAuth } from "@/src/Hook/AuthContext";
+import { useRouter } from "next/navigation";
 
 const DonarCard = ({ record = {} }) => {
+  const router = useRouter();
   const { token, logout } = useAuth();
   const [UserDetails, setUserDetails] = useState(false);
   const handleUserDetails = () => {
     setUserDetails(!UserDetails);
   };
-
-  const controls = useAnimation();
-  const ref = useRef(null);
 
   const {
     address,
@@ -67,7 +69,15 @@ const DonarCard = ({ record = {} }) => {
         hoverable
         className="bg-popover p-5 h-[280px]"
       >
-        <div>
+        <div
+          className={`relative ${!token ? "cursor-pointer" : ""}`}
+          onClick={() => {
+            if (!token) {
+              console.log("Redirecting to register...");
+              router.push("/register");
+            }
+          }}
+        >
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2 flex-wrap">
               <Image
@@ -106,10 +116,20 @@ const DonarCard = ({ record = {} }) => {
             </div>
           </div>
           <hr className="my-5" />
+          {!token && (
+            <h1 className="absolute left-[10%] top-[60%] text-secondary font-semibold text-center">
+              Register to view more information.
+            </h1>
+          )}
           <div
             className={`${
               token ? "" : "blur-sm pointer-events-none opacity-50"
             }`}
+            onClick={() => {
+              if (!token) {
+                router.push("/register");
+              }
+            }}
           >
             <div className="flex items-center justify-between gap-2 my-3">
               <div className="flex items-center gap-1">
@@ -135,7 +155,7 @@ const DonarCard = ({ record = {} }) => {
 
             <div className="flex items-center justify-between gap-2 my-3">
               <div className="flex items-center gap-1">
-                <BiDonateBlood className="text-primary text-lg" />
+                <FaAccessibleIcon className="text-primary text-lg" />
                 <h1 className="ml-1 text-base font-semibold">
                   Physical Complexity
                 </h1>

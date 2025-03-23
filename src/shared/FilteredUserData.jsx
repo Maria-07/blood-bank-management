@@ -76,7 +76,7 @@ const FilteredUserData = ({ role, handleFilteredData }) => {
   return (
     <div className="">
       <div
-        className={`gap-5 grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 ${
+        className={`gap-5 grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 ${
           role === "admin" ? "2xl:grid-cols-6" : "2xl:grid-cols-5"
         }`}
       >
@@ -107,7 +107,7 @@ const FilteredUserData = ({ role, handleFilteredData }) => {
           />
         </div>
         {/* User Type Filter */}
-        {role === "admin" && (
+        {/* {role === "admin" && (
           <div>
             <h1 className="flex items-center gap-1 font-semibold text-sm mb-2 text-black">
               <FaRegUser className="text-secondary text-lg" /> User Type
@@ -120,9 +120,9 @@ const FilteredUserData = ({ role, handleFilteredData }) => {
               }}
             />
           </div>
-        )}
+        )} */}
         {/* User Type Filter */}
-        {role === "admin" && (
+        {/* {role === "admin" && (
           <div>
             <h1 className="flex items-center gap-1 font-semibold text-sm mb-2 text-black">
               <FaRegUser className="text-secondary text-lg" /> User Approval
@@ -136,7 +136,7 @@ const FilteredUserData = ({ role, handleFilteredData }) => {
               }}
             />
           </div>
-        )}
+        )} */}
         {/* User Type Filter */}
         {role === "admin" && (
           <div>

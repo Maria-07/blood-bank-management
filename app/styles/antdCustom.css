@@ -54,10 +54,8 @@
 }
 
 .ant-slider .ant-slider-handle:hover::after,
-:where(.css-dev-only-do-not-override-1w4v3hc).ant-slider
-  .ant-slider-handle:active::after,
-:where(.css-dev-only-do-not-override-1w4v3hc).ant-slider
-  .ant-slider-handle:focus::after {
+:where(.css-dev-only-do-not-override-1w4v3hc).ant-slider .ant-slider-handle:active::after,
+:where(.css-dev-only-do-not-override-1w4v3hc).ant-slider .ant-slider-handle:focus::after {
   box-shadow: 0 0 0 4px var(--primary-color);
   width: 12px;
   height: 12px;
@@ -67,12 +65,8 @@
 
 /* check box  */
 
-.ant-checkbox-wrapper:not(.ant-checkbox-wrapper-disabled):hover
-  .ant-checkbox-inner,
-:where(.css-dev-only-do-not-override-1w4v3hc).ant-checkbox:not(
-    .ant-checkbox-disabled
-  ):hover
-  .ant-checkbox-inner {
+.ant-checkbox-wrapper:not(.ant-checkbox-wrapper-disabled):hover .ant-checkbox-inner,
+:where(.css-dev-only-do-not-override-1w4v3hc).ant-checkbox:not(.ant-checkbox-disabled):hover .ant-checkbox-inner {
   border-color: var(--primary-color);
 }
 
@@ -81,15 +75,12 @@
   border-color: var(--primary-color);
 }
 
-.ant-checkbox-wrapper:not(.ant-checkbox-wrapper-disabled):hover
-  .ant-checkbox-checked:not(.ant-checkbox-disabled)
-  .ant-checkbox-inner {
+.ant-checkbox-wrapper:not(.ant-checkbox-wrapper-disabled):hover .ant-checkbox-checked:not(.ant-checkbox-disabled) .ant-checkbox-inner {
   background-color: var(--primary-color);
   border-color: transparent;
 }
 
-.ant-checkbox-wrapper:not(.ant-checkbox-wrapper-disabled):hover
-  .ant-checkbox-checked:not(.ant-checkbox-disabled):after {
+.ant-checkbox-wrapper:not(.ant-checkbox-wrapper-disabled):hover .ant-checkbox-checked:not(.ant-checkbox-disabled):after {
   border-color: var(--primary-color);
 }
 
@@ -109,16 +100,15 @@
 
 /* select options  */
 
-.ant-select-dropdown
-  .ant-select-item-option-active:not(.ant-select-item-option-disabled) {
+.ant-select-dropdown .ant-select-item-option-active:not(.ant-select-item-option-disabled) {
   background-color: var(--primary-color);
   color: #ffffff;
 }
 
 /* table css  */
 
-.ant-table-wrapper .ant-table-thead > tr > th,
-.ant-table-wrapper .ant-table-thead > tr > td {
+.ant-table-wrapper .ant-table-thead>tr>th,
+.ant-table-wrapper .ant-table-thead>tr>td {
   position: relative;
   color: #fff;
   font-weight: 600;
@@ -132,9 +122,9 @@
   background: var(--primary-color);
 }
 
-.ant-table-wrapper .ant-table.ant-table-small .ant-table-tbody > tr > td,
-.ant-table-wrapper .ant-table.ant-table-small tfoot > tr > th,
-.ant-table-wrapper .ant-table.ant-table-small tfoot > tr > td {
+.ant-table-wrapper .ant-table.ant-table-small .ant-table-tbody>tr>td,
+.ant-table-wrapper .ant-table.ant-table-small tfoot>tr>th,
+.ant-table-wrapper .ant-table.ant-table-small tfoot>tr>td {
   padding: 4px 4px;
   text-align: center;
   font-size: 13px;
@@ -142,10 +132,10 @@
 
 .ant-table-wrapper .ant-table.ant-table-small .ant-table-title,
 .ant-table-wrapper .ant-table.ant-table-small .ant-table-footer,
-.ant-table-wrapper .ant-table.ant-table-small .ant-table-thead > tr > th,
-.ant-table-wrapper .ant-table.ant-table-small .ant-table-tbody > tr > th,
-.ant-table-wrapper .ant-table.ant-table-small tfoot > tr > th,
-.ant-table-wrapper .ant-table.ant-table-small tfoot > tr > td {
+.ant-table-wrapper .ant-table.ant-table-small .ant-table-thead>tr>th,
+.ant-table-wrapper .ant-table.ant-table-small .ant-table-tbody>tr>th,
+.ant-table-wrapper .ant-table.ant-table-small tfoot>tr>th,
+.ant-table-wrapper .ant-table.ant-table-small tfoot>tr>td {
   padding: 1px 2px 0px 2px;
 }
 
@@ -160,23 +150,17 @@
   text-align: center;
 }
 
-.ant-table-wrapper
-  .ant-table.ant-table-bordered
-  > .ant-table-container
-  > .ant-table-content
-  > table
-  > thead
-  > tr
-  > th,
-.ant-table-header > table > thead > tr > th,
-.ant-table-body > table > thead > tr > th,
-.ant-table-summary > table > thead > tr > th {
+.ant-table-wrapper .ant-table.ant-table-bordered>.ant-table-container>.ant-table-content>table>thead>tr>th,
+.ant-table-header>table>thead>tr>th,
+.ant-table-body>table>thead>tr>th,
+.ant-table-summary>table>thead>tr>th {
   /* border-inline-end: 1px solid #f0f0f0; */
   font-size: 14px;
   font-family: "Roboto", sans-serif;
   letter-spacing: 1px;
   text-align: center;
 }
+
 
 .anticon-plus {
   display: none;
@@ -223,8 +207,7 @@ a:hover {
   border-color: var(--primary-color);
 }
 
-.ant-checkbox-wrapper:not(.ant-checkbox-wrapper-disabled):hover
-  .ant-checkbox-inner,
+.ant-checkbox-wrapper:not(.ant-checkbox-wrapper-disabled):hover .ant-checkbox-inner,
 .ant-checkbox:not(.ant-checkbox-disabled):hover .ant-checkbox-inner {
   border-color: var(--primary-color);
 }
@@ -241,8 +224,7 @@ a:hover {
   content: "";
 }
 
-.ant-checkbox-wrapper:not(.ant-checkbox-wrapper-disabled):hover
-  .ant-checkbox-checked:not(.ant-checkbox-disabled):after {
+.ant-checkbox-wrapper:not(.ant-checkbox-wrapper-disabled):hover .ant-checkbox-checked:not(.ant-checkbox-disabled):after {
   border-color: var(--primary-color);
 }
 
@@ -257,8 +239,7 @@ a:hover {
   border-color: var(--primary-color);
 }
 
-.ant-checkbox-wrapper:not(.ant-checkbox-wrapper-disabled):hover
-  .ant-checkbox-inner,
+.ant-checkbox-wrapper:not(.ant-checkbox-wrapper-disabled):hover .ant-checkbox-inner,
 .ant-checkbox:not(.ant-checkbox-disabled):hover .ant-checkbox-inner {
   border-color: var(--primary-color);
 }
@@ -275,8 +256,7 @@ a:hover {
   content: "";
 }
 
-.ant-checkbox-wrapper:not(.ant-checkbox-wrapper-disabled):hover
-  .ant-checkbox-checked:not(.ant-checkbox-disabled):after {
+.ant-checkbox-wrapper:not(.ant-checkbox-wrapper-disabled):hover .ant-checkbox-checked:not(.ant-checkbox-disabled):after {
   border-color: var(--primary-color);
 }
 
@@ -330,10 +310,7 @@ a:hover {
   transition: all 0.2s;
 }
 
-.ant-select:not(.ant-select-disabled):not(.ant-select-customize-input):not(
-    .ant-pagination-size-changer
-  ):hover
-  .ant-select-selector {
+.ant-select:not(.ant-select-disabled):not(.ant-select-customize-input):not(.ant-pagination-size-changer):hover .ant-select-selector {
   border-color: #cacaca;
 }
 
@@ -354,20 +331,14 @@ a:hover {
 } */
 
 /* tabs  */
-.ant-tabs-card > .ant-tabs-nav .ant-tabs-tab-active,
-:where(.css-dev-only-do-not-override-nnuwmp).ant-tabs-card
-  > div
-  > .ant-tabs-nav
-  .ant-tabs-tab-active {
+.ant-tabs-card>.ant-tabs-nav .ant-tabs-tab-active,
+:where(.css-dev-only-do-not-override-nnuwmp).ant-tabs-card>div>.ant-tabs-nav .ant-tabs-tab-active {
   color: var(--secondary-shade);
   background: #ffffff;
 }
 
-.ant-tabs-card > .ant-tabs-nav .ant-tabs-tab,
-:where(.css-dev-only-do-not-override-nnuwmp).ant-tabs-card
-  > div
-  > .ant-tabs-nav
-  .ant-tabs-tab {
+.ant-tabs-card>.ant-tabs-nav .ant-tabs-tab,
+:where(.css-dev-only-do-not-override-nnuwmp).ant-tabs-card>div>.ant-tabs-nav .ant-tabs-tab {
   margin: 0;
   padding: 8px 16px;
   border: 1px solid #e3e3e3;
@@ -375,11 +346,8 @@ a:hover {
   /* background: #f5f5f5; */
 }
 
-.ant-tabs-card.ant-tabs-top > .ant-tabs-nav .ant-tabs-tab-active,
-:where(.css-dev-only-do-not-override-nnuwmp).ant-tabs-card.ant-tabs-top
-  > div
-  > .ant-tabs-nav
-  .ant-tabs-tab-active {
+.ant-tabs-card.ant-tabs-top>.ant-tabs-nav .ant-tabs-tab-active,
+:where(.css-dev-only-do-not-override-nnuwmp).ant-tabs-card.ant-tabs-top>div>.ant-tabs-nav .ant-tabs-tab-active {
   border-bottom-color: #ffffff;
   border-top: 1px solid var(--secondary-shade);
   /* border-left: 1px solid var(--secondary-shade);
@@ -387,10 +355,7 @@ a:hover {
   background: #ffffff;
 }
 
-.ant-tabs-card.ant-tabs-top > .ant-tabs-nav .ant-tabs-tab,
-:where(.css-dev-only-do-not-override-nnuwmp).ant-tabs-card.ant-tabs-top
-  > div
-  > .ant-tabs-nav
-  .ant-tabs-tab {
+.ant-tabs-card.ant-tabs-top>.ant-tabs-nav .ant-tabs-tab,
+:where(.css-dev-only-do-not-override-nnuwmp).ant-tabs-card.ant-tabs-top>div>.ant-tabs-nav .ant-tabs-tab {
   border-radius: 3px 3px 0 0;
 }

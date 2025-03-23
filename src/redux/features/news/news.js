@@ -13,21 +13,20 @@ const newsApi = api.injectEndpoints({
 
     //* Update a news
     updateNews: builder.mutation({
-      query: ({ id, newsData }) => ({
-        url: `/news/update/${id}`,
+      query: (newsData) => ({
+        url: `/news/update`,
         method: "PUT",
         body: newsData,
       }),
     }),
 
-    //* Get all My News :
-    // getAllNews: builder.mutation({
-    //   query: (data) => ({
-    //     url: "/news/getall",
-    //     method: "POST",
-    //     body: data,
-    //   }),
-    // }),
+    //* Delete a News
+    deleteNews: builder.mutation({
+      query: ({ id }) => ({
+        url: `/news/delete/${id}`,
+        method: "DELETE",
+      }),
+    }),
 
     getAllNews: builder.query({
       query: ({ pageNo, pageSize }) => ({
@@ -43,4 +42,5 @@ export const {
   useGetAllNewsQuery,
   usePostNewsMutation,
   useUpdateNewsMutation,
+  useDeleteNewsMutation,
 } = newsApi;

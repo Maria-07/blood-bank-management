@@ -1,10 +1,9 @@
 "use client";
 
 import Loader from "@/src/Components/Layouts/Loader";
-import CreateNoticeModal from "@/src/Components/UI/Admin/Notices/CreateNoticeModal";
-import NoticeActionModal from "@/src/Components/UI/Admin/Notices/NoticeActionModal";
+import CreateNewsModal from "@/src/Components/UI/Admin/News/CreateNewsModal";
+import NewsActionModal from "@/src/Components/UI/Admin/News/NewsActionModal";
 import { useGetAllNewsQuery } from "@/src/redux/features/news/news";
-import formatDate from "@/src/shared/ReusedFunctions";
 import { Pagination, Table } from "antd";
 import Link from "next/link";
 import React, { useEffect, useMemo, useState } from "react";
@@ -75,10 +74,13 @@ const NewsPage = () => {
             key !== "createdBy"
         )
         .map((key, index) => ({
-          title: key
-            .replace(/([a-z])([A-Z])/g, "$1 $2") // Add spaces between camelCase
-            .replace(/([A-Z])([A-Z])/, "$1 $2") // Handle uppercase sequences
-            .replace(/^./, (char) => char.toUpperCase()), // Capitalize the first letter
+          title:
+            key === "name"
+              ? "Title"
+              : key
+                  .replace(/([a-z])([A-Z])/g, "$1 $2")
+                  .replace(/([A-Z])([A-Z])/, "$1 $2")
+                  .replace(/^./, (char) => char.toUpperCase()),
 
           dataIndex: key,
           key,
@@ -97,8 +99,10 @@ const NewsPage = () => {
           },
           sortOrder: sortedInfo.columnKey === key ? sortedInfo.order : null,
           render: (text, record) =>
-            key === "publishDate" ? (
-              <div> {formatDate(record?.publishDate)}</div>
+            key === "name" ? (
+              <Link href={record?.url}>
+                <div>{record?.name}</div>
+              </Link>
             ) : (
               <div key={index}>{text || "N/A"}</div>
             ),
@@ -125,10 +129,7 @@ const NewsPage = () => {
       key: "action",
       width: 50,
       render: (text, record) => (
-        <NoticeActionModal
-          refetch={refetch}
-          record={record}
-        ></NoticeActionModal>
+        <NewsActionModal refetch={refetch} record={record}></NewsActionModal>
       ),
     });
   }
@@ -180,7 +181,7 @@ const NewsPage = () => {
         />
       </div>
       {createNotice && (
-        <CreateNoticeModal
+        <CreateNewsModal
           refetch={refetch}
           handleClose={handleCreateNotice}
           clicked={createNotice}

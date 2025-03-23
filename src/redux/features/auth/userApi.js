@@ -15,9 +15,29 @@ const userApi = api.injectEndpoints({
         body: data,
       }),
     }),
+    getAllAdmin: builder.query({
+      query: ({ pageNo, pageSize }) => ({
+        url: `/user/getAllAdmin?pageNo=${pageNo}&pageSize=${pageSize}`,
+        method: "GET",
+      }),
+    }),
     getAllDonor: builder.mutation({
       query: (data) => ({
         url: "/bloodbank/getbloodbankdata",
+        method: "POST",
+        body: data,
+      }),
+    }),
+    getAllApprovedDonor: builder.mutation({
+      query: (data) => ({
+        url: "/user/getApprovedDonor",
+        method: "POST",
+        body: data,
+      }),
+    }),
+    getAllPendingDonor: builder.mutation({
+      query: (data) => ({
+        url: "/user/getUnapprovedDonor",
         method: "POST",
         body: data,
       }),
@@ -41,7 +61,10 @@ const userApi = api.injectEndpoints({
 export const {
   useGetUserTypeQuery,
   useGetAllDonorMutation,
+  useGetAllAdminQuery,
   useGetAllUserMutation,
+  useGetAllApprovedDonorMutation,
+  useGetAllPendingDonorMutation,
   useGetProfileQuery,
   useUpdateProfileMutation,
 } = userApi;

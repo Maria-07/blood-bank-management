@@ -1,33 +1,31 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
+
+import React, { useEffect, useState, useMemo, useCallback } from "react";
+import { Table, Tabs, Pagination } from "antd";
+import { LuFilter, LuFilterX } from "react-icons/lu";
 
 import Loader from "@/src/Components/Layouts/Loader";
 import ActionModal from "@/src/Components/UI/Admin/Volunteers/ActionModal";
-import PendingVolunteersApproved from "@/src/Components/UI/Admin/Volunteers/PendingVolunteersApproved";
 import UserDeleteModal from "@/src/Components/UI/User/UserDeleteModal";
-import { useGetAllUserMutation } from "@/src/redux/features/auth/userApi";
 import FilteredUserData from "@/src/shared/FilteredUserData";
-import { Pagination, Table } from "antd";
-import React, { useEffect, useState, useMemo } from "react";
-import { LuFilter, LuFilterX } from "react-icons/lu";
-import { MdDeleteForever } from "react-icons/md";
+
+import {
+  useGetAllApprovedDonorMutation,
+  useGetAllPendingDonorMutation,
+} from "@/src/redux/features/auth/userApi";
 
 const BloodBanks = () => {
   const [filterShow, setFilterShow] = useState(false);
-  const [rowCount, setRowCount] = useState(0);
-  const [page, setPage] = useState(1);
-  const [size, setSize] = useState(10);
   const [deleteModal, setDeleteModal] = useState(false);
-  const [id, setId] = useState();
+  const [id, setId] = useState(null);
+  const [filteredData, setFilteredData] = useState({});
 
-  const handleDeleteModal = (record) => {
-    setDeleteModal(!deleteModal);
-    setId(record);
-  };
-
-  const [getAllUsers, { data, isLoading, isError }] = useGetAllUserMutation();
+  const [pagination, setPagination] = useState({ page: 1, size: 10 });
 
   const [tableData, setTableData] = useState([]);
-  const [filteredData, setFilteredData] = useState({});
+  const [tableDataPending, setTableDataPending] = useState([]);
+  const [rowCount, setRowCount] = useState(0);
   const [filteredInfo, setFilteredInfo] = useState({});
   const [sortedInfo, setSortedInfo] = useState({});
 
@@ -38,209 +36,219 @@ const BloodBanks = () => {
     }));
   };
 
-  console.log(filteredData);
+  const [getAllApprovedDonors, { isLoading, isError }] =
+    useGetAllApprovedDonorMutation();
+  const [getAllPendingDonors, { isLoadingPending, isErrorPending }] =
+    useGetAllPendingDonorMutation();
 
-  // ✅ Define a manual refetch function
-  const refetch = async () => {
-    try {
-      const response = await getAllUsers({
-        ...filteredData,
-        pageNo: page,
-        pageSize: size,
-      }).unwrap();
-      setRowCount(response?.rowCount || 0);
-      setTableData(response?.data || []);
-    } catch (error) {
-      console.error("Error fetching users:", error);
-    }
-  };
+  const tableDataWithKeys = (data) =>
+    data?.map((item, index) => ({ ...item, key: item?.id || index }));
 
-  useEffect(() => {
-    refetch();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [filteredData, page, size]);
+  const fetchData = useCallback(
+    async (fetchFunction, setData) => {
+      try {
+        const response = await fetchFunction({
+          ...filteredData,
+          pageNo: pagination.page,
+          pageSize: pagination.size,
+        }).unwrap();
 
-  const tableDataWithKeys = useMemo(
-    () =>
-      tableData.map((item) => ({
-        ...item,
-        key: item.id || item.mobileNumber,
-      })),
-    [tableData]
+        setRowCount(response?.rowCount || 0);
+        setData(tableDataWithKeys(response?.data || []));
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    },
+    [pagination, filteredData]
   );
 
-  const generateFilterValues = (data, columnKey) => {
-    if (!data || !data.length || !columnKey) return [];
-    const uniqueValues = [...new Set(data.map((d) => d[columnKey]))];
-    return uniqueValues.map((value) => ({ text: value, value }));
-  };
+  useEffect(() => {
+    fetchData(getAllApprovedDonors, setTableData);
+    fetchData(getAllPendingDonors, setTableDataPending);
+  }, [fetchData]);
 
-  const handleChange = (pagination, filters, sorter) => {
+  const handleTableChange = (pagination, filters, sorter) => {
     setFilteredInfo(filters);
     setSortedInfo(sorter);
   };
 
-  const columns = tableData.length
-    ? Object.keys(tableData[0] || {})
-        .filter(
-          (key) =>
-            key !== "id" &&
-            key !== "serial" &&
-            key !== "code" &&
-            key !== "isSuperAdmin" &&
-            key !== "password" &&
-            key !== "address" &&
-            key !== "userType" &&
-            key !== "lastDonationTime" &&
-            key !== "profilePicture" &&
-            key !== "district" &&
-            key !== "districtName" &&
-            key !== "fatherName" &&
-            key !== "upazila" &&
-            key !== "upazilaName" &&
-            key !== "union" &&
-            key !== "unionName" &&
-            key !== "motherName" &&
-            key !== "physicalComplexity" &&
-            key !== "nid" &&
-            key !== "nidUrls" &&
-            key !== "bloodDonationCount" &&
-            key !== "imageUrl"
-        ) // Exclude unnecessary keys
-        .map((key, index) => ({
-          title:
-            key === "isApproved"
-              ? "Action"
-              : key // Rename column title
-                  .replace(/([a-z])([A-Z])/g, "$1 $2") // Add spaces between camelCase
-                  .replace(/^./, (char) => char.toUpperCase()), // Capitalize first letter
-          dataIndex: key,
-          key,
-          filters: generateFilterValues(tableData, key),
-          filterSearch: true,
-          filteredValue: filteredInfo[key] || null,
-          onFilter: (value, record) => {
-            const recordValue = record[key];
-            if (typeof recordValue === "boolean") {
-              console.log(`Filtering boolean for ${key}:`, {
+  const generateColumns = (data) =>
+    data.length
+      ? Object.keys(data[0])
+          .filter(
+            (key) =>
+              ![
+                "id",
+                "serial",
+                "code",
+                "isSuperAdmin",
+                "password",
+                "address",
+                "isApproved",
+                "userType",
+                "lastDonationTime",
+                "profilePicture",
+                "district",
+                "districtName",
+                "fatherName",
+                "upazila",
+                "upazilaName",
+                "union",
+                "unionName",
+                "motherName",
+                "physicalComplexity",
+                "nid",
+                "nidUrls",
+                "key",
+                "bloodDonationCount",
+                "imageUrl",
+              ].includes(key)
+          )
+          .map((key) => ({
+            title: key
+              .replace(/([a-z])([A-Z])/g, "$1 $2")
+              .replace(/^./, (c) => c.toUpperCase()),
+            dataIndex: key,
+            key,
+            filters: [...new Set(data.map((item) => item[key]))].map(
+              (value) => ({
+                text: value,
                 value,
-                recordValue,
-              });
-              return recordValue === (value === "true");
-            }
-            console.log(`Filtering non-boolean for ${key}:`, {
-              value,
-              recordValue,
-            });
-            return recordValue
-              ?.toString()
-              ?.toLowerCase()
-              ?.includes(value.toLowerCase());
-          },
-          sorter: (a, b) => {
-            const aValue = a[key] || ""; // Default empty string for null
-            const bValue = b[key] || "";
-            if (typeof aValue === "boolean" && typeof bValue === "boolean") {
-              return aValue === bValue ? 0 : aValue ? -1 : 1;
-            }
-            return typeof aValue === "string" && typeof bValue === "string"
-              ? aValue.localeCompare(bValue)
-              : aValue - bValue;
-          },
-          sortOrder: sortedInfo.columnKey === key ? sortedInfo.order : null,
-          render: (text, record) =>
-            key === "isApproved" ? (
-              <PendingVolunteersApproved
-                refetch={refetch}
-                record={record}
-              ></PendingVolunteersApproved>
-            ) : (
-              <div key={index}>{text || "N/A"}</div>
+              })
             ),
-          ellipsis: true,
-        }))
-    : [];
+            filterSearch: true,
+            filteredValue: filteredInfo[key] || null,
+            onFilter: (value, record) =>
+              record[key]
+                ?.toString()
+                ?.toLowerCase()
+                ?.includes(value.toLowerCase()),
+            sorter: (a, b) => {
+              const aValue = a[key] || "";
+              const bValue = b[key] || "";
+              return typeof aValue === "string" && typeof bValue === "string"
+                ? aValue.localeCompare(bValue)
+                : aValue - bValue;
+            },
+            sortOrder: sortedInfo.columnKey === key ? sortedInfo.order : null,
+            render: (text, record) =>
+              key === "fullName" ? (
+                <h1 className="text-primary2">{record.fullName}</h1>
+              ) : (
+                text || "N/A"
+              ),
+            ellipsis: true,
+          }))
+      : [];
 
-  //! Add Details column
-  if (tableData?.length) {
-    columns.push({
-      title: "Details",
-      key: "view",
-      render: (_, record) => <ActionModal record={record} />,
-    });
-    // columns.push({
-    //   title: "Delete",
-    //   key: "view",
-    //   render: (_, record) => (
-    //     <div
-    //       onClick={() => handleDeleteModal(record)}
-    //       className="flex items-center justify-center text-secondary"
-    //     >
-    //       <MdDeleteForever />
-    //     </div>
-    //   ),
-    // });
-  }
+  const approvedColumns = useMemo(
+    () => [
+      ...generateColumns(tableData),
+      {
+        title: "Details",
+        key: "view",
+        render: (_, record) => <ActionModal record={record} />,
+      },
+    ],
+    [tableData, sortedInfo, filteredInfo]
+  );
+
+  const pendingColumns = useMemo(
+    () => [
+      ...generateColumns(tableDataPending),
+      {
+        title: "Details",
+        key: "view",
+        render: (_, record) => <ActionModal record={record} />,
+      },
+    ],
+    [tableDataPending, sortedInfo, filteredInfo]
+  );
 
   return (
     <div>
       <div className="flex items-center justify-between gap-2 mb-2">
-        {" "}
-        <h1 className="text-primary2 font-semibold text-lg">User Management</h1>
+        <h1 className="text-primary font-semibold text-lg">User Management</h1>
         <button
           className="border p-1 rounded-sm"
-          onClick={() => {
-            setFilterShow(!filterShow);
-          }}
+          onClick={() => setFilterShow(!filterShow)}
         >
           {!filterShow ? <LuFilter /> : <LuFilterX />}
         </button>
       </div>
 
       {filterShow && (
-        <div className=" border px-5 py-5 rounded-md shadow-md mt-5 mb-10">
-          {" "}
+        <div className="border px-5 py-5 rounded-md shadow-md mt-5 mb-10">
           <FilteredUserData
-            role={"admin"}
+            role="admin"
             handleFilteredData={handleFilteredData}
           />
         </div>
       )}
 
-      {isLoading && <Loader />}
-      {isError && <div className="text-red-500">Error loading users!</div>}
-
-      <Table
-        pagination={false}
-        size="small"
-        className="text-xs font-normal"
-        columns={columns}
-        bordered
-        dataSource={tableDataWithKeys}
-        onChange={handleChange}
-      />
-
-      <div className="my-5">
-        {" "}
-        <Pagination
-          showSizeChanger
-          onChange={(currentPage, pageSize) => {
-            setPage(currentPage);
-            setSize(pageSize);
-          }}
-          align="end"
-          current={page}
-          total={rowCount}
-          pageSize={size}
-        />
-      </div>
+      {isLoading ? (
+        <div>
+          <Loader></Loader>
+        </div>
+      ) : isError ? (
+        <div>Something went wrong </div>
+      ) : (
+        <div>
+          {" "}
+          <div className="my-5">
+            <Tabs
+              type="card"
+              items={[
+                {
+                  label: "Approved",
+                  key: 1,
+                  children: (
+                    <Table
+                      pagination={false}
+                      size="small"
+                      columns={approvedColumns}
+                      bordered
+                      dataSource={tableData}
+                      onChange={handleTableChange}
+                    />
+                  ),
+                },
+                {
+                  label: "Pending",
+                  key: 2,
+                  children: (
+                    <Table
+                      pagination={false}
+                      size="small"
+                      columns={pendingColumns}
+                      bordered
+                      dataSource={tableDataPending}
+                      onChange={handleTableChange}
+                    />
+                  ),
+                },
+              ]}
+            />
+          </div>
+          <div className="my-5">
+            <Pagination
+              showSizeChanger
+              onChange={(page, size) => setPagination({ page, size })}
+              current={pagination.page}
+              total={rowCount}
+              pageSize={pagination.size}
+              align="end"
+            />
+          </div>
+        </div>
+      )}
 
       {deleteModal && (
         <UserDeleteModal
           record={id}
-          refetch={refetch}
+          refetch={() => fetchData(getAllApprovedDonors, setTableData)}
           clicked={deleteModal}
-          handleClose={handleDeleteModal}
+          handleClose={() => setDeleteModal(false)}
         />
       )}
     </div>

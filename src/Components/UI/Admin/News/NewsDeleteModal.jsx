@@ -1,3 +1,5 @@
+import Loader from "@/src/Components/Layouts/Loader";
+import { useDeleteNewsMutation } from "@/src/redux/features/news/news";
 import { Modal } from "antd";
 import Cookies from "js-cookie";
 import React from "react";
@@ -5,39 +7,26 @@ import { IoMdCloseCircleOutline } from "react-icons/io";
 import { MdDeleteOutline, MdDone } from "react-icons/md";
 import { toast } from "react-toastify";
 
-const NoticeDeleteModal = ({ handleClose, clicked, record, refetch }) => {
+const NewsDeleteModal = ({ handleClose, clicked, record, refetch }) => {
   const id = record?.id;
-  console.log("record", record?.id);
+
+  //! Delete News :
+  const [deleteNews, { isLoading }] = useDeleteNewsMutation();
 
   const handleDelete = async () => {
-    const accessToken = Cookies.get("accessToken");
-
-    if (!accessToken) {
-      toast.error("Unauthorized. Please log in again.");
-      return;
-    }
-
     try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/notice/delete/${id}`,
-        {
-          method: "DELETE",
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        }
-      );
-
-      const responseData = await response.json();
-      console.log("Delete Response:", responseData);
-
-      if (responseData?.data?.isSuccess) {
-        toast.success(
-          responseData?.data?.message || "notice deleted successfully!"
-        );
-        refetch();
-        handleClose();
+      const response = await deleteNews({ id });
+      if (isLoading) {
+        <Loader />;
       }
+      console.log("response", response);
+      if (response?.data?.statusCode === 200) {
+        toast.success(response?.data?.data?.message);
+      } else {
+        toast.success(response?.data?.message);
+      }
+      refetch();
+      handleClose();
     } catch (error) {
       console.error("Network or server error:", error);
       toast.error("An unexpected error occurred. Please try again.");
@@ -59,7 +48,7 @@ const NoticeDeleteModal = ({ handleClose, clicked, record, refetch }) => {
         <div className="">
           <div className="flex items-center justify-between">
             <h1 className="text-xl  font-semibold tracking-tight">
-              Delete Notice
+              Delete News
             </h1>
 
             <IoMdCloseCircleOutline
@@ -74,7 +63,7 @@ const NoticeDeleteModal = ({ handleClose, clicked, record, refetch }) => {
             <div className="text-center text-base my-4">
               Do you want to delete this{" "}
               <span className="text-primary font-semibold">{record?.name}</span>{" "}
-              Pdf ? This can not be reclaimed.
+              News ? This can not be reclaimed.
             </div>
             <div className="bg-gray-200 py-[1px] mt-10"></div>
             <div className="flex items-end justify-end gap-2 mt-2">
@@ -104,4 +93,4 @@ const NoticeDeleteModal = ({ handleClose, clicked, record, refetch }) => {
     </div>
   );
 };
-export default NoticeDeleteModal;
+export default NewsDeleteModal;

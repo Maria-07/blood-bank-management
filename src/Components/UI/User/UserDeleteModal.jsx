@@ -6,7 +6,7 @@ import { IoMdCloseCircleOutline } from "react-icons/io";
 import { MdDeleteOutline, MdDone } from "react-icons/md";
 import { toast } from "react-toastify";
 
-const UserDeleteModal = ({ record, handleClose, clicked, refetch }) => {
+const UserDeleteModal = ({ record, handleClose, clicked }) => {
   console.log("record", record);
 
   const router = useRouter();
@@ -46,7 +46,7 @@ const UserDeleteModal = ({ record, handleClose, clicked, refetch }) => {
         toast.success(
           responseData?.data?.message || "User deleted successfully!"
         );
-        refetch();
+        window.location.reload();
         handleClose();
       }
     } catch (error) {

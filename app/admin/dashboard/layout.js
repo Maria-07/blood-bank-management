@@ -1,7 +1,18 @@
+"use client";
+
 import DashboardNavbar from "@/src/Components/Layouts/DashboardNavbar";
+import { useAuth } from "@/src/Hook/AuthContext";
 import { settingsSidebar } from "@/src/shared/LinkLists";
+import { useState } from "react";
 
 export default function RootLayout({ children }) {
+  const { userType } = useAuth();
+  const [userRole, setUserRole] = useState("superadmin");
+
+  const filteredSidebar = settingsSidebar.filter((link) =>
+    link.onlySuperAdmin ? userRole === "superadmin" : true
+  );
+
   return (
     <div className="md:w-[90%] sm:mx-auto ">
       <div className="grid sm:grid-cols-12 grid-cols-1 ">
@@ -11,7 +22,7 @@ export default function RootLayout({ children }) {
           transition={{ delay: 0.6 }}
           className={`p-2 my-2 border-[1px] lg:col-span-2 shadow-md rounded-md min-h-screen bg-dark-background border-dark-background `}
         >
-          {settingsSidebar.map((s, i) => (
+          {filteredSidebar.map((s, i) => (
             <DashboardNavbar key={i} data={s}></DashboardNavbar>
           ))}
         </div>

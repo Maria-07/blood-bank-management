@@ -1,15 +1,18 @@
 "use client";
 
+import Loader from "@/src/Components/Layouts/Loader";
 import CreateCampaignModal from "@/src/Components/UI/Admin/Campaigns/CreateCampaignModal";
 import VolunteerListAction from "@/src/Components/UI/Admin/Campaigns/VolunteerListAction";
+import ActionModal from "@/src/Components/UI/Admin/Volunteers/ActionModal";
+import ApproveVolunteerTable from "@/src/Components/UI/Admin/Volunteers/ApproveVolunteerTable";
 import PendingVolunteersApproved from "@/src/Components/UI/Admin/Volunteers/PendingVolunteersApproved";
-import { useGetAllApprovedVolunteersQuery } from "@/src/redux/features/volunteers/volunteers";
+import { useGetAllVolunteersQuery } from "@/src/redux/features/volunteers/volunteers";
 import { Pagination, Table } from "antd";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useMemo, useState } from "react";
-import ActionModal from "./ActionModal";
+import { toast } from "react-toastify";
 
-const ApproveVolunteerTable = () => {
+const VolunteerList = () => {
   const router = useRouter();
   const [tableData, setTableData] = useState([]); // Data for table
   const [allVolunteers, setAllVolunteers] = useState(false); // Modal state
@@ -21,11 +24,10 @@ const ApproveVolunteerTable = () => {
   const [size, setSize] = useState(10);
 
   //! Get all volunteers using RTK Query
-  const { data, isLoading, isError, refetch } =
-    useGetAllApprovedVolunteersQuery({
-      pageNo: page,
-      pageSize: size,
-    });
+  const { data, isLoading, isError, refetch } = useGetAllVolunteersQuery({
+    pageNo: page,
+    pageSize: size,
+  });
 
   //! Update table data when data is fetched
   useEffect(() => {
@@ -40,12 +42,6 @@ const ApproveVolunteerTable = () => {
   }, [data, isLoading, isError, router]);
 
   console.log("data", data);
-
-  // //! Generate filters dynamically for table
-  // const generateFilterValues = (data, columnKey) => {
-  //   const uniqueValues = [...new Set(data.map((d) => d[columnKey] || "N/A"))];
-  //   return uniqueValues.map((value) => ({ text: value, value }));
-  // };
 
   //! Generate filter values (handles booleans, strings, and other types)
   const generateFilterValues = (data, columnKey) => {
@@ -98,13 +94,13 @@ const ApproveVolunteerTable = () => {
             key !== "fatherName" &&
             key !== "upazila" &&
             key !== "upazilaName" &&
+            key !== "union" &&
+            key !== "unionName" &&
             key !== "nid" &&
             key !== "nidUrls" &&
             key !== "physicalComplexity" &&
-            key !== "union" &&
-            key !== "unionName" &&
-            key !== "motherName" &&
             key !== "isApproved" &&
+            key !== "motherName" &&
             key !== "bloodDonationCount" &&
             key !== "imageUrl"
         )
@@ -149,8 +145,8 @@ const ApproveVolunteerTable = () => {
           render: (text, record) =>
             key === "isApproved" ? (
               <PendingVolunteersApproved
-                record={record}
                 refetch={refetch}
+                record={record}
               ></PendingVolunteersApproved>
             ) : (
               <div key={index}>{text || "N/A"}</div>
@@ -173,16 +169,18 @@ const ApproveVolunteerTable = () => {
       {/* Header Section */}
       <div className="flex items-center justify-between gap-2 flex-wrap mb-3 px-1">
         <h1 className="text-primary2 font-semibold text-lg">
-          Approved Volunteers
+          Pending Volunteers
         </h1>
       </div>
 
       {/* Table Section */}
       <div className="overflow-scroll pb-4">
         {isLoading ? (
-          <div>Loading...</div>
+          <div>
+            <Loader></Loader>
+          </div>
         ) : isError ? (
-          <div>Somthing went wrong </div>
+          <div>Something went wrong</div>
         ) : (
           <Table
             pagination={false}
@@ -210,7 +208,26 @@ const ApproveVolunteerTable = () => {
           pageSize={size}
         />
       </div>
+
+      <div>
+        <ApproveVolunteerTable></ApproveVolunteerTable>
+      </div>
+
+      {/* Modals */}
+      {allVolunteers && (
+        <VolunteerListAction
+          handleClose={handleAllVolunteers}
+          clicked={allVolunteers}
+        />
+      )}
+      {createCampaign && (
+        <CreateCampaignModal
+          handleClose={handleCreateCampaign}
+          clicked={createCampaign}
+        />
+      )}
     </div>
   );
 };
-export default ApproveVolunteerTable;
+
+export default VolunteerList;
