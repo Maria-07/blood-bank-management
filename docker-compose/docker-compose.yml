@@ -1,0 +1,45 @@
+services:
+  db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sql_server_container
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=Pass1234@
+    ports:
+      - "1455:1433"
+    volumes:
+      - ./sql_data:/var/opt/mssql
+    networks:
+      - blood_donation
+    restart: always
+
+  backend:
+    build:
+      context: . # Path to your .NET application folder
+      dockerfile: Dockerfile   # Specify Dockerfile for building your app
+    container_name: dotnet_web_app
+    depends_on:
+      - db
+    ports:
+      - "5000:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ConnectionStrings__BloodDonationConnection_Local=Server=db;Database=BloodBank;User=sa;Password=Pass1234@;
+    networks:
+      - blood_donation
+    restart: always
+
+  frontend:
+    build:
+      context: .
+    container_name: nextjs_app
+    ports:
+      - "5001:3000"
+    networks:
+      - blood_donation
+    restart: always
+
+networks:
+  blood_donation: 
+    driver: bridge
+
