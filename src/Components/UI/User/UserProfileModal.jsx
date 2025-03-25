@@ -101,12 +101,13 @@ const UserProfileModal = ({ handleClose, clicked, record, admin }) => {
                   </div>
 
                   <div>
-                    <h1 className="text-capitalize font-semibold text-lg">
-                      {fullName}
+                    <h1 className="text-capitalize font-semibold text-lg flex items-center gap-1">
+                      {fullName}{" "}
+                      {/* <h2 className="text-capitalize text-gray-400 text-sm font-semibold">
+                        #{code}
+                      </h2> */}
                     </h1>
-                    <h2 className="text-capitalize text-accent text-sm font-semibold">
-                      {code}
-                    </h2>
+
                     <h2 className="text-capitalize text-accent text-sm font-semibold">
                       {userType}
                     </h2>
@@ -177,32 +178,35 @@ const UserProfileModal = ({ handleClose, clicked, record, admin }) => {
                     
                   </div> */}
                 </div>
-                <div className="pt-3">
-                  {admin && record?.nidUrls?.length > 0 && (
-                    <div>
-                      <h1 className="text-xs text-accent">NID details</h1>
-                      <div className="flex items-center mt-2 gap-2">
-                        {record.nidUrls.map((n, i) => {
-                          console.log(
-                            `${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}/${n}`
-                          );
+                {Array.isArray(record?.nidUrls) &&
+                  record?.nidUrls.length > 0 && (
+                    <div className="pt-3">
+                      {admin && (
+                        <div>
+                          <h1 className="text-xs text-accent">NID details</h1>
+                          <div className="flex items-center mt-2 gap-2">
+                            {record.nidUrls.map((n, i) => {
+                              console.log(
+                                `${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}/${n}`
+                              );
 
-                          return (
-                            <div key={i} className="overflow-hidden">
-                              <Image
-                                className="border object-cover w-full h-full"
-                                src={`${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}/${n}`}
-                                width={100}
-                                height={80}
-                                alt="NID image"
-                              />
-                            </div>
-                          );
-                        })}
-                      </div>
+                              return (
+                                <div key={i} className="overflow-hidden">
+                                  <Image
+                                    className="border object-cover w-full h-full"
+                                    src={`${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}/${n}`}
+                                    width={100}
+                                    height={80}
+                                    alt="NID image"
+                                  />
+                                </div>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      )}
                     </div>
                   )}
-                </div>
               </div>
               <div className="border-[1px] p-3 rounded-md mb-3">
                 <h1 className="font-semibold text-primary2 text-lg mb-2">
