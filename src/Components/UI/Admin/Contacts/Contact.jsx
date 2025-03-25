@@ -13,6 +13,7 @@ import {
   useGetAllContactsQuery,
   useGetMessageReadMutation,
 } from "@/src/redux/features/contacts/contact";
+import ContactActionModal from "./ContactActionModal";
 
 const Contact = () => {
   const [userData, setUserData] = useState(null);
@@ -151,7 +152,7 @@ const Contact = () => {
     columns.push({
       title: "Action",
       key: "action",
-      render: (_, record) => <ActionModal record={record?.userData} />,
+      render: (_, record) => <ContactActionModal record={record?.userData} />,
     });
   }
 

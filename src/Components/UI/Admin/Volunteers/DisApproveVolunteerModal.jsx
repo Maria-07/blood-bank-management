@@ -81,7 +81,7 @@ const DisApproveVolunteerModal = ({
           <div className="">
             <div className="flex items-center justify-between">
               <h1 className="text-xl  font-semibold tracking-tight">
-                Remove {record?.userType}
+                Remove this user
               </h1>
 
               <IoMdCloseCircleOutline
@@ -94,7 +94,7 @@ const DisApproveVolunteerModal = ({
 
             <form>
               <div className="text-center text-base my-4">
-                Do you want to Remove this {record?.userType} ?
+                Do you want to Remove this user ?
               </div>
               <div className="bg-gray-200 py-[1px] mt-10"></div>
               <div className="flex items-end justify-end gap-2 mt-2">

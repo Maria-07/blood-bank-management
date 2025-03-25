@@ -16,7 +16,7 @@ export const settingsSidebar = [
   },
   {
     icon: <FaPeopleCarryBox />,
-    link_name: "Volunteers",
+    link_name: "Leaders",
     link: "/admin/dashboard/volunteers",
   },
   {
@@ -41,7 +41,7 @@ export const settingsSidebar = [
   },
   {
     icon: <MdAdminPanelSettings />,
-    link_name: "Admin Manage",
+    link_name: "Admins",
     link: "/admin/dashboard/admin-manage",
     onlySuperAdmin: true,
   },

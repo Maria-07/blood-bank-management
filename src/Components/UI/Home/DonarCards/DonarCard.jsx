@@ -74,7 +74,7 @@ const DonarCard = ({ record = {} }) => {
           onClick={() => {
             if (!token) {
               console.log("Redirecting to register...");
-              router.push("/register");
+              router.push("/login");
             }
           }}
         >
@@ -117,9 +117,7 @@ const DonarCard = ({ record = {} }) => {
           </div>
           <hr className="my-5" />
           {!token && (
-            <h1 className="absolute left-[10%] top-[60%] text-secondary font-semibold text-center">
-              Register to view more information.
-            </h1>
+            <h1 className="absolute left-[10%] top-[60%] text-secondary font-semibold text-center"></h1>
           )}
           <div
             className={`${

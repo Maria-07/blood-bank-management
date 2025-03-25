@@ -9,7 +9,7 @@ const NewsCard = ({ news }) => {
   const { name, description, url, id, createTime } = news;
 
   return (
-    <div className="border rounded-lg shadow-md overflow-hidden bg-primary text-white">
+    <div className="border rounded-lg shadow-md overflow-hidden bg-primary text-white min-h-[250px] max-h-[600px] ">
       {/* News Content */}
       <div className="p-4">
         {/* Title */}
@@ -28,8 +28,8 @@ const NewsCard = ({ news }) => {
 
         {/* Description */}
         <p className="text-[15px] h-[60px] mt-3 ">
-          {description?.length > 180
-            ? `${description.slice(0, 180)}...`
+          {description?.length > 100
+            ? `${description.slice(0, 100)} ...`
             : description || "No description available."}
         </p>
 

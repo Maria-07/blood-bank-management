@@ -8,11 +8,11 @@ const RegistrationPage = () => {
   return (
     <div>
       {" "}
-      <div className="sm:w-[90%]  sm:mx-auto my-16 px-5">
+      <div className="sm:w-[90%]  sm:mx-auto mb-16 px-5">
         <div className="grid lg:grid-cols-3 grid-cols-1">
           <div className="flex items-center justify-center ">
             {" "}
-            <div className="mx-auto my-auto p-5 border-r-[1px]">
+            <div className="mx-auto my-auto px-5 sm:py-20  border-r-[1px]">
               <Image
                 src={blood}
                 // src={register}

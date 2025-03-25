@@ -115,12 +115,33 @@ const Register = () => {
               >
                 <option value="">Select</option>
                 <option value="Donor">Donor</option>
-                <option value="Volunteer">Volunteer</option>
+                <option value="Volunteer">Leader</option>
               </select>
               {errors.UserType && (
                 <p className="text-red-500">{errors.UserType.message}</p>
               )}
             </div>
+            {uType === "Volunteer" && (
+              <div>
+                <label className="input-title">
+                  Leader Type<span className="text-rose-600">*</span>
+                </label>
+                <select
+                  {...register("LeaderType", {
+                    required: "LeaderType is required",
+                  })}
+                  className="input-select-border w-full mb-2"
+                >
+                  <option value="">Select</option>
+                  <option value="DcOffice">DC Office</option>
+                  <option value="CivilOffice">Civil Sergon Office</option>
+                  <option value="Scouts">Scout</option>
+                </select>
+                {errors.UserType && (
+                  <p className="text-red-500">{errors.UserType.message}</p>
+                )}
+              </div>
+            )}
 
             {/* Personal Info */}
             <div className="sm:col-span-3">
@@ -302,22 +323,7 @@ const Register = () => {
               </h3>
               <hr />
             </div>
-            <div className="sm:col-span-2">
-              <label htmlFor="PhysicalComplexity" className="input-title">
-                Any Physical Complexity?{" "}
-                <span className="text-xs text-accent">
-                  (like : Diabetics / Cancer / thyroid.... etc.)
-                </span>
-              </label>
-              <select
-                {...register("PhysicalComplexity")}
-                className="input-select-border w-full mb-2"
-              >
-                <option value="">Select</option>
-                <option value="Yes">Yes</option>
-                <option value="No">No</option>
-              </select>
-            </div>
+
             <div>
               <label className="input-title">
                 Blood Group<span className="text-rose-600">*</span>
@@ -352,6 +358,7 @@ const Register = () => {
                 <option value="">Select</option>
                 <option value="Interested">Interested</option>
                 <option value="NotInterested">Not Interested</option>
+                <option value="NotSure">Not Sure</option>
               </select>
             </div>
             <div>
@@ -363,14 +370,28 @@ const Register = () => {
               />
             </div>
             <div>
-              <label className="input-title">
-                Blood Donation Count<span className="text-rose-600">*</span>
-              </label>
+              <label className="input-title">Blood Donation Count</label>
               <input
                 type="number"
                 {...register("BloodDonationCount")}
                 className="input-border w-full mb-2"
               />
+            </div>
+            <div className="">
+              <label htmlFor="PhysicalComplexity" className="input-title">
+                Any Physical Complexity?{" "}
+                {/* <span className="text-xs text-accent">
+                  (like : Diabetics / Cancer / thyroid.... etc.)
+                </span> */}
+              </label>
+              <select
+                {...register("PhysicalComplexity")}
+                className="input-select-border w-full mb-2"
+              >
+                <option value="">Select</option>
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+              </select>
             </div>
           </div>
           <button type="submit" className="input-button mb-4">

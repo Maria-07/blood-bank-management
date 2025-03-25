@@ -78,7 +78,7 @@ const ApproveVolunteerModal = ({ handleClose, clicked, record, refetch }) => {
           <div className="">
             <div className="flex items-center justify-between">
               <h1 className="text-xl  font-semibold tracking-tight">
-                Approve {record?.userType}
+                Approve this user
               </h1>
 
               <IoMdCloseCircleOutline
@@ -91,7 +91,7 @@ const ApproveVolunteerModal = ({ handleClose, clicked, record, refetch }) => {
 
             <form>
               <div className="text-center text-base my-4">
-                Do you want to Approve this this {record?.userType} ?
+                Do you want to Approve this user ?
               </div>
               <div className="bg-gray-200 py-[1px] mt-10"></div>
               <div className="flex items-end justify-end gap-2 mt-2">

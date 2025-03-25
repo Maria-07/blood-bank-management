@@ -201,7 +201,7 @@ const Navbar = () => {
               }
               href={"/volunteers/"}
             >
-              Volunteers
+              Leaders
             </Link>
             <Link
               className={

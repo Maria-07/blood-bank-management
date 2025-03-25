@@ -161,6 +161,23 @@ const VolunteerList = () => {
   const columns = createColumns(tableData);
   const columns2 = createColumns(tableData2);
 
+  //! Manually add the "Code" column at the beginning
+  columns.unshift({
+    title: "Code",
+    dataIndex: "code",
+    key: "code",
+    sorter: (a, b) => (a.code || "").localeCompare(b.code || ""),
+    render: (text) => <h1 className="font-semibold">{text || "N/A"}</h1>,
+  });
+  //! Manually add the "Code" column at the beginning
+  columns2.unshift({
+    title: "Code",
+    dataIndex: "code",
+    key: "code",
+    sorter: (a, b) => (a.code || "").localeCompare(b.code || ""),
+    render: (text) => <h1 className="font-semibold">{text || "N/A"}</h1>,
+  });
+
   //! Add Details column
   if (columns.length) {
     columns.push({
@@ -181,7 +198,7 @@ const VolunteerList = () => {
   return (
     <div>
       <div className="flex items-center justify-between gap-2 flex-wrap mb-3 px-1">
-        <h1 className="text-primary2 font-semibold text-lg">Volunteers</h1>
+        <h1 className="text-primary2 font-semibold text-lg">Leaders</h1>
       </div>
 
       {isLoading ? (
