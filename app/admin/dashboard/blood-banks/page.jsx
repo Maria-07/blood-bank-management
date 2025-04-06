@@ -145,7 +145,7 @@ const BloodBanks = () => {
     () => [
       ...generateColumns(tableData),
       {
-        title: "Details",
+        title: "Action",
         key: "view",
         render: (_, record) => <ActionModal record={record} />,
       },
@@ -157,7 +157,7 @@ const BloodBanks = () => {
     () => [
       ...generateColumns(tableDataPending),
       {
-        title: "Details",
+        title: "Action",
         key: "view",
         render: (_, record) => <ActionModal record={record} />,
       },
@@ -206,6 +206,7 @@ const BloodBanks = () => {
                     <Table
                       pagination={false}
                       size="small"
+                      className="text-xs font-normal"
                       columns={approvedColumns}
                       bordered
                       dataSource={tableData}
@@ -220,6 +221,7 @@ const BloodBanks = () => {
                     <Table
                       pagination={false}
                       size="small"
+                      className="text-xs font-normal"
                       columns={pendingColumns}
                       bordered
                       dataSource={tableDataPending}

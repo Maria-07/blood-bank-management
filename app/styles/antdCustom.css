@@ -359,3 +359,7 @@ a:hover {
 :where(.css-dev-only-do-not-override-nnuwmp).ant-tabs-card.ant-tabs-top>div>.ant-tabs-nav .ant-tabs-tab {
   border-radius: 3px 3px 0 0;
 }
+
+.ant-tabs .ant-tabs-content-holder {
+  overflow-x: scroll;
+}

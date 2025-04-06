@@ -6,20 +6,26 @@ import { AiOutlineEdit } from "react-icons/ai";
 import UserInfo from "@/src/Hook/UserInfo";
 import { useRouter } from "next/navigation";
 import dayjs from "dayjs";
+import Cookies from "js-cookie";
+import { toast } from "react-toastify";
 
 const MyProfilePage = () => {
   //! User data
   const user = UserInfo();
-  console.log(user);
-  console.log(dayjs(user?.lastDonationTime).format("YYYY-MM-DD"));
 
-  const donationDate = dayjs(user?.lastDonationTime).format("YYYY-MM-DD");
+  console.log("user details", user);
+
+  const donationDate =
+    user?.lastDonationTime !== null
+      ? dayjs(user?.lastDonationTime).format("YYYY-MM-DD")
+      : "";
 
   const [upazilas, setUpazilas] = useState([]);
   const [unions, setUnions] = useState([]);
-  const [dob, setDob] = useState("");
-  const [uType, setUType] = useState();
+  const [uId, setUId] = useState();
   const [isEdit, setIsEdit] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const accessToken = Cookies.get("accessToken");
 
   const router = useRouter();
   const {
@@ -45,18 +51,22 @@ const MyProfilePage = () => {
     }
   };
 
-  console.log("unions", unions);
-
   useEffect(() => {
     if (user) {
+      setValue("FullName", user.fullName || "");
+      setValue("Address", user.address || "");
+      setValue("dateOfBirth", user.dateOfBirth || "");
+      setValue("mobileNumber", user.mobileNumber || "");
       setValue("BloodGroup", user.bloodGroup || "");
       setValue("District", user.district || "");
       setValue("Upazila", user.upazila || "");
       setValue("Union", user.union || "");
+      setValue("BloodDonationCount", user.bloodDonationCount || 0);
       setValue("Gender", user.gender || "");
       setValue("UserType", user.userType || "");
       setValue("BloodDonationStatus", user.bloodDonationStatus || "");
       setValue("LastDonationTime", donationDate || "");
+      setUId(user?.id);
     }
   }, [user, setValue, donationDate]);
   useEffect(() => {
@@ -71,10 +81,58 @@ const MyProfilePage = () => {
 
   const filteredUnion = unions.filter((d) => d.id == user?.union);
   const filteredUpazila = upazilas.filter((d) => d.id == user?.upazila);
-  console.log(filteredUnion[0]?.name);
 
   const onSubmit = async (data) => {
     console.log("Sign up data =", data);
+
+    setLoading(true);
+
+    const formData = new FormData();
+    Object.entries(data).forEach(([key, value]) => {
+      if (value instanceof FileList && value.length > 0) {
+        key === "Nid"
+          ? Array.from(value).forEach((file) => formData.append("Nid", file))
+          : formData.append(key, value[0]);
+      } else {
+        formData.append(key, value);
+      }
+    });
+    console.log(uId);
+
+    if (donationDate && uId) {
+      formData.append("LastDonationTime", donationDate);
+      formData.append("id", uId);
+    }
+
+    try {
+      if (!accessToken) {
+        toast.error("Unauthorized. Please log in again.");
+        return;
+      }
+
+      console.log(accessToken);
+
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/user/update`,
+        {
+          method: "PUT",
+          headers: {
+            Authorization: `bearer ${accessToken}`,
+          },
+          body: formData,
+        }
+      );
+
+      console.log(response);
+
+      if (!response.ok) throw new Error("User update error occurred.");
+      const responseData = await response.json();
+      toast.success(responseData?.data?.message || "User Update successfully!");
+    } catch (error) {
+      toast.error("An unexpected error occurred. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -139,7 +197,7 @@ const MyProfilePage = () => {
                   defaultValue={user?.dateOfBirth}
                   type="date"
                   className="input-border w-full sm:w-[100%] mb-2"
-                  {...register("DateOfBirth")}
+                  {...register("dateOfBirth")}
                 />
               </div>
               <div>
@@ -149,7 +207,7 @@ const MyProfilePage = () => {
                   defaultValue={user?.mobileNumber}
                   type="number"
                   className="input-border w-full sm:w-[100%] mb-2"
-                  {...register("MobileNumber")}
+                  {...register("mobileNumber")}
                 />
               </div>
               <div>
@@ -364,20 +422,28 @@ const MyProfilePage = () => {
                   </select>
                 )}
               </div>
-              <div className="flex items-center sm:col-span-3">
-                <input
-                  disabled={!isEdit}
-                  defaultChecked={user?.physicalComplexity}
-                  type="checkbox"
-                  id="PhysicalComplexity"
-                  className="mr-2"
-                />
+              <div className="">
                 <label htmlFor="PhysicalComplexity" className="input-title">
-                  Any Physical Complexity?{" "}
-                  <span className="text-xs text-accent">
-                    (like : Diabetics / Cancer / thyroid.... etc.)
-                  </span>
+                  Any Physical Complexity?
                 </label>
+                {!isEdit ? (
+                  <input
+                    disabled
+                    type="text"
+                    defaultValue={user?.physicalComplexity}
+                    className="input-border w-full mb-2"
+                  />
+                ) : (
+                  <select
+                    {...register("PhysicalComplexity")}
+                    className="input-select-border w-full mb-2"
+                    defaultValue={user?.physicalComplexity || ""}
+                  >
+                    <option value="">Select</option>
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                  </select>
+                )}
               </div>
             </div>
             {isEdit && (

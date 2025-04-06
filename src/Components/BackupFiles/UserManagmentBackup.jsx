@@ -273,7 +273,7 @@ const BloodBanks = () => {
   //! Add Details column
   if (tableData?.length) {
     columns.push({
-      title: "Details",
+      title: "Actions",
       key: "view",
       render: (_, record) => <ActionModal record={record} />,
     });
@@ -281,7 +281,7 @@ const BloodBanks = () => {
   //! Add Details column
   if (tableDataPending?.length) {
     pendingColumns.push({
-      title: "Details",
+      title: "Actions",
       key: "view",
       render: (_, record) => <ActionModal record={record} />,
     });
