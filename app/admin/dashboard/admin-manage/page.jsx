@@ -1,7 +1,7 @@
 "use client";
 import Loader from "@/src/Components/Layouts/Loader";
 import AddAdminModal from "@/src/Components/UI/Admin/AdminManage/AddAdminModal";
-import ActionModal from "@/src/Components/UI/Admin/Volunteers/ActionModal";
+import AdminActionModal from "@/src/Components/UI/Admin/AdminManage/AdminActionModal";
 import { useGetAllAdminQuery } from "@/src/redux/features/auth/userApi";
 import { Pagination, Table } from "antd";
 import Link from "next/link";
@@ -106,6 +106,7 @@ const AdminManagePage = () => {
               "nid",
               "nidUrls",
               "key",
+              "code",
               "bloodDonationCount",
               "imageUrl",
             ].includes(key)
@@ -147,15 +148,15 @@ const AdminManagePage = () => {
         }))
     : [];
 
-    //! Manually add the "Code" column at the beginning
-    columns.unshift({
-      title: "Code",
-      dataIndex: "code",
-      key: "code",
-      width: 50,
-      sorter: (a, b) => (a.code || "").localeCompare(b.code || ""),
-      render: (text) => <h1 className="font-semibold">{text || "N/A"}</h1>,
-    });
+  //! Manually add the "Code" column at the beginning
+  columns.unshift({
+    title: "Code",
+    dataIndex: "code",
+    key: "code",
+    width: 50,
+    sorter: (a, b) => (a.code || "").localeCompare(b.code || ""),
+    render: (text) => <h1 className="font-semibold">{text || "N/A"}</h1>,
+  });
 
   //! Add action column if data exists
   if (tableData.length) {
@@ -165,7 +166,7 @@ const AdminManagePage = () => {
       width: 50,
       render: (text, record) => (
         <div>
-          <ActionModal record={record} />
+          <AdminActionModal record={record} />
         </div>
       ),
     });
@@ -192,32 +193,35 @@ const AdminManagePage = () => {
         ) : isError ? (
           <div>Somthing went wrong </div>
         ) : (
-          <>   <Table
-            pagination={false}
-            size="small"
-            className="text-xs font-normal"
-            columns={columns}
-            bordered
-            dataSource={tableDataWithKeys}
-            onChange={handleChange}
-          /><div className="my-5">
-          {" "}
-          <Pagination
-            showSizeChanger
-            onChange={(currentPage, pageSize) => {
-              setPage(currentPage);
-              setSize(pageSize);
-            }}
-            align="end"
-            current={page}
-            total={rowCount}
-            pageSize={size}
-          />
-        </div></>
-       
+          <>
+            {" "}
+            <Table
+              pagination={false}
+              size="small"
+              className="text-xs font-normal"
+              columns={columns}
+              bordered
+              dataSource={tableDataWithKeys}
+              onChange={handleChange}
+            />
+            <div className="my-5">
+              {" "}
+              <Pagination
+                showSizeChanger
+                onChange={(currentPage, pageSize) => {
+                  setPage(currentPage);
+                  setSize(pageSize);
+                }}
+                align="end"
+                current={page}
+                total={rowCount}
+                pageSize={size}
+              />
+            </div>
+          </>
         )}
       </div>
-      
+
       {AddAdmin && (
         <AddAdminModal
           refetch={refetch}
