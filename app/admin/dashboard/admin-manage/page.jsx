@@ -87,7 +87,6 @@ const AdminManagePage = () => {
               "createdBy",
               "isDeleted",
               "serial",
-              "code",
               "isSuperAdmin",
               "password",
               "address",
@@ -148,11 +147,21 @@ const AdminManagePage = () => {
         }))
     : [];
 
+    //! Manually add the "Code" column at the beginning
+    columns.unshift({
+      title: "Code",
+      dataIndex: "code",
+      key: "code",
+      width: 50,
+      sorter: (a, b) => (a.code || "").localeCompare(b.code || ""),
+      render: (text) => <h1 className="font-semibold">{text || "N/A"}</h1>,
+    });
+
   //! Add action column if data exists
   if (tableData.length) {
     columns.push({
-      title: "News",
-      key: "news",
+      title: "Action",
+      key: "Action",
       width: 50,
       render: (text, record) => (
         <div>
@@ -183,7 +192,7 @@ const AdminManagePage = () => {
         ) : isError ? (
           <div>Somthing went wrong </div>
         ) : (
-          <Table
+          <>   <Table
             pagination={false}
             size="small"
             className="text-xs font-normal"
@@ -191,23 +200,24 @@ const AdminManagePage = () => {
             bordered
             dataSource={tableDataWithKeys}
             onChange={handleChange}
+          /><div className="my-5">
+          {" "}
+          <Pagination
+            showSizeChanger
+            onChange={(currentPage, pageSize) => {
+              setPage(currentPage);
+              setSize(pageSize);
+            }}
+            align="end"
+            current={page}
+            total={rowCount}
+            pageSize={size}
           />
+        </div></>
+       
         )}
       </div>
-      <div className="my-5">
-        {" "}
-        <Pagination
-          showSizeChanger
-          onChange={(currentPage, pageSize) => {
-            setPage(currentPage);
-            setSize(pageSize);
-          }}
-          align="end"
-          current={page}
-          total={rowCount}
-          pageSize={size}
-        />
-      </div>
+      
       {AddAdmin && (
         <AddAdminModal
           refetch={refetch}
