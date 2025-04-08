@@ -7,6 +7,7 @@ import {
 import { FaPeopleCarryBox, FaRegNewspaper } from "react-icons/fa6";
 import { BsChatSquareText } from "react-icons/bs";
 import { IoDocumentAttachSharp } from "react-icons/io5";
+import { CgUserlane } from "react-icons/cg";
 
 export const settingsSidebar = [
   {
@@ -44,5 +45,18 @@ export const settingsSidebar = [
     link_name: "Admins",
     link: "/admin/dashboard/admin-manage",
     onlySuperAdmin: true,
+  },
+  {
+    icon: <CgUserlane />,
+    link_name: "Donors",
+    link: "/admin/dashboard/donar-manage",
+    onlyVolunteers: true,
+  },
+];
+export const volunteerSidebar = [
+  {
+    icon: <CgUserlane />,
+    link_name: "Donors",
+    link: "/admin/dashboard/donar-manage",
   },
 ];

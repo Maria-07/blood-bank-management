@@ -17,7 +17,7 @@ import { useState } from "react";
 const Navbar = () => {
   const [open, setOpen] = useState(false);
   const { token, userType, logout, userId } = useAuth();
-  console.log(userId);
+  console.log(userType);
 
   const currentRoute = usePathname();
   const router = useRouter();
@@ -76,17 +76,23 @@ const Navbar = () => {
                     overlay={
                       <div className="bg-primary py-3 px-4 w-[200px] border shadow-md rounded-sm mt-1">
                         <div>
-                          {token && userType === "Admin" && (
-                            <button>
-                              {" "}
-                              <Link
-                                className="text-white hover:text-white font-semibold flex items-center gap-2"
-                                href={"/admin/dashboard/campaigns/"}
-                              >
-                                <MdDashboard /> Dashboard
-                              </Link>{" "}
-                            </button>
-                          )}
+                          {token &&
+                            (userType === "Admin" ||
+                              userType === "Volunteer") && (
+                              <button>
+                                {" "}
+                                <Link
+                                  className="text-white hover:text-white font-semibold flex items-center gap-2"
+                                  href={`${
+                                    userType === "Volunteer"
+                                      ? "/admin/dashboard/donar-manage/"
+                                      : "/admin/dashboard/campaigns/"
+                                  }`}
+                                >
+                                  <MdDashboard /> Dashboard
+                                </Link>{" "}
+                              </button>
+                            )}
 
                           <br />
                           <button>
@@ -97,14 +103,16 @@ const Navbar = () => {
                               <CgProfile /> My Profile
                             </Link>
                           </button>
-                          <button>
-                            <Link
-                              className="text-white hover:text-white font-semibold flex items-center gap-2"
-                              href={"/download-id"}
-                            >
-                              <FaIdBadge /> Download Id Card
-                            </Link>
-                          </button>
+                          {token && userType === "Volunteer" && (
+                            <button>
+                              <Link
+                                className="text-white hover:text-white font-semibold flex items-center gap-2"
+                                href={"/download-id"}
+                              >
+                                <FaIdBadge /> Download Id Card
+                              </Link>
+                            </button>
+                          )}
                           <button>
                             <Link
                               className="text-white hover:text-white font-semibold flex items-center gap-2"
@@ -242,17 +250,19 @@ const Navbar = () => {
                   overlay={
                     <div className="bg-primary py-3 px-4 w-[200px] border shadow-md rounded-sm mt-1">
                       <div>
-                        {token && userType === "Admin" && (
-                          <button>
-                            {" "}
-                            <Link
-                              className="text-white hover:text-white font-semibold flex items-center gap-2"
-                              href={"/admin/dashboard/campaigns/"}
-                            >
-                              <MdDashboard /> Dashboard
-                            </Link>{" "}
-                          </button>
-                        )}
+                        {token &&
+                          (userType === "Admin" ||
+                            userType === "Volunteer") && (
+                            <button>
+                              {" "}
+                              <Link
+                                className="text-white hover:text-white font-semibold flex items-center gap-2"
+                                href={"/admin/dashboard/campaigns/"}
+                              >
+                                <MdDashboard /> Dashboard
+                              </Link>{" "}
+                            </button>
+                          )}
 
                         <br />
                         <button>

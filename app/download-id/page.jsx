@@ -1,27 +1,45 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
+
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import React, { useRef } from "react";
 import { FaDownload } from "react-icons/fa6";
-import logo from "@/src/assets/Image/logo/darkLogo.png";
+import logo from "@/src/assets/Image/logo/lightLogo.png";
 import UserInfo from "@/src/Hook/UserInfo";
-import { Image } from "antd";
 
 const DownloadId = () => {
   const user = UserInfo();
-  console.log(user);
+  const myRef = useRef(null);
 
-  const contentRef = useRef();
+  const handleDownloadPDF = async () => {
+    const input = myRef.current;
+    if (!input) return;
 
-  const handleDownloadPDF = () => {
-    const input = contentRef.current;
-    const scale = window.devicePixelRatio || 2; // Higher scale for better resolution
+    // Wait for images to load
+    await Promise.all(
+      Array.from(input.querySelectorAll("img")).map(
+        (img) =>
+          new Promise((resolve) => {
+            if (img.complete) resolve(true);
+            else img.onload = img.onerror = () => resolve(true);
+          })
+      )
+    );
 
-    html2canvas(input, { scale, backgroundColor: null }).then((canvas) => {
+    // Add PDF style mode
+    input.classList.add("pdf-mode");
+
+    const scale = window.devicePixelRatio || 2;
+
+    html2canvas(input, {
+      scale,
+      useCORS: true,
+      backgroundColor: null,
+    }).then((canvas) => {
       const imgData = canvas.toDataURL("image/png");
       const pdf = new jsPDF("p", "mm", "a4");
 
-      // Get A4 dimensions
       const pdfWidth = pdf.internal.pageSize.getWidth();
       const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
 
@@ -35,9 +53,17 @@ const DownloadId = () => {
         undefined,
         "FAST"
       );
-      pdf.save("download.pdf");
+      pdf.save("id_card.pdf");
+
+      // Remove PDF mode styles
+      input.classList.remove("pdf-mode");
     });
   };
+
+  const imageUrl =
+    user?.imageUrl && process.env.NEXT_PUBLIC_IMAGE_BASE_URL
+      ? `${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}/${user.imageUrl}`
+      : "https://static.vecteezy.com/system/resources/thumbnails/004/607/791/small_2x/man-face-emotive-icon-smiling-male-character-in-blue-shirt-flat-illustration-isolated-on-white-happy-human-psychological-portrait-positive-emotions-user-avatar-for-app-web-design-vector.jpg";
 
   return (
     <div className="sm:w-[30%] mx-auto p-5">
@@ -50,58 +76,48 @@ const DownloadId = () => {
 
       {/* Section to Convert into PDF */}
       <div
-        ref={contentRef}
+        ref={myRef}
         className="mx-auto my-auto flex items-center justify-center"
       >
         <div className="w-64 bg-white shadow-lg rounded-xl overflow-hidden border border-gray-300 relative">
-          {/* Top Blue Section with Wave */}
-          <div className="relative">
-            <div className="bg-primary2 p-3 w-full rounded-t-lg flex items-center justify-center relative gap-3">
-              <Image
-                src={logo}
-                width={50}
-                height={50}
-                className="rounded-full"
-                alt="Logo"
-                preview={false}
-              />
-              <div className="text-end">
-                <h1 className="font-primary text-xs font-bold text-primary">
-                  WELCOME To হিমোগ্লোবিন
-                </h1>
-                <span className="text-[11px]">
-                  মানবতার শ্রেষ্ঠ দান, রক্ত দিয়ে বাচাই প্রাণ
-                </span>
-              </div>
-            </div>
+          {/* Top Header */}
+          <div className="bg-primary2 p-3 w-full rounded-t-lg text-center text-white font-bold text-xl pb-12">
+            হিমোগ্লোবিন
+          </div>
 
-            {/* Profile Picture */}
-            <div className="absolute top-14 left-1/2 transform -translate-x-1/2">
-              <Image
-                className="border rounded-full"
-                src={
-                  user?.imageUrl
-                    ? `${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}/${user.imageUrl}`
-                    : "https://static.vecteezy.com/system/resources/thumbnails/004/607/791/small_2x/man-face-emotive-icon-smiling-male-character-in-blue-shirt-flat-illustration-isolated-on-white-happy-human-psychological-portrait-positive-emotions-user-avatar-for-app-web-design-vector.jpg"
-                }
-                width={70}
-                height={70}
-                preview={false}
-                alt="User Profile"
-                crossOrigin="anonymous"
-              />
-            </div>
+          {/* Profile Picture */}
+          <div className="flex justify-center mt-[-40px]">
+            <img
+              className="border rounded-full bg-white p-[1px]"
+              src={imageUrl}
+              width="80"
+              height="80"
+              alt="User"
+              crossOrigin="anonymous"
+              style={{ objectFit: "cover" }}
+            />
           </div>
 
           {/* User Info */}
-          <div className="text-center mt-12 mb-2">
+          <div className="text-center mt-2 mb-2">
             <h2 className="text-lg font-bold">{user?.fullName}</h2>
-            <p className="text-gray-500 text-sm">Volunteer</p>
+            <p className="text-gray-500 text-sm">{user?.userType}</p>
           </div>
 
           {/* Details */}
-          <div className="flex items-center justify-center">
-            <div className="mt-4 space-y-2 text-sm text-gray-700 px-3">
+          <div className="relative flex items-center justify-center">
+            {/* Watermark Logo in Background */}
+            <img
+              src={logo.src}
+              alt="Logo Watermark"
+              className="absolute opacity-20 w-32 h-32 object-contain pointer-events-none"
+              style={{
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -50%)",
+              }}
+            />
+            <div className="mt-4 space-y-2 text-sm text-gray-700 px-10 text-left">
               <p>
                 <span className="font-semibold">ID NO:</span> #{user?.code}
               </p>
@@ -117,18 +133,18 @@ const DownloadId = () => {
               </p>
               <p>
                 <span className="font-semibold">Institute Name:</span>{" "}
-                {user?.instituteName}
+                {user?.instituteName || "N/A"}
               </p>
               <p>
                 <span className="font-semibold">Address:</span>{" "}
-                {user?.address || "abc def, sdjsah"}
+                {user?.address || "N/A"}
               </p>
             </div>
           </div>
 
           {/* Footer */}
-          <div className="mt-7">
-            <p className="text-[12px] py-[3px] text-center bg-primary2 rounded-sm">
+          <div className="mt-5">
+            <p className="text-[12px] py-[3px] pb-5 text-center bg-primary2 text-white rounded-sm">
               মানবতার শ্রেষ্ঠ দান, রক্ত দিয়ে বাচাই প্রাণ
             </p>
           </div>
