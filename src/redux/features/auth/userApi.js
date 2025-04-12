@@ -21,6 +21,12 @@ const userApi = api.injectEndpoints({
         method: "GET",
       }),
     }),
+    getAllPermittedDonors: builder.query({
+      query: ({ pageNo, pageSize }) => ({
+        url: `/user/getPermittedDonors?pageNo=${pageNo}&pageSize=${pageSize}`,
+        method: "GET",
+      }),
+    }),
     getAllDonor: builder.mutation({
       query: (data) => ({
         url: "/bloodbank/getbloodbankdata",
@@ -62,6 +68,7 @@ export const {
   useGetUserTypeQuery,
   useGetAllDonorMutation,
   useGetAllAdminQuery,
+  useGetAllPermittedDonorsQuery,
   useGetAllUserMutation,
   useGetAllApprovedDonorMutation,
   useGetAllPendingDonorMutation,

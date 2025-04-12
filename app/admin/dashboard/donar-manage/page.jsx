@@ -2,7 +2,10 @@
 import Loader from "@/src/Components/Layouts/Loader";
 import AdminActionModal from "@/src/Components/UI/Admin/AdminManage/AdminActionModal";
 import AddDonorManageModal from "@/src/Components/UI/Admin/DonorManage/AddDonorManageModal";
-import { useGetAllAdminQuery } from "@/src/redux/features/auth/userApi";
+import {
+  useGetAllAdminQuery,
+  useGetAllPermittedDonorsQuery,
+} from "@/src/redux/features/auth/userApi";
 import { Pagination, Table } from "antd";
 import Link from "next/link";
 import React, { useEffect, useMemo, useState } from "react";
@@ -19,7 +22,7 @@ const DonarManage = () => {
   const [record, setRecord] = useState({});
 
   //! Get all Campaigns Data
-  const { data, isLoading, isError, refetch } = useGetAllAdminQuery({
+  const { data, isLoading, isError, refetch } = useGetAllPermittedDonorsQuery({
     pageNo: page,
     pageSize: size,
   });
@@ -149,14 +152,16 @@ const DonarManage = () => {
     : [];
 
   //! Manually add the "Code" column at the beginning
-  columns.unshift({
-    title: "Code",
-    dataIndex: "code",
-    key: "code",
-    width: 50,
-    sorter: (a, b) => (a.code || "").localeCompare(b.code || ""),
-    render: (text) => <h1 className="font-semibold">{text || "N/A"}</h1>,
-  });
+  if (tableData.length) {
+    columns.unshift({
+      title: "Code",
+      dataIndex: "code",
+      key: "code",
+      width: 50,
+      sorter: (a, b) => (a.code || "").localeCompare(b.code || ""),
+      render: (text) => <h1 className="font-semibold">{text || "N/A"}</h1>,
+    });
+  }
 
   //! Add action column if data exists
   if (tableData.length) {

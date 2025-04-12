@@ -14,7 +14,7 @@ const AddDonorManageModal = ({ handleClose, clicked, refetch }) => {
   const [upazilas, setUpazilas] = useState([]);
   const [unions, setUnions] = useState([]);
   const [dob, setDob] = useState("");
-  const [uType, setUType] = useState("Admin");
+  const [uType, setUType] = useState("donor");
   const [donationDate, setDonationDate] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -55,6 +55,13 @@ const AddDonorManageModal = ({ handleClose, clicked, refetch }) => {
   const onSubmit = async (data) => {
     setLoading(true);
 
+    const accessToken = Cookies.get("accessToken");
+
+    if (!accessToken) {
+      toast.error("Unauthorized. Please log in again.");
+      return;
+    }
+
     const formData = new FormData();
     Object.entries(data).forEach(([key, value]) => {
       if (value instanceof FileList && value.length > 0) {
@@ -66,16 +73,21 @@ const AddDonorManageModal = ({ handleClose, clicked, refetch }) => {
       }
     });
 
-    if (dob && donationDate && uType) {
-      formData.append("DateOfBirth", dob);
-      formData.append("LastDonationTime", donationDate);
-      formData.append("UserType", uType);
-    }
+    formData.append("UserType", uType);
+    formData.append("DateOfBirth", dob);
+    formData.append("LastDonationTime", donationDate);
 
     try {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_BASE_URL}/user/registration`,
-        { method: "POST", body: formData }
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}`,
+          },
+          body: formData,
+        }
       );
       if (!response.ok)
         throw new Error("User already exists or another error occurred.");
@@ -83,7 +95,7 @@ const AddDonorManageModal = ({ handleClose, clicked, refetch }) => {
       toast.success(
         responseData?.data?.message || "User created successfully!"
       );
-      handleClose();
+      // handleClose();
       refetch();
     } catch (error) {
       toast.error("An unexpected error occurred. Please try again.");
@@ -331,19 +343,14 @@ const AddDonorManageModal = ({ handleClose, clicked, refetch }) => {
                     />
                   </div>
                   <div>
-                    <label className="input-title">
-                      NID/Student ID<span className="text-rose-600">*</span>
-                    </label>
+                    <label className="input-title">NID/Student ID</label>
                     <input
                       type="file"
                       multiple
                       accept="image/*"
-                      {...register("Nid", { required: "NID is required" })}
+                      {...register("Nid")}
                       className="w-full mb-2"
                     />
-                    {errors.Nid && (
-                      <p className="text-red-500">{errors.Nid.message}</p>
-                    )}
                   </div>
 
                   {/* Blood Information */}
@@ -436,7 +443,7 @@ const AddDonorManageModal = ({ handleClose, clicked, refetch }) => {
                   >
                     <MdDone className="text-white bg-sky-700 px-1 py-[2px] text-[28px]" />
                     <span className="px-2 py-[6px] bg-sky-500 transition-all hover:bg-sky-600 text-white text-xs">
-                      Create Admin
+                      Create Donor
                     </span>
                   </button>
                   <button

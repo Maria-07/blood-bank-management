@@ -300,19 +300,14 @@ const Register = () => {
               />
             </div>
             <div>
-              <label className="input-title">
-                NID/Student ID<span className="text-rose-600">*</span>
-              </label>
+              <label className="input-title">NID/Student ID</label>
               <input
                 type="file"
                 multiple
                 accept="image/*"
-                {...register("Nid", { required: "NID is required" })}
+                {...register("Nid")}
                 className="w-full mb-2"
               />
-              {errors.Nid && (
-                <p className="text-red-500">{errors.Nid.message}</p>
-              )}
             </div>
 
             {/* Blood Information */}

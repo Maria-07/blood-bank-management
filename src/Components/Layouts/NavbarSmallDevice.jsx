@@ -196,8 +196,8 @@ const NavbarSmallDevice = ({ isOpen, setOpen, token, handleLogout }) => {
                 <Link href={"/login"}>
                   <button className="input-button w-[100px]">Log In</button>
                 </Link>
-                <Link href={"/signup"}>
-                  <button className="input-button w-[100px]">Sign Up</button>
+                <Link href={"/register/"}>
+                  <button className="input-button w-[100px]">Register</button>
                 </Link>
               </div>
             )}

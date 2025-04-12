@@ -8,7 +8,6 @@ import CreateCampaignModal from "@/src/Components/UI/Admin/Campaigns/CreateCampa
 import MediaUploadAndDeleteModal from "@/src/Components/UI/Admin/Campaigns/MediaUploadAndDeleteModal";
 import VolunteerListAction from "@/src/Components/UI/Admin/Campaigns/VolunteerListAction";
 import { useGetAllCampaignsQuery } from "@/src/redux/features/campaign/campaignApi";
-import useAutoLogout from "@/src/Utils/useAutoLogout";
 import { Pagination, Switch, Table } from "antd";
 import React, { useEffect, useMemo, useState } from "react";
 import { FaPeopleCarryBox, FaPlus } from "react-icons/fa6";
@@ -25,8 +24,6 @@ const CampaignList = () => {
   const [page, setPage] = useState(1);
   const [size, setSize] = useState(10);
   const [record, setRecord] = useState({});
-
-  useAutoLogout();
 
   //! Get all Campaigns Data
   const { data, isLoading, isError, refetch } = useGetAllCampaignsQuery({
