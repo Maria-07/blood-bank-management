@@ -43,10 +43,10 @@ const MediaTab = () => {
         setMedia((prev) => ({
           ...prev,
           images: isImageTab
-            ? response?.data?.imageUrls || prev.images
+            ? response?.data?.imageData || prev.images
             : prev.images,
           videos: !isImageTab
-            ? response?.data?.videoUrls || prev.videos
+            ? response?.data?.videoData || prev.videos
             : prev.videos,
         }));
       }

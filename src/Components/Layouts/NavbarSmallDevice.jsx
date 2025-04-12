@@ -122,7 +122,7 @@ const NavbarSmallDevice = ({ isOpen, setOpen, token, handleLogout }) => {
             <span>
               <FaPeopleCarryBox className="text-lg" />
             </span>
-            Volunteers
+            Leaders
           </Link>
           <Link
             className={
