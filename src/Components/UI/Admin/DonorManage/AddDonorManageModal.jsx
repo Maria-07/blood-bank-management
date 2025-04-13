@@ -7,7 +7,6 @@ import { MdDeleteOutline, MdDone } from "react-icons/md";
 import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { usePostNewsMutation } from "@/src/redux/features/news/news";
 import Loader from "@/src/Components/Layouts/Loader";
 
 const AddDonorManageModal = ({ handleClose, clicked, refetch }) => {
@@ -79,11 +78,10 @@ const AddDonorManageModal = ({ handleClose, clicked, refetch }) => {
 
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BASE_URL}/user/registration`,
+        `${process.env.NEXT_PUBLIC_BASE_URL}/user/donorRegistration`,
         {
           method: "POST",
           headers: {
-            "Content-Type": "application/json",
             Authorization: `Bearer ${accessToken}`,
           },
           body: formData,
@@ -95,7 +93,7 @@ const AddDonorManageModal = ({ handleClose, clicked, refetch }) => {
       toast.success(
         responseData?.data?.message || "User created successfully!"
       );
-      // handleClose();
+      handleClose();
       refetch();
     } catch (error) {
       toast.error("An unexpected error occurred. Please try again.");
@@ -117,7 +115,7 @@ const AddDonorManageModal = ({ handleClose, clicked, refetch }) => {
         <div>
           <div className="flex items-center justify-between">
             <h1 className="text-xl font-semibold tracking-tight">
-              Create an admin
+              Register Donor
             </h1>
 
             <IoMdCloseCircleOutline
@@ -134,7 +132,6 @@ const AddDonorManageModal = ({ handleClose, clicked, refetch }) => {
             </>
           ) : (
             <>
-              {" "}
               <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="grid sm:grid-cols-3 grid-cols-1  gap-3 my-5">
                   {/* User Type Selection */}

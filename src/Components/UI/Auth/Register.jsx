@@ -64,11 +64,9 @@ const Register = () => {
       }
     });
 
-    if (dob && donationDate && uType) {
-      formData.append("DateOfBirth", dob);
-      formData.append("LastDonationTime", donationDate);
-      formData.append("UserType", uType);
-    }
+    formData.append("DateOfBirth", dob);
+    formData.append("LastDonationTime", donationDate);
+    formData.append("UserType", uType);
 
     try {
       const response = await fetch(

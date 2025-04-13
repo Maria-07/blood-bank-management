@@ -46,12 +46,6 @@ export const settingsSidebar = [
     link: "/admin/dashboard/admin-manage",
     onlySuperAdmin: true,
   },
-  {
-    icon: <CgUserlane />,
-    link_name: "Donors",
-    link: "/admin/dashboard/donar-manage",
-    onlyVolunteers: true,
-  },
 ];
 export const volunteerSidebar = [
   {
