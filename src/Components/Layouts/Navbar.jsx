@@ -248,23 +248,18 @@ const Navbar = () => {
               <div>
                 <Dropdown
                   overlay={
-                    <div className="bg-primary py-3 px-4 w-[200px] border shadow-md rounded-sm mt-1">
+                    <div className="bg-primary py-3 px-4 w-[200px] border shadow-md rounded-sm  ">
                       <div>
-                        {token &&
-                          (userType === "Admin" ||
-                            userType === "Volunteer") && (
-                            <button>
-                              {" "}
-                              <Link
-                                className="text-white hover:text-white font-semibold flex items-center gap-2"
-                                href={"/admin/dashboard/campaigns/"}
-                              >
-                                <MdDashboard /> Dashboard
-                              </Link>{" "}
-                            </button>
-                          )}
-
-                        <br />
+                        {(userType === "Admin" || userType === "Volunteer") && (
+                          <button>
+                            <Link
+                              className="text-white hover:text-white font-semibold flex items-center gap-2"
+                              href={"/admin/dashboard/campaigns/"}
+                            >
+                              <MdDashboard /> Dashboard
+                            </Link>{" "}
+                          </button>
+                        )}
                         <button>
                           <Link
                             className="text-white hover:text-white font-semibold flex items-center gap-2"
@@ -281,6 +276,7 @@ const Navbar = () => {
                             <FaIdBadge /> Download Id Card
                           </Link>
                         </button>
+
                         <button>
                           <Link
                             className="text-white hover:text-white font-semibold flex items-center gap-2"
@@ -289,6 +285,7 @@ const Navbar = () => {
                             <FaFileDownload /> Download Report
                           </Link>
                         </button>
+
                         <hr className="mt-5 mb-3" />
                         <div className="">
                           <>

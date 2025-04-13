@@ -2,6 +2,18 @@ import { api } from "../../api/apiSlice";
 
 const VolunteerApi = api.injectEndpoints({
   endpoints: (builder) => ({
+    getOfficialLeaders: builder.query({
+      query: ({ pageNo, pageSize }) => ({
+        url: `/user/getOfficialLeaders?pageNo=${pageNo}&pageSize=${pageSize}`,
+        method: "GET",
+      }),
+    }),
+    getScoutLeaders: builder.query({
+      query: ({ pageNo, pageSize }) => ({
+        url: `/user/getScoutLeaders?pageNo=${pageNo}&pageSize=${pageSize}`,
+        method: "GET",
+      }),
+    }),
     getAllVolunteers: builder.query({
       query: ({ pageNo, pageSize }) => ({
         url: `/user/getUnapprovedVolunteer?pageNo=${pageNo}&pageSize=${pageSize}`,
@@ -17,5 +29,9 @@ const VolunteerApi = api.injectEndpoints({
   }),
 });
 
-export const { useGetAllVolunteersQuery, useGetAllApprovedVolunteersQuery } =
-  VolunteerApi;
+export const {
+  useGetOfficialLeadersQuery,
+  useGetScoutLeadersQuery,
+  useGetAllVolunteersQuery,
+  useGetAllApprovedVolunteersQuery,
+} = VolunteerApi;

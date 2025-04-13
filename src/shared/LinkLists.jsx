@@ -53,4 +53,9 @@ export const volunteerSidebar = [
     link_name: "Donors",
     link: "/admin/dashboard/donar-manage",
   },
+  {
+    icon: <FaUsersCog />,
+    link_name: "My Campaigns",
+    link: "/admin/dashboard/my-campaign",
+  },
 ];

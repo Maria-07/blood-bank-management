@@ -9,6 +9,13 @@ const campaignApi = api.injectEndpoints({
         method: "GET",
       }),
     }),
+    //* Get all Campaign :
+    getAllVolunteerPermittedCampaigns: builder.query({
+      query: ({ pageNo, pageSize }) => ({
+        url: `/campaign/getVolunteerPermittedCampaigns?pageNo=${pageNo}&pageSize=${pageSize}`,
+        method: "GET",
+      }),
+    }),
     //* Get all running and upcoming Campaign :
     getAllRunningCampaigns: builder.query({
       query: ({ pageNo, pageSize }) => ({
@@ -45,6 +52,7 @@ const campaignApi = api.injectEndpoints({
 
 export const {
   useGetAllCampaignsQuery,
+  useGetAllVolunteerPermittedCampaignsQuery,
   useGetAllRunningCampaignsQuery,
   useGetAllMediaMutation,
   useGetAllCampaignMediaQuery,
