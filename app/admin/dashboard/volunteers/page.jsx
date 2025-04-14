@@ -120,6 +120,8 @@ const VolunteerList = () => {
             "physicalComplexity",
             "isApproved",
             "motherName",
+            "campaignId",
+            "campaignName",
             "bloodDonationCount",
             "imageUrl",
           ].includes(key)

@@ -3,6 +3,7 @@
 import Loader from "@/src/Components/Layouts/Loader";
 import MediaUploadAndDeleteModal from "@/src/Components/UI/Admin/Campaigns/MediaUploadAndDeleteModal";
 import VolunteerListAction from "@/src/Components/UI/Admin/Campaigns/VolunteerListAction";
+import MyCampaignAction from "@/src/Components/UI/Admin/MyCampaign/MyCampaignAction";
 import { useGetAllVolunteerPermittedCampaignsQuery } from "@/src/redux/features/campaign/campaignApi";
 import { Pagination, Table } from "antd";
 import React, { useEffect, useMemo, useState } from "react";
@@ -113,24 +114,33 @@ const OwnCampaign = () => {
     : [];
 
   //! Add action column if data exists
-  // if (tableData.length) {
-  //   columns.push({
-  //     title: "Media",
-  //     key: "media",
-  //     width: 50,
-  //     render: (text, record) => (
-  //       <div
-  //         onClick={() => {
-  //           setRecord(record);
-  //           handleMedia();
-  //         }}
-  //         className="flex items-center justify-center hover:text-secondary"
-  //       >
-  //         <MdPermMedia />
-  //       </div>
-  //     ),
-  //   });
-  // }
+  if (tableData.length) {
+    columns.push({
+      title: "Media",
+      key: "media",
+      width: 50,
+      render: (text, record) => (
+        <div
+          onClick={() => {
+            setRecord(record);
+            handleMedia();
+          }}
+          className="flex items-center justify-center hover:text-secondary"
+        >
+          <MdPermMedia />
+        </div>
+      ),
+    });
+  }
+
+  columns.push({
+    title: "Action",
+    key: "action",
+    width: 50,
+    render: (text, record) => (
+      <MyCampaignAction refetch={refetch} record={record}></MyCampaignAction>
+    ),
+  });
 
   return (
     <div>

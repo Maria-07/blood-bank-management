@@ -109,6 +109,8 @@ const DonarManage = () => {
               "nid",
               "nidUrls",
               "key",
+              "campaignId",
+              "userType",
               "code",
               "bloodDonationCount",
               "imageUrl",
@@ -181,14 +183,6 @@ const DonarManage = () => {
     <div>
       <div className="flex items-center justify-between gap-2 flex-wrap mb-3 px-1">
         <h1 className="text-primary2 font-semibold text-lg">Donors</h1>
-        <div className="flex items-center gap-2">
-          <button
-            onClick={handleAddDonor}
-            className="bbm-button flex items-center gap-2"
-          >
-            <FaPlus /> Create Donor
-          </button>
-        </div>
       </div>
       <div className="overflow-scroll pb-4">
         {isLoading ? (

@@ -131,9 +131,13 @@ const Register = () => {
                   className="input-select-border w-full mb-2"
                 >
                   <option value="">Select</option>
-                  <option value="DcOffice">DC Office</option>
-                  <option value="CivilOffice">Civil Sergon Office</option>
-                  <option value="Scouts">Scout</option>
+                  <option value="Deputy Commissioner Official">
+                    Deputy Commissioner Official
+                  </option>
+                  <option value="Civil Surgeon Official">
+                    Civil Surgeon Official
+                  </option>
+                  <option value="Volunteer (Scout)">Volunteer (Scout)</option>
                 </select>
                 {errors.UserType && (
                   <p className="text-red-500">{errors.UserType.message}</p>
@@ -373,9 +377,9 @@ const Register = () => {
             <div className="">
               <label htmlFor="PhysicalComplexity" className="input-title">
                 Any Physical Complexity?{" "}
-                {/* <span className="text-xs text-accent">
-                  (like : Diabetics / Cancer / thyroid.... etc.)
-                </span> */}
+                <span className="text-xs text-accent">
+                  (Diabetics / Cancer / thyroid etc.)
+                </span>
               </label>
               <select
                 {...register("PhysicalComplexity")}

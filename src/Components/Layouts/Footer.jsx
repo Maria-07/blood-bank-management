@@ -1,40 +1,42 @@
 import Image from "next/image";
 import Link from "next/link";
-import logo from "@/src/assets/Image/footer.png";
+import logo from "@/src/assets/Image/logo/logo.png";
 import { FaFacebookF, FaInstagram, FaTwitch, FaTwitter } from "react-icons/fa";
 
 const Footer = () => {
   return (
     <div>
-      <div className="bg-primary px-10 py-24 ">
+      <div className="bg-primary px-10 py-16 ">
         <div className="sm:w-[80%]  sm:mx-auto">
-          <div className="grid sm:grid-cols-5 md:grid-cols-5 grid-cols-3 gap-5 mb-24">
+          <div className="grid sm:grid-cols-5 md:grid-cols-5 grid-cols-3 gap-5 mb-5">
             <div className="mx-auto">
               <Link href={"/"}>
                 <Image
                   src={logo}
-                  width={300}
-                  height={300}
+                  width={200}
+                  height={200}
                   alt="Picture of the author"
                 />
               </Link>
-              <p className="text-base my-3 text-white">
-                Lörem ipsum fapen vås kåll, päjerat i reakroliga dov.
-                Bokstavsdrog eud. Påjör Lars .
-              </p>
+              <h1 className="text-base my-3 text-white">
+                মানবতার শ্রেষ্ঠ দান, রক্ত দিয়ে বাচাই প্রাণ
+              </h1>
             </div>
             <div className="mx-auto">
               <h2 className="text-white text-lg font-semibold mb-1">
                 Important links
               </h2>
-              <Link href={"/"}>
-                <h2 className="text-white text-sm mb-1">Volunteers</h2>
+              <Link href={"/blood-bank"}>
+                <h2 className="text-white text-sm mb-1">Blood Bank</h2>
               </Link>
-              <Link href={"/"}>
+              <Link href={"/campaigns"}>
                 <h2 className="text-white text-sm mb-1">Campaigns</h2>
               </Link>
-              <Link href={"/"}>
-                <h2 className="text-white text-sm mb-1">Company</h2>
+              <Link href={"/volunteers"}>
+                <h2 className="text-white text-sm mb-1">Leaders</h2>
+              </Link>
+              <Link href={"/media"}>
+                <h2 className="text-white text-sm mb-1">Media</h2>
               </Link>
             </div>
 

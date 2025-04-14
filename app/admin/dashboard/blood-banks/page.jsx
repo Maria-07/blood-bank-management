@@ -100,6 +100,10 @@ const BloodBanks = () => {
                 "nid",
                 "nidUrls",
                 "key",
+                "campaignId",
+                "campaignName",
+                "instituteName",
+                "leaderType",
                 "bloodDonationCount",
                 "imageUrl",
               ].includes(key)

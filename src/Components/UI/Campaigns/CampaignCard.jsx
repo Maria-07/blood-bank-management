@@ -27,7 +27,11 @@ const CampaignCard = ({ campaign }) => {
             <div className=" overflow-hidden h-[200px] min-w-[200px]">
               <Image
                 className="border object-cover w-full h-full rounded-l-md"
-                src={`${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}/${bannerUrl}`}
+                src={
+                  bannerUrl
+                    ? `${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}/${bannerUrl}`
+                    : "  https://static.vecteezy.com/system/resources/previews/025/406/648/non_2x/infographic-of-blood-donation-with-receiving-to-human-in-various-blood-groups-and-example-texts-and-red-gradient-background-poster-s-infographic-of-world-blood-donor-day-campaign-in-design-vector.jpg"
+                }
                 width={200}
                 height={200}
                 alt="Picture of the author"

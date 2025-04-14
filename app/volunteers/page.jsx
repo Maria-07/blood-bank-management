@@ -18,6 +18,7 @@ const VolunteerPage = () => {
   const [rowCount, setRowCount] = useState(0);
   const [page, setPage] = useState(1);
   const [size, setSize] = useState(10);
+  const [scoutSize, setScoutSize] = useState(10);
 
   // Fetch Official Leaders Data
   const {
@@ -35,8 +36,8 @@ const VolunteerPage = () => {
     isLoading: isLoadingScout,
     isError: isErrorScout,
   } = useGetScoutLeadersQuery({
-    pageNo: page,
-    pageSize: size,
+    pageNo: 1,
+    pageSize: scoutSize,
   });
 
   useEffect(() => {
@@ -50,7 +51,7 @@ const VolunteerPage = () => {
   useEffect(() => {
     if (!isLoadingScout && !isErrorScout && ScoutLeaders) {
       setRowCount(ScoutLeaders?.rowCount || 0);
-      setAllScoutLeaders(ScoutLeaders?.civilOfficeLeaders || []);
+      setAllScoutLeaders(ScoutLeaders?.data || []);
     }
   }, [ScoutLeaders, isLoadingScout, isErrorScout]);
 
@@ -63,7 +64,7 @@ const VolunteerPage = () => {
           <div className="md:w-[100%] sm:mx-auto grid sm:grid-cols-2 grid-cols-1 gap-3 items-center justify-between">
             <div className="sm:pl-10">
               <h1 className="font-bold lg:text-7xl text-4xl font-primary">
-                Volunteers
+                Leaders
               </h1>
               <hr className="p-[2px] bg-primary w-[22%]" />
               <p className="text-sm text-accent lg:w-[55%] my-3">
@@ -84,7 +85,7 @@ const VolunteerPage = () => {
         </div>
 
         <h1 className="lg:text-3xl text-2xl font-semibold text-center mt-20">
-          Our Respected Official Leaders
+          Deputy Commissioner Officials
         </h1>
 
         <div className="md:w-[90%] sm:mx-auto mt-10 sm:px-0 px-2 mb-20">
@@ -117,7 +118,7 @@ const VolunteerPage = () => {
 
       <div className="my-10 bg-[#F2F2F2] py-10 pb-20">
         <h1 className="lg:text-3xl text-2xl font-semibold text-center mt-10">
-          Our Civil-Office Leaders
+          Civil Surgeon Officials
         </h1>
         <div className="md:w-[90%] sm:mx-auto mt-10 px-20 ">
           <Swiper
@@ -150,15 +151,24 @@ const VolunteerPage = () => {
         </div>
       </div>
 
-      <h1 className="lg:text-3xl text-2xl font-semibold text-center mt-20">
-        Scouts
+      <h1 className="lg:text-3xl text-2xl font-semibold text-center mt-20 ">
+        Volunteers (Scouts)
       </h1>
 
-      <div className="md:w-[90%] sm:mx-auto my-20">
+      <div className="md:w-[90%] sm:mx-auto my-20 px-20 ">
         <div className="gap-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 2xl:grid-cols-4 mt-20">
-          {allScoutLeaders?.slice(0, 5).map((data, i) => (
-            <Volunteer record={data} key={i}></Volunteer>
+          {allScoutLeaders?.map((data, i) => (
+            <Initiator record={data} key={i}></Initiator>
           ))}
+        </div>
+        {/* Load More Button */}
+        <div className="flex justify-end mt-4">
+          <button
+            onClick={() => setSize((prev) => prev + 10)}
+            className="px-3 py-1 bg-primary2 text-sm text-white rounded-md shadow-md hover:bg-blue-600"
+          >
+            Load More
+          </button>
         </div>
       </div>
 

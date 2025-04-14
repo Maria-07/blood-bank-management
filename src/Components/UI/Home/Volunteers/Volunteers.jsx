@@ -3,6 +3,7 @@ import React from "react";
 import Volunteer from "./Volunteer";
 import { useGetAllApprovedVolunteersQuery } from "@/src/redux/features/volunteers/volunteers";
 import { Card } from "antd";
+import { TiPointOfInterest } from "react-icons/ti";
 
 const Volunteers = () => {
   //! Get all volunteers using RTK Query
@@ -17,34 +18,63 @@ const Volunteers = () => {
 
   return (
     <div className="my-32">
-      <div className="gap-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 2xl:grid-cols-3 mt-20">
-        <Card hoverable className="bg-primary text-white">
-          <div className="py-24 px-10">
-            <h2 className="text-3xl mb-3 font-semibold">Mission</h2>
-            <p className="text-lg text-gray-50 ">
-              Our mission is to ensure a safe and sufficient blood supply
-              through voluntary donations.
-            </p>
-          </div>
-        </Card>
+      <div className="gap-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 2xl:grid-cols-4 mt-20">
+        <div className="sm:col-span-2">
+          {" "}
+          <Card hoverable className="bg-primary text-white mb-5">
+            <div className="py-16 px-10">
+              <h2 className="text-3xl mb-3 font-semibold">🚀 Mission</h2>
+              <div className="text-lg text-gray-50 ">
+                To establish an organized, technology-driven blood donation
+                network that helps identify everyone&apos;s blood group and
+                connect potential donors through a reliable platform.
+              </div>
+            </div>
+          </Card>
+          <Card hoverable className="shadow-md">
+            <div className="py-16 px-10">
+              <h2 className="text-3xl mb-3 font-semibold text-primary">
+                🎭 Vision
+              </h2>
+              <div className="text-lg text-accent">
+                To simplify and accelerate the availability of blood in
+                Nilphamari by building a digital system that stores donor
+                information and helps locate suitable donors swiftly.
+              </div>
+            </div>
+          </Card>
+        </div>
 
-        <Card hoverable className="shadow-md">
-          <div className="py-24 px-10">
-            <h2 className="text-3xl mb-3 font-semibold text-primary">Vision</h2>
-            <p className="text-lg text-accent">
-              We envision a world where no life is lost due to a shortage of
-              blood.
-            </p>
-          </div>
-        </Card>
-
-        <Card hoverable className="bg-primary text-white">
-          <div className="py-24 px-10">
-            <h2 className="text-3xl mb-3 font-semibold">Goal</h2>
-            <p className="text-lg text-gray-50 ">
-              Our goal is to create a seamless and efficient blood donation
-              process for everyone.
-            </p>
+        <Card hoverable className="bg-primary text-white sm:col-span-2">
+          <div className="py-16 px-10">
+            <h2 className="text-3xl mb-3 font-semibold">🎯 Goals</h2>
+            <div className="text-lg text-gray-50 ">
+              <div className="flex  gap-2 ml-7  mt-2">
+                <TiPointOfInterest className="text-sm mt-2" /> Blood group
+                identification at camps
+              </div>
+              <div className="flex  gap-2 ml-7  mt-2">
+                <TiPointOfInterest className="text-sm mt-2" /> Provide the right
+                donor at the right time when blood is needed.
+              </div>
+              <div className="flex  gap-2 ml-7  mt-2">
+                <TiPointOfInterest className="text-sm mt-2" /> Increase
+                awareness of blood donation and grow the number of voluntary
+                donors.
+              </div>
+              <div className="flex  gap-2 ml-7  mt-2">
+                <TiPointOfInterest className="text-sm mt-2" /> Build an
+                integrated, technology-supported blood donation ecosystem.
+              </div>
+              <div className="flex  gap-2 ml-7  mt-2">
+                <TiPointOfInterest className="text-sm mt-2" /> Educate and
+                encourage the public about the importance of donating blood.
+              </div>
+              <div className="flex  gap-2 ml-7  mt-2">
+                <TiPointOfInterest className="text-sm mt-2" /> Recognize regular
+                and active blood donors with appreciation and rewards.
+              </div>
+            </div>
           </div>
         </Card>
       </div>

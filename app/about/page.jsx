@@ -137,51 +137,6 @@ const AboutPage = () => {
                 </div>
               </div>
             </div>
-            <div className="grid sm:grid-cols-2 grid-cols-1 gap-4 my-20">
-              <div className="border-[1px] sm:p-5 p-1 my-5 rounded-sm shadow-md">
-                <h1 className="text-xl font-semibold">🎭 Vision</h1>
-                <div className="flex gap-2 ml-7 mt-2">
-                  To simplify and accelerate the availability of blood in
-                  Nilphamari by building a digital system that stores donor
-                  information and helps locate suitable donors swiftly.
-                </div>
-              </div>
-              <div className="border-[1px] sm:p-5 p-1 my-5 rounded-sm shadow-md">
-                <h1 className="text-xl font-semibold">🚀 Mission</h1>
-                <div className="flex gap-2 ml-7 mt-2">
-                  To establish an organized, technology-driven blood donation
-                  network that helps identify everyone&apos;s blood group and
-                  connect potential donors through a reliable platform.
-                </div>
-              </div>
-            </div>
-            <div className="border-[1px] sm:p-5 p-1 my-5 rounded-sm shadow-md text-center">
-              <h1 className="text-xl font-semibold my-5">🎯 Goals</h1>
-              <div className="flex items-center gap-2 ml-7  mt-2">
-                <TbPointFilled className="text-sm" /> Blood group identification
-                at camps
-              </div>
-              <div className="flex items-center gap-2 ml-7  mt-2">
-                <TbPointFilled className="text-sm" /> Provide the right donor at
-                the right time when blood is needed.
-              </div>
-              <div className="flex items-center gap-2 ml-7  mt-2">
-                <TbPointFilled className="text-sm" /> Increase awareness of
-                blood donation and grow the number of voluntary donors.
-              </div>
-              <div className="flex items-center gap-2 ml-7  mt-2">
-                <TbPointFilled className="text-sm" /> Build an integrated,
-                technology-supported blood donation ecosystem.
-              </div>
-              <div className="flex items-center gap-2 ml-7  mt-2">
-                <TbPointFilled className="text-sm" /> Educate and encourage the
-                public about the importance of donating blood.
-              </div>
-              <div className="flex items-center gap-2 ml-7  mt-2">
-                <TbPointFilled className="text-sm" /> Recognize regular and
-                active blood donors with appreciation and rewards.
-              </div>
-            </div>
           </div>
         </div>
       </div>
