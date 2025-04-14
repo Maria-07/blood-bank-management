@@ -24,7 +24,7 @@ const Videos = ({ videos = [] }) => {
                 <iframe
                   width="100%"
                   height="100%"
-                  src={formatYouTubeUrl(video)}
+                  src={formatYouTubeUrl(video?.imageUrl)}
                   title={`Video ${index}`}
                   frameBorder="0"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
@@ -42,7 +42,9 @@ const Videos = ({ videos = [] }) => {
                   alt="Picture of the author"
                 ></Image>
                 <div>
-                  <h1 className="text-lg font-semibold">Campaign name</h1>
+                  <h1 className="text-lg font-semibold">
+                    {video?.campaignName}
+                  </h1>
                   <span className="text-sm">Institution Name</span>
                   <h3 className="text-xs text-accent">2 years ago</h3>
                 </div>

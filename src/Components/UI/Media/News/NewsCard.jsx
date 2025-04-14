@@ -15,7 +15,9 @@ const NewsCard = ({ news }) => {
         {/* Title */}
         <Link href={url}>
           <h2 className="text-lg font-semibold  hover:text-white">
-            {name || "News Title Not Available"}
+            {name?.length > 80
+              ? `${name.slice(0, 80)} ...`
+              : name || "News Title Not Available"}
           </h2>
         </Link>
 

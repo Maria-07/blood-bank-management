@@ -54,6 +54,8 @@ const VolunteerPage = () => {
     }
   }, [ScoutLeaders, isLoadingScout, isErrorScout]);
 
+  console.log(ScoutLeaders);
+
   return (
     <div>
       <div className="md:w-[90%] sm:mx-auto">
