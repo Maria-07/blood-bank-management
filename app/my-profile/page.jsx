@@ -137,11 +137,38 @@ const MyProfilePage = () => {
     }
   };
 
+  console.log(unions);
+
   return (
     <div className="min-h-screen">
       {" "}
       <div className="sm:w-[60%] rounded-t-md sm:mx-auto mt-10 bg-primary text-base px-5 py-2 text-white font-semibold">
         <h1>Personal Information</h1>
+      </div>
+      <div>
+        <label className="input-title">Union</label>{" "}
+        {!isEdit ? (
+          <input
+            disabled={!isEdit}
+            type="text"
+            defaultValue={
+              filteredUnion[0]?.name ? filteredUnion[0]?.name : "union"
+            }
+            className="input-border w-full mb-2 mt-1"
+          />
+        ) : (
+          <select
+            {...register("Union")}
+            className="input-select-border w-full my-2 "
+          >
+            <option value="">Select</option>
+            {unions.map((un) => (
+              <option key={un.id} value={un.id}>
+                {un.name}
+              </option>
+            ))}
+          </select>
+        )}
       </div>
       <div className="sm:w-[60%] sm:mx-auto  border py-10 sm:px-16 px-5 rounded-md shadow-md">
         <div>
@@ -324,11 +351,16 @@ const MyProfilePage = () => {
                     <input
                       disabled={!isEdit}
                       type="text"
-                      defaultValue={filteredUnion[0]?.name}
+                      defaultValue={
+                        filteredUnion[0]?.name
+                          ? filteredUnion[0]?.name
+                          : "union"
+                      }
                       className="input-border w-full mb-2 mt-1"
                     />
                   ) : (
                     <select
+                      defaultValue={user?.Union}
                       {...register("Union")}
                       className="input-select-border w-full my-2 "
                     >

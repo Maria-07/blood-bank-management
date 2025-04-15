@@ -1,4 +1,5 @@
 "use client";
+import UserInfo from "@/src/Hook/UserInfo";
 import { Image } from "antd";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
@@ -10,8 +11,11 @@ import {
 } from "react-icons/fa6";
 
 const DownloadReport = () => {
+  const user = UserInfo();
   const admin = "admin";
   const record = {};
+
+  console.log(user);
 
   const {
     address,
@@ -25,8 +29,7 @@ const DownloadReport = () => {
     fullName,
     gender,
     id,
-    imageUrl,
-    isApproved,
+    code,
     isSuperAdmin,
     lastDonationTime,
     mobileNumber,
@@ -39,13 +42,30 @@ const DownloadReport = () => {
     PhysicalComplexity,
     upazilaName,
     userType,
-  } = record;
+  } = user || {};
 
   const contentRef = useRef();
 
-  const handleDownloadPDF = () => {
+  // Construct the full image URL or fallback
+  const imageUrl = user?.imageUrl
+    ? `${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}/${user.imageUrl}`
+    : "https://static.vecteezy.com/system/resources/thumbnails/004/607/791/small_2x/man-face-emotive-icon-smiling-male-character-in-blue-shirt-flat-illustration-isolated-on-white-happy-human-psychological-portrait-positive-emotions-user-avatar-for-app-web-design-vector.jpg";
+
+  const handleDownloadPDF = async () => {
     const input = contentRef.current;
-    html2canvas(input, { scale: 2 }).then((canvas) => {
+
+    // Wait for all images to load before capture
+    await Promise.all(
+      Array.from(input.querySelectorAll("img")).map(
+        (img) =>
+          new Promise((resolve) => {
+            if (img.complete) resolve(true);
+            else img.onload = img.onerror = () => resolve(true);
+          })
+      )
+    );
+
+    html2canvas(input, { scale: 2, useCORS: true }).then((canvas) => {
       const imgData = canvas.toDataURL("image/png");
       const pdf = new jsPDF("p", "mm", "a4");
       const imgWidth = 210; // A4 width in mm
@@ -85,8 +105,8 @@ const DownloadReport = () => {
                 <div className="h-[80px] w-[80px] overflow-hidden rounded-full">
                   <Image
                     className="border object-cover w-full h-full"
-                    src={`https://static.vecteezy.com/system/resources/previews/000/439/863/non_2x/vector-users-icon.jpg`}
-                    // src={`${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}/${imageUrl}`}
+                    // src={`https://static.vecteezy.com/system/resources/previews/000/439/863/non_2x/vector-users-icon.jpg`}
+                    src={imageUrl}
                     width={80}
                     height={80}
                     alt="Picture of the author"
@@ -94,15 +114,16 @@ const DownloadReport = () => {
                 </div>
 
                 <div>
-                  <h1 className="text-capitalize font-semibold text-lg">
-                    {fullName} User Full Name
+                  <h1 className="text-capitalize flex items-center gap-1 text-sm ">
+                    <span className="font-semibold  text-lg">{fullName}</span>#
+                    {code}
                   </h1>
 
                   <h2 className="text-capitalize text-accent text-sm font-semibold">
-                    {userType} Volunteer
+                    {userType}
                   </h2>
                   <h2 className="text-capitalize text-accent text-sm">
-                    {address} abc, sds, wererwr
+                    {address}
                   </h2>
                 </div>
               </div>
@@ -164,20 +185,18 @@ const DownloadReport = () => {
                     </div>
                   </div>
                 )}
-                <div className="flex items-center sm:col-span-2">
-                  <input
-                    defaultChecked={PhysicalComplexity}
-                    type="checkbox"
-                    id="PhysicalComplexity"
-                    className="mr-2"
-                    disabled
-                  />
-                  <label htmlFor="PhysicalComplexity" className="input-title">
+                <div>
+                  <h1 className="text-xs text-accent">
+                    {" "}
                     Any Physical Complexity?{" "}
                     <span className="text-xs text-accent">
                       (like : Diabetics / Cancer / thyroid.... etc.)
                     </span>
-                  </label>
+                  </h1>
+                  <h6 className="text-base font-semibold">
+                    {" "}
+                    {PhysicalComplexity ? PhysicalComplexity : "No"}
+                  </h6>
                 </div>
               </div>
             </div>
@@ -189,7 +208,7 @@ const DownloadReport = () => {
               <div className="grid grid-cols-1 lg:grid-cols-3 my-3 mr-2 gap-x-2 gap-y-3">
                 <div>
                   <h1 className="text-xs text-accent">District</h1>
-                  <h6 className="text-base font-semibold"> {districtName}</h6>
+                  <h6 className="text-base font-semibold">{districtName}</h6>
                 </div>{" "}
                 <div>
                   <h1 className="text-xs text-accent">Upazila</h1>

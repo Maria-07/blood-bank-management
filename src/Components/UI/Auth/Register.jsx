@@ -374,21 +374,28 @@ const Register = () => {
                 className="input-border w-full mb-2"
               />
             </div>
-            <div className="">
+            <div className="sm:col-span-2">
               <label htmlFor="PhysicalComplexity" className="input-title">
-                Any Physical Complexity?{" "}
+                Any Physical Complexity?<span className="text-rose-600">*</span>
                 <span className="text-xs text-accent">
                   (Diabetics / Cancer / thyroid etc.)
                 </span>
               </label>
               <select
-                {...register("PhysicalComplexity")}
+                {...register("PhysicalComplexity", {
+                  required: "Physical Complexity is required",
+                })}
                 className="input-select-border w-full mb-2"
               >
                 <option value="">Select</option>
                 <option value="Yes">Yes</option>
                 <option value="No">No</option>
               </select>
+              {errors.PhysicalComplexity && (
+                <p className="text-red-500">
+                  {errors.PhysicalComplexity.message}
+                </p>
+              )}
             </div>
           </div>
           <button type="submit" className="input-button mb-4">

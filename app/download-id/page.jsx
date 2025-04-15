@@ -14,9 +14,8 @@ const DownloadId = () => {
 
   const handleDownloadPDF = async () => {
     const input = myRef.current;
-    if (!input) return;
 
-    // Wait for images to load
+    // Wait for all images to load before capture
     await Promise.all(
       Array.from(input.querySelectorAll("img")).map(
         (img) =>
@@ -27,38 +26,64 @@ const DownloadId = () => {
       )
     );
 
-    // Add PDF style mode
-    input.classList.add("pdf-mode");
-
-    const scale = window.devicePixelRatio || 2;
-
-    html2canvas(input, {
-      scale,
-      useCORS: true,
-      backgroundColor: null,
-    }).then((canvas) => {
+    html2canvas(input, { scale: 2, useCORS: true }).then((canvas) => {
       const imgData = canvas.toDataURL("image/png");
       const pdf = new jsPDF("p", "mm", "a4");
+      const imgWidth = 210; // A4 width in mm
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
 
-      const pdfWidth = pdf.internal.pageSize.getWidth();
-      const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
-
-      pdf.addImage(
-        imgData,
-        "PNG",
-        0,
-        0,
-        pdfWidth,
-        pdfHeight,
-        undefined,
-        "FAST"
-      );
-      pdf.save("id_card.pdf");
-
-      // Remove PDF mode styles
-      input.classList.remove("pdf-mode");
+      pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
+      pdf.save("download.pdf");
     });
   };
+
+  // const handleDownloadPDF = async () => {
+  //   const input = myRef.current;
+  //   if (!input) return;
+
+  //   // Wait for images to load
+  //   await Promise.all(
+  //     Array.from(input.querySelectorAll("img")).map(
+  //       (img) =>
+  //         new Promise((resolve) => {
+  //           if (img.complete) resolve(true);
+  //           else img.onload = img.onerror = () => resolve(true);
+  //         })
+  //     )
+  //   );
+
+  //   // Add PDF style mode
+  //   input.classList.add("pdf-mode");
+
+  //   const scale = window.devicePixelRatio || 2;
+
+  //   html2canvas(input, {
+  //     scale,
+  //     useCORS: true,
+  //     backgroundColor: null,
+  //   }).then((canvas) => {
+  //     const imgData = canvas.toDataURL("image/png");
+  //     const pdf = new jsPDF("p", "mm", "a4");
+
+  //     const pdfWidth = pdf.internal.pageSize.getWidth();
+  //     const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+
+  //     pdf.addImage(
+  //       imgData,
+  //       "PNG",
+  //       0,
+  //       0,
+  //       pdfWidth,
+  //       pdfHeight,
+  //       undefined,
+  //       "FAST"
+  //     );
+  //     pdf.save("id_card.pdf");
+
+  //     // Remove PDF mode styles
+  //     input.classList.remove("pdf-mode");
+  //   });
+  // };
 
   const imageUrl =
     user?.imageUrl && process.env.NEXT_PUBLIC_IMAGE_BASE_URL
