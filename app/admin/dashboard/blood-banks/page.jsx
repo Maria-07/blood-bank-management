@@ -172,7 +172,7 @@ const BloodBanks = () => {
   return (
     <div>
       <div className="flex items-center justify-between gap-2 mb-2">
-        <h1 className="text-primary font-semibold text-lg">User Management</h1>
+        <h1 className="text-primary font-semibold text-lg">Users</h1>
         <button
           className="border p-1 rounded-sm"
           onClick={() => setFilterShow(!filterShow)}

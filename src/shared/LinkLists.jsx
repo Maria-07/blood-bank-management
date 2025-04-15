@@ -22,7 +22,7 @@ export const settingsSidebar = [
   },
   {
     icon: <MdOutlineAssignmentReturned />,
-    link_name: "User Management",
+    link_name: "Users",
     link: "/admin/dashboard/blood-banks",
   },
   {
