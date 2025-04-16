@@ -74,6 +74,7 @@ const MyProfilePage = () => {
     if (user) {
       setValue("FullName", user.fullName || "abd");
       setValue("Address", user.address || "");
+      setValue("InstituteName", user.instituteName || "");
       setValue("dateOfBirth", user.dateOfBirth || "");
       setValue("FatherName", user.fatherName || "");
       setValue("MotherName", user.motherName || "");
@@ -169,7 +170,7 @@ const MyProfilePage = () => {
       </div>
       {user === undefined ? (
         <div className="my-16">
-          <ErrorLoader></ErrorLoader>
+          <Loader></Loader>
         </div>
       ) : (
         <div className="sm:w-[60%] sm:mx-auto  border py-10 sm:px-16 px-5 rounded-md shadow-md">
@@ -389,16 +390,30 @@ const MyProfilePage = () => {
                       ))}
                     </select>
                   </div> */}
+                  {user?.userType !== "donor" && (
+                    <div className="">
+                      <label className="input-title">Institution</label>
+                      <input
+                        disabled={!isEdit}
+                        type="text"
+                        defaultValue={user?.InstituteName}
+                        {...register("InstituteName", {
+                          required: "Address is required",
+                        })}
+                        className="input-border w-full mt-2"
+                      />
+                    </div>
+                  )}
 
                   {isEdit && (
                     <>
                       {" "}
-                      <div className="mt-3">
+                      <div className="">
                         <h1 className="input-title ">Change profile</h1>
                         <input
                           disabled={!isEdit}
                           type="file"
-                          className="border rounded-md w-full my-1"
+                          className="border rounded-md w-full "
                           {...register("ProfilePicture")}
                         />
                       </div>
