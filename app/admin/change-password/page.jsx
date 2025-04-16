@@ -5,9 +5,12 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 import { RiLockPasswordLine } from "react-icons/ri";
+import { toast } from "react-toastify";
 
 const ChangePassword = () => {
-  const [showPassword, setShowPassword] = useState(false);
+  const [showOldPassword, setShowOldPassword] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showConfirmNewPassword, setShowConfirmNewPassword] = useState(false);
 
   const {
     register,
@@ -17,64 +20,57 @@ const ChangePassword = () => {
 
   const [resetPassword, { isLoading }] = useResetPasswordMutation();
 
-  console.log(resetPassword);
-
   const router = useRouter();
 
   const onSubmit = async (data) => {
-    console.log("Sign up data =", data);
+    console.log("Password Change data =", data);
 
     try {
       const response = await resetPassword({ ...data }).unwrap();
-      const responseData = await response.json();
+      const responseData = response.data;
       console.log("Response Data:", responseData);
 
-      if (responseData?.data?.isSuccess) {
-        toast.success(responseData?.data?.message);
-        refetch();
-        reset();
-        handleClose(); // Close modal after successful creation
+      if (responseData?.isSuccess) {
+        toast.success(responseData?.message);
+        reset(); // Reset the form after successful submission
+        // router.push("/login"); // Redirect or close modal after success
       } else {
-        toast.error(responseData?.data?.message);
+        toast.error(responseData?.message);
       }
-      //   router.push("/login");
     } catch (error) {
-      console.log("error?.data?.message", error?.data?.message);
-      if (error?.data?.message === "Already exist") {
-        toast.error("User already exists");
-      } else {
-        console.error("signUp failed:", error);
-      }
+      console.log("Error:", error?.data?.message);
+      toast.error("An unexpected error occurred. Please try again.");
     }
   };
+
   return (
     <div>
-      {" "}
       <div className="w-[95%] sm:w-[30%] mx-auto border-[1px] rounded-md shadow-sm p-5 my-16">
         <form onSubmit={handleSubmit(onSubmit)}>
+          {/* Old Password Field */}
           <div>
             <h1 className="input-title flex items-center gap-1">
               <RiLockPasswordLine className="text-primary" />
               Old Password <span className="text-red-600">*</span>
             </h1>
-            <div className="relative ">
+            <div className="relative">
               <input
-                type={showPassword ? "text" : "OldPassword"}
+                type={showOldPassword ? "text" : "password"}
                 className="input-border w-full sm:w-[100%] mb-2"
                 {...register("OldPassword", {
-                  required: "OldPassword is required",
+                  required: "Old Password is required",
                   minLength: {
                     value: 6,
-                    message: "OldPassword must be at least 6 characters",
+                    message: "Old Password must be at least 6 characters",
                   },
                 })}
               />
               <button
                 type="button"
-                onClick={() => setShowPassword((prev) => !prev)}
+                onClick={() => setShowOldPassword((prev) => !prev)}
                 className="absolute right-3 top-[15px] transform -translate-y-1/2 text-gray-500"
               >
-                {showPassword ? (
+                {showOldPassword ? (
                   <IoMdEye className="text-green-600" />
                 ) : (
                   <IoMdEyeOff className="text-primary" />
@@ -85,29 +81,31 @@ const ChangePassword = () => {
               <p className="text-red-500">{errors.OldPassword.message}</p>
             )}
           </div>
+
+          {/* New Password Field */}
           <div>
             <h1 className="input-title flex items-center gap-1">
               <RiLockPasswordLine className="text-primary" />
               New Password <span className="text-red-600">*</span>
             </h1>
-            <div className="relative ">
+            <div className="relative">
               <input
-                type={showPassword ? "text" : "NewPassword "}
+                type={showNewPassword ? "text" : "password"}
                 className="input-border w-full sm:w-[100%] mb-2"
                 {...register("NewPassword", {
-                  required: "NewPassword  is required",
+                  required: "New Password is required",
                   minLength: {
                     value: 6,
-                    message: "NewPassword  must be at least 6 characters",
+                    message: "New Password must be at least 6 characters",
                   },
                 })}
               />
               <button
                 type="button"
-                onClick={() => setShowPassword((prev) => !prev)}
+                onClick={() => setShowNewPassword((prev) => !prev)}
                 className="absolute right-3 top-[15px] transform -translate-y-1/2 text-gray-500"
               >
-                {showPassword ? (
+                {showNewPassword ? (
                   <IoMdEye className="text-green-600" />
                 ) : (
                   <IoMdEyeOff className="text-primary" />
@@ -118,30 +116,32 @@ const ChangePassword = () => {
               <p className="text-red-500">{errors.NewPassword.message}</p>
             )}
           </div>
+
+          {/* Confirm New Password Field */}
           <div>
             <h1 className="input-title flex items-center gap-1">
               <RiLockPasswordLine className="text-primary" />
               Confirm New Password <span className="text-red-600">*</span>
             </h1>
-            <div className="relative ">
+            <div className="relative">
               <input
-                type={showPassword ? "text" : "ConfirmNewPassword "}
+                type={showConfirmNewPassword ? "text" : "password"}
                 className="input-border w-full sm:w-[100%] mb-2"
                 {...register("ConfirmNewPassword", {
-                  required: "ConfirmNewPassword  is required",
+                  required: "Confirm New Password is required",
                   minLength: {
                     value: 6,
                     message:
-                      "ConfirmNewPassword  must be at least 6 characters",
+                      "Confirm New Password must be at least 6 characters",
                   },
                 })}
               />
               <button
                 type="button"
-                onClick={() => setShowPassword((prev) => !prev)}
+                onClick={() => setShowConfirmNewPassword((prev) => !prev)}
                 className="absolute right-3 top-[15px] transform -translate-y-1/2 text-gray-500"
               >
-                {showPassword ? (
+                {showConfirmNewPassword ? (
                   <IoMdEye className="text-green-600" />
                 ) : (
                   <IoMdEyeOff className="text-primary" />
@@ -155,7 +155,8 @@ const ChangePassword = () => {
             )}
           </div>
 
-          <button type="submit" className="input-button  my-5 ">
+          {/* Submit Button */}
+          <button type="submit" className="input-button my-5">
             Confirm Password
           </button>
         </form>
