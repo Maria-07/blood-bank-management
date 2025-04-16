@@ -122,7 +122,7 @@ const Navbar = () => {
                           <button>
                             <Link
                               className="text-white hover:text-white font-semibold flex items-center gap-2"
-                              href={"/download-report"}
+                              href={"/admin/change-password"}
                             >
                               <FaFileDownload /> Change Password
                             </Link>

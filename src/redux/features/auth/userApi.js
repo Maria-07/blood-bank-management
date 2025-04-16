@@ -15,6 +15,13 @@ const userApi = api.injectEndpoints({
         body: data,
       }),
     }),
+    resetPassword: builder.mutation({
+      query: (data) => ({
+        url: "/user/changePassword",
+        method: "POST",
+        body: data,
+      }),
+    }),
     getAllAdmin: builder.query({
       query: ({ pageNo, pageSize }) => ({
         url: `/user/getAllAdmin?pageNo=${pageNo}&pageSize=${pageSize}`,
@@ -66,6 +73,7 @@ const userApi = api.injectEndpoints({
 
 export const {
   useGetUserTypeQuery,
+  useResetPasswordMutation,
   useGetAllDonorMutation,
   useGetAllAdminQuery,
   useGetAllPermittedDonorsQuery,

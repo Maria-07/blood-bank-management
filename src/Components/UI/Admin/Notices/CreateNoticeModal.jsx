@@ -78,6 +78,10 @@ const CreateNoticeModal = ({ handleClose, clicked, refetch }) => {
         refetch();
         reset();
         handleClose(); // Close modal after successful creation
+      } else {
+        toast.error(
+          responseData?.data?.message || "Notice created unsuccessful!"
+        );
       }
     } catch (error) {
       console.error("Network or server error:", error);
