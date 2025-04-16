@@ -152,7 +152,7 @@ const VolunteerPage = () => {
       </div>
 
       <h1 className="lg:text-3xl text-2xl font-semibold text-center mt-20 ">
-        Volunteers (Scouts)
+        Volunteers
       </h1>
 
       <div className="md:w-[90%] sm:mx-auto my-20 px-20 ">

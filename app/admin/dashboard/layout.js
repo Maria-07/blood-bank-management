@@ -30,10 +30,10 @@ export default function RootLayout({ children }) {
     );
   }
   let filteredSidebar;
-
+debugger;
   if (userRole === "superAdmin") {
     filteredSidebar = settingsSidebar;
-  } else if (userRole === "admin") {
+  } else if (userRole === "Admin") {
     filteredSidebar = settingsSidebar;
   } else {
     filteredSidebar = volunteerSidebar;

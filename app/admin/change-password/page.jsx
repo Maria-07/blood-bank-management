@@ -39,7 +39,6 @@ const ChangePassword = () => {
       }
     } catch (error) {
       console.log("Error:", error?.data?.message);
-      toast.error("An unexpected error occurred. Please try again.");
     }
   };
 

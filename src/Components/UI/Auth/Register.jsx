@@ -187,7 +187,20 @@ const Register = () => {
                 className="input-border w-full mb-2"
               />
             </div>
-
+            <div>
+              <label className="input-title">
+                Gender<span className="text-rose-600">*</span>
+              </label>
+              <select
+                {...register("Gender", { required: "Gender is required" })}
+                className="input-select-border w-full mb-2"
+              >
+                <option value="">Select</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
             <div>
               <label className="input-title">
                 Father Name<span className="text-rose-600">*</span>
@@ -253,20 +266,6 @@ const Register = () => {
                     {un.name}
                   </option>
                 ))}
-              </select>
-            </div>
-            <div>
-              <label className="input-title">
-                Gender<span className="text-rose-600">*</span>
-              </label>
-              <select
-                {...register("Gender", { required: "Gender is required" })}
-                className="input-select-border w-full mb-2"
-              >
-                <option value="">Select</option>
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
-                <option value="Other">Other</option>
               </select>
             </div>
             <div className="sm:col-span-2">

@@ -119,7 +119,7 @@ const Navbar = () => {
                               <FaFileDownload /> Download Report
                             </Link>
                           </button>
-                          <button>
+                          {token && userType === "Admin" && (<button>
                             <Link
                               className="text-white hover:text-white font-semibold flex items-center gap-2"
                               href={"/admin/change-password"}
@@ -127,6 +127,7 @@ const Navbar = () => {
                               <FaFileDownload /> Change Password
                             </Link>
                           </button>
+                          )}
                           <hr className="mt-5 mb-3" />
                           <div className="">
                             <>
