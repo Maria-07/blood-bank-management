@@ -1,13 +1,11 @@
 "use client";
-import Cookies from "js-cookie";
-import { DatePicker, Modal, Select } from "antd";
+
+import { DatePicker, Modal } from "antd";
 import { useForm } from "react-hook-form";
-import { IoMdCloseCircleOutline } from "react-icons/io";
-import { MdDeleteOutline, MdDone } from "react-icons/md";
+import { IoMdCloseCircleOutline, IoMdEye, IoMdEyeOff } from "react-icons/io";
 import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { usePostNewsMutation } from "@/src/redux/features/news/news";
 import Loader from "@/src/Components/Layouts/Loader";
 
 const AddAdminModal = ({ handleClose, clicked, refetch }) => {
@@ -17,6 +15,7 @@ const AddAdminModal = ({ handleClose, clicked, refetch }) => {
   const [uType, setUType] = useState("Admin");
   const [donationDate, setDonationDate] = useState("");
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const router = useRouter();
   const {
@@ -66,11 +65,9 @@ const AddAdminModal = ({ handleClose, clicked, refetch }) => {
       }
     });
 
-    if (dob && donationDate && uType) {
-      formData.append("DateOfBirth", dob);
-      formData.append("LastDonationTime", donationDate);
-      formData.append("UserType", uType);
-    }
+    formData.append("DateOfBirth", dob);
+    formData.append("LastDonationTime", donationDate);
+    formData.append("UserType", uType);
 
     try {
       const response = await fetch(
@@ -122,18 +119,16 @@ const AddAdminModal = ({ handleClose, clicked, refetch }) => {
             </>
           ) : (
             <>
-              {" "}
               <form onSubmit={handleSubmit(onSubmit)}>
-                <div className="grid sm:grid-cols-3 grid-cols-1  gap-3 my-5">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 2xl:grid-cols-3 gap-3 my-5">
                   {/* User Type Selection */}
                   <div>
                     <label className="input-title">
                       User Type<span className="text-rose-600">*</span>
                     </label>
                     <select
-                      // {...register("UserType", { required: "User Type is required" })}
                       onChange={(e) => {
-                        setUType(e.target.value);
+                        setUType("Admin");
                       }}
                       className="input-select-border w-full mb-2"
                     >
@@ -143,29 +138,30 @@ const AddAdminModal = ({ handleClose, clicked, refetch }) => {
                       <p className="text-red-500">{errors.UserType.message}</p>
                     )}
                   </div>
-                  {uType === "Volunteer" && (
-                    <div>
-                      <label className="input-title">
-                        Leader Type<span className="text-rose-600">*</span>
-                      </label>
-                      <select
-                        {...register("LeaderType", {
-                          required: "LeaderType is required",
-                        })}
-                        className="input-select-border w-full mb-2"
-                      >
-                        <option value="">Select</option>
-                        <option value="DcOffice">DC Office</option>
-                        <option value="CivilOffice">Civil Sergon Office</option>
-                        <option value="Scouts">Scout</option>
-                      </select>
-                      {errors.UserType && (
-                        <p className="text-red-500">
-                          {errors.UserType.message}
-                        </p>
-                      )}
-                    </div>
-                  )}
+
+                  <div>
+                    <label className="input-title">
+                      Leader Type<span className="text-rose-600">*</span>
+                    </label>
+                    <select
+                      {...register("LeaderType", {
+                        required: "LeaderType is required",
+                      })}
+                      className="input-select-border w-full mb-2"
+                    >
+                      <option value="">Select</option>
+                      <option value="Deputy Commissioner Official">
+                        Deputy Commissioner Official
+                      </option>
+                      <option value="Civil Surgeon Official">
+                        Civil Surgeon Official
+                      </option>
+                      <option value="Volunteer (Scout)">Volunteer</option>
+                    </select>
+                    {errors.UserType && (
+                      <p className="text-red-500">{errors.UserType.message}</p>
+                    )}
+                  </div>
 
                   {/* Personal Info */}
                   <div className="sm:col-span-3">
@@ -320,6 +316,38 @@ const AddAdminModal = ({ handleClose, clicked, refetch }) => {
                       className="input-border w-full mb-2"
                     />
                   </div>
+                  {/* <div>
+                    <label className="input-title">
+                      Password<span className="text-rose-600">*</span>
+                    </label>
+                    <div className="relative w-full ">
+                      <input
+                        type={showPassword ? "text" : "password"}
+                        className="input-border w-full mb-2"
+                        {...register("Password", {
+                          required: "Password is required",
+                          minLength: {
+                            value: 6,
+                            message: "Password must be at least 6 characters",
+                          },
+                        })}
+                      />
+                      <button
+                        type="button"
+                        onClick={() => setShowPassword((prev) => !prev)}
+                        className="absolute right-3 top-[15px] transform -translate-y-1/2 text-gray-500"
+                      >
+                        {showPassword ? (
+                          <IoMdEye className="text-green-600" />
+                        ) : (
+                          <IoMdEyeOff className="text-primary" />
+                        )}
+                      </button>
+                    </div>
+                    {errors.Password && (
+                      <p className="text-red-500">{errors.Password.message}</p>
+                    )}
+                  </div> */}
 
                   {/* Documents */}
                   <div>
@@ -331,19 +359,14 @@ const AddAdminModal = ({ handleClose, clicked, refetch }) => {
                     />
                   </div>
                   <div>
-                    <label className="input-title">
-                      NID/Student ID<span className="text-rose-600">*</span>
-                    </label>
+                    <label className="input-title">NID/Student ID</label>
                     <input
                       type="file"
                       multiple
                       accept="image/*"
-                      {...register("Nid", { required: "NID is required" })}
+                      {...register("Nid")}
                       className="w-full mb-2"
                     />
-                    {errors.Nid && (
-                      <p className="text-red-500">{errors.Nid.message}</p>
-                    )}
                   </div>
 
                   {/* Blood Information */}
@@ -410,45 +433,34 @@ const AddAdminModal = ({ handleClose, clicked, refetch }) => {
                       className="input-border w-full mb-2"
                     />
                   </div>
-                  <div className="">
+                  <div className="sm:col-span-2">
                     <label htmlFor="PhysicalComplexity" className="input-title">
-                      Any Physical Complexity?{" "}
-                      {/* <span className="text-xs text-accent">
-                              (like : Diabetics / Cancer / thyroid.... etc.)
-                            </span> */}
+                      Any Physical Complexity?
+                      <span className="text-rose-600">*</span>
+                      <span className="text-xs text-accent">
+                        (Diabetics / Cancer / thyroid etc.)
+                      </span>
                     </label>
                     <select
-                      {...register("PhysicalComplexity")}
+                      {...register("PhysicalComplexity", {
+                        required: "Physical Complexity is required",
+                      })}
                       className="input-select-border w-full mb-2"
                     >
                       <option value="">Select</option>
                       <option value="Yes">Yes</option>
                       <option value="No">No</option>
                     </select>
+                    {errors.PhysicalComplexity && (
+                      <p className="text-red-500">
+                        {errors.PhysicalComplexity.message}
+                      </p>
+                    )}
                   </div>
                 </div>
-
-                <div className="bg-gray-200 py-[1px] mt-10"></div>
-                <div className="flex items-end justify-end gap-2 mt-2">
-                  <button
-                    type="submit"
-                    className="border-sky-600 flex items-center border rounded-sm"
-                  >
-                    <MdDone className="text-white bg-sky-700 px-1 py-[2px] text-[28px]" />
-                    <span className="px-2 py-[6px] bg-sky-500 transition-all hover:bg-sky-600 text-white text-xs">
-                      Create Admin
-                    </span>
-                  </button>
-                  <button
-                    onClick={handleClose}
-                    className="border-secondary flex items-center border rounded-sm"
-                  >
-                    <MdDeleteOutline className="text-white bg-secondary px-1 py-[2px] text-[28px]" />
-                    <span className="px-2 py-[6px] bg-primary transition-all hover:bg-secondary text-white text-xs">
-                      Cancel
-                    </span>
-                  </button>
-                </div>
+                <button type="submit" className="input-button mb-4">
+                  Register
+                </button>
               </form>
             </>
           )}

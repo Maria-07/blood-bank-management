@@ -137,7 +137,7 @@ const Register = () => {
                   <option value="Civil Surgeon Official">
                     Civil Surgeon Official
                   </option>
-                  <option value="Volunteer (Scout)">Volunteer (Scout)</option>
+                  <option value="Volunteer (Scout)">Volunteer</option>
                 </select>
                 {errors.UserType && (
                   <p className="text-red-500">{errors.UserType.message}</p>
