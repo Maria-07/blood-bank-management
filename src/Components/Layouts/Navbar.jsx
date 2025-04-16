@@ -93,8 +93,6 @@ const Navbar = () => {
                                 </Link>{" "}
                               </button>
                             )}
-
-                          <br />
                           <button>
                             <Link
                               className="text-white hover:text-white font-semibold flex items-center gap-2"
@@ -119,6 +117,14 @@ const Navbar = () => {
                               href={"/download-report"}
                             >
                               <FaFileDownload /> Download Report
+                            </Link>
+                          </button>
+                          <button>
+                            <Link
+                              className="text-white hover:text-white font-semibold flex items-center gap-2"
+                              href={"/download-report"}
+                            >
+                              <FaFileDownload /> Change Password
                             </Link>
                           </button>
                           <hr className="mt-5 mb-3" />
