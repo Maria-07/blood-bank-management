@@ -388,7 +388,7 @@ const MyProfilePage = () => {
                       ))}
                     </select>
                   </div> */}
-                {user?.userType !== "donor" && (
+                {user?.userType !== "Donor" && (
                   <div className="">
                     <label className="input-title">Institution</label>
                     <input

@@ -13,7 +13,7 @@ const AddDonorManageModalCampaign = ({ handleClose, clicked, record }) => {
   const [upazilas, setUpazilas] = useState([]);
   const [unions, setUnions] = useState([]);
   const [dob, setDob] = useState("");
-  const [uType, setUType] = useState("donor");
+  const [uType, setUType] = useState("Donor");
   const [donationDate, setDonationDate] = useState("");
   const [loading, setLoading] = useState(false);
 
