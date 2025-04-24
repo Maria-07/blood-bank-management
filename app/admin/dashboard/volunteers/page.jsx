@@ -113,6 +113,8 @@ const VolunteerList = () => {
             "districtName",
             "fatherName",
             "upazila",
+            "designation",
+            "createTime",
             "upazilaName",
             "union",
             "unionName",

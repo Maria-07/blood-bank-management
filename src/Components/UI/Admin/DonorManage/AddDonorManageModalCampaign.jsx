@@ -88,14 +88,18 @@ const AddDonorManageModalCampaign = ({ handleClose, clicked, record }) => {
           body: formData,
         }
       );
-      if (!response.ok)
-        throw new Error("User already exists or another error occurred.");
+
       const responseData = await response.json();
-      toast.success(
-        responseData?.data?.message || "User created successfully!"
-      );
-      handleClose();
-      refetch();
+
+      if (responseData?.data?.isSuccess) {
+        toast.success(
+          responseData?.data?.message || "Donar created successfully!"
+        );
+        handleClose();
+        refetch();
+      } else {
+        toast.error(responseData?.data?.message);
+      }
     } catch (error) {
       //toast.error("An unexpected error occurred. Please try again.");
     } finally {
@@ -220,6 +224,11 @@ const AddDonorManageModalCampaign = ({ handleClose, clicked, record }) => {
                       })}
                       className="input-border w-full mb-2"
                     />
+                    {errors.MobileNumber && (
+                      <p className="text-red-500">
+                        {errors.MobileNumber.message}
+                      </p>
+                    )}
                   </div>
 
                   <div>

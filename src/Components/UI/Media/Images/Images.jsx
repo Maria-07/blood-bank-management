@@ -4,6 +4,8 @@ import { Image } from "antd";
 import React, { useEffect, useState } from "react";
 
 const Images = ({ images }) => {
+  console.log(images);
+
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 p-4">
       {images?.map((imageObj, index) => (
@@ -20,7 +22,10 @@ const Images = ({ images }) => {
               className="transition-transform duration-300 hover:scale-105 w-full object-cover"
             />
           </div>
-          <div className=" text-xs mt-2 px-2">{imageObj.campaignName}</div>
+          <div className=" text-sm mt-2 px-2">{imageObj.campaignName}</div>
+          <div className=" text-xs mt-1 mb-3 px-2 text-accent">
+            {imageObj.institute}
+          </div>
         </div>
       ))}
     </div>

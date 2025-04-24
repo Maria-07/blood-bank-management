@@ -221,6 +221,9 @@ const Register = () => {
                 })}
                 className="input-border w-full mb-2"
               />
+              {errors.MobileNumber && (
+                <p className="text-red-500">{errors.MobileNumber.message}</p>
+              )}
             </div>
             <div>
               <label className="input-title">

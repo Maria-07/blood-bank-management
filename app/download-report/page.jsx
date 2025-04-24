@@ -1,9 +1,11 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 import UserInfo from "@/src/Hook/UserInfo";
 import { Image } from "antd";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import React, { useRef } from "react";
+import logo from "@/src/assets/Image/logo/lightLogo.png";
 import {
   FaDownload,
   FaHandHoldingHeart,
@@ -23,14 +25,14 @@ const DownloadReport = () => {
     bloodDonationStatus,
     bloodGroup,
     dateOfBirth,
-    district,
+    campaignId,
     districtName,
     fatherName,
     fullName,
     gender,
     id,
     code,
-    isSuperAdmin,
+    createTime,
     lastDonationTime,
     mobileNumber,
     motherName,
@@ -77,7 +79,7 @@ const DownloadReport = () => {
   };
 
   return (
-    <div className="sm:w-[50%] mx-auto ">
+    <div className="sm:w-[40%] mx-auto ">
       {/* Download Button */}
       <div className="my-2 flex items-center justify-end ">
         {" "}
@@ -100,7 +102,7 @@ const DownloadReport = () => {
 
         <div>
           <div>
-            <div className="border-[1px] p-3 rounded-md mb-3">
+            <div className="border-[1px] p-3 rounded-md mb-3 flex justify-between">
               <div className="flex items-center flex-wrap gap-3">
                 <div className="h-[80px] w-[80px] overflow-hidden rounded-full">
                   <Image
@@ -127,139 +129,163 @@ const DownloadReport = () => {
                   </h2>
                 </div>
               </div>
-            </div>
-            <div className="border-[1px] p-3 rounded-md mb-3">
-              <h1 className="font-semibold text-lg mb-2 text-primary2">
-                Personal information
-              </h1>
-
-              <div className="grid grid-cols-1 lg:grid-cols-2 mt-3 mr-2 gap-x-2 gap-y-3">
+              {campaignId === null || "" ? (
                 <div>
-                  <h1 className="text-xs text-accent">Full Name</h1>
-                  <h6 className="text-base font-semibold"> {fullName}</h6>
+                  <h1 className="text-xs text-accent">Registered Date</h1>
+                  <h6 className="text-base font-semibold">
+                    {createTime?.split("T")[0]}
+                  </h6>
                 </div>
-                <div>
-                  <h1 className="text-xs text-accent">Mobile Number</h1>
-                  <h6 className="text-base font-semibold"> {mobileNumber}</h6>
-                </div>
-                <div>
-                  <h1 className="text-xs text-accent">Date of Birth</h1>
-                  <h6 className="text-base font-semibold"> {dateOfBirth}</h6>
-                </div>
-
-                <div>
-                  <h1 className="text-xs text-accent">Gender</h1>
-                  <h6 className="text-base font-semibold"> {gender}</h6>
-                </div>
-
-                <div>
-                  <h1 className="text-xs text-accent">Father&apos;s Name</h1>
-                  <h6 className="text-base font-semibold"> {fatherName}</h6>
-                </div>
-                <div>
-                  <h1 className="text-xs text-accent">Mother&apos;s Name</h1>
-                  <h6 className="text-base font-semibold"> {motherName}</h6>
-                </div>
-
-                {admin && record?.nidUrls?.length > 0 && (
+              ) : (
+                <>
+                  {" "}
                   <div>
-                    <h1 className="text-xs text-accent">NID details</h1>
-                    <div className="flex items-center mt-2 gap-2">
-                      {record.nidUrls.map((n, i) => {
-                        console.log(
-                          `${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}/${n}`
-                        );
+                    <h1 className="text-xs text-accent">Test Date</h1>
+                    <h6 className="text-base font-semibold">
+                      {createTime?.split("T")[0]}
+                    </h6>
+                  </div>
+                </>
+              )}
+            </div>
 
-                        return (
-                          <div key={i} className="overflow-hidden">
-                            <Image
-                              className="border object-cover w-full h-full"
-                              src={`${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}/${n}`}
-                              width={100}
-                              height={80}
-                              alt="NID image"
-                            />
-                          </div>
-                        );
-                      })}
+            {/* Details */}
+            <div className="relative flex items-center justify-center">
+              {/* Watermark Logo in Background */}
+              <img
+                src={logo.src}
+                alt="Logo Watermark"
+                className="absolute opacity-20 w-60 h-60 object-contain pointer-events-none"
+                style={{
+                  top: "50%",
+                  left: "50%",
+                  transform: "translate(-50%, -50%)",
+                }}
+              />
+              <div className="relative z-10 w-full">
+                {/* Personal Information */}
+                <div className="border-[1px] p-3 rounded-md mb-3">
+                  <h1 className="font-semibold text-lg mb-2 text-primary2">
+                    Personal Information
+                  </h1>
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
+                    <div>
+                      <h1 className="text-xs text-accent">Full Name</h1>
+                      <h6 className="text-base font-semibold">{fullName}</h6>
+                    </div>
+                    <div>
+                      <h1 className="text-xs text-accent">Mobile Number</h1>
+                      <h6 className="text-base font-semibold">
+                        {mobileNumber}
+                      </h6>
+                    </div>
+                    <div>
+                      <h1 className="text-xs text-accent">Date of Birth</h1>
+                      <h6 className="text-base font-semibold">{dateOfBirth}</h6>
+                    </div>
+                    <div>
+                      <h1 className="text-xs text-accent">Gender</h1>
+                      <h6 className="text-base font-semibold">{gender}</h6>
+                    </div>
+
+                    {/* Physical Complexity */}
+                    <div>
+                      <h1 className="text-xs text-accent">
+                        Any Physical Complexity?
+                      </h1>
+                      <h6 className="text-base font-semibold">
+                        {PhysicalComplexity ? PhysicalComplexity : "No"}
+                      </h6>
+                    </div>
+
+                    {/* NID Details (Admin view only) */}
+                    {admin && record?.nidUrls?.length > 0 && (
+                      <div>
+                        <h1 className="text-xs text-accent">NID details</h1>
+                        <div className="flex items-center mt-2 gap-2">
+                          {record.nidUrls.map((n, i) => (
+                            <div key={i} className="overflow-hidden">
+                              <Image
+                                className="border object-cover w-full h-full"
+                                src={`${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}/${n}`}
+                                width={100}
+                                height={80}
+                                alt="NID image"
+                              />
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                {/* Address Section
+                <div className="border-[1px] p-3 rounded-md mb-3">
+                  <h1 className="font-semibold text-primary2 text-lg mb-2">
+                    Address
+                  </h1>
+                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
+                    <div>
+                      <h1 className="text-xs text-accent">District</h1>
+                      <h6 className="text-base font-semibold">
+                        {districtName}
+                      </h6>
+                    </div>
+                    <div>
+                      <h1 className="text-xs text-accent">Upazila</h1>
+                      <h6 className="text-base font-semibold">{upazilaName}</h6>
+                    </div>
+                    <div>
+                      <h1 className="text-xs text-accent">Union</h1>
+                      <h6 className="text-base font-semibold">{unionName}</h6>
                     </div>
                   </div>
-                )}
-                <div>
-                  <h1 className="text-xs text-accent">
-                    {" "}
-                    Any Physical Complexity?{" "}
-                    <span className="text-xs text-accent">
-                      (like : Diabetics / Cancer / thyroid.... etc.)
-                    </span>
+                </div> */}
+
+                {/* Blood Donation Details */}
+                <div className="border-[1px] p-3 rounded-md mb-3">
+                  <h1 className="font-semibold text-primary2 text-lg mb-2">
+                    Blood Donation Details
                   </h1>
-                  <h6 className="text-base font-semibold">
-                    {" "}
-                    {PhysicalComplexity ? PhysicalComplexity : "No"}
-                  </h6>
-                </div>
-              </div>
-            </div>
-            <div className="border-[1px] p-3 rounded-md mb-3">
-              <h1 className="font-semibold text-primary2 text-lg mb-2">
-                Address
-              </h1>
-
-              <div className="grid grid-cols-1 lg:grid-cols-3 my-3 mr-2 gap-x-2 gap-y-3">
-                <div>
-                  <h1 className="text-xs text-accent">District</h1>
-                  <h6 className="text-base font-semibold">{districtName}</h6>
-                </div>{" "}
-                <div>
-                  <h1 className="text-xs text-accent">Upazila</h1>
-                  <h6 className="text-base font-semibold"> {upazilaName}</h6>
-                </div>
-                <div>
-                  <h1 className="text-xs text-accent">Union</h1>
-                  <h6 className="text-base font-semibold"> {unionName}</h6>
-                </div>
-              </div>
-            </div>
-            <div className="border-[1px] p-3 rounded-md mb-3">
-              <h1 className="font-semibold text-primary2 text-lg mb-2">
-                Blood Donation Details
-              </h1>
-
-              <div className="grid grid-cols-1 lg:grid-cols-3 my-3 mr-2 gap-x-2 gap-y-3">
-                <div>
-                  <h1 className="text-xs text-accent">Blood Group</h1>
-                  <h6 className="text-base font-semibold"> {bloodGroup}</h6>
-                </div>
-                <div>
-                  <h1 className="text-xs text-accent">Donation Count</h1>
-                  <h6 className="text-base font-semibold">
-                    {" "}
-                    {bloodDonationCount} times
-                  </h6>
-                </div>
-                <div>
-                  <h1 className="text-xs text-accent">Last Donation Date</h1>
-                  <h6 className="text-base font-semibold">
-                    {/* {dayjs(lastDonationTime, "YYYY-MM-DD")} */}
-                    {lastDonationTime?.split("T")[0]}
-                  </h6>
-                </div>
-                <div>
-                  <h1 className="text-xs text-accent">Blood Donation Status</h1>
-                  <h6 className="text-sm mt-[4px]">
-                    {" "}
-                    {bloodDonationStatus === "Interested" ? (
-                      <span className="flex item-center gap-2">
-                        <FaHandHoldingHeart className="text-sm text-secondary" />
-                        Interested
-                      </span>
-                    ) : (
-                      <span className="flex item-center gap-2">
-                        <FaRegHandBackFist className="text-sm " /> Not
-                        Interested
-                      </span>
-                    )}{" "}
-                  </h6>
+                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
+                    <div>
+                      <h1 className="text-xs text-accent">Blood Group</h1>
+                      <h6 className="text-base font-semibold">{bloodGroup}</h6>
+                    </div>
+                    <div>
+                      <h1 className="text-xs text-accent">Donation Count</h1>
+                      <h6 className="text-base font-semibold">
+                        {bloodDonationCount} times
+                      </h6>
+                    </div>
+                    <div>
+                      <h1 className="text-xs text-accent">
+                        Last Donation Date
+                      </h1>
+                      <h6 className="text-base font-semibold">
+                        {lastDonationTime?.split("T")[0]}
+                      </h6>
+                    </div>
+                    <div>
+                      <h1 className="text-xs text-accent">
+                        Blood Donation Status
+                      </h1>
+                      <h6 className="text-sm mt-[4px]">
+                        {bloodDonationStatus === "Interested" ? (
+                          <span className="flex items-center gap-2">
+                            <FaHandHoldingHeart className="text-sm text-secondary" />
+                            Interested
+                          </span>
+                        ) : (
+                          <span className="flex items-center gap-2">
+                            <FaRegHandBackFist className="text-sm" /> Not
+                            Interested
+                          </span>
+                        )}
+                      </h6>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

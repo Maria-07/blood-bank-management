@@ -93,6 +93,8 @@ const BloodBanks = () => {
                 "fatherName",
                 "upazila",
                 "upazilaName",
+                "designation",
+                "createTime",
                 "union",
                 "unionName",
                 "motherName",

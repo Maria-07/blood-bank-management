@@ -16,7 +16,7 @@ const UserProfileModal = ({ handleClose, clicked, record, admin }) => {
     bloodDonationStatus,
     bloodGroup,
     dateOfBirth,
-    district,
+    leaderType,
     districtName,
     fatherName,
     fullName,
@@ -24,13 +24,14 @@ const UserProfileModal = ({ handleClose, clicked, record, admin }) => {
     id,
     imageUrl,
     isApproved,
-    isSuperAdmin,
+    instituteName,
     lastDonationTime,
     mobileNumber,
     motherName,
     password,
     profilePicture,
     union,
+    designation,
     unionName,
     upazila,
     PhysicalComplexity,
@@ -174,6 +175,25 @@ const UserProfileModal = ({ handleClose, clicked, record, admin }) => {
                       {unionName ? unionName : "N/A"}
                     </h6>
                   </div>
+                  {(leaderType === "Deputy Commissioner Official" ||
+                    leaderType === "Civil Surgeon Official") && (
+                    <div>
+                      <h1 className="text-xs text-accent">Designation</h1>
+                      <h6 className="text-base font-semibold">
+                        {" "}
+                        {designation ? designation : "N/A"}
+                      </h6>
+                    </div>
+                  )}
+                  {userType !== "donor" && (
+                    <div>
+                      <h1 className="text-xs text-accent">Institution</h1>
+                      <h6 className="text-base font-semibold">
+                        {" "}
+                        {instituteName ? instituteName : "N/A"}
+                      </h6>
+                    </div>
+                  )}
                   {/* <div className="grid grid-cols-1 lg:grid-cols-3 my-3 mr-2 gap-x-2 gap-y-3">
                     
                   </div> */}

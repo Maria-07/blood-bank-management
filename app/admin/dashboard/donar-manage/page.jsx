@@ -94,7 +94,7 @@ const DonarManage = () => {
               "password",
               "address",
               "isApproved",
-              // "userType",
+              "designation",
               "lastDonationTime",
               "profilePicture",
               "district",

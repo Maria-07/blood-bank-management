@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import Image from "next/image";
 import logo from "@/src/assets/Image/logo/darkLogo.png";
 import mlogo from "@/src/assets/Image/logo/mbLogo.png";
@@ -64,13 +65,6 @@ const Navbar = () => {
               >
                 Contact Us
               </Link>{" "}
-              <Link
-                className="text-white font-semibold text-end hover:text-primary2 transition-all mr-2  "
-                href={"/"}
-              >
-                <h1 className="text-sm">{user?.fullName}</h1>
-                <h2 className="text-xs font-thin">{user?.userType}</h2>
-              </Link>{" "}
               {!token && (
                 <>
                   <Link href={"/register/"}>
@@ -97,7 +91,7 @@ const Navbar = () => {
                                   className="text-white hover:text-white font-semibold flex items-center gap-2"
                                   href={`${
                                     userType === "Volunteer"
-                                      ? "/admin/dashboard/donar-manage/"
+                                      ? "/admin/dashboard/my-campaign/"
                                       : "/admin/dashboard/campaigns/"
                                   }`}
                                 >
@@ -157,16 +151,25 @@ const Navbar = () => {
                     }
                     placement="bottomRight"
                   >
-                    <button className="mt-2">
+                    <div className="my-2 flex items-center gap-1">
                       {" "}
-                      <Image
-                        src={logo}
-                        width={40}
-                        height={40}
-                        className="rounded-full"
+                      <Link
+                        className="text-white font-semibold text-end hover:text-primary2 transition-all mr-2  "
+                        href={"/"}
+                      >
+                        <h1 className="text-sm">{user?.fullName}</h1>
+                        <h2 className="text-xs font-thin">{user?.userType}</h2>
+                      </Link>{" "}
+                      <img
+                        src={
+                          user?.imageUrl
+                            ? `${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}/${user?.imageUrl}`
+                            : "https://static.vecteezy.com/system/resources/thumbnails/004/607/791/small_2x/man-face-emotive-icon-smiling-male-character-in-blue-shirt-flat-illustration-isolated-on-white-happy-human-psychological-portrait-positive-emotions-user-avatar-for-app-web-design-vector.jpg"
+                        }
+                        className="rounded-full h-[40px] w-[40px] overflow-hidden"
                         alt="Picture of the author"
                       />
-                    </button>
+                    </div>
                   </Dropdown>
                 </div>
               )}

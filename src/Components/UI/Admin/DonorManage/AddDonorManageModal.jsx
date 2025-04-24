@@ -89,14 +89,18 @@ const AddDonorManageModal = ({ handleClose, clicked, refetch }) => {
           body: formData,
         }
       );
-      if (!response.ok)
-        throw new Error("User already exists or another error occurred.");
+
       const responseData = await response.json();
-      toast.success(
-        responseData?.data?.message || "User created successfully!"
-      );
-      handleClose();
-      refetch();
+
+      if (responseData?.data?.isSuccess) {
+        toast.success(
+          responseData?.data?.message || "Donar created successfully!"
+        );
+        handleClose();
+        refetch();
+      } else {
+        toast.error(responseData?.data?.message);
+      }
     } catch (error) {
       toast.error("An unexpected error occurred. Please try again.");
     } finally {
@@ -177,7 +181,6 @@ const AddDonorManageModal = ({ handleClose, clicked, refetch }) => {
                       )}
                     </div>
                   )}
-
                   {/* Personal Info */}
                   <div className="sm:col-span-3">
                     {" "}
@@ -198,7 +201,6 @@ const AddDonorManageModal = ({ handleClose, clicked, refetch }) => {
                       className="input-border w-full mb-2"
                     />
                   </div>
-
                   <div>
                     <label className="input-title">
                       Date of Birth<span className="text-rose-600">*</span>
@@ -221,7 +223,13 @@ const AddDonorManageModal = ({ handleClose, clicked, refetch }) => {
                       })}
                       className="input-border w-full mb-2"
                     />
+                    {errors.MobileNumber && (
+                      <p className="text-red-500">
+                        {errors.MobileNumber.message}
+                      </p>
+                    )}
                   </div>
+
                   <div>
                     <label className="input-title">
                       Gender<span className="text-rose-600">*</span>
@@ -317,7 +325,6 @@ const AddDonorManageModal = ({ handleClose, clicked, refetch }) => {
                       className="input-border w-full mb-2"
                     />
                   </div>
-
                   {/* <div className="">
                     <label className="input-title">
                       Institution<span className="text-rose-600">*</span>
@@ -330,7 +337,6 @@ const AddDonorManageModal = ({ handleClose, clicked, refetch }) => {
                       className="input-border w-full mb-2"
                     />
                   </div> */}
-
                   {/* Documents */}
                   <div>
                     <label className="input-title">Profile Picture</label>
@@ -350,7 +356,6 @@ const AddDonorManageModal = ({ handleClose, clicked, refetch }) => {
                       className="w-full mb-2"
                     />
                   </div>
-
                   {/* Blood Information */}
                   <div className="sm:col-span-3">
                     {" "}
@@ -359,7 +364,6 @@ const AddDonorManageModal = ({ handleClose, clicked, refetch }) => {
                     </h3>
                     <hr />
                   </div>
-
                   <div>
                     <label className="input-title">
                       Blood Group<span className="text-rose-600">*</span>
