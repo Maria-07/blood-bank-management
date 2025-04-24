@@ -102,6 +102,7 @@ const VolunteerList = () => {
           ![
             "id",
             "serial",
+            "code",
             "isSuperAdmin",
             "password",
             "address",

@@ -11,12 +11,16 @@ import Loader from "../../Layouts/Loader";
 const Register = () => {
   const [upazilas, setUpazilas] = useState([]);
   const [unions, setUnions] = useState([]);
+  const [leaderType, setLeaderType] = useState("");
   const [dob, setDob] = useState("");
   const [uType, setUType] = useState();
   const [donationDate, setDonationDate] = useState("");
   const [loading, setLoading] = useState(false);
 
   const router = useRouter();
+
+  console.log(leaderType);
+
   const {
     register,
     handleSubmit,
@@ -65,6 +69,7 @@ const Register = () => {
     });
 
     formData.append("DateOfBirth", dob);
+    formData.append("LeaderType", leaderType);
     formData.append("LastDonationTime", donationDate);
     formData.append("UserType", uType);
 
@@ -76,11 +81,17 @@ const Register = () => {
       if (!response.ok)
         throw new Error("User already exists or another error occurred.");
       const responseData = await response.json();
-      toast.success(
-        responseData?.data?.message || "User created successfully!"
-      );
-      router.push("/login");
-      reset();
+      console.log(responseData?.data);
+
+      if (responseData?.data?.isSuccess) {
+        toast.success(
+          responseData?.data?.message || "User created successfully!"
+        );
+        router.push("/login");
+        reset();
+      } else {
+        toast.error(responseData?.data?.message);
+      }
     } catch (error) {
       toast.error("An unexpected error occurred. Please try again.");
     } finally {
@@ -125,9 +136,12 @@ const Register = () => {
                   Leader Type<span className="text-rose-600">*</span>
                 </label>
                 <select
-                  {...register("LeaderType", {
-                    required: "LeaderType is required",
-                  })}
+                  onChange={(e) => {
+                    setLeaderType(e.target.value);
+                  }}
+                  // {...register("LeaderType", {
+                  //   required: "LeaderType is required",
+                  // })}
                   className="input-select-border w-full mb-2"
                 >
                   <option value="">Select</option>
@@ -141,6 +155,24 @@ const Register = () => {
                 </select>
                 {errors.UserType && (
                   <p className="text-red-500">{errors.UserType.message}</p>
+                )}
+              </div>
+            )}
+            {(leaderType === "Deputy Commissioner Official" ||
+              leaderType === "Civil Surgeon Official") && (
+              <div>
+                <label className="input-title">
+                  Designation<span className="text-rose-600">*</span>
+                </label>
+                <input
+                  type="text"
+                  {...register("Designation", {
+                    required: "Designation is required",
+                  })}
+                  className="input-border w-full mb-2"
+                />
+                {errors.Designation && (
+                  <p className="text-red-500">{errors.Designation.message}</p>
                 )}
               </div>
             )}
@@ -162,6 +194,9 @@ const Register = () => {
                 {...register("FullName", { required: "Full Name is required" })}
                 className="input-border w-full mb-2"
               />
+              {errors.FullName && (
+                <p className="text-red-500">{errors.FullName.message}</p>
+              )}
             </div>
 
             <div>
@@ -182,7 +217,7 @@ const Register = () => {
                 type="number"
                 {...register("MobileNumber", {
                   required: "Mobile Number is required",
-                  minLength: { value: 11, message: "Must be 11 digits" },
+                  maxLength: 11,
                 })}
                 className="input-border w-full mb-2"
               />
@@ -288,6 +323,9 @@ const Register = () => {
                   })}
                   className="input-border w-full mb-2"
                 />
+                {errors.InstituteName && (
+                  <p className="text-red-500">{errors.InstituteName.message}</p>
+                )}
               </div>
             )}
 
@@ -340,6 +378,9 @@ const Register = () => {
                 <option value="AB+">AB+</option>
                 <option value="AB-">AB-</option>
               </select>
+              {errors.BloodGroup && (
+                <p className="text-red-500">{errors.BloodGroup.message}</p>
+              )}
             </div>
             <div>
               <label className="input-title">
@@ -356,6 +397,11 @@ const Register = () => {
                 <option value="NotInterested">Not Interested</option>
                 <option value="NotSure">Not Sure</option>
               </select>
+              {errors.BloodDonationStatus && (
+                <p className="text-red-500">
+                  {errors.BloodDonationStatus.message}
+                </p>
+              )}
             </div>
             <div>
               <label className="input-title">Last Donation Date</label>

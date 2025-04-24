@@ -13,8 +13,13 @@ import { FaFileDownload } from "react-icons/fa";
 import { FaIdBadge } from "react-icons/fa6";
 import NavbarSmallDevice from "./NavbarSmallDevice";
 import { useState } from "react";
+import UserInfo from "@/src/Hook/UserInfo";
 
 const Navbar = () => {
+  //! User data
+  const user = UserInfo();
+
+  console.log(user);
   const [open, setOpen] = useState(false);
   const { token, userType, logout, userId } = useAuth();
   console.log(userType);
@@ -58,6 +63,13 @@ const Navbar = () => {
                 href={"/contact/"}
               >
                 Contact Us
+              </Link>{" "}
+              <Link
+                className="text-white font-semibold text-end hover:text-primary2 transition-all mr-2  "
+                href={"/"}
+              >
+                <h1 className="text-sm">{user?.fullName}</h1>
+                <h2 className="text-xs font-thin">{user?.userType}</h2>
               </Link>{" "}
               {!token && (
                 <>
@@ -119,14 +131,15 @@ const Navbar = () => {
                               <FaFileDownload /> Download Report
                             </Link>
                           </button>
-                          {token && userType === "Admin" && (<button>
-                            <Link
-                              className="text-white hover:text-white font-semibold flex items-center gap-2"
-                              href={"/admin/change-password"}
-                            >
-                              <FaFileDownload /> Change Password
-                            </Link>
-                          </button>
+                          {token && userType === "Admin" && (
+                            <button>
+                              <Link
+                                className="text-white hover:text-white font-semibold flex items-center gap-2"
+                                href={"/admin/change-password"}
+                              >
+                                <FaFileDownload /> Change Password
+                              </Link>
+                            </button>
                           )}
                           <hr className="mt-5 mb-3" />
                           <div className="">

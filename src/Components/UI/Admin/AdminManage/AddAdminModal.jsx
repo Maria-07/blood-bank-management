@@ -16,6 +16,7 @@ const AddAdminModal = ({ handleClose, clicked, refetch }) => {
   const [donationDate, setDonationDate] = useState("");
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [leaderType, setLeaderType] = useState("");
 
   const router = useRouter();
   const {
@@ -68,6 +69,7 @@ const AddAdminModal = ({ handleClose, clicked, refetch }) => {
     formData.append("DateOfBirth", dob);
     formData.append("LastDonationTime", donationDate);
     formData.append("UserType", uType);
+    formData.append("LeaderType", leaderType);
 
     try {
       const response = await fetch(
@@ -144,9 +146,12 @@ const AddAdminModal = ({ handleClose, clicked, refetch }) => {
                       Leader Type<span className="text-rose-600">*</span>
                     </label>
                     <select
-                      {...register("LeaderType", {
-                        required: "LeaderType is required",
-                      })}
+                      // {...register("LeaderType", {
+                      //   required: "LeaderType is required",
+                      // })}
+                      onChange={(e) => {
+                        setLeaderType(e.target.value);
+                      }}
                       className="input-select-border w-full mb-2"
                     >
                       <option value="">Select</option>
@@ -162,6 +167,27 @@ const AddAdminModal = ({ handleClose, clicked, refetch }) => {
                       <p className="text-red-500">{errors.UserType.message}</p>
                     )}
                   </div>
+
+                  {(leaderType === "Deputy Commissioner Official" ||
+                    leaderType === "Civil Surgeon Official") && (
+                    <div>
+                      <label className="input-title">
+                        Designation<span className="text-rose-600">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        {...register("Designation", {
+                          required: "Designation is required",
+                        })}
+                        className="input-border w-full mb-2"
+                      />
+                      {errors.Designation && (
+                        <p className="text-red-500">
+                          {errors.Designation.message}
+                        </p>
+                      )}
+                    </div>
+                  )}
 
                   {/* Personal Info */}
                   <div className="sm:col-span-3">
@@ -202,7 +228,7 @@ const AddAdminModal = ({ handleClose, clicked, refetch }) => {
                       type="number"
                       {...register("MobileNumber", {
                         required: "Mobile Number is required",
-                        minLength: { value: 11, message: "Must be 11 digits" },
+                        maxLength: 11,
                       })}
                       className="input-border w-full mb-2"
                     />

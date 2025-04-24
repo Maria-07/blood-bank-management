@@ -16,6 +16,7 @@ const AddDonorManageModal = ({ handleClose, clicked, refetch }) => {
   const [uType, setUType] = useState("donor");
   const [donationDate, setDonationDate] = useState("");
   const [loading, setLoading] = useState(false);
+  const [leaderType, setLeaderType] = useState("");
 
   const router = useRouter();
   const {
@@ -74,6 +75,7 @@ const AddDonorManageModal = ({ handleClose, clicked, refetch }) => {
 
     formData.append("UserType", uType);
     formData.append("DateOfBirth", dob);
+    formData.append("LeaderType", leaderType);
     formData.append("LastDonationTime", donationDate);
 
     try {
@@ -215,7 +217,7 @@ const AddDonorManageModal = ({ handleClose, clicked, refetch }) => {
                       type="number"
                       {...register("MobileNumber", {
                         required: "Mobile Number is required",
-                        minLength: { value: 11, message: "Must be 11 digits" },
+                        maxLength: 11,
                       })}
                       className="input-border w-full mb-2"
                     />

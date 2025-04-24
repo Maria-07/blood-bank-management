@@ -32,7 +32,7 @@ const LoginPage = () => {
             <h1 className="font-primary text-2xl font-bold text-primary mb-2">
               WELCOME To হিমোগ্লোবিন
             </h1>
-            <span>মানবতার শ্রেষ্ঠ দান, রক্ত দিয়ে বাচাই প্রাণ</span>
+            <span>মানবতার শ্রেষ্ঠ দান, রক্ত দিয়ে বাঁচাই প্রাণ</span>
             <div>
               {" "}
               <Login></Login>{" "}

@@ -216,7 +216,7 @@ const AddDonorManageModalCampaign = ({ handleClose, clicked, record }) => {
                       type="number"
                       {...register("MobileNumber", {
                         required: "Mobile Number is required",
-                        minLength: { value: 11, message: "Must be 11 digits" },
+                        maxLength: 11,
                       })}
                       className="input-border w-full mb-2"
                     />

@@ -283,7 +283,6 @@ const MyProfilePage = () => {
                     {...register("FatherName")}
                   />
                 </div>
-
                 <div>
                   <h1 className="input-title">Mother&apos;s Name</h1>
                   <input
@@ -294,7 +293,6 @@ const MyProfilePage = () => {
                     {...register("MotherName")}
                   />
                 </div>
-
                 <div className="sm:col-span-2">
                   <h1 className="input-title">Address</h1>
                   <input
@@ -402,7 +400,19 @@ const MyProfilePage = () => {
                     />
                   </div>
                 )}
-
+                {(user?.leaderType === "Deputy Commissioner Official" ||
+                  user?.leaderType === "") && (
+                  <div>
+                    <h1 className="input-title">Designation</h1>
+                    <input
+                      disabled={!isEdit}
+                      defaultValue={user?.Designation}
+                      type="text"
+                      className="input-border w-full mb-2"
+                      {...register("Designation")}
+                    />
+                  </div>
+                )}
                 {isEdit && (
                   <>
                     {" "}
@@ -417,7 +427,6 @@ const MyProfilePage = () => {
                     </div>
                   </>
                 )}
-
                 {/* Blood Information */}
                 <div className="sm:col-span-3">
                   {" "}
@@ -472,7 +481,6 @@ const MyProfilePage = () => {
                     {...register("LastDonationTime")}
                   />
                 </div>
-
                 <div>
                   <h1 className="input-title">Blood Donation Status</h1>
                   {!isEdit ? (

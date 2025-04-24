@@ -35,13 +35,13 @@ const AboutPage = () => {
               access to blood services. This initiative has been established and
               is operated under the personal vision, direct guidance, and strong
               efforts of the Honorable Deputy Commissioner of Nilphamari,
-              <strong>Mr. Mohammad Nayiruzzaman.</strong> Under his leadership,
-              a dedicated team within the District Administration is
-              consistently working to ensure the success of this mission. The
-              Civil Surgeon’s Office, Nilphamari is providing technical support
-              for blood group testing and volunteer training, while members of
-              the Bangladesh Scouts, Nilphamari District are serving selflessly
-              as volunteers to push this humanitarian effort forward.
+              <strong>Mr. Mohammad Nairuzzaman.</strong> Under his leadership, a
+              dedicated team within the District Administration is consistently
+              working to ensure the success of this mission. The Civil Surgeon’s
+              Office, Nilphamari is providing technical support for blood group
+              testing and volunteer training, while members of the Bangladesh
+              Scouts, Nilphamari District are serving selflessly as volunteers
+              to push this humanitarian effort forward.
             </div>
             <div className="border-[1px] sm:px-5 px-1 my-20 rounded-sm shadow-md pt-5 pb-16">
               <h1 className="text-xl font-semibold my-10 text-center">

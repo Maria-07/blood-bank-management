@@ -170,7 +170,7 @@ const DownloadId = () => {
           {/* Footer */}
           <div className="mt-5">
             <p className="text-[12px] py-[3px] pb-5 text-center bg-primary2 text-white rounded-sm">
-              মানবতার শ্রেষ্ঠ দান, রক্ত দিয়ে বাচাই প্রাণ
+              মানবতার শ্রেষ্ঠ দান, রক্ত দিয়ে বাঁচাই প্রাণ
             </p>
           </div>
         </div>

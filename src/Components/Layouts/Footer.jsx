@@ -19,7 +19,7 @@ const Footer = () => {
                 />
               </Link>
               <h1 className="text-base my-3 text-white">
-                মানবতার শ্রেষ্ঠ দান, রক্ত দিয়ে বাচাই প্রাণ
+                মানবতার শ্রেষ্ঠ দান, রক্ত দিয়ে বাঁচাই প্রাণ
               </h1>
             </div>
             <div className="mx-auto">
