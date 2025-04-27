@@ -138,8 +138,14 @@ const BloodBanks = () => {
             render: (text, record) =>
               key === "fullName" ? (
                 <h1 className="text-primary2">{record.fullName}</h1>
+              ) : key === "bloodDonationStatus" ? (
+                <div>
+                  {record?.bloodDonationStatus === "NotInterested"
+                    ? "Not Interested"
+                    : record?.bloodDonationStatus}
+                </div>
               ) : (
-                text || "N/A"
+                <div>{text || "N/A"}</div>
               ),
             ellipsis: true,
           }))

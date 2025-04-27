@@ -100,6 +100,8 @@ const AdminManagePage = () => {
               "union",
               "unionName",
               "motherName",
+              "campaignName",
+              "campaignId",
               "physicalComplexity",
               "nid",
               "nidUrls",
@@ -139,6 +141,12 @@ const AdminManagePage = () => {
               <Link href={record?.url}>
                 <div>{record?.name}</div>
               </Link>
+            ) : key === "bloodDonationStatus" ? (
+              <div>
+                {record?.bloodDonationStatus === "NotInterested"
+                  ? "Not Interested"
+                  : record?.bloodDonationStatus}
+              </div>
             ) : (
               <div key={index}>{text || "N/A"}</div>
             ),

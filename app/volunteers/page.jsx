@@ -19,7 +19,8 @@ const VolunteerPage = () => {
   const [rowCount, setRowCount] = useState(0);
   const [page, setPage] = useState(1);
   const [size, setSize] = useState(10);
-  const [scoutSize, setScoutSize] = useState(10);
+  const [scoutSize, setScoutSize] = useState(12);
+  const [swiperInitialized, setSwiperInitialized] = useState(false);
 
   // Fetch Official Leaders Data
   const {
@@ -55,6 +56,17 @@ const VolunteerPage = () => {
       setAllScoutLeaders(ScoutLeaders?.data || []);
     }
   }, [ScoutLeaders, isLoadingScout, isErrorScout]);
+
+  // Ensure Swiper is initialized after the data has been loaded
+  useEffect(() => {
+    if (allOfficialLeaders.length > 0 || allScoutLeaders.length > 0) {
+      setSwiperInitialized(true);
+    }
+  }, [allOfficialLeaders, allScoutLeaders]);
+
+  if (!swiperInitialized) {
+    return null; // Don't render the swiper component until it's ready
+  }
 
   return (
     <div>
@@ -141,7 +153,6 @@ const VolunteerPage = () => {
             {allCivilOfficeLeaders?.map((data, i) => (
               <SwiperSlide key={i}>
                 <div className="bg-white">
-                  {" "}
                   <Volunteer record={data} />
                 </div>
               </SwiperSlide>
@@ -163,7 +174,7 @@ const VolunteerPage = () => {
         {/* Load More Button */}
         <div className="flex justify-end mt-4">
           <button
-            onClick={() => setSize((prev) => prev + 10)}
+            onClick={() => setScoutSize((prev) => prev + 6)}
             className="px-3 py-1 bg-primary2 text-sm text-white rounded-md shadow-md hover:bg-blue-600"
           >
             Load More

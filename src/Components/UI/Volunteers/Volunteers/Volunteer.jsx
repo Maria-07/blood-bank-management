@@ -2,8 +2,6 @@ import React from "react";
 import { Card, Image } from "antd";
 
 const Volunteer = ({ record }) => {
-  c;
-
   return (
     <div className="border-[1px] rounded-md bg-white ">
       <Card hoverable className="shadow-md p-5">

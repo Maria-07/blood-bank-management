@@ -156,6 +156,12 @@ const VolunteerList = () => {
         render: (text, record) =>
           key === "isApproved" ? (
             <PendingVolunteersApproved refetch={refetch} record={record} />
+          ) : key === "bloodDonationStatus" ? (
+            <div>
+              {record?.bloodDonationStatus === "NotInterested"
+                ? "Not Interested"
+                : record?.bloodDonationStatus}
+            </div>
           ) : (
             <div key={index}>{text || "N/A"}</div>
           ),

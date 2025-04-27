@@ -74,14 +74,17 @@ const AddAdminModal = ({ handleClose, clicked, refetch }) => {
         `${process.env.NEXT_PUBLIC_BASE_URL}/user/registration`,
         { method: "POST", body: formData }
       );
-      if (!response.ok)
-        throw new Error("User already exists or another error occurred.");
       const responseData = await response.json();
-      toast.success(
-        responseData?.data?.message || "User created successfully!"
-      );
-      handleClose();
-      refetch();
+
+      if (responseData?.data?.isSuccess) {
+        toast.success(
+          responseData?.data?.message || "Admin created successfully!"
+        );
+        handleClose();
+        refetch();
+      } else {
+        toast.error(responseData?.data?.message);
+      }
     } catch (error) {
       toast.error("An unexpected error occurred. Please try again.");
     } finally {

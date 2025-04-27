@@ -65,15 +65,27 @@ const DownloadReport = () => {
       )
     );
 
-    html2canvas(input, { scale: 2, useCORS: true }).then((canvas) => {
-      const imgData = canvas.toDataURL("image/png");
-      const pdf = new jsPDF("p", "mm", "a4");
-      const imgWidth = 210; // A4 width in mm
-      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+    html2canvas(input, { scale: 2, useCORS: true, logging: true })
+      .then((canvas) => {
+        // Debugging: Check if the canvas is being generated
+        console.log("Canvas generated:", canvas);
+        const imgData = canvas.toDataURL("image/jpeg"); // Use JPEG if PNG fails
 
-      pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
-      pdf.save("download.pdf");
-    });
+        // Check if PNG image is captured correctly
+        console.log("Image data URL (PNG):", imgData);
+
+        // Create PDF instance
+        const pdf = new jsPDF("p", "mm", "a4");
+        const imgWidth = 210; // A4 width in mm
+        const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+        // Add the image to the PDF
+        pdf.addImage(imgData, "jpeg", 0, 0, imgWidth, imgHeight);
+        pdf.save("download.pdf");
+      })
+      .catch((error) => {
+        console.error("Error in rendering the PDF:", error);
+      });
   };
 
   return (
@@ -97,7 +109,7 @@ const DownloadReport = () => {
         </div>
 
         <div className="flex items-center justify-center mt-2">
-          <h1 className="text-lg tracking-tight  border-[1px] rounded-md shadow-md text-primary px-3">
+          <h1 className="text-lg tracking-tight   rounded-md shadow-md text-primary px-3">
             Blood Report
           </h1>
         </div>
@@ -111,8 +123,7 @@ const DownloadReport = () => {
                 <div className="h-[80px] w-[80px] overflow-hidden rounded-full">
                   <Image
                     className="border object-cover w-full h-full"
-                    // src={`https://static.vecteezy.com/system/resources/previews/000/439/863/non_2x/vector-users-icon.jpg`}
-                    src={imageUrl}
+                    src={`https://cors-anywhere.herokuapp.com/${imageUrl}`}
                     width={80}
                     height={80}
                     alt="Picture of the author"
