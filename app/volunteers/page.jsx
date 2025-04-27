@@ -10,6 +10,7 @@ import Initiator from "@/src/Components/UI/Volunteers/Initiators/Initiator";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import Volunteer from "@/src/Components/UI/Volunteers/Volunteers/Volunteer";
+import Link from "next/link";
 
 const VolunteerPage = () => {
   const [allOfficialLeaders, setAllOfficialLeaders] = useState([]);
@@ -54,8 +55,6 @@ const VolunteerPage = () => {
       setAllScoutLeaders(ScoutLeaders?.data || []);
     }
   }, [ScoutLeaders, isLoadingScout, isErrorScout]);
-
-  console.log(ScoutLeaders);
 
   return (
     <div>
@@ -179,7 +178,9 @@ const VolunteerPage = () => {
               Apply to be a volunteer instead ?
             </h1>
             <div className="ml-[10%] px-12">
-              <button className="bb-input-button">Apply Here</button>
+              <button className="bb-input-button">
+                <Link href={"/register"}>Apply Here</Link>
+              </button>
             </div>
           </div>
         </div>

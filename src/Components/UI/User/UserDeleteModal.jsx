@@ -7,11 +7,8 @@ import { MdDeleteOutline, MdDone } from "react-icons/md";
 import { toast } from "react-toastify";
 
 const UserDeleteModal = ({ record, handleClose, clicked }) => {
-  console.log("record", record);
-
   const router = useRouter();
   const id = record?.id;
-  console.log("record", record?.id);
 
   const handleDelete = async () => {
     const accessToken = Cookies.get("accessToken");
@@ -40,7 +37,6 @@ const UserDeleteModal = ({ record, handleClose, clicked }) => {
 
       const responseData = await response.json();
       //   debugger;
-      console.log("Delete Response:", responseData);
 
       if (responseData?.data?.isSuccess) {
         toast.success(
@@ -50,7 +46,6 @@ const UserDeleteModal = ({ record, handleClose, clicked }) => {
         handleClose();
       }
     } catch (error) {
-      console.error("Network or server error:", error);
       toast.error("An unexpected error occurred. Please try again.");
     }
   };

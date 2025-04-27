@@ -51,9 +51,7 @@ const Complain = () => {
     try {
       await readMessage({ id: id }).unwrap();
       refetch(); // Refresh the table after marking as read
-    } catch (error) {
-      console.error("Error reading message:", error);
-    }
+    } catch (error) {}
   };
 
   //! Handle table filter and sort changes

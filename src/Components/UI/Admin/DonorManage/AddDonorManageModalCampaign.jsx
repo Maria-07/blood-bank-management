@@ -36,9 +36,7 @@ const AddDonorManageModalCampaign = ({ handleClose, clicked, record }) => {
       type === "upazila"
         ? setUpazilas(data?.data || [])
         : setUnions(data?.data || []);
-    } catch (error) {
-      console.error(`Error fetching ${type}:`, error.message);
-    }
+    } catch (error) {}
   };
 
   useEffect(() => {
@@ -426,7 +424,8 @@ const AddDonorManageModalCampaign = ({ handleClose, clicked, record }) => {
                   </div>
                   <div className="">
                     <label htmlFor="PhysicalComplexity" className="input-title">
-                      Any Physical Complexity?{" "}
+                      Any Physical Complexity?
+                      <span className="text-rose-600">*</span>
                       {/* <span className="text-xs text-accent">
                               (like : Diabetics / Cancer / thyroid.... etc.)
                             </span> */}

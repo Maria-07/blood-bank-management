@@ -24,7 +24,6 @@ const Campaigns = () => {
 
   useEffect(() => {
     if (!isLoading && !isError) {
-      console.log("All Data", campaigns);
     }
   }, [campaigns, isLoading, isError]);
 

@@ -28,8 +28,6 @@ const CreateNoticeModal = ({ handleClose, clicked, refetch }) => {
   } = useForm();
 
   const onSubmit = async (data) => {
-    console.log("Create Notice data =", data);
-
     //! Create FormData from input data
     const formData = new FormData();
 
@@ -44,7 +42,6 @@ const CreateNoticeModal = ({ handleClose, clicked, refetch }) => {
 
     //! Log FormData entries for debugging
     for (const [key, value] of formData.entries()) {
-      console.log(`${key}: ${value}`);
     }
 
     try {
@@ -52,8 +49,6 @@ const CreateNoticeModal = ({ handleClose, clicked, refetch }) => {
         toast.error("Unauthorized. Please log in again.");
         return;
       }
-
-      console.log(accessToken);
 
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_BASE_URL}/notice/create`,
@@ -66,10 +61,8 @@ const CreateNoticeModal = ({ handleClose, clicked, refetch }) => {
         }
       );
       // debugger;
-      console.log("response", response);
 
       const responseData = await response.json();
-      console.log("Response Data:", responseData);
 
       if (responseData?.data?.isSuccess) {
         toast.success(
@@ -84,7 +77,6 @@ const CreateNoticeModal = ({ handleClose, clicked, refetch }) => {
         );
       }
     } catch (error) {
-      console.error("Network or server error:", error);
       toast.error("An unexpected error occurred. Please try again.");
     }
   };

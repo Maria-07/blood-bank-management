@@ -48,8 +48,6 @@ const BloodBanks = () => {
     }));
   };
 
-  console.log(filteredData);
-
   // ✅ Define a manual refetch function
   const refetch = async () => {
     try {
@@ -60,9 +58,7 @@ const BloodBanks = () => {
       }).unwrap();
       setRowCount(response?.rowCount || 0);
       setTableData(response?.data || []);
-    } catch (error) {
-      console.error("Error fetching users:", error);
-    }
+    } catch (error) {}
   };
 
   const refetchPending = async () => {
@@ -74,9 +70,7 @@ const BloodBanks = () => {
       }).unwrap();
       setRowCount(responsePending?.rowCount || 0);
       setTableDataPending(responsePending?.data || []);
-    } catch (error) {
-      console.error("Error fetching users:", error);
-    }
+    } catch (error) {}
   };
 
   useEffect(() => {

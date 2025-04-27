@@ -23,12 +23,9 @@ const ChangePassword = () => {
   const router = useRouter();
 
   const onSubmit = async (data) => {
-    console.log("Password Change data =", data);
-
     try {
       const response = await resetPassword({ ...data }).unwrap();
       const responseData = response.data;
-      console.log("Response Data:", responseData);
 
       if (responseData?.isSuccess) {
         toast.success(responseData?.message);
@@ -37,9 +34,7 @@ const ChangePassword = () => {
       } else {
         toast.error(responseData?.message);
       }
-    } catch (error) {
-      console.log("Error:", error?.data?.message);
-    }
+    } catch (error) {}
   };
 
   return (

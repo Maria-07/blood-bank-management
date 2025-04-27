@@ -16,12 +16,9 @@ const UserInfo = () => {
 
   useEffect(() => {
     if (!isLoading && !isError) {
-      // console.log("User Profile:", userProfile?.data);
       setUser(userProfile?.data);
     }
   }, [userProfile, isLoading, isError]);
-
-  console.log(user);
 
   return user;
 };

@@ -48,7 +48,6 @@ const Login = () => {
 
       return await response.json();
     } catch (error) {
-      console.error("API Request Error:", error.message);
       toast.error(error.message || "An unexpected error occurred.");
       throw error;
     }
@@ -78,9 +77,7 @@ const Login = () => {
       } else {
         toast.error(responseLoginData?.data?.message || "Login failed!");
       }
-    } catch (error) {
-      console.error("Login Error:", error.message);
-    }
+    } catch (error) {}
   };
   /**
    * Handles form submission and determines user type before proceeding to login.
@@ -102,9 +99,7 @@ const Login = () => {
           await handleLogin(data);
         }
       }
-    } catch (error) {
-      console.error("Error detecting user type:", error.message);
-    }
+    } catch (error) {}
   };
 
   return (

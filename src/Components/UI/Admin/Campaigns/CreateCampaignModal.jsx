@@ -46,14 +46,11 @@ const CreateCampaignModal = ({ handleClose, clicked, refetch }) => {
     pageNo: page,
     pageSize: size,
   });
-  console.log("allVolunteers", allVolunteers);
 
   useEffect(() => {
     if (!isLoading && !isError) {
-      console.log("All volunteers", volunteers);
       setAllVolunteers(volunteers?.data);
     } else {
-      console.log(volunteers);
     }
   }, [volunteers, isLoading, isError, router]);
 
@@ -63,13 +60,10 @@ const CreateCampaignModal = ({ handleClose, clicked, refetch }) => {
   }));
 
   const handleChange = (selectedValues) => {
-    console.log("Selected Values:", selectedValues);
     setSelectedVolunteers(selectedValues);
   };
 
   const onSubmit = async (data) => {
-    console.log("Create Campaign data =", data);
-
     //! Create FormData from input data
     const formData = new FormData();
 
@@ -92,7 +86,6 @@ const CreateCampaignModal = ({ handleClose, clicked, refetch }) => {
 
     //! Log FormData entries for debugging
     for (const [key, value] of formData.entries()) {
-      console.log(`${key}: ${value}`);
     }
 
     try {
@@ -100,8 +93,6 @@ const CreateCampaignModal = ({ handleClose, clicked, refetch }) => {
         toast.error("Unauthorized. Please log in again.");
         return;
       }
-
-      console.log(accessToken);
 
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_BASE_URL}/campaign/create`,
@@ -114,10 +105,8 @@ const CreateCampaignModal = ({ handleClose, clicked, refetch }) => {
         }
       );
       // debugger;
-      console.log("response", response);
 
       const responseData = await response.json();
-      console.log("Response Data:", responseData);
 
       if (responseData?.data?.isSuccess) {
         toast.success(
@@ -128,7 +117,6 @@ const CreateCampaignModal = ({ handleClose, clicked, refetch }) => {
         handleClose(); // Close modal after successful creation
       }
     } catch (error) {
-      console.error("Network or server error:", error);
       toast.error("An unexpected error occurred. Please try again.");
     }
   };

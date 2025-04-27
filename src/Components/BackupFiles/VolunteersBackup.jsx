@@ -32,7 +32,6 @@ const VolunteerList = () => {
   //! Update table data when data is fetched
   useEffect(() => {
     if (!isLoading && !isError && data) {
-      console.log("Fetched Volunteers Data:", data);
       setRowCount(data?.rowCount || 0);
       setTableData(data?.data || []); // Adjust based on API response structure
     } else {
@@ -40,8 +39,6 @@ const VolunteerList = () => {
       // router.push("/login");
     }
   }, [data, isLoading, isError, router]);
-
-  console.log("data", data);
 
   //! Generate filter values (handles booleans, strings, and other types)
   const generateFilterValues = (data, columnKey) => {

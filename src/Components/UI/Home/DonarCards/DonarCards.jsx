@@ -14,7 +14,6 @@ const DonarCards = () => {
   const [size, setSize] = useState(4);
   const [filteredData, setFilteredData] = useState({});
   const [donors, setDonors] = useState([]);
-  console.log(donors);
 
   const handleFilteredData = (key, value) => {
     setFilteredData((prev) => ({
@@ -22,8 +21,6 @@ const DonarCards = () => {
       [key]: value,
     }));
   };
-
-  console.log(filteredData);
 
   const [getAllDonor, { data, isLoading, isError }] = useGetAllDonorMutation();
 
@@ -36,9 +33,7 @@ const DonarCards = () => {
           pageSize: size,
         }).unwrap();
         setDonors(response?.data || []);
-      } catch (error) {
-        console.error("Error fetching users:", error);
-      }
+      } catch (error) {}
     };
 
     fetchUsers();

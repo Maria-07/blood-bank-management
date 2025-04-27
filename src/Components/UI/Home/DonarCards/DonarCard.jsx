@@ -52,6 +52,7 @@ const DonarCard = ({ record = {} }) => {
     upazilaName,
     userType,
   } = record;
+
   const getLastDonationTime = (time) => {
     if (!time) return "Unknown";
     const donationDate = parseISO(time);
@@ -59,8 +60,6 @@ const DonarCard = ({ record = {} }) => {
       addSuffix: true,
     })}`;
   };
-
-  console.log(record);
 
   return (
     <div>
@@ -73,7 +72,6 @@ const DonarCard = ({ record = {} }) => {
           className={`relative ${!token ? "cursor-pointer" : ""}`}
           onClick={() => {
             if (!token) {
-              console.log("Redirecting to register...");
               router.push("/login");
             }
           }}
@@ -159,7 +157,7 @@ const DonarCard = ({ record = {} }) => {
                 </h1>
               </div>
               <div className="text-sm text-accent text-right">
-                {record.physicalComplexity ? "Yes" : "No"}
+                {record?.physicalComplexity === "Yes" ? "Yes" : "No"}
               </div>
             </div>
 

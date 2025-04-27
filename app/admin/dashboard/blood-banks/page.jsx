@@ -55,9 +55,7 @@ const BloodBanks = () => {
 
         setRowCount(response?.rowCount || 0);
         setData(tableDataWithKeys(response?.data || []));
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
+      } catch (error) {}
     },
     [pagination, filteredData]
   );

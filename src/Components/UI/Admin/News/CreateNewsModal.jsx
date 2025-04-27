@@ -24,8 +24,6 @@ const CreateNewsModal = ({ handleClose, clicked, refetch }) => {
     try {
       const response = await news(data);
 
-      console.log(response);
-
       if (response?.data?.data?.isSuccess) {
         toast.success(response?.data?.data?.message);
         handleClose();
@@ -33,9 +31,7 @@ const CreateNewsModal = ({ handleClose, clicked, refetch }) => {
       } else {
         toast.error(response?.error?.data?.message);
       }
-    } catch (error) {
-      console.log("error", error);
-    }
+    } catch (error) {}
   };
 
   return (

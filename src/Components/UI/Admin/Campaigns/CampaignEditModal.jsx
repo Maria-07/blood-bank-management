@@ -18,7 +18,7 @@ import dayjs from "dayjs";
 
 const CampaignEditModal = ({ handleClose, clicked, record, refetch }) => {
   // debugger;
-  console.log(record);
+
   const [bannerEdit, setBannerEdit] = useState(false);
   const [page, setPage] = useState(1);
   const [size, setSize] = useState(100);
@@ -69,8 +69,6 @@ const CampaignEditModal = ({ handleClose, clicked, record, refetch }) => {
     pageSize: size,
   });
 
-  console.log(volunteers?.data);
-
   useEffect(() => {
     if (!isLoading && !isError) {
       setAllVolunteers(volunteers?.data || []);
@@ -86,8 +84,6 @@ const CampaignEditModal = ({ handleClose, clicked, record, refetch }) => {
   }));
 
   const handleChange = (selectedValues) => {
-    console.log("selected v", selectedValues);
-
     setSelectedVolunteers(selectedValues);
   };
 
@@ -115,8 +111,6 @@ const CampaignEditModal = ({ handleClose, clicked, record, refetch }) => {
         return;
       }
 
-      console.log("after select", selectedVolunteers);
-
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_BASE_URL}/campaign/update`,
         {
@@ -134,7 +128,6 @@ const CampaignEditModal = ({ handleClose, clicked, record, refetch }) => {
       }
       const responseData = await response.json();
       // debugger;
-      console.log(responseData);
 
       if (responseData?.data?.isSuccess) {
         toast.success(

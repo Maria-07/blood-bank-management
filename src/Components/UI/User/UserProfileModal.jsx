@@ -8,7 +8,6 @@ import { IoMdCloseCircleOutline } from "react-icons/io";
 import { MdDeleteOutline, MdDone } from "react-icons/md";
 
 const UserProfileModal = ({ handleClose, clicked, record, admin }) => {
-  console.log(record);
   const { token } = useAuth();
   const {
     address,

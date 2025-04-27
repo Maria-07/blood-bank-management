@@ -30,7 +30,7 @@ export default function RootLayout({ children }) {
     );
   }
   let filteredSidebar;
-debugger;
+
   if (userRole === "superAdmin") {
     filteredSidebar = settingsSidebar;
   } else if (userRole === "Admin") {
@@ -38,9 +38,6 @@ debugger;
   } else {
     filteredSidebar = volunteerSidebar;
   }
-
-  console.log(userRole);
-  console.log(filteredSidebar);
 
   return (
     <div className="md:w-[90%] sm:mx-auto">

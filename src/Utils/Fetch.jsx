@@ -35,7 +35,6 @@ export const apiRequest = async (
     const data = await response.json();
     return data;
   } catch (error) {
-    console.error("API Request Error:", error.message);
     throw error;
   }
 };

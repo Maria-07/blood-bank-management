@@ -23,8 +23,6 @@ const MediaTab = () => {
     isLoading: newsLoading,
   } = useGetAllNewsQuery({ pageNo: 1, pageSize: size });
 
-  console.log(newsData);
-
   //! Fetch Media based on Active Tab
   const fetchMedia = async () => {
     try {
@@ -38,7 +36,6 @@ const MediaTab = () => {
         };
 
         const response = await getAllMedia(params).unwrap();
-        console.log("API Response (Media):", response);
 
         setMedia((prev) => ({
           ...prev,
@@ -50,9 +47,7 @@ const MediaTab = () => {
             : prev.videos,
         }));
       }
-    } catch (error) {
-      console.error("Error fetching media:", error);
-    }
+    } catch (error) {}
   };
 
   //! Fetch Data when activeTab or size changes

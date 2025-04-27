@@ -28,14 +28,10 @@ const AllCampaigns = () => {
 
   useEffect(() => {
     if (!isLoading && !isError) {
-      console.log("All Data", Campaigns);
       setRowCount(Campaigns?.rowCount);
     } else {
-      console.log(Campaigns);
     }
   }, [Campaigns, isLoading, isError]);
-
-  console.log(Campaigns);
 
   return (
     <div>

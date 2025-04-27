@@ -10,7 +10,6 @@ import { getUserDetails } from "@/src/Hook/authUtils";
 
 const ContactPage = () => {
   const type = getUserDetails();
-  console.log(type);
 
   const {
     register,
@@ -20,8 +19,6 @@ const ContactPage = () => {
   } = useForm();
 
   const onSubmit = async (data) => {
-    console.log(data);
-
     const accessToken = Cookies.get("accessToken");
 
     if (!accessToken) {
@@ -44,7 +41,6 @@ const ContactPage = () => {
       );
 
       const responseData = await response.json();
-      console.log("Approved Response:", responseData);
 
       if (responseData?.data?.isSuccess) {
         toast.success(
@@ -57,7 +53,6 @@ const ContactPage = () => {
         return;
       }
     } catch (error) {
-      console.error("Network or server error:", error);
       toast.error("An unexpected error occurred. Please try again.");
     }
   };

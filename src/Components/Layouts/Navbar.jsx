@@ -20,10 +20,8 @@ const Navbar = () => {
   //! User data
   const user = UserInfo();
 
-  console.log(user);
   const [open, setOpen] = useState(false);
   const { token, userType, logout, userId } = useAuth();
-  console.log(userType);
 
   const currentRoute = usePathname();
   const router = useRouter();

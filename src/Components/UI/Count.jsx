@@ -9,9 +9,7 @@ const Count = () => {
 
   useEffect(() => {
     if (!isLoading && !isError) {
-      console.log("All Data", CountedData);
     } else {
-      console.log(CountedData);
     }
   }, [CountedData, isLoading, isError]);
 

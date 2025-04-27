@@ -37,9 +37,7 @@ const AddDonorManageModal = ({ handleClose, clicked, refetch }) => {
       type === "upazila"
         ? setUpazilas(data?.data || [])
         : setUnions(data?.data || []);
-    } catch (error) {
-      console.error(`Error fetching ${type}:`, error.message);
-    }
+    } catch (error) {}
   };
 
   useEffect(() => {

@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 
 const CustomDefaultSearchOption = ({ item, option, dValue }) => {
   const [items, setItems] = useState([]);
-  // console.log("item", item);
+  //
 
   useEffect(() => {
     const uniqueArray = [...new Set(item)];
@@ -12,12 +12,9 @@ const CustomDefaultSearchOption = ({ item, option, dValue }) => {
     }
   }, [item]);
 
-  const onSearch = (value) => {
-    console.log("search:", value);
-  };
+  const onSearch = (value) => {};
 
   const onChange = (value) => {
-    console.log(`selected ${value}`);
     option(value);
   };
 

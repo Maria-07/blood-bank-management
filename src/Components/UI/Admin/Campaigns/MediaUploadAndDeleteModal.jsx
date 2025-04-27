@@ -32,7 +32,6 @@ const MediaUploadAndDeleteModal = ({ handleClose, clicked, record }) => {
   const accessToken = Cookies.get("accessToken");
   const router = useRouter();
   const id = record?.id;
-  console.log("record", record?.id);
 
   //! All Media get
   const {
@@ -49,21 +48,19 @@ const MediaUploadAndDeleteModal = ({ handleClose, clicked, record }) => {
 
   useEffect(() => {
     if (!isLoading && !isError) {
-      console.log("All campaignMedia", campaignMedia);
       setImages(campaignMedia?.data?.imageData);
       setVideos(campaignMedia?.data?.videoData);
     }
   }, [campaignMedia, isLoading, isError]);
 
   const handleDelete = async (mId) => {
-    console.log("url", mId);
     // debugger;
     try {
       const response = await mediaDelete({ campaignId: id, mediaId: mId });
       if (isLoading2) {
         <Loader></Loader>;
       }
-      console.log("response", response);
+
       if (response?.data?.data?.isSuccess) {
         // router.push("/books");
         toast.success(response?.data?.data?.message);
@@ -71,9 +68,7 @@ const MediaUploadAndDeleteModal = ({ handleClose, clicked, record }) => {
       } else {
         toast.error(response?.error?.data?.message);
       }
-    } catch (error) {
-      console.log("error", error);
-    }
+    } catch (error) {}
   };
 
   const {
@@ -84,8 +79,6 @@ const MediaUploadAndDeleteModal = ({ handleClose, clicked, record }) => {
     setValue,
     formState: { errors },
   } = useForm();
-
-  console.log("VideoUrls", VideoUrls);
 
   const tabItems = [
     {
@@ -205,8 +198,6 @@ const MediaUploadAndDeleteModal = ({ handleClose, clicked, record }) => {
   ];
 
   const onSubmit = async (data) => {
-    console.log("Create Media data =", data);
-
     const formData = new FormData();
 
     Object.entries(data).forEach(([key, value]) => {
@@ -232,7 +223,6 @@ const MediaUploadAndDeleteModal = ({ handleClose, clicked, record }) => {
 
     //! Log FormData entries for debugging
     for (const [key, value] of formData.entries()) {
-      console.log(`${key}: ${value}`);
     }
 
     try {
@@ -249,13 +239,12 @@ const MediaUploadAndDeleteModal = ({ handleClose, clicked, record }) => {
 
       if (!response.ok) {
         const errorText = await response.text();
-        console.error("Error response:", errorText);
+
         toast.error("Media upload failed.");
         return;
       }
 
       const responseData = await response.json();
-      console.log("Response Data:", responseData);
 
       if (responseData?.data?.isSuccess) {
         toast.success(
@@ -267,7 +256,6 @@ const MediaUploadAndDeleteModal = ({ handleClose, clicked, record }) => {
         toast.error(responseData?.data?.message);
       }
     } catch (error) {
-      console.error("Network or server error:", error);
       toast.error("An unexpected error occurred. Please try again.");
     }
   };

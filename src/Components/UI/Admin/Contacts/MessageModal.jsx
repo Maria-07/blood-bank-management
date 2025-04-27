@@ -4,8 +4,6 @@ import { IoMdCloseCircleOutline } from "react-icons/io";
 import { MdDeleteOutline } from "react-icons/md";
 
 const MessageModal = ({ record, handleClose, clicked }) => {
-  console.log(record);
-
   return (
     <div>
       <Modal

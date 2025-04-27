@@ -2,7 +2,7 @@ import React from "react";
 import { Card, Image } from "antd";
 
 const Volunteer = ({ record }) => {
-  console.log(record);
+  c;
 
   return (
     <div className="border-[1px] rounded-md bg-white ">

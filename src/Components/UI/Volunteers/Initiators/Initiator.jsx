@@ -2,8 +2,6 @@ import React from "react";
 import { Card, Image } from "antd";
 
 const Initiator = ({ record }) => {
-  console.log(record);
-
   return (
     <div>
       <Card

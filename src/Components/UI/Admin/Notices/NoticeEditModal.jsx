@@ -7,7 +7,6 @@ import { MdDeleteOutline, MdDone } from "react-icons/md";
 import { toast } from "react-toastify";
 
 const NoticeEditModal = ({ handleClose, record, clicked, refetch }) => {
-  console.log("record", record);
   const { id, name, description } = record;
 
   const accessToken = Cookies.get("accessToken");
@@ -20,8 +19,6 @@ const NoticeEditModal = ({ handleClose, record, clicked, refetch }) => {
   } = useForm();
 
   const onSubmit = async (data) => {
-    console.log("Update Notice data =", data);
-
     //! Update FormData from input data
     const formData = new FormData();
 
@@ -43,7 +40,6 @@ const NoticeEditModal = ({ handleClose, record, clicked, refetch }) => {
 
     //! Log FormData entries for debugging
     for (const [key, value] of formData.entries()) {
-      console.log(`${key}: ${value}`);
     }
 
     try {
@@ -51,8 +47,6 @@ const NoticeEditModal = ({ handleClose, record, clicked, refetch }) => {
         toast.error("Unauthorized. Please log in again.");
         return;
       }
-
-      console.log(accessToken);
 
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_BASE_URL}/notice/update`,
@@ -65,10 +59,7 @@ const NoticeEditModal = ({ handleClose, record, clicked, refetch }) => {
         }
       );
 
-      console.log("response", response);
-
       const responseData = await response.json();
-      console.log("Response Data:", responseData);
 
       if (responseData?.data?.isSuccess) {
         toast.success(
@@ -78,7 +69,6 @@ const NoticeEditModal = ({ handleClose, record, clicked, refetch }) => {
         handleClose(); // Close modal after successful update
       }
     } catch (error) {
-      console.error("Network or server error:", error);
       toast.error("An unexpected error occurred. Please try again.");
     }
   };

@@ -38,15 +38,11 @@ const FilteredUserData = ({ role, handleFilteredData }) => {
 
       if (type === "upazila") setUpazilas(data?.data || []);
       else setUnions(data?.data || []);
-    } catch (error) {
-      console.error(`Error fetching ${type}:`, error.message);
-    }
+    } catch (error) {}
   };
 
   //! Handle Filter Updates
   const updateFilters = (key, value) => {
-    console.log(key, value);
-
     handleFilteredData(key, value); // Call the parent handler
 
     if (key === "upazila") {

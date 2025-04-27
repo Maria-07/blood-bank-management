@@ -6,14 +6,14 @@ let index = 0;
 
 const CustomDefaultOptionAntd = ({ item, dValue, option }) => {
   const [items, setItems] = useState([]);
-  // console.log("dValue", dValue);
+  //
 
   useEffect(() => {
     const uniqueArray = [...new Set(item)];
     if (uniqueArray) {
       setItems(uniqueArray);
     }
-    // console.log("uniqueArray", uniqueArray);
+    //
   }, [item]);
   const [name, setName] = useState("");
   const inputRef = useRef(null);
@@ -32,12 +32,9 @@ const CustomDefaultOptionAntd = ({ item, dValue, option }) => {
     }, 0);
   };
 
-  const onSearch = (value) => {
-    console.log("search:", value);
-  };
+  const onSearch = (value) => {};
 
   const onChange = (value) => {
-    console.log(`selected ${value}`);
     option(value);
   };
 

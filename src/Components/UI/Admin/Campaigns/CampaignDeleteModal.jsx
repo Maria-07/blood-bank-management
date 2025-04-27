@@ -11,7 +11,6 @@ import { toast } from "react-toastify";
 const CampaignDeleteModal = ({ handleClose, clicked, record, refetch }) => {
   const router = useRouter();
   const id = record?.id;
-  console.log("record", record?.id);
 
   const handleDelete = async () => {
     const accessToken = Cookies.get("accessToken");
@@ -48,7 +47,6 @@ const CampaignDeleteModal = ({ handleClose, clicked, record, refetch }) => {
       }
 
       const responseData = await response.json();
-      console.log("Delete Response:", responseData);
 
       if (responseData?.data?.isSuccess) {
         toast.success(
@@ -58,7 +56,6 @@ const CampaignDeleteModal = ({ handleClose, clicked, record, refetch }) => {
         handleClose();
       }
     } catch (error) {
-      console.error("Network or server error:", error);
       toast.error("An unexpected error occurred. Please try again.");
       onFailure?.(error); // Call the failure callback if provided
     }

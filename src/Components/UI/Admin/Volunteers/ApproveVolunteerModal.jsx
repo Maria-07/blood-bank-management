@@ -9,7 +9,6 @@ import { toast } from "react-toastify";
 const ApproveVolunteerModal = ({ handleClose, clicked, record, refetch }) => {
   const router = useRouter();
   const id = record?.id;
-  console.log("record", record);
 
   const handleApproveVolunteer = async () => {
     const accessToken = Cookies.get("accessToken");
@@ -48,7 +47,7 @@ const ApproveVolunteerModal = ({ handleClose, clicked, record, refetch }) => {
       }
 
       const responseData = await response.json();
-      console.log("Approved Response:", responseData);
+
       // debugger;
       if (responseData?.data?.isSuccess) {
         toast.success(
@@ -59,7 +58,6 @@ const ApproveVolunteerModal = ({ handleClose, clicked, record, refetch }) => {
         window.location.reload();
       }
     } catch (error) {
-      console.error("Network or server error:", error);
       toast.error("An unexpected error occurred. Please try again.");
     }
   };

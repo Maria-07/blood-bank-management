@@ -4,8 +4,6 @@ import React from "react";
 import { format } from "date-fns"; // ✅ Import format from date-fns
 
 const NewsCard = ({ news }) => {
-  console.log(news);
-
   const { name, description, url, id, createTime } = news;
 
   return (

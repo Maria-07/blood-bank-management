@@ -7,8 +7,6 @@ import NewsDeleteModal from "./NewsDeleteModal";
 import NewsEditModal from "./NewsEditModal";
 
 const NewsActionModal = ({ record, refetch }) => {
-  // console.log(record, "record");
-
   const [EditNews, setEditNews] = useState(false);
   const handleEditNews = () => {
     setEditNews(!EditNews);

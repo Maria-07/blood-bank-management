@@ -17,8 +17,6 @@ const MyProfilePage = () => {
   //! User data
   const user = UserInfo();
 
-  console.log(user);
-
   const donationDate =
     user?.lastDonationTime !== null
       ? dayjs(user?.lastDonationTime).format("YYYY-MM-DD")
@@ -65,9 +63,7 @@ const MyProfilePage = () => {
       type === "upazila"
         ? setUpazilas(data?.data || [])
         : setUnions(data?.data || []);
-    } catch (error) {
-      console.error(`Error fetching ${type}:`, error.message);
-    }
+    } catch (error) {}
   };
 
   useEffect(() => {
@@ -116,8 +112,6 @@ const MyProfilePage = () => {
 
   // Submit handler
   const onSubmit = async (data) => {
-    console.log("Sign up data =", data);
-
     const formData = new FormData();
     Object.entries(data).forEach(([key, value]) => {
       if (value instanceof FileList && value.length > 0) {

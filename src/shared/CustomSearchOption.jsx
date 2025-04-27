@@ -9,12 +9,9 @@ const CustomSearchOption = ({ item, option }) => {
     if (uniqueArray) setItems(uniqueArray);
   }, [item]);
 
-  const onSearch = (value) => {
-    console.log("Search:", value);
-  };
+  const onSearch = (value) => {};
 
   const onChange = (value, data) => {
-    console.log("Selected:", data);
     option(data); // Pass the full selected object to the parent
   };
 

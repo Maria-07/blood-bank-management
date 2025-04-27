@@ -19,8 +19,6 @@ const Register = () => {
 
   const router = useRouter();
 
-  console.log(leaderType);
-
   const {
     register,
     handleSubmit,
@@ -39,9 +37,7 @@ const Register = () => {
       type === "upazila"
         ? setUpazilas(data?.data || [])
         : setUnions(data?.data || []);
-    } catch (error) {
-      console.error(`Error fetching ${type}:`, error.message);
-    }
+    } catch (error) {}
   };
 
   useEffect(() => {
@@ -81,7 +77,6 @@ const Register = () => {
       if (!response.ok)
         throw new Error("User already exists or another error occurred.");
       const responseData = await response.json();
-      console.log(responseData?.data);
 
       if (responseData?.data?.isSuccess) {
         toast.success(

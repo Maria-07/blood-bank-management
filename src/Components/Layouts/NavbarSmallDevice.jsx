@@ -20,7 +20,6 @@ const NavbarSmallDevice = ({ isOpen, setOpen, token, handleLogout }) => {
   const router = useRouter();
 
   const handleLogOut = () => {
-    console.log("logout");
     Cookies.remove("token");
     router.push("/");
   };

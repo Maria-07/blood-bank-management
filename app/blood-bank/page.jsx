@@ -30,8 +30,6 @@ const BloodBankPage = () => {
     }));
   };
 
-  console.log(filteredData);
-
   const [getAllUsers, { data, isLoading, isError }] = useGetAllDonorMutation();
 
   useEffect(() => {
@@ -44,9 +42,7 @@ const BloodBankPage = () => {
         }).unwrap();
         setDonors(response?.data || []);
         setRowCount(response?.rowCount || 0);
-      } catch (error) {
-        console.error("Error fetching users:", error);
-      }
+      } catch (error) {}
     };
 
     fetchUsers();

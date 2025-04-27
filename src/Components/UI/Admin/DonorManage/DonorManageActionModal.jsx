@@ -14,8 +14,6 @@ const AdminActionModal = ({ record }) => {
   const user = UserInfo();
   const { userType } = useAuth();
 
-  console.log(user?.isSuperAdmin);
-
   const [UserDetails, setUserDetails] = useState(false);
   const handleUserDetails = () => {
     setUserDetails(!UserDetails);

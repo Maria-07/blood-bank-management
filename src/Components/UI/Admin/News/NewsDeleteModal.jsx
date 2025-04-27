@@ -19,7 +19,7 @@ const NewsDeleteModal = ({ handleClose, clicked, record, refetch }) => {
       if (isLoading) {
         <Loader />;
       }
-      console.log("response", response);
+
       if (response?.data?.statusCode === 200) {
         toast.success(response?.data?.data?.message);
       } else {
@@ -28,7 +28,6 @@ const NewsDeleteModal = ({ handleClose, clicked, record, refetch }) => {
       refetch();
       handleClose();
     } catch (error) {
-      console.error("Network or server error:", error);
       toast.error("An unexpected error occurred. Please try again.");
       onFailure?.(error); // Call the failure callback if provided
     }

@@ -29,7 +29,6 @@ const NewsEditModal = ({ handleClose, record, clicked, refetch }) => {
   const onSubmit = async (data) => {
     try {
       const response = await updateNews({ ...data, id: record?.id });
-      console.log("Response:", response);
 
       if (response?.data?.isSuccess) {
         toast.success(response?.data?.message);
@@ -38,9 +37,7 @@ const NewsEditModal = ({ handleClose, record, clicked, refetch }) => {
       } else {
         toast.error(response?.error?.data?.message || "Failed to update news");
       }
-    } catch (error) {
-      console.log("Error:", error);
-    }
+    } catch (error) {}
   };
 
   return (

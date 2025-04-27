@@ -30,7 +30,6 @@ const ApproveVolunteerTable = () => {
   //! Update table data when data is fetched
   useEffect(() => {
     if (!isLoading && !isError && data) {
-      console.log("Fetched Volunteers Data:", data);
       setRowCount(data?.rowCount || 0);
       setTableData(data?.data || []); // Adjust based on API response structure
     } else {
@@ -38,8 +37,6 @@ const ApproveVolunteerTable = () => {
       // router.push("/login");
     }
   }, [data, isLoading, isError, router]);
-
-  console.log("data", data);
 
   // //! Generate filters dynamically for table
   // const generateFilterValues = (data, columnKey) => {

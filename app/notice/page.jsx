@@ -30,35 +30,31 @@ const NoticePage = () => {
     <div>
       <div>
         <div className="md:w-[90%] sm:mx-auto ">
-          <div className="pt-8 bg-[#F2F2F2] rounded-xl shadow-md py-2  px-5 ">
+          <div className="py-5 bg-[#F2F2F2] rounded-xl shadow-md   px-5 ">
             <div className="md:w-[100%] sm:mx-auto grid sm:grid-cols-2 grid-cols-1 gap-3 items-center justify-between">
-              {/* <div
+              <div
                 initial={{ opacity: 0, x: -30 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.4 }}
-                className=""
+                className="sm:pl-10"
               >
-                <h1 className="font-bold lg:text-7xl text-4xl font-primary">
+                <h1 className="font-bold lg:text-6xl text-3xl font-primary">
                   Notice
                 </h1>
                 <hr className="p-[2px] bg-primary w-[22%]" />
-                <p className="text-sm text-accent lg:w-[55%] my-3">
-                  Search for blood donors in your area quickly and conveniently.
-                  Filter results by blood group.
-                </p>
-              </div> */}
-              <h1 className="font-bold lg:text-7xl text-4xl font-primary my-5">
-                Notice
-              </h1>
+                <p className="text-sm text-accent  my-3"></p>
+              </div>
+
               <div
+                className="flex items-center justify-center"
                 initial={{ opacity: 0, x: 30 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.4 }}
               >
                 <Image
                   src={notice}
-                  width={500}
-                  height={600}
+                  width={200}
+                  height={80}
                   alt="Picture of the author"
                 ></Image>
               </div>
@@ -81,13 +77,13 @@ const NoticePage = () => {
                     </div>
                   </div>
                   <div>
-                    <button className="text-sm border bg-primary px-3 py-1 text-white rounded-md shadow-md">
+                    <button className="text-sm border border-primary px-3 py-1 text-primary hover:bg-primary hover:text-white rounded-md shadow-md transition-all">
                       <Link
                         href={`${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}/${n?.fileUrls[0]}`}
                         target="_blank"
                         rel="noopener noreferrer"
                       >
-                        <div className="flex items-center gap-2 justify-center">
+                        <div className="flex items-center gap-2 justify-center hover:text-white">
                           Read More <FaRegFilePdf />
                         </div>
                       </Link>

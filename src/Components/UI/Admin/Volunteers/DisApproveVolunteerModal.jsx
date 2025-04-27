@@ -12,7 +12,6 @@ const DisApproveVolunteerModal = ({
   refetch,
 }) => {
   const id = record?.id;
-  console.log("record", record?.id);
 
   const handleApproveVolunteer = async () => {
     const accessToken = Cookies.get("accessToken");
@@ -52,7 +51,6 @@ const DisApproveVolunteerModal = ({
       }
 
       const responseData = await response.json();
-      console.log("Approved Response:", responseData);
 
       if (responseData?.data?.isSuccess) {
         toast.success(
@@ -62,7 +60,6 @@ const DisApproveVolunteerModal = ({
         window.location.reload();
       }
     } catch (error) {
-      console.error("Network or server error:", error);
       toast.error("An unexpected error occurred. Please try again.");
     }
   };

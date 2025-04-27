@@ -24,8 +24,6 @@ const AdminManagePage = () => {
     pageSize: size,
   });
 
-  console.log("data", data);
-
   //! Update table data when data is fetched
   useEffect(() => {
     if (!isLoading && !isError && data) {

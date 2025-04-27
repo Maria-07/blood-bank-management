@@ -12,8 +12,6 @@ const formatYouTubeUrl = (url) => {
 };
 
 const Videos = ({ videos = [] }) => {
-  console.log("Videos array:", videos);
-
   return (
     <div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 px-2 gap-10 my-10">

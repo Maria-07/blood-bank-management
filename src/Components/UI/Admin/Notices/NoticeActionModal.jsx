@@ -7,8 +7,6 @@ import NoticeDeleteModal from "./NoticeDeleteModal";
 import NoticeEditModal from "./NoticeEditModal";
 
 const NoticeActionModal = ({ record, refetch }) => {
-  // console.log(record, "record");
-
   const [EditNotice, setEditNotice] = useState(false);
   const handleEditNotice = () => {
     setEditNotice(!EditNotice);

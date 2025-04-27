@@ -17,8 +17,6 @@ const DownloadReport = () => {
   const admin = "admin";
   const record = {};
 
-  console.log(user);
-
   const {
     address,
     bloodDonationCount,
@@ -91,11 +89,17 @@ const DownloadReport = () => {
         ref={contentRef}
         className="border rounded-md shadow-md p-3 mt-5 mb-10"
       >
-        <div className="">
-          {" "}
-          <div className="flex items-center justify-between">
-            <h1 className="text-xl font-semibold tracking-tight">Report</h1>
-          </div>{" "}
+        <div className="bg-primary2 p-3 w-full rounded-t-lg text-center text-white font-bold pt-5 text-xl">
+          হিমোগ্লোবিন
+          <h1 className="text-base my-3 text-white">
+            মানবতার শ্রেষ্ঠ দান, রক্ত দিয়ে বাঁচাই প্রাণ
+          </h1>
+        </div>
+
+        <div className="flex items-center justify-center mt-2">
+          <h1 className="text-lg tracking-tight  border-[1px] rounded-md shadow-md text-primary px-3">
+            Blood Report
+          </h1>
         </div>
 
         <div className="bg-gray-200 pt-[1px] my-3"></div>
