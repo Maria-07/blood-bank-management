@@ -302,7 +302,7 @@ const DownloadReport = () => {
           </div>
           <div className="my-5  italic ">
                  <h1 className="text-sm mb-2 ">This is a system-generated report, No signature is required.</h1>
-                 <h1 className="text-[13px] text-accent w-[80%]"> Created under the “Hemoglobin” initiative by the Deputy Commissioner's Office, Nilphamari, with funding from the Zilla Parishad, Nilphamari.
+                 <h1 className="text-[13px] text-accent w-[80%]"> Created under the &apos;Hemoglobin&apos; initiative by the Deputy Commissioner's Office, Nilphamari, with funding from the Zilla Parishad, Nilphamari.
                  </h1>
                 </div>
         </div>
