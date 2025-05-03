@@ -34,19 +34,22 @@ const CampaignCard = ({ campaign }) => {
                 }
                 width={200}
                 height={200}
-                alt="Picture of the author"
+                alt="Picture of the Campaign"
               />
             </div>
             <div
               onClick={() => handleCampaignDetailModal()}
               className="my-1 p-2"
             >
-              <h1 className="mb-4 mt-2 text-lg font-semibold">{name}</h1>
+              <h1 className="mb-4 mt-2 text-lg font-semibold">
+                
+              {name.length > 35 ? `${name.slice(0, 35)}...` : name}
+                </h1>
               <div className="flex gap-2 my-3">
                 <FaMapLocationDot className="text-primary text-xl" />{" "}
                 <div className="text-sm text-accent ">
                   {" "}
-                  {address.length > 45 ? `${address.slice(0, 45)}...` : address}
+                  {address.length > 35 ? `${address.slice(0, 35)}...` : address}
                 </div>
               </div>
               <div className="flex gap-2 my-3">

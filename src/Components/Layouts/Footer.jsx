@@ -8,7 +8,7 @@ const Footer = () => {
     <div>
       <div className="bg-primary px-10 py-16 ">
         <div className="sm:w-[80%]  sm:mx-auto">
-          <div className="grid sm:grid-cols-5 md:grid-cols-5 grid-cols-3 gap-5 mb-5">
+          <div className="grid sm:grid-cols-4 md:grid-cols-4 grid-cols-2 gap-5 mb-5">
             <div className="mx-auto">
               <Link href={"/"}>
                 <Image
@@ -40,7 +40,7 @@ const Footer = () => {
               </Link>
             </div>
 
-            <div className="mx-auto">
+            {/* <div className="mx-auto">
               <h2 className="text-white text-lg font-semibold mb-1">Legal</h2>
               <Link href={"/"}>
                 <h2 className="text-white text-sm mb-1">Terms & Conditions</h2>
@@ -51,13 +51,13 @@ const Footer = () => {
               <Link href={"/"}>
                 <h2 className="text-white text-sm mb-1">Cookie Policy</h2>
               </Link>
-            </div>
+            </div> */}
             <div className="mx-auto">
               <h2 className="text-white font-semibold">
                 Don&apos;t have an account?
               </h2>
 
-              <Link href={"/signup"}>
+              <Link href={"/register"}>
                 <h2 className="text-white text-sm mb-1">Sign Up</h2>
               </Link>
               <Link href={"/login"}>
@@ -66,11 +66,11 @@ const Footer = () => {
             </div>
 
             <div className="mx-auto">
-              <h2 className="text-white text-lg font-semibold mb-1">Company</h2>
-              <Link href={"/"}>
-                <h2 className="text-white text-sm mb-1">About US</h2>
+              <h2 className="text-white text-lg font-semibold mb-1"></h2>
+              <Link href={"/about"}>
+                <h2 className="text-white text-sm mb-1">About Us</h2>
               </Link>
-              <Link href={"/"}>
+              <Link href={"/contact"}>
                 <h2 className="text-white text-sm mb-1">Contact</h2>
               </Link>
               <div className="flex items-center gap-5 my-4">
@@ -82,13 +82,6 @@ const Footer = () => {
             </div>
           </div>
         </div>
-      </div>
-      <div className="bg-black">
-        {" "}
-        <p className="text-gray-500 text-sm text-center py-5">
-          Copyright © 2022 all rights reserved | This whole project sponsor by
-          <span className="text-primary"> Blood bank 🩸</span>
-        </p>
       </div>
     </div>
   );

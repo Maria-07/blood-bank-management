@@ -6,6 +6,7 @@ import Image from "next/image";
 import banner from "@/src/assets/Image/logo/heroBanner.png";
 import Count from "./Count";
 import { useAuth } from "@/src/Hook/AuthContext";
+import Link from "next/link";
 
 const HeroBanner = () => {
   const { token } = useAuth();
@@ -31,9 +32,10 @@ const HeroBanner = () => {
               </p>
               {!token && (
                 <div className="my-3">
-                  <button className="bb-input-button">
+                  <Link href={'/register'}>  <button className="bb-input-button">
                     Register to Save Lives
-                  </button>
+                  </button></Link>
+                
                 </div>
               )}
               <div className="my-7">

@@ -83,9 +83,10 @@ const CampaignDetailsModal = ({ handleClose, clicked, record }) => {
                       <span className="text-black font-semibold">
                         Address :
                       </span>{" "}
-                      {address}
+                     
+                      {address.length > 55 ? `${address.slice(0, 55)}...` : address}
                     </div>
-                  </div>{" "}
+                  </div>
                   <div className="flex gap-2 my-3">
                     <MdOutlineDateRange className="text-primary text-xl" />{" "}
                     <div className="text-sm text-accent ">

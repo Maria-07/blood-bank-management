@@ -125,10 +125,10 @@ const DownloadReport = () => {
 
                 <div>
                   <h1 className="text-capitalize flex items-center gap-1 text-sm ">
-                    <span className="font-semibold  text-lg">{fullName}</span>#
-                    {code}
+                    <span className="font-semibold  text-lg">{fullName}</span>
                   </h1>
-
+<h6 className="text-xs">#
+{code}</h6>
                   <h2 className="text-capitalize text-accent text-sm font-semibold">
                     {userType}
                   </h2>
@@ -275,7 +275,7 @@ const DownloadReport = () => {
                         {lastDonationTime?.split("T")[0]}
                       </h6>
                     </div>
-                    <div>
+                    {/* <div>
                       <h1 className="text-xs text-accent">
                         Blood Donation Status
                       </h1>
@@ -292,12 +292,19 @@ const DownloadReport = () => {
                           </span>
                         )}
                       </h6>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
+
+               
               </div>
             </div>
           </div>
+          <div className="my-5  italic ">
+                 <h1 className="text-sm mb-2 ">This is a system-generated report, No signature is required.</h1>
+                 <h1 className="text-[13px] text-accent w-[80%]"> Created under the “Hemoglobin” initiative by the Deputy Commissioner's Office, Nilphamari, with funding from the Zilla Parishad, Nilphamari.
+                 </h1>
+                </div>
         </div>
       </div>
     </div>

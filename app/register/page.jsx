@@ -12,7 +12,7 @@ const RegistrationPage = () => {
         <div className="grid lg:grid-cols-3 grid-cols-1">
           <div className="flex items-center justify-center ">
             {" "}
-            <div className="mx-auto my-auto px-5 sm:py-20  border-r-[1px]">
+            <div className="mx-auto my-auto px-5 sm:py-32  border-r-[1px]">
               <Image
                 src={blood}
                 // src={register}
@@ -27,15 +27,9 @@ const RegistrationPage = () => {
                   WELCOME To Hemoglobin
                 </h1>
                 <h2 className="text-center">
-                  Join Our Life-Saving Mission – Register Today! 🩸❤️
+                  Join Our Life-Saving Mission – Register Today!
                 </h2>
-                <div className="text-sm text-gray-600 my-5">
-                  Every drop of blood has the power to save a life. By creating
-                  an account with our blood bank, you are taking a step toward
-                  becoming a real-life hero. Thousands of people, including
-                  accident victims, cancer patients, and those undergoing
-                  surgery, rely on the generosity of donors like you.
-                  <br />{" "}
+                <div className="text-sm text-gray-600 mb-5">
                   <p className="my-2">
                     When you register, you become part of a compassionate
                     community that stands together to make a difference. Whether
@@ -44,7 +38,7 @@ const RegistrationPage = () => {
                   </p>{" "}
                   Sign up today and be the reason someone gets a second chance
                   at life. Together, we can build a future where no one suffers
-                  due to a lack of blood. 💪🔥
+                  due to a lack of blood. 
                   <p className="text-base font-semibold my-1">
                     Donate Blood. Save Lives. Make an Impact.
                   </p>

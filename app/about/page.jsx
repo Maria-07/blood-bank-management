@@ -30,7 +30,7 @@ const AboutPage = () => {
               <span className="text-xl font-semibold text-secondary">
                 Hemoglobin
               </span>
-              is a digital blood donation platform initiated for the people of
+              {" "}is a digital blood donation platform initiated for the people of
               Nilphamari District, aiming to ensure fast, easy, and effective
               access to blood services. This initiative has been established and
               is operated under the personal vision, direct guidance, and strong
@@ -44,8 +44,8 @@ const AboutPage = () => {
               to push this humanitarian effort forward.
             </div>
             <div className="border-[1px] sm:px-5 px-1 my-20 rounded-sm shadow-md pt-5 pb-16">
-              <h1 className="text-xl font-semibold my-10 text-center">
-                🩸 Why This Platform Was Needed
+              <h1 className="text-xl font-semibold uppercase my-10 text-center">
+               Why This Platform Was Needed?
               </h1>
               <div className="flex gap-2 mx-7 my-5 pl-5 border-primary border-l-[5px]">
                 Blood donation is a noble act — not only does it help save
@@ -63,9 +63,9 @@ const AboutPage = () => {
                 awareness about blood donation.
               </div>
             </div>
-            <div className="border-[1px] sm:p-5 p-1 my-20 rounded-sm shadow-md">
-              <h1 className="text-xl font-semibold text-center my-5">
-                👥 Our Stakeholders
+            <div className=" sm:p-5 p-1 my-20 ">
+              <h1 className="text-xl font-semibold text-center my-5 uppercase ">
+                 Our Stakeholders
               </h1>
 
               <div className="ml-7 my-4">
@@ -73,7 +73,7 @@ const AboutPage = () => {
                   This initiative involves three key groups:
                 </h2> */}
               </div>
-              <div className="grid sm:grid-cols-3 grid-cols-1 gap-2">
+              <div className="grid sm:grid-cols-2 grid-cols-1 gap-2">
                 <div>
                   <div className="ml-7 my-4 p-5 rounded-md border h-[340px] bg-primary text-white">
                     <h2 className="text-lg font-semibold">
@@ -103,13 +103,13 @@ const AboutPage = () => {
                   </div>
                 </div>
                 <div>
-                  <div className="ml-7 my-4 p-5 rounded-md border h-[340px]">
+                  <div className="ml-7 my-4 p-5 h-[160px] rounded-md border ">
                     <h2 className="text-lg font-semibold">
                       Bangladesh Scouts – Nilphamari – Act as volunteers in:
                     </h2>
                     <div className="flex items-center gap-2  mt-2">
                       <TbPointFilled className="text-sm" /> Blood group
-                      identification at camps
+                      identification at campaign
                     </div>
                     <div className="flex items-center gap-2  mt-2">
                       <TbPointFilled className="text-sm" /> Uploading data into
@@ -119,10 +119,8 @@ const AboutPage = () => {
                       <TbPointFilled className="text-sm" /> Conducting awareness
                       campaigns
                     </div>
-                  </div>
-                </div>
-                <div>
-                  <div className="ml-7 my-4 p-5 rounded-md border h-[340px] bg-primary text-white">
+                  </div>  <div className="ml-7 my-4 p-5 rounded-md border h-[160px] bg-sky-600
+                   text-white">
                     <h2 className="text-lg font-semibold">
                       Platform Users – General public who:
                     </h2>
@@ -130,11 +128,12 @@ const AboutPage = () => {
                       <TbPointFilled className="text-sm" /> Register as donors
                     </div>
                     <div className="flex items-center gap-2   mt-2">
-                      <TbPointFilled className="text-lg" /> Search for and
+                      <TbPointFilled className="text-sm" /> Search for and
                       contact blood donors during emergencies
                     </div>
                   </div>
                 </div>
+             
               </div>
             </div>
           </div>

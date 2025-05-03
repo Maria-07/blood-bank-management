@@ -34,8 +34,7 @@ const Campaigns = () => {
           Campaigns
         </h1>
         <p className="text-lg md:text-xl text-accent font-secondary mt-4 lg:px-24">
-          Dive into our latest blogs, explore the fascinating world of
-          literature, and let the words ignite your imagination.
+        Saving a life won’t cost you anything. Go ahead and donate blood.
         </p>
       </div>
 

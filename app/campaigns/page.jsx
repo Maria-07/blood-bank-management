@@ -22,8 +22,7 @@ const CampaignsPage = () => {
                 </h1>
                 <hr className="p-[2px] bg-primary w-[22%]" />
                 <p className="text-sm text-accent  my-3">
-                  Search for blood donors in your area quickly and conveniently.
-                  Filter results by blood group.
+                Every drop of blood counts. By donating blood, you’re not just giving a part of yourself; you’re giving someone a second chance at life. With every donation, you can save up to three lives. It’s a simple act that can make an extraordinary difference. Join the movement today—be a hero, share the gift of life, and inspire others to do the same. Donate blood, save lives, and make the world a healthier place for all.
                 </p>
               </div>
 
