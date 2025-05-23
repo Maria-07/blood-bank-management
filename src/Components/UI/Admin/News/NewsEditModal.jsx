@@ -29,9 +29,9 @@ const NewsEditModal = ({ handleClose, record, clicked, refetch }) => {
   const onSubmit = async (data) => {
     try {
       const response = await updateNews({ ...data, id: record?.id });
-
-      if (response?.data?.isSuccess) {
-        toast.success(response?.data?.message);
+      
+      if (response?.data?.data?.isSuccess) {
+        toast.success(response?.data?.data?.message);
         handleClose();
         refetch();
       } else {

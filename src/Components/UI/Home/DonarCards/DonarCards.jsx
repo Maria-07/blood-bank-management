@@ -48,8 +48,8 @@ const DonarCards = () => {
           handleFilteredData={handleFilteredData}
         />
       </div>
-      <div className="gap-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 2xl:grid-cols-4 mt-20">
-        {donors?.slice(0, 5).map((data, i) => (
+      <div className="gap-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-3  mt-20">
+        {donors?.slice(0, 3).map((data, i) => (
           <DonarCard record={data} key={i}></DonarCard>
         ))}
       </div>

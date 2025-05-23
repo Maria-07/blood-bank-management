@@ -87,11 +87,10 @@ const Navbar = () => {
                                 {" "}
                                 <Link
                                   className="text-white hover:text-white font-semibold flex items-center gap-2"
-                                  href={`${
-                                    userType === "Volunteer"
+                                  href={`${userType === "Volunteer"
                                       ? "/admin/dashboard/my-campaign/"
                                       : "/admin/dashboard/campaigns/"
-                                  }`}
+                                    }`}
                                 >
                                   <MdDashboard /> Dashboard
                                 </Link>{" "}
@@ -271,16 +270,22 @@ const Navbar = () => {
                   overlay={
                     <div className="bg-primary py-3 px-4 w-[200px] border shadow-md rounded-sm  ">
                       <div>
-                        {(userType === "Admin" || userType === "Volunteer") && (
-                          <button>
-                            <Link
-                              className="text-white hover:text-white font-semibold flex items-center gap-2"
-                              href={"/admin/dashboard/campaigns/"}
-                            >
-                              <MdDashboard /> Dashboard
-                            </Link>{" "}
-                          </button>
-                        )}
+                        {token &&
+                          (userType === "Admin" ||
+                            userType === "Volunteer") && (
+                            <button>
+                              {" "}
+                              <Link
+                                className="text-white hover:text-white font-semibold flex items-center gap-2"
+                                href={`${userType === "Volunteer"
+                                    ? "/admin/dashboard/my-campaign/"
+                                    : "/admin/dashboard/campaigns/"
+                                  }`}
+                              >
+                                <MdDashboard /> Dashboard
+                              </Link>{" "}
+                            </button>
+                          )}
                         <button>
                           <Link
                             className="text-white hover:text-white font-semibold flex items-center gap-2"
@@ -289,15 +294,16 @@ const Navbar = () => {
                             <CgProfile /> My Profile
                           </Link>
                         </button>
-                        <button>
-                          <Link
-                            className="text-white hover:text-white font-semibold flex items-center gap-2"
-                            href={"/download-id"}
-                          >
-                            <FaIdBadge /> Download Id Card
-                          </Link>
-                        </button>
-
+                        {token && userType === "Volunteer" && (
+                          <button>
+                            <Link
+                              className="text-white hover:text-white font-semibold flex items-center gap-2"
+                              href={"/download-id"}
+                            >
+                              <FaIdBadge /> Download Id Card
+                            </Link>
+                          </button>
+                        )}
                         <button>
                           <Link
                             className="text-white hover:text-white font-semibold flex items-center gap-2"
@@ -306,7 +312,16 @@ const Navbar = () => {
                             <FaFileDownload /> Download Report
                           </Link>
                         </button>
-
+                        {token && userType === "Admin" && (
+                          <button>
+                            <Link
+                              className="text-white hover:text-white font-semibold flex items-center gap-2"
+                              href={"/admin/change-password"}
+                            >
+                              <FaFileDownload /> Change Password
+                            </Link>
+                          </button>
+                        )}
                         <hr className="mt-5 mb-3" />
                         <div className="">
                           <>
@@ -323,16 +338,17 @@ const Navbar = () => {
                   }
                   placement="bottomRight"
                 >
-                  <button className="">
-                    {" "}
-                    <Image
-                      src={logo}
-                      width={40}
-                      height={40}
-                      className="rounded-full"
+                  <div className="">
+                    <img
+                      src={
+                        user?.imageUrl
+                          ? `${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}/${user?.imageUrl}`
+                          : "https://static.vecteezy.com/system/resources/thumbnails/004/607/791/small_2x/man-face-emotive-icon-smiling-male-character-in-blue-shirt-flat-illustration-isolated-on-white-happy-human-psychological-portrait-positive-emotions-user-avatar-for-app-web-design-vector.jpg"
+                      }
+                      className="rounded-full h-[40px] w-[40px] overflow-hidden"
                       alt="Picture of the author"
                     />
-                  </button>
+                  </div>
                 </Dropdown>
               </div>
             ) : (

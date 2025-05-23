@@ -45,7 +45,7 @@ const AboutPage = () => {
             </div>
             <div className="border-[1px] sm:px-5 px-1 my-20 rounded-sm shadow-md pt-5 pb-16">
               <h1 className="text-xl font-semibold uppercase my-10 text-center">
-               Why This Platform Was Needed?
+                Why This Platform Was Needed?
               </h1>
               <div className="flex gap-2 mx-7 my-5 pl-5 border-primary border-l-[5px]">
                 Blood donation is a noble act — not only does it help save
@@ -65,7 +65,7 @@ const AboutPage = () => {
             </div>
             <div className=" sm:p-5 p-1 my-20 ">
               <h1 className="text-xl font-semibold text-center my-5 uppercase ">
-                 Our Stakeholders
+                Our Stakeholders
               </h1>
 
               <div className="ml-7 my-4">
@@ -74,8 +74,8 @@ const AboutPage = () => {
                 </h2> */}
               </div>
               <div className="grid sm:grid-cols-2 grid-cols-1 gap-2">
-                <div>
-                  <div className="ml-7 my-4 p-5 rounded-md border h-[340px] bg-primary text-white">
+               
+                  <div className="sm:row-span-2 h-[100%] ml-7 my-4 p-5 rounded-md border  bg-primary text-white">
                     <h2 className="text-lg font-semibold">
                       District Administration – Led by the Deputy Commissioner
                       and supported by the Civil Surgeon’s Office, this team
@@ -101,9 +101,8 @@ const AboutPage = () => {
                       donors and issuing digital ID cards
                     </div>
                   </div>
-                </div>
-                <div>
-                  <div className="ml-7 my-4 p-5 h-[160px] rounded-md border ">
+              
+                  <div className="ml-7 my-4 p-5 h-[100%] rounded-md border ">
                     <h2 className="text-lg font-semibold">
                       Bangladesh Scouts – Nilphamari – Act as volunteers in:
                     </h2>
@@ -119,7 +118,8 @@ const AboutPage = () => {
                       <TbPointFilled className="text-sm" /> Conducting awareness
                       campaigns
                     </div>
-                  </div>  <div className="ml-7 my-4 p-5 rounded-md border h-[160px] bg-sky-600
+                  </div>  
+                  <div className="ml-7 my-4 p-5 h-[100%] rounded-md border  bg-sky-600
                    text-white">
                     <h2 className="text-lg font-semibold">
                       Platform Users – General public who:
@@ -132,8 +132,8 @@ const AboutPage = () => {
                       contact blood donors during emergencies
                     </div>
                   </div>
-                </div>
-             
+               
+
               </div>
             </div>
           </div>

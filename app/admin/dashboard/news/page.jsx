@@ -71,6 +71,7 @@ const NewsPage = () => {
             key !== "createTime" &&
             key !== "lastModifiedTime" &&
             key !== "lastModifiedBy" &&
+            key !== "thumbnailUrl" &&
             key !== "createdBy"
         )
         .map((key, index) => ({

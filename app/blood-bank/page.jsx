@@ -60,7 +60,7 @@ const BloodBankPage = () => {
             />
           </div>
           {isLoading && <Loader></Loader>}
-          <div className="gap-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 2xl:grid-cols-4 mt-20">
+          <div className="gap-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-3 mt-20">
             {donors?.map((data, i) => (
               <DonarCard record={data} key={i}></DonarCard>
             ))}

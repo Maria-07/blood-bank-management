@@ -3,10 +3,10 @@ import { Card, Image } from "antd";
 
 const Initiator = ({ record }) => {
   return (
-    <div>
+    <div className="">
       <Card
         hoverable
-        className="bg-popover border-[1px] border-gray-200 shadow-md p-5"
+        className="bg-popover border-[1px] border-gray-200 shadow-md p-5 h-[320px]"
       >
         {/* <div className="flex items-end justify-end">
           <h1 className="text-4xl font-bold text-primary">AB+</h1>
@@ -22,7 +22,7 @@ const Initiator = ({ record }) => {
             }
             width={180}
             height={180}
-            alt="Picture of the author"
+            alt="Picture of the Officials"
           ></Image>
         </div>
         <div className="text-center mt-5">

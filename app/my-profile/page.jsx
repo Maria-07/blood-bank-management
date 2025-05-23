@@ -63,7 +63,7 @@ const MyProfilePage = () => {
       type === "upazila"
         ? setUpazilas(data?.data || [])
         : setUnions(data?.data || []);
-    } catch (error) {}
+    } catch (error) { }
   };
 
   useEffect(() => {
@@ -109,6 +109,18 @@ const MyProfilePage = () => {
       }
     }
   }, [unions, user?.union, setValue]);
+
+  const validateFileSize = (files) => {
+    const maxSize = 300 * 1024; // 400 KB
+
+    for (let file of files) {
+      if (file.size > maxSize) {
+        return "Image Size must be less than 300 KB.";
+      }
+    }
+
+    return true;
+  };
 
   // Submit handler
   const onSubmit = async (data) => {
@@ -396,17 +408,17 @@ const MyProfilePage = () => {
                 )}
                 {(user?.leaderType === "Deputy Commissioner Official" ||
                   user?.leaderType === "") && (
-                  <div>
-                    <h1 className="input-title">Designation</h1>
-                    <input
-                      disabled={!isEdit}
-                      defaultValue={user?.Designation}
-                      type="text"
-                      className="input-border w-full mb-2"
-                      {...register("Designation")}
-                    />
-                  </div>
-                )}
+                    <div>
+                      <h1 className="input-title">Designation</h1>
+                      <input
+                        disabled={!isEdit}
+                        defaultValue={user?.Designation}
+                        type="text"
+                        className="input-border w-full mb-2"
+                        {...register("Designation")}
+                      />
+                    </div>
+                  )}
                 {isEdit && (
                   <>
                     {" "}
@@ -416,9 +428,15 @@ const MyProfilePage = () => {
                         disabled={!isEdit}
                         type="file"
                         className="border rounded-md w-full "
-                        {...register("ProfilePicture")}
+                        {...register("ProfilePicture", {
+                          validate: validateFileSize,
+                        })}
                       />
+                      {errors.ProfilePicture && (
+                        <p className="text-red-500 text-sm">{errors.ProfilePicture.message}</p>
+                      )}
                     </div>
+
                   </>
                 )}
                 {/* Blood Information */}

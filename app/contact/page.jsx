@@ -93,11 +93,11 @@ const ContactPage = () => {
             </div>
           </div>
         </div>
-        <div className="grid grid-cols-2">
+        <div className="grid sm:grid-cols-2 grid-cols-1">
           {" "}
           <div className=" flex items-center justify-center py-10">
-            <div className="mx-auto">
-              <div className="w-[70%] text-accent my-5">
+            <div className="mx-auto sm:text-start text-center">
+              <div className="w-[70%] text-accent my-5 ">
                 {" "}
                 {/* <MdConnectWithoutContact className="text-4xl mb-1 text-primary" /> */}
                 <h1 className="text-3xl font-semibold text-primary2 ">

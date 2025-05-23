@@ -17,6 +17,7 @@ const Images = ({ images }) => {
               alt={imageObj.campaignName || "Campaign Image"}
               preview={true}
               height={200}
+              width="100%"
               className="transition-transform duration-300 hover:scale-105 w-full object-cover"
             />
           </div>

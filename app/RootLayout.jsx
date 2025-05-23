@@ -37,7 +37,7 @@ export default function RootLayout({ children }) {
           <AuthProvider>
             <Provider store={store}>
               <Navbar />
-              <div className="min-h-[70vh]">{children}</div>
+              <div className="min-h-[70vh] p-2 sm:p-0">{children}</div>
               <Footer />
             </Provider>
           </AuthProvider>

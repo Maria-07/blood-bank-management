@@ -14,7 +14,7 @@ const Works = () => {
       <div className="gap-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 2xl:grid-cols-2 my-20">
         <div className="p-5">
           <h1 className=" text-6xl font-semibold  ">How we work</h1>
-          <p className="text-sm text-accent my-2 tracking-wide sm:w-[60%] w-0">
+          <p className="text-sm text-accent my-2 tracking-wide ">
             Our Process: How We Work to Ensure Safe Blood Donation
           </p>
 

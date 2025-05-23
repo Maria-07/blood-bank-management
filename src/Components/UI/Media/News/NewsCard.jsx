@@ -4,19 +4,32 @@ import React from "react";
 import { format } from "date-fns"; // ✅ Import format from date-fns
 
 const NewsCard = ({ news }) => {
-  const { name, description, url, id, createTime } = news;
+
+  const { name, description, url, thumbnailUrl, createTime } = news;
 
   return (
     <div className="border rounded-lg shadow-md overflow-hidden bg-primary text-white min-h-[250px] max-h-[600px] ">
+      {/* Embed the iframe for live news */}
+      <div className=" mb-4 read-only">
+        <Image
+          src={thumbnailUrl !== "" ? thumbnailUrl : 'https://www.dailyjanakantha.com/media/imgAll/2024April/18-2504271834.jpg'}
+          width="100%"
+          height="200px" // Adjust the height based on your needs
+        />
+      </div>
       {/* News Content */}
       <div className="p-4">
         {/* Title */}
-        <Link href={url}>
-          <h2 className="text-lg font-semibold  hover:text-white">
+        <Link href={url} passHref legacyBehavior>
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-lg font-semibold hover:text-white"
+          >
             {name?.length > 80
               ? `${name.slice(0, 80)} ...`
               : name || "News Title Not Available"}
-          </h2>
+          </a>
         </Link>
 
         {/* Date */}

@@ -30,7 +30,7 @@ const NoticePage = () => {
     <div>
       <div>
         <div className="md:w-[90%] sm:mx-auto ">
-          <div className="py-5 bg-[#F2F2F2] rounded-xl shadow-md   px-5 ">
+          {/* <div className="py-5 bg-[#F2F2F2] rounded-xl shadow-md   px-5 ">
             <div className="md:w-[100%] sm:mx-auto grid sm:grid-cols-2 grid-cols-1 gap-3 items-center justify-between">
               <div
                 initial={{ opacity: 0, x: -30 }}
@@ -38,10 +38,8 @@ const NoticePage = () => {
                 transition={{ delay: 0.4 }}
                 className="sm:pl-10"
               >
-                <h1 className="font-bold lg:text-6xl text-3xl font-primary">
-                  Notice
-                </h1>
-                <hr className="p-[2px] bg-primary w-[22%]" />
+                
+             
                 <p className="text-sm text-accent  my-3"></p>
               </div>
 
@@ -59,7 +57,11 @@ const NoticePage = () => {
                 ></Image>
               </div>
             </div>
-          </div>
+          </div> */}
+          <h1 className="font-bold lg:text-5xl text-3xl font-primary">
+            Notice
+          </h1>
+             <hr className="p-[2px] bg-primary w-[10%]" />
 
           <div>
             {allNotice?.map((n, i) => (

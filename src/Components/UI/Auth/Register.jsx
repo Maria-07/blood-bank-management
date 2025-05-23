@@ -37,7 +37,7 @@ const Register = () => {
       type === "upazila"
         ? setUpazilas(data?.data || [])
         : setUnions(data?.data || []);
-    } catch (error) {}
+    } catch (error) { }
   };
 
   useEffect(() => {
@@ -49,6 +49,18 @@ const Register = () => {
       setValue("Union", "");
     }
   }, [watch("Upazila"), setValue]);
+
+  const validateFileSize = (files) => {
+    const maxSize = 300 * 1024; // 400 KB
+
+    for (let file of files) {
+      if (file.size > maxSize) {
+        return "Image Size must be less than 300 KB.";
+      }
+    }
+
+    return true;
+  };
 
   const onSubmit = async (data) => {
     setLoading(true);
@@ -155,22 +167,22 @@ const Register = () => {
             )}
             {(leaderType === "Deputy Commissioner Official" ||
               leaderType === "Civil Surgeon Official") && (
-              <div>
-                <label className="input-title">
-                  Designation<span className="text-rose-600">*</span>
-                </label>
-                <input
-                  type="text"
-                  {...register("Designation", {
-                    required: "Designation is required",
-                  })}
-                  className="input-border w-full mb-2"
-                />
-                {errors.Designation && (
-                  <p className="text-red-500">{errors.Designation.message}</p>
-                )}
-              </div>
-            )}
+                <div>
+                  <label className="input-title">
+                    Designation<span className="text-rose-600">*</span>
+                  </label>
+                  <input
+                    type="text"
+                    {...register("Designation", {
+                      required: "Designation is required",
+                    })}
+                    className="input-border w-full mb-2"
+                  />
+                  {errors.Designation && (
+                    <p className="text-red-500">{errors.Designation.message}</p>
+                  )}
+                </div>
+              )}
 
             {/* Personal Info */}
             <div className="sm:col-span-3">
@@ -332,9 +344,14 @@ const Register = () => {
               <label className="input-title">Profile Picture</label>
               <input
                 type="file"
-                {...register("ProfilePicture")}
+                {...register("ProfilePicture", {
+                  validate: validateFileSize,
+                })}
                 className="w-full mb-2"
               />
+              {errors.ProfilePicture && (
+                <p className="text-red-500 text-sm">{errors.ProfilePicture.message}</p>
+              )}
             </div>
             <div>
               <label className="input-title">NID/Student ID</label>

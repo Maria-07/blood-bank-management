@@ -32,6 +32,7 @@ const MediaUploadAndDeleteModal = ({ handleClose, clicked, record }) => {
   const accessToken = Cookies.get("accessToken");
   const router = useRouter();
   const id = record?.id;
+  const [loading, setLoading] = useState(false);
 
   //! All Media get
   const {
@@ -68,7 +69,7 @@ const MediaUploadAndDeleteModal = ({ handleClose, clicked, record }) => {
       } else {
         toast.error(response?.error?.data?.message);
       }
-    } catch (error) {}
+    } catch (error) { }
   };
 
   const {
@@ -79,6 +80,8 @@ const MediaUploadAndDeleteModal = ({ handleClose, clicked, record }) => {
     setValue,
     formState: { errors },
   } = useForm();
+
+
 
   const tabItems = [
     {
@@ -106,8 +109,12 @@ const MediaUploadAndDeleteModal = ({ handleClose, clicked, record }) => {
                 </span>
               </button>
             </div>
+
             <hr className="my-3" />
-            <div>
+
+            {loading ? (
+              <Loader />
+            ) : (<div>
               {" "}
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4  max-h-[450px] overflow-y-scroll relative">
                 {images?.map((image, index) => (
@@ -117,7 +124,8 @@ const MediaUploadAndDeleteModal = ({ handleClose, clicked, record }) => {
                         src={`${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}/${image?.imageUrl}`}
                         alt=""
                         preview={true}
-                        height={180}
+                        height={200}
+                        width='100%'
                         className="transition-transform duration-300 hover:scale-105"
                       />
                       {/* Delete Button */}
@@ -132,7 +140,8 @@ const MediaUploadAndDeleteModal = ({ handleClose, clicked, record }) => {
                   </div>
                 ))}
               </div>
-            </div>
+            </div>)}
+
           </div>
         </>
       ),
@@ -198,6 +207,7 @@ const MediaUploadAndDeleteModal = ({ handleClose, clicked, record }) => {
   ];
 
   const onSubmit = async (data) => {
+    setLoading(true);
     const formData = new FormData();
 
     Object.entries(data).forEach(([key, value]) => {
@@ -257,6 +267,8 @@ const MediaUploadAndDeleteModal = ({ handleClose, clicked, record }) => {
       }
     } catch (error) {
       toast.error("An unexpected error occurred. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
