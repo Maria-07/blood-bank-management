@@ -6,8 +6,10 @@ import { MdOutlineDateRange } from "react-icons/md";
 import { IoIosPeople } from "react-icons/io";
 import formatDate from "@/src/shared/ReusedFunctions";
 import CampaignDetailsModal from "./CampaignDetailsModal";
+import { useTranslation } from "@/src/Hook/useTranslation";
 
 const CampaignCard = ({ campaign }) => {
+  const { t } = useTranslation();
   const [CampaignDetailModal, setCampaignDetailModal] = useState(false);
 
   const handleCampaignDetailModal = () => {
@@ -42,9 +44,8 @@ const CampaignCard = ({ campaign }) => {
               className="my-1 p-2"
             >
               <h1 className="mb-4 mt-2 text-lg font-semibold">
-                
-              {name.length > 35 ? `${name.slice(0, 35)}...` : name}
-                </h1>
+                {name.length > 30 ? `${name.slice(0, 30)}...` : name}
+              </h1>
               <div className="flex gap-2 my-3">
                 <FaMapLocationDot className="text-primary text-xl" />{" "}
                 <div className="text-sm text-accent ">
@@ -55,21 +56,28 @@ const CampaignCard = ({ campaign }) => {
               <div className="flex gap-2 my-3">
                 <MdOutlineDateRange className="text-primary text-xl" />{" "}
                 <div className="text-sm text-accent ">
-                  <span className="text-black font-semibold">Start at :</span>{" "}
+                  <span className="text-black font-semibold">
+                    {" "}
+                    {t("campaignCard.startAt")} :
+                  </span>{" "}
                   {formatDate(startDate)}
                 </div>
               </div>
               <div className="flex gap-2 my-3">
                 <MdOutlineDateRange className="text-primary text-xl" />{" "}
                 <div className="text-sm text-accent ">
-                  <span className="text-black font-semibold">End at :</span>{" "}
+                  <span className="text-black font-semibold">
+                    {t("campaignCard.endAt")} :
+                  </span>{" "}
                   {formatDate(endDate)}
                 </div>
               </div>
               <div className="flex gap-2 mt-3">
                 <IoIosPeople className="text-primary text-xl" />{" "}
                 <div className="text-sm text-accent ">
-                  <span className="text-black font-semibold">Volunteers :</span>{" "}
+                  <span className="text-black font-semibold">
+                    {t("campaignCard.volunteers")} :
+                  </span>{" "}
                   {volunteerList?.length || 0}
                 </div>
               </div>

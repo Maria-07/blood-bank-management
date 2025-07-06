@@ -14,6 +14,7 @@ import {
 } from "@/src/shared/constance";
 import { BiSolidDonateHeart } from "react-icons/bi";
 import { BsGenderAmbiguous } from "react-icons/bs";
+import { useTranslation } from "../Hook/useTranslation";
 
 const FilteredUserData = ({ role, handleFilteredData }) => {
   // const [userType, setUserType] = useState("");
@@ -23,6 +24,8 @@ const FilteredUserData = ({ role, handleFilteredData }) => {
   const [age, setAge] = useState({ startAge: null, endAge: null });
   const [upazilas, setUpazilas] = useState([]);
   const [unions, setUnions] = useState([]);
+
+  const { t } = useTranslation();
 
   //! Fetch Upazila and Union data
   const fetchData = async (id = 1, type = "upazila") => {
@@ -79,7 +82,8 @@ const FilteredUserData = ({ role, handleFilteredData }) => {
         {/* Blood Group Filter */}
         <div>
           <h1 className="flex items-center gap-1 font-semibold text-sm mb-2 text-black">
-            <MdBloodtype className="text-secondary text-lg" /> Blood Group
+            <MdBloodtype className="text-secondary text-lg" />{" "}
+            {t("filters.bloodGroup")}
           </h1>
           <CustomSearchOption
             item={bloodGroups}
@@ -92,7 +96,8 @@ const FilteredUserData = ({ role, handleFilteredData }) => {
         {/* Blood Group Filter */}
         <div>
           <h1 className="flex items-center gap-1 font-semibold text-sm mb-2 text-black">
-            <FaTransgender className="text-secondary text-lg" /> Gender
+            <FaTransgender className="text-secondary text-lg" />{" "}
+            {t("filters.gender")}
           </h1>
           <CustomSearchOption
             item={gender}
@@ -137,8 +142,8 @@ const FilteredUserData = ({ role, handleFilteredData }) => {
         {role === "admin" && (
           <div>
             <h1 className="flex items-center gap-1 font-semibold text-sm mb-2 text-black">
-              <BiSolidDonateHeart className="text-secondary text-lg" /> Blood
-              Donation Status
+              <BiSolidDonateHeart className="text-secondary text-lg" />{" "}
+              {t("filters.bloodDonationStatus")}
             </h1>
             <CustomSearchOption
               item={DonationStatus}
@@ -153,7 +158,8 @@ const FilteredUserData = ({ role, handleFilteredData }) => {
         {/* Upazila Filter */}
         <div>
           <h1 className="flex items-center gap-1 font-semibold text-sm mb-2 text-black">
-            <LuMapPinned className="text-secondary text-lg" /> Upazila
+            <LuMapPinned className="text-secondary text-lg" />{" "}
+            {t("filters.upazila")}
           </h1>
           <CustomSearchOption
             item={upazilas.map((u) => ({ label: u.name, value: u.id }))}
@@ -166,7 +172,7 @@ const FilteredUserData = ({ role, handleFilteredData }) => {
         {/* Union Filter */}
         <div>
           <h1 className="flex items-center gap-1 font-semibold text-sm mb-2 text-black">
-            <TiPin className="text-secondary text-lg" /> Union
+            <TiPin className="text-secondary text-lg" /> {t("filters.union")}
           </h1>
           <CustomSearchOption
             item={unions.map((u) => ({ label: u.name, value: u.id }))}
@@ -179,7 +185,8 @@ const FilteredUserData = ({ role, handleFilteredData }) => {
         {/* Age Filter */}
         <div>
           <h1 className="flex items-center gap-1 font-semibold text-sm mb-2 text-black">
-            <FaPeopleArrows className="text-secondary text-lg" /> Age
+            <FaPeopleArrows className="text-secondary text-lg" />{" "}
+            {t("filters.age")}
           </h1>
           <CustomSearchOption item={ageRange} option={handleAgeSelection} />
         </div>

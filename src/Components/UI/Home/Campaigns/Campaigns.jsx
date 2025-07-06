@@ -7,10 +7,13 @@ import "swiper/css/navigation";
 import { useGetAllRunningCampaignsQuery } from "@/src/redux/features/campaign/campaignApi";
 import CampaignCard from "../../Campaigns/CampaignCard";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
+import { useTranslation } from "@/src/Hook/useTranslation";
 
 const Campaigns = () => {
   const [page] = useState(1);
   const [size] = useState(100);
+
+  const { t } = useTranslation();
 
   //! Fetch all running campaigns
   const {
@@ -31,10 +34,10 @@ const Campaigns = () => {
     <div className="bg-[#ffe8e8] py-16">
       <div className="max-w-6xl mx-auto px-6 text-center">
         <h1 className="text-4xl md:text-6xl font-bold text-primary">
-          Campaigns
+          {t("campaigns.title")}
         </h1>
         <p className="text-lg md:text-xl text-accent font-secondary mt-4 lg:px-24">
-        Saving a life won’t cost you anything. Go ahead and donate blood.
+          {t("campaigns.subtitle")}
         </p>
       </div>
 

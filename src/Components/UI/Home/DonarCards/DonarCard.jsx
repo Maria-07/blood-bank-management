@@ -1,73 +1,42 @@
 import { Avatar, Card, Image, Tooltip } from "antd";
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import { LuCrown } from "react-icons/lu";
 import { IoLocationOutline } from "react-icons/io5";
 import { FaPhoneAlt } from "react-icons/fa";
-import {
-  FaAccessibleIcon,
-  FaHandHoldingHeart,
-  FaRegHandBackFist,
-} from "react-icons/fa6";
-import {
-  BiDonateBlood,
-  BiDonateHeart,
-  BiSolidDonateHeart,
-} from "react-icons/bi";
+import { FaAccessibleIcon, FaHandHoldingHeart } from "react-icons/fa6";
+import { BiDonateBlood } from "react-icons/bi";
 import { formatDistanceToNow, parseISO } from "date-fns";
 import UserProfileModal from "../../User/UserProfileModal";
 import { useAuth } from "@/src/Hook/AuthContext";
 import { useRouter } from "next/navigation";
+import { useTranslation } from "@/src/Hook/useTranslation";
 
 const DonarCard = ({ record = {} }) => {
   const router = useRouter();
-  const { token, logout } = useAuth();
+  const { token } = useAuth();
+  const { t } = useTranslation(); // get the translation function
   const [UserDetails, setUserDetails] = useState(false);
+
+  console.log(t);
+
   const handleUserDetails = () => {
     setUserDetails(!UserDetails);
   };
 
   const {
-    address,
     bloodDonationCount,
     bloodDonationStatus,
     bloodGroup,
-    dateOfBirth,
-    district,
-    districtName,
-    fatherName,
     fullName,
-    gender,
-    id,
     imageUrl,
-    isApproved,
-    isSuperAdmin,
-    lastDonationTime,
     mobileNumber,
-    motherName,
-    password,
-    profilePicture,
-    union,
-    unionName,
-    upazila,
-    upazilaName,
-    userType,
+    lastDonationDayCount,
+    physicalComplexity,
   } = record;
-
-  const getLastDonationTime = (time) => {
-    if (!time) return "Unknown";
-    const donationDate = parseISO(time);
-    return `${formatDistanceToNow(donationDate, {
-      addSuffix: true,
-    })}`;
-  };
 
   return (
     <div>
-      <Card
-        // onClick={handleUserDetails}
-        hoverable
-        className="bg-popover p-5 h-[280px]"
-      >
+      <Card hoverable className="bg-popover p-5 h-[280px]">
         <div
           className={`relative ${!token ? "cursor-pointer" : ""}`}
           onClick={() => {
@@ -87,25 +56,27 @@ const DonarCard = ({ record = {} }) => {
                 }
                 width={50}
                 height={50}
-                alt="Picture of the author"
-              ></Image>
+                alt={fullName}
+              />
               <div>
                 <h1 className="flex items-center gap-1 text-lg font-semibold">
                   {fullName}
                   <span className="bg-yellow-600 text-white p-[3px] rounded-md">
-                    {" "}
                     <Tooltip
-                      title="Frequent Donar"
+                      title={t("donarCard.frequentDonorTooltip")}
                       colorText="#000"
                       color={"#a78017"}
                       key={1}
                     >
-                      <LuCrown className="text-sm" />{" "}
+                      <LuCrown className="text-sm" />
                     </Tooltip>
-                  </span>{" "}
+                  </span>
                 </h1>
                 <span className="text-xs text-accent">
-                  Last donated: {record.lastDonationDayCount} days ago
+                  {t("donarCard.lastDonatedDaysAgo").replace(
+                    "{{days}}",
+                    lastDonationDayCount ?? "Unknown"
+                  )}
                 </span>
               </div>
             </div>
@@ -113,10 +84,9 @@ const DonarCard = ({ record = {} }) => {
               <h1 className="text-4xl font-bold text-primary">{bloodGroup}</h1>
             </div>
           </div>
+
           <hr className="my-5" />
-          {!token && (
-            <h1 className="absolute left-[10%] top-[60%] text-secondary font-semibold text-center"></h1>
-          )}
+
           <div
             className={`${
               token ? "" : "blur-sm pointer-events-none opacity-50"
@@ -130,7 +100,9 @@ const DonarCard = ({ record = {} }) => {
             <div className="flex items-center justify-between gap-2 my-3">
               <div className="flex items-center gap-1">
                 <FaPhoneAlt className="text-primary text-lg" />
-                <h1 className="ml-1 text-base font-semibold">Contact</h1>
+                <h1 className="ml-1 text-base font-semibold">
+                  {t("donarCard.contact")}
+                </h1>
               </div>
               <div className="text-sm text-accent text-right">
                 {mobileNumber}
@@ -141,7 +113,7 @@ const DonarCard = ({ record = {} }) => {
               <div className="flex items-center gap-1">
                 <BiDonateBlood className="text-primary text-lg" />
                 <h1 className="ml-1 text-base font-semibold">
-                  Number of Donation
+                  {t("donarCard.numberOfDonation")}
                 </h1>
               </div>
               <div className="text-sm text-accent text-right">
@@ -153,11 +125,13 @@ const DonarCard = ({ record = {} }) => {
               <div className="flex items-center gap-1">
                 <FaAccessibleIcon className="text-primary text-lg" />
                 <h1 className="ml-1 text-base font-semibold">
-                  Physical Complexity
+                  {t("donarCard.physicalComplexity")}
                 </h1>
               </div>
               <div className="text-sm text-accent text-right">
-                {record?.physicalComplexity === "Yes" ? "Yes" : "No"}
+                {physicalComplexity === "Yes"
+                  ? t("donarCard.yes")
+                  : t("donarCard.no")}
               </div>
             </div>
 
@@ -165,12 +139,22 @@ const DonarCard = ({ record = {} }) => {
               <div className="flex items-center gap-1">
                 <FaHandHoldingHeart className="text-primary text-lg" />
                 <h1 className="ml-1 text-base font-semibold">
-                  Donation Status
+                  {t("donarCard.donationStatus")}
                 </h1>
               </div>
-              <div className="text-sm text-accent text-right">
-                {bloodDonationStatus}
-              </div>
+              {/* <div className="text-sm text-accent text-right">
+                {localStorage.getItem("language") === "en" ? (
+                  { bloodDonationStatus }
+                ) : (
+                  <>
+                    {bloodDonationStatus === "Interested"
+                      ? "আগ্রহী"
+                      : "আগ্রহী নই"}
+                  </>
+                )}
+              </div> */}
+
+              {t(`donarCard.donationStatusMap.${bloodDonationStatus}`)}
             </div>
           </div>
         </div>
@@ -181,7 +165,7 @@ const DonarCard = ({ record = {} }) => {
           record={record}
           handleClose={handleUserDetails}
           clicked={UserDetails}
-        ></UserProfileModal>
+        />
       )}
     </div>
   );

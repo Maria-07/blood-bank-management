@@ -7,18 +7,36 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { useAuth } from "@/src/Hook/AuthContext";
-import { Dropdown } from "antd";
+import { Dropdown, Switch } from "antd";
 import { MdDashboard } from "react-icons/md";
 import { CgProfile } from "react-icons/cg";
 import { FaFileDownload } from "react-icons/fa";
 import { FaIdBadge } from "react-icons/fa6";
 import NavbarSmallDevice from "./NavbarSmallDevice";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import UserInfo from "@/src/Hook/UserInfo";
+import { useTranslation } from "@/src/Hook/useTranslation";
 
 const Navbar = () => {
   //! User data
   const user = UserInfo();
+
+  const [language, setLanguage] = useState("en");
+
+  useEffect(() => {
+    const storedLang = localStorage.getItem("language") || "en";
+    setLanguage(storedLang);
+  }, []);
+
+  const toggleLanguage = (checked) => {
+    const lang = checked ? "bn" : "en";
+    setLanguage(lang);
+    console.log(lang);
+    localStorage.setItem("language", lang);
+    window.location.reload();
+  };
+
+  console.log(language);
 
   const [open, setOpen] = useState(false);
   const { token, userType, logout, userId } = useAuth();
@@ -30,6 +48,8 @@ const Navbar = () => {
     logout(); // Update context
     router.push("/login");
   };
+
+  const { t } = useTranslation();
 
   return (
     <div>
@@ -55,13 +75,13 @@ const Navbar = () => {
                 className="text-white font-semibold hover:text-primary2 transition-all  border-r-[2px] px-3"
                 href={"/notice/"}
               >
-                Notices
+                {t("navbar.notice")}
               </Link>{" "}
               <Link
                 className="text-white font-semibold hover:text-primary2 transition-all mr-2 border-r-[2px] pr-2"
                 href={"/contact/"}
               >
-                Contact Us
+                {t("navbar.contact")}
               </Link>{" "}
               {!token && (
                 <>
@@ -87,10 +107,11 @@ const Navbar = () => {
                                 {" "}
                                 <Link
                                   className="text-white hover:text-white font-semibold flex items-center gap-2"
-                                  href={`${userType === "Volunteer"
+                                  href={`${
+                                    userType === "Volunteer"
                                       ? "/admin/dashboard/my-campaign/"
                                       : "/admin/dashboard/campaigns/"
-                                    }`}
+                                  }`}
                                 >
                                   <MdDashboard /> Dashboard
                                 </Link>{" "}
@@ -132,6 +153,7 @@ const Navbar = () => {
                               </Link>
                             </button>
                           )}
+
                           <hr className="mt-5 mb-3" />
                           <div className="">
                             <>
@@ -170,6 +192,14 @@ const Navbar = () => {
                   </Dropdown>
                 </div>
               )}
+              <div>
+                <Switch
+                  checked={language === "bn"}
+                  onChange={toggleLanguage}
+                  checkedChildren="বাংলা"
+                  unCheckedChildren="English"
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -181,7 +211,7 @@ const Navbar = () => {
               }
               href={"/"}
             >
-              Home
+              {t("navbar.home")}
             </Link>{" "}
             <Link
               className={
@@ -189,7 +219,7 @@ const Navbar = () => {
               }
               href={"/about/"}
             >
-              About us
+              {t("navbar.about")}
             </Link>
             <Link
               className={
@@ -199,7 +229,7 @@ const Navbar = () => {
               }
               href={"/campaigns/"}
             >
-              Campaigns
+              {t("navbar.campaigns")}
             </Link>
             <div className="mt-[-44px]">
               <Link href={"/"}>
@@ -219,7 +249,7 @@ const Navbar = () => {
               }
               href={"/blood-bank/"}
             >
-              Blood Bank
+              {t("navbar.bloodBank")}
             </Link>
             <Link
               className={
@@ -229,7 +259,7 @@ const Navbar = () => {
               }
               href={"/volunteers/"}
             >
-              Leaders
+              {t("navbar.leaders")}
             </Link>
             <Link
               className={
@@ -237,7 +267,7 @@ const Navbar = () => {
               }
               href={"/media/"}
             >
-              Media
+              {t("navbar.media")}
             </Link>
           </div>
         </div>
@@ -277,10 +307,11 @@ const Navbar = () => {
                               {" "}
                               <Link
                                 className="text-white hover:text-white font-semibold flex items-center gap-2"
-                                href={`${userType === "Volunteer"
+                                href={`${
+                                  userType === "Volunteer"
                                     ? "/admin/dashboard/my-campaign/"
                                     : "/admin/dashboard/campaigns/"
-                                  }`}
+                                }`}
                               >
                                 <MdDashboard /> Dashboard
                               </Link>{" "}
