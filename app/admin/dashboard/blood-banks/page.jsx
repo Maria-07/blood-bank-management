@@ -21,11 +21,18 @@ const BloodBanks = () => {
   const [id, setId] = useState(null);
   const [filteredData, setFilteredData] = useState({});
 
+  // Pagination and row count
   const [pagination, setPagination] = useState({ page: 1, size: 10 });
+  const [pagination2, setPagination2] = useState({ page: 1, size: 10 });
+  const [rowCount, setRowCount] = useState(0);
+  const [rowCount2, setRowCount2] = useState(0);
 
+  // Active tab state
+  const [activeTabKey, setActiveTabKey] = useState("1");
+
+  // Table data
   const [tableData, setTableData] = useState([]);
   const [tableDataPending, setTableDataPending] = useState([]);
-  const [rowCount, setRowCount] = useState(0);
   const [filteredInfo, setFilteredInfo] = useState({});
   const [sortedInfo, setSortedInfo] = useState({});
 
@@ -45,25 +52,40 @@ const BloodBanks = () => {
     data?.map((item, index) => ({ ...item, key: item?.id || index }));
 
   const fetchData = useCallback(
-    async (fetchFunction, setData) => {
+    async (fetchFunction, setData, paginationConfig, setRowCountFn) => {
       try {
         const response = await fetchFunction({
           ...filteredData,
-          pageNo: pagination.page,
-          pageSize: pagination.size,
+          pageNo: paginationConfig.page,
+          pageSize: paginationConfig.size,
         }).unwrap();
 
-        setRowCount(response?.rowCount || 0);
+        setRowCountFn(response?.rowCount || 0);
         setData(tableDataWithKeys(response?.data || []));
-      } catch (error) {}
+      } catch (error) {
+        console.error("Error fetching data", error);
+      }
     },
-    [pagination, filteredData]
+    [filteredData]
   );
 
+  // Fetch only active tab's data
   useEffect(() => {
-    fetchData(getAllApprovedDonors, setTableData);
-    fetchData(getAllPendingDonors, setTableDataPending);
-  }, [fetchData]);
+    if (activeTabKey === "1") {
+      fetchData(getAllApprovedDonors, setTableData, pagination, setRowCount);
+    }
+  }, [fetchData, pagination, activeTabKey]);
+
+  useEffect(() => {
+    if (activeTabKey === "2") {
+      fetchData(
+        getAllPendingDonors,
+        setTableDataPending,
+        pagination2,
+        setRowCount2
+      );
+    }
+  }, [fetchData, pagination2, activeTabKey]);
 
   const handleTableChange = (pagination, filters, sorter) => {
     setFilteredInfo(filters);
@@ -197,22 +219,21 @@ const BloodBanks = () => {
       )}
 
       {isLoading ? (
-        <div>
-          <Loader></Loader>
-        </div>
+        <Loader />
       ) : isError ? (
         <div>Something went wrong </div>
       ) : (
-        <div>
-          {" "}
-          <div className="my-5">
-            <Tabs
-              type="card"
-              items={[
-                {
-                  label: "Approved",
-                  key: 1,
-                  children: (
+        <div className="my-5">
+          <Tabs
+            type="card"
+            activeKey={activeTabKey}
+            onChange={(key) => setActiveTabKey(key)}
+            items={[
+              {
+                label: "Approved",
+                key: "1",
+                children: (
+                  <>
                     <Table
                       pagination={false}
                       size="small"
@@ -222,12 +243,24 @@ const BloodBanks = () => {
                       dataSource={tableData}
                       onChange={handleTableChange}
                     />
-                  ),
-                },
-                {
-                  label: "Pending",
-                  key: 2,
-                  children: (
+                    <div className="my-5">
+                      <Pagination
+                        showSizeChanger
+                        onChange={(page, size) => setPagination({ page, size })}
+                        current={pagination.page}
+                        total={rowCount}
+                        pageSize={pagination.size}
+                        align="end"
+                      />
+                    </div>
+                  </>
+                ),
+              },
+              {
+                label: "Pending",
+                key: "2",
+                children: (
+                  <>
                     <Table
                       pagination={false}
                       size="small"
@@ -237,28 +270,37 @@ const BloodBanks = () => {
                       dataSource={tableDataPending}
                       onChange={handleTableChange}
                     />
-                  ),
-                },
-              ]}
-            />
-          </div>
-          <div className="my-5">
-            <Pagination
-              showSizeChanger
-              onChange={(page, size) => setPagination({ page, size })}
-              current={pagination.page}
-              total={rowCount}
-              pageSize={pagination.size}
-              align="end"
-            />
-          </div>
+                    <div className="my-5">
+                      <Pagination
+                        showSizeChanger
+                        onChange={(page, size) =>
+                          setPagination2({ page, size })
+                        }
+                        current={pagination2.page}
+                        total={rowCount2}
+                        pageSize={pagination2.size}
+                        align="end"
+                      />
+                    </div>
+                  </>
+                ),
+              },
+            ]}
+          />
         </div>
       )}
 
       {deleteModal && (
         <UserDeleteModal
           record={id}
-          refetch={() => fetchData(getAllApprovedDonors, setTableData)}
+          refetch={() =>
+            fetchData(
+              getAllApprovedDonors,
+              setTableData,
+              pagination,
+              setRowCount
+            )
+          }
           clicked={deleteModal}
           handleClose={() => setDeleteModal(false)}
         />

@@ -10,6 +10,7 @@ import {
 import { Pagination, Table, Tabs } from "antd";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useMemo, useState } from "react";
+import { LuFilterX } from "react-icons/lu";
 
 const VolunteerList = () => {
   const router = useRouter();
@@ -22,6 +23,9 @@ const VolunteerList = () => {
   const [rowCount, setRowCount] = useState(0);
   const [page, setPage] = useState(1);
   const [size, setSize] = useState(10);
+  const [rowCount2, setRowCount2] = useState(0);
+  const [page2, setPage2] = useState(1);
+  const [size2, setSize2] = useState(10);
 
   //! Get all volunteers using RTK Query
   const {
@@ -42,13 +46,13 @@ const VolunteerList = () => {
 
   //! Get all volunteers using RTK Query
   const { data, isLoading, isError, refetch } = useGetAllVolunteersQuery({
-    pageNo: page,
-    pageSize: size,
+    pageNo: page2,
+    pageSize: size2,
   });
 
   useEffect(() => {
     if (!isLoading && !isError && data) {
-      setRowCount(data?.rowCount || 0);
+      setRowCount2(data?.rowCount || 0);
       setTableData(data?.data || []);
     }
   }, [data, isLoading, isError]);
@@ -208,8 +212,22 @@ const VolunteerList = () => {
 
   return (
     <div>
-      <div className="flex items-center justify-between gap-2 flex-wrap mb-3 px-1">
+      {/* <div className="flex items-center justify-between gap-2 flex-wrap mb-3 px-1">
         <h1 className="text-primary2 font-semibold text-lg">Leaders</h1>
+      </div> */}
+
+      <div className="flex items-center justify-between flex-wrap gap-2 mb-3 px-1">
+        <h1 className="text-primary2 font-semibold text-lg">Leaders</h1>
+        <button
+          onClick={() => {
+            setFilteredInfo({});
+            setSortedInfo({});
+          }}
+          title="Clear All filters"
+          className="px-2 py-1 bg-red-100 text-red-600 hover:bg-red-200 transition-all rounded text-xs border border-red-300"
+        >
+          <LuFilterX />
+        </button>
       </div>
 
       {isLoading ? (
@@ -226,44 +244,62 @@ const VolunteerList = () => {
                   label: "Approved",
                   key: 1,
                   children: (
-                    <Table
-                      pagination={false}
-                      size="small"
-                      columns={columns2}
-                      bordered
-                      dataSource={tableDataWithKeys2}
-                      onChange={handleChange}
-                    />
+                    <>
+                      <Table
+                        pagination={false}
+                        size="small"
+                        columns={columns2}
+                        bordered
+                        dataSource={tableDataWithKeys2}
+                        onChange={handleChange}
+                      />
+                      <Pagination
+                        showSizeChanger
+                        className="my-3"
+                        onChange={(currentPage, pageSize) => {
+                          setPage(currentPage);
+                          setSize(pageSize);
+                        }}
+                        align="end"
+                        current={page}
+                        total={rowCount}
+                        pageSize={size}
+                      />
+                    </>
                   ),
                 },
                 {
                   label: "Pending",
                   key: 2,
                   children: (
-                    <Table
-                      pagination={false}
-                      size="small"
-                      columns={columns}
-                      bordered
-                      dataSource={tableDataWithKeys}
-                      onChange={handleChange}
-                    />
+                    <>
+                      {" "}
+                      <Table
+                        pagination={false}
+                        size="small"
+                        columns={columns}
+                        bordered
+                        dataSource={tableDataWithKeys}
+                        onChange={handleChange}
+                      />
+                      <Pagination
+                        showSizeChanger
+                        className="my-3"
+                        onChange={(currentPage, pageSize) => {
+                          setPage2(currentPage);
+                          setSize2(pageSize);
+                        }}
+                        align="end"
+                        current={page2}
+                        total={rowCount2}
+                        pageSize={size2}
+                      />
+                    </>
                   ),
                 },
               ]}
             />
           </div>{" "}
-          <Pagination
-            showSizeChanger
-            onChange={(currentPage, pageSize) => {
-              setPage(currentPage);
-              setSize(pageSize);
-            }}
-            align="end"
-            current={page}
-            total={rowCount}
-            pageSize={size}
-          />
         </>
       )}
     </div>

@@ -11,6 +11,7 @@ import { useGetAllCampaignsQuery } from "@/src/redux/features/campaign/campaignA
 import { Pagination, Switch, Table } from "antd";
 import React, { useEffect, useMemo, useState } from "react";
 import { FaPeopleCarryBox, FaPlus } from "react-icons/fa6";
+import { LuFilterX } from "react-icons/lu";
 import { MdPermMedia } from "react-icons/md";
 
 const CampaignList = () => {
@@ -156,6 +157,18 @@ const CampaignList = () => {
             <FaPlus /> Create Campaign
           </button>
         </div>
+      </div>
+      <div className="flex items-end justify-end my-1 pr-2">
+        <button
+          onClick={() => {
+            setFilteredInfo({});
+            setSortedInfo({});
+          }}
+          title="Clear All filters"
+          className="px-2 py-1 bg-red-100 text-red-600 hover:bg-red-200 transition-all rounded text-xs border border-red-300"
+        >
+          <LuFilterX />
+        </button>
       </div>
       <div className="overflow-scroll pb-4">
         {isLoading ? (
