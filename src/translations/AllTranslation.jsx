@@ -186,6 +186,30 @@ export const translations = {
       media: "Media",
       notice: "Notice",
     },
+    volunteerSection: {
+      title: "Join Our Mission",
+      description:
+        "Be part of this life-saving initiative. Every volunteer makes a difference in building a stronger, more connected community.",
+      button: "Become a Volunteer",
+    },
+    cta: {
+      title: "Join Our Mission",
+      description:
+        "Every drop of blood counts. Be part of this life-saving initiative and help us create a stronger, healthier community.",
+      register: "Register as Donor",
+      learnMore: "Learn More",
+    },
+    leaders: {
+      title: "Leaders",
+      subtitle:
+        "Search for blood donors in your area quickly and conveniently. Filter results by blood group.",
+      dcOfficials: "Deputy Commissioner Officials",
+      civilSurgeon: "Civil Surgeon Officials",
+      volunteers: "Volunteers",
+      loadMore: "Load More",
+      applyPrompt: "Apply to be a volunteer instead?",
+      applyHere: "Apply Here",
+    },
   },
 
   bn: {
@@ -372,6 +396,30 @@ export const translations = {
       leaders: "নেতৃবৃন্দ",
       media: "মিডিয়া",
       notice: "নোটিশ",
+    },
+    volunteerSection: {
+      title: "আমাদের মিশনে যোগ দিন",
+      description:
+        "এই জীবন-রক্ষাকারী উদ্যোগের অংশ হোন। প্রতিটি স্বেচ্ছাসেবক একটি শক্তিশালী ও সংযুক্ত সমাজ গঠনে গুরুত্বপূর্ণ ভূমিকা রাখে।",
+      button: "স্বেচ্ছাসেবক হোন",
+    },
+    cta: {
+      title: "আমাদের মিশনে যোগ দিন",
+      description:
+        "প্রতিটি রক্তবিন্দু গুরুত্বপূর্ণ। এই জীবন-রক্ষাকারী উদ্যোগের অংশ হোন এবং একটি শক্তিশালী ও সুস্থ সমাজ গঠনে সাহায্য করুন।",
+      register: "রক্তদাতা হিসাবে নিবন্ধন করুন",
+      learnMore: "আরও জানুন",
+    },
+    leaders: {
+      title: "নেতৃবৃন্দ",
+      subtitle:
+        "আপনার এলাকায় রক্তদাতাদের দ্রুত ও সহজে খুঁজুন। রক্তের গ্রুপ অনুসারে ফিল্টার করুন।",
+      dcOfficials: "ডেপুটি কমিশনার অফিসিয়াল",
+      civilSurgeon: "সিভিল সার্জন অফিসিয়াল",
+      volunteers: "স্বেচ্ছাসেবক",
+      loadMore: "আরও দেখুন",
+      applyPrompt: "স্বেচ্ছাসেবক হতে চান?",
+      applyHere: "এখানে আবেদন করুন",
     },
   },
 };

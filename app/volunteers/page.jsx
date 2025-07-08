@@ -11,6 +11,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
 import Volunteer from "@/src/Components/UI/Volunteers/Volunteers/Volunteer";
 import Link from "next/link";
+import { useTranslation } from "@/src/Hook/useTranslation";
 
 const VolunteerPage = () => {
   const [allOfficialLeaders, setAllOfficialLeaders] = useState([]);
@@ -21,6 +22,8 @@ const VolunteerPage = () => {
   const [size, setSize] = useState(10);
   const [scoutSize, setScoutSize] = useState(12);
   const [swiperInitialized, setSwiperInitialized] = useState(false);
+
+  const { t } = useTranslation();
 
   // Fetch Official Leaders Data
   const {
@@ -75,12 +78,11 @@ const VolunteerPage = () => {
           <div className="md:w-[100%] sm:mx-auto grid sm:grid-cols-2 grid-cols-1 gap-3 items-center justify-between">
             <div className="sm:pl-10">
               <h1 className="font-bold lg:text-7xl text-4xl font-primary">
-                Leaders
+                {t("leaders.title")}
               </h1>
               <hr className="p-[2px] bg-primary w-[22%]" />
               <p className="text-sm text-accent lg:w-[55%] my-3">
-                Search for blood donors in your area quickly and conveniently.
-                Filter results by blood group.
+                {t("leaders.subtitle")}
               </p>
             </div>
 
@@ -96,7 +98,7 @@ const VolunteerPage = () => {
         </div>
 
         <h1 className="lg:text-3xl text-2xl font-semibold text-center mt-20">
-          Deputy Commissioner Officials
+          {t("leaders.dcOfficials")}
         </h1>
 
         <div className="md:w-[90%] sm:mx-auto mt-10 sm:px-0 px-2 mb-20">
@@ -129,7 +131,7 @@ const VolunteerPage = () => {
 
       <div className="my-10 bg-[#F2F2F2] py-10 pb-20">
         <h1 className="lg:text-3xl text-2xl font-semibold text-center mt-10">
-          Civil Surgeon Officials
+          {t("leaders.civilSurgeon")}
         </h1>
         <div className="md:w-[90%] sm:mx-auto mt-10 px-20 ">
           <Swiper
@@ -162,7 +164,7 @@ const VolunteerPage = () => {
       </div>
 
       <h1 className="lg:text-3xl text-2xl font-semibold text-center mt-20 ">
-        Volunteers
+        {t("leaders.volunteers")}
       </h1>
 
       <div className="md:w-[90%] sm:mx-auto my-20 px-20 ">
@@ -177,7 +179,7 @@ const VolunteerPage = () => {
             onClick={() => setScoutSize((prev) => prev + 6)}
             className="px-3 py-1 bg-primary2 text-sm text-white rounded-md shadow-md hover:bg-blue-600"
           >
-            Load More
+            {t("leaders.loadMore")}
           </button>
         </div>
       </div>
@@ -186,11 +188,11 @@ const VolunteerPage = () => {
         <div className="Volunteer-bg gap-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2">
           <div>
             <h1 className="lg:text-6xl text-4xl sm:w-[80%] font-semibold mt-[10%] ml-[10%] p-10">
-              Apply to be a volunteer instead ?
+              {t("leaders.applyPrompt")}
             </h1>
             <div className="ml-[10%] px-12">
               <button className="bb-input-button">
-                <Link href={"/register"}>Apply Here</Link>
+                <Link href={"/register"}>{t("leaders.applyHere")}</Link>
               </button>
             </div>
           </div>

@@ -10,6 +10,7 @@ import {
   FaChartLine,
 } from "react-icons/fa";
 import { useTranslation } from "@/src/Hook/useTranslation";
+import Link from "next/link";
 
 const AboutPage = () => {
   const { t } = useTranslation();
@@ -212,19 +213,22 @@ const AboutPage = () => {
             <FaHeart className="text-white text-2xl" />
           </div>
           <h3 className="text-3xl md:text-4xl font-bold mb-4">
-            Join Our Mission
+            {t("cta.title")}
           </h3>
           <p className="text-xl mb-8 max-w-2xl mx-auto">
-            Every drop of blood counts. Be part of this life-saving initiative
-            and help us create a stronger, healthier community.
+            {t("cta.description")}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="bg-white text-green-600 px-8 py-3 rounded-full font-semibold hover:bg-gray-100 transition-colors">
-              Register as Donor
-            </button>
-            <button className="border-2 border-white text-white px-8 py-3 rounded-full font-semibold hover:bg-white hover:text-green-600 transition-colors">
-              Learn More
-            </button>
+            <Link href="/register">
+              <button className="bg-white text-green-600 px-8 py-3 rounded-full font-semibold hover:bg-gray-100 transition-colors">
+                {t("cta.register")}
+              </button>
+            </Link>
+            <Link href="/media">
+              <button className="border-2 border-white text-white px-8 py-3 rounded-full font-semibold hover:bg-white hover:text-green-600 transition-colors">
+                {t("cta.learnMore")}
+              </button>
+            </Link>
           </div>
         </div>
       </div>

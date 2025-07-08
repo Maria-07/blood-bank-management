@@ -4,6 +4,7 @@ import { Card } from "antd";
 import { TiPointOfInterest } from "react-icons/ti";
 import { useTranslation } from "@/src/Hook/useTranslation";
 import { FaRocket, FaEye, FaBullseye } from "react-icons/fa";
+import Link from "next/link";
 
 const Volunteers = () => {
   const { t } = useTranslation();
@@ -106,14 +107,17 @@ const Volunteers = () => {
         {/* Call to Action */}
         <div className="mt-16 text-center">
           <div className="bg-gradient-to-r from-primary to-secondary text-white p-8 rounded-2xl shadow-xl">
-            <h3 className="text-2xl font-bold mb-4">Join Our Mission</h3>
+            <h3 className="text-2xl font-bold mb-4">
+              {t("volunteerSection.title")}
+            </h3>
             <p className="text-gray-100 mb-6 max-w-2xl mx-auto">
-              Be part of this life-saving initiative. Every volunteer makes a
-              difference in building a stronger, more connected community.
+              {t("volunteerSection.description")}
             </p>
-            <button className="bg-white text-primary px-8 py-3 rounded-full font-semibold hover:bg-gray-100 transition-all duration-300 shadow-lg hover:shadow-xl">
-              Become a Volunteer
-            </button>
+            <Link href="/register">
+              <button className="bg-white text-primary px-8 py-3 rounded-full font-semibold hover:bg-gray-100 transition-all duration-300 shadow-lg hover:shadow-xl">
+                {t("volunteerSection.button")}
+              </button>
+            </Link>
           </div>
         </div>
       </div>
