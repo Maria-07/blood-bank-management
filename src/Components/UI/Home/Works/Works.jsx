@@ -33,20 +33,27 @@ const Works = () => {
           </p>
 
           <div className="gap-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-3 my-10">
-            {steps.map((step, i) => (
-              <div key={i}>
-                <div>{icons[i]}</div>
-                <h1 className="text-lg text-accent font-semibold my-2">
-                  {step.title}
-                </h1>
-                <p className="text-sm text-accent">{step.desc}</p>
-              </div>
-            ))}
+            {Array.isArray(steps) &&
+              steps.map((step, i) => (
+                <div key={`step-${i}`}>
+                  <div>{icons[i] || icons[0]}</div>
+                  <h1 className="text-lg text-accent font-semibold my-2">
+                    {step?.title || `Step ${i + 1}`}
+                  </h1>
+                  <p className="text-sm text-accent">{step?.desc || ""}</p>
+                </div>
+              ))}
           </div>
         </div>
 
         <div>
-          <Image src={work} width={"100%"} height={"100%"} alt="Work Process" />
+          <Image
+            src={work}
+            width={500}
+            height={400}
+            alt="Work Process"
+            className="w-full h-auto"
+          />
         </div>
       </div>
     </div>

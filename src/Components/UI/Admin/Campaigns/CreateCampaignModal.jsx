@@ -11,6 +11,7 @@ import {
 } from "@/src/redux/features/volunteers/volunteers";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { useTranslation } from "@/src/Hook/useTranslation";
 
 const CreateCampaignModal = ({ handleClose, clicked, refetch }) => {
   const router = useRouter();
@@ -21,6 +22,8 @@ const CreateCampaignModal = ({ handleClose, clicked, refetch }) => {
   const [size, setSize] = useState(100);
   const [StartDate, setStartDate] = useState("");
   const [EndDate, setEndDate] = useState("");
+
+  const { t } = useTranslation();
 
   const handleStartDate = (date, dateString) => {
     setStartDate(dateString);
@@ -134,7 +137,7 @@ const CreateCampaignModal = ({ handleClose, clicked, refetch }) => {
         <div>
           <div className="flex items-center justify-between">
             <h1 className="text-xl font-semibold tracking-tight">
-              Create a campaign
+              {t("campaign.title")}
             </h1>
 
             <IoMdCloseCircleOutline
@@ -150,7 +153,8 @@ const CreateCampaignModal = ({ handleClose, clicked, refetch }) => {
               <div className="sm:col-span-2">
                 <label className="label flex items-center">
                   <div className="modal-label-name">
-                    Campaign Name<span className="text-red-600">*</span>
+                    {t("campaign.name")}
+                    <span className="text-red-600">*</span>
                   </div>
                 </label>
                 <input
@@ -168,7 +172,8 @@ const CreateCampaignModal = ({ handleClose, clicked, refetch }) => {
               <div className="sm:col-span-2">
                 <label className="label flex items-center">
                   <div className="modal-label-name">
-                    Institution Name <span className="text-red-600">*</span>
+                    {t("campaign.institute")}{" "}
+                    <span className="text-red-600">*</span>
                   </div>
                 </label>
                 <input
@@ -188,7 +193,8 @@ const CreateCampaignModal = ({ handleClose, clicked, refetch }) => {
               <div>
                 <label className="label flex items-center">
                   <div className="modal-label-name">
-                    Start Date <span className="text-red-600">*</span>
+                    {t("campaign.startDate")}{" "}
+                    <span className="text-red-600">*</span>
                   </div>
                 </label>
                 <DatePicker
@@ -204,7 +210,8 @@ const CreateCampaignModal = ({ handleClose, clicked, refetch }) => {
               <div>
                 <label className="label flex items-center">
                   <div className="modal-label-name">
-                    End Date <span className="text-red-600">*</span>
+                    {t("campaign.endDate")}{" "}
+                    <span className="text-red-600">*</span>
                   </div>
                 </label>
                 <DatePicker
@@ -220,7 +227,8 @@ const CreateCampaignModal = ({ handleClose, clicked, refetch }) => {
               <div className="sm:col-span-2">
                 <label className="label flex items-center">
                   <div className="modal-label-name">
-                    Address <span className="text-red-600">*</span>
+                    {t("campaign.address")}{" "}
+                    <span className="text-red-600">*</span>
                   </div>
                 </label>
                 <input
@@ -237,7 +245,9 @@ const CreateCampaignModal = ({ handleClose, clicked, refetch }) => {
 
               <div className="sm:col-span-2">
                 <label className="label flex items-center">
-                  <div className="modal-label-name">Select Volunteers</div>
+                  <div className="modal-label-name">
+                    {t("campaign.volunteers")}
+                  </div>
                 </label>
                 <Select
                   mode="multiple"
@@ -254,7 +264,7 @@ const CreateCampaignModal = ({ handleClose, clicked, refetch }) => {
 
               <div className="sm:col-span-2">
                 <label className="label flex items-center">
-                  <div className="modal-label-name">Campaign Banner</div>
+                  <div className="modal-label-name">{t("campaign.banner")}</div>
                 </label>
                 <input
                   type="file"
@@ -273,7 +283,7 @@ const CreateCampaignModal = ({ handleClose, clicked, refetch }) => {
               >
                 <MdDone className="text-white bg-sky-700 px-1 py-[2px] text-[28px]" />
                 <span className="px-2 py-[6px] bg-sky-500 transition-all hover:bg-sky-600 text-white text-xs">
-                  Create Campaign
+                  {t("campaign.createBtn")}
                 </span>
               </button>
               <button
@@ -282,7 +292,7 @@ const CreateCampaignModal = ({ handleClose, clicked, refetch }) => {
               >
                 <MdDeleteOutline className="text-white bg-secondary px-1 py-[2px] text-[28px]" />
                 <span className="px-2 py-[6px] bg-primary transition-all hover:bg-secondary text-white text-xs">
-                  Cancel
+                  {t("campaign.cancelBtn")}
                 </span>
               </button>
             </div>

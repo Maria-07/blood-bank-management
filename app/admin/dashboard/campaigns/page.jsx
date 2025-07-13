@@ -7,6 +7,7 @@ import ActionModal from "@/src/Components/UI/Admin/Campaigns/ActionModal";
 import CreateCampaignModal from "@/src/Components/UI/Admin/Campaigns/CreateCampaignModal";
 import MediaUploadAndDeleteModal from "@/src/Components/UI/Admin/Campaigns/MediaUploadAndDeleteModal";
 import VolunteerListAction from "@/src/Components/UI/Admin/Campaigns/VolunteerListAction";
+import { useTranslation } from "@/src/Hook/useTranslation";
 import { useGetAllCampaignsQuery } from "@/src/redux/features/campaign/campaignApi";
 import { Pagination, Switch, Table } from "antd";
 import React, { useEffect, useMemo, useState } from "react";
@@ -25,6 +26,8 @@ const CampaignList = () => {
   const [page, setPage] = useState(1);
   const [size, setSize] = useState(10);
   const [record, setRecord] = useState({});
+
+  const { t } = useTranslation();
 
   //! Get all Campaigns Data
   const { data, isLoading, isError, refetch } = useGetAllCampaignsQuery({
@@ -148,28 +151,31 @@ const CampaignList = () => {
   return (
     <div>
       <div className="flex items-center justify-between gap-2 flex-wrap mb-3 px-1">
-        <h1 className="text-primary2 font-semibold text-lg">Campaigns</h1>
+        <h1 className="text-primary2 font-semibold text-lg">
+          {t("campaign.heading")}
+        </h1>
         <div className="flex items-center gap-2">
+          <div className="flex items-end justify-end my-1 pr-2">
+            <button
+              onClick={() => {
+                setFilteredInfo({});
+                setSortedInfo({});
+              }}
+              title="Clear All filters"
+              className="px-2 py-2 bg-red-100 text-red-600 hover:bg-red-200 transition-all rounded text-xs border border-red-300"
+            >
+              <LuFilterX />
+            </button>
+          </div>
           <button
             onClick={handleCreateCampaign}
             className="bbm-button flex items-center gap-2"
           >
-            <FaPlus /> Create Campaign
+            <FaPlus /> {t("campaign.create")}
           </button>
         </div>
       </div>
-      <div className="flex items-end justify-end my-1 pr-2">
-        <button
-          onClick={() => {
-            setFilteredInfo({});
-            setSortedInfo({});
-          }}
-          title="Clear All filters"
-          className="px-2 py-1 bg-red-100 text-red-600 hover:bg-red-200 transition-all rounded text-xs border border-red-300"
-        >
-          <LuFilterX />
-        </button>
-      </div>
+
       <div className="overflow-scroll pb-4">
         {isLoading ? (
           <div>

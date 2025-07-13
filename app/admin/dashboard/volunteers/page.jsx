@@ -3,6 +3,7 @@
 import Loader from "@/src/Components/Layouts/Loader";
 import ActionModal from "@/src/Components/UI/Admin/Volunteers/ActionModal";
 import PendingVolunteersApproved from "@/src/Components/UI/Admin/Volunteers/PendingVolunteersApproved";
+import { useTranslation } from "@/src/Hook/useTranslation";
 import {
   useGetAllApprovedVolunteersQuery,
   useGetAllVolunteersQuery,
@@ -13,6 +14,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import { LuFilterX } from "react-icons/lu";
 
 const VolunteerList = () => {
+  const { t } = useTranslation();
   const router = useRouter();
   const [tableData, setTableData] = useState([]);
   const [tableData2, setTableData2] = useState([]);
@@ -196,7 +198,7 @@ const VolunteerList = () => {
   //! Add Details column
   if (columns.length) {
     columns.push({
-      title: "Details",
+      title: "Action",
       key: "view",
       render: (_, record) => <ActionModal record={record} />,
     });
@@ -204,7 +206,7 @@ const VolunteerList = () => {
   //! Add Details column
   if (columns2.length) {
     columns2.push({
-      title: "Details",
+      title: "Action",
       key: "view",
       render: (_, record) => <ActionModal record={record} />,
     });
@@ -217,19 +219,22 @@ const VolunteerList = () => {
       </div> */}
 
       <div className="flex items-center justify-between flex-wrap gap-2 mb-3 px-1">
-        <h1 className="text-primary2 font-semibold text-lg">Leaders</h1>
+        <h1 className="text-primary2 font-semibold text-lg">
+          {t("leaders.titleName")}
+        </h1>
         <button
           onClick={() => {
             setFilteredInfo({});
             setSortedInfo({});
           }}
-          title="Clear All filters"
+          title={t("leaders.clearFilterTooltip")}
           className="px-2 py-1 bg-red-100 text-red-600 hover:bg-red-200 transition-all rounded text-xs border border-red-300"
         >
           <LuFilterX />
         </button>
       </div>
-
+      {/*
+       */}
       {isLoading ? (
         <Loader />
       ) : isError ? (
@@ -241,7 +246,7 @@ const VolunteerList = () => {
               type="card"
               items={[
                 {
-                  label: "Approved",
+                  label: t("leaders.approved"),
                   key: 1,
                   children: (
                     <>
@@ -269,7 +274,7 @@ const VolunteerList = () => {
                   ),
                 },
                 {
-                  label: "Pending",
+                  label: t("leaders.pending"),
                   key: 2,
                   children: (
                     <>

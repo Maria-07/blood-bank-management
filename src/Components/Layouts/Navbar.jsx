@@ -86,11 +86,15 @@ const Navbar = () => {
               {!token && (
                 <>
                   <Link href={"/register/"}>
-                    <button className="head-input-button mr-3">Register</button>
+                    <button className="head-input-button mr-3">
+                      {t("navbar.register")}
+                    </button>
                   </Link>
 
                   <Link href={"/login/"}>
-                    <button className="head-input-button">Login</button>
+                    <button className="head-input-button">
+                      {t("navbar.login")}
+                    </button>
                   </Link>
                 </>
               )}
@@ -113,7 +117,7 @@ const Navbar = () => {
                                       : "/admin/dashboard/campaigns/"
                                   }`}
                                 >
-                                  <MdDashboard /> Dashboard
+                                  <MdDashboard /> {t("dropdown.dashboard")}
                                 </Link>{" "}
                               </button>
                             )}
@@ -122,7 +126,7 @@ const Navbar = () => {
                               className="text-white hover:text-white font-semibold flex items-center gap-2"
                               href={"/my-profile"}
                             >
-                              <CgProfile /> My Profile
+                              <CgProfile /> {t("dropdown.myProfile")}
                             </Link>
                           </button>
                           {token && userType === "Volunteer" && (
@@ -131,7 +135,7 @@ const Navbar = () => {
                                 className="text-white hover:text-white font-semibold flex items-center gap-2"
                                 href={"/download-id"}
                               >
-                                <FaIdBadge /> Download Id Card
+                                <FaIdBadge /> {t("dropdown.downloadId")}
                               </Link>
                             </button>
                           )}
@@ -140,7 +144,7 @@ const Navbar = () => {
                               className="text-white hover:text-white font-semibold flex items-center gap-2"
                               href={"/download-report"}
                             >
-                              <FaFileDownload /> Download Report
+                              <FaFileDownload /> {t("dropdown.downloadReport")}
                             </Link>
                           </button>
                           {token && userType === "Admin" && (
@@ -149,7 +153,8 @@ const Navbar = () => {
                                 className="text-white hover:text-white font-semibold flex items-center gap-2"
                                 href={"/admin/change-password"}
                               >
-                                <FaFileDownload /> Change Password
+                                <FaFileDownload />{" "}
+                                {t("dropdown.changePassword")}
                               </Link>
                             </button>
                           )}
@@ -161,7 +166,7 @@ const Navbar = () => {
                                 onClick={handleLogout}
                                 className="head-input-button"
                               >
-                                Logout
+                                {t("dropdown.logout")}
                               </button>
                             </>
                           </div>
@@ -298,78 +303,81 @@ const Navbar = () => {
               <div>
                 <Dropdown
                   overlay={
-                    <div className="bg-primary py-3 px-4 w-[200px] border shadow-md rounded-sm  ">
+                    <div className="bg-primary py-3 px-4 w-[200px] border shadow-md rounded-sm">
                       <div>
                         {token &&
                           (userType === "Admin" ||
                             userType === "Volunteer") && (
                             <button>
-                              {" "}
                               <Link
                                 className="text-white hover:text-white font-semibold flex items-center gap-2"
-                                href={`${
+                                href={
                                   userType === "Volunteer"
                                     ? "/admin/dashboard/my-campaign/"
                                     : "/admin/dashboard/campaigns/"
-                                }`}
+                                }
                               >
-                                <MdDashboard /> Dashboard
-                              </Link>{" "}
+                                <MdDashboard /> {t("dropdown.dashboard")}
+                              </Link>
                             </button>
                           )}
+
                         <button>
                           <Link
                             className="text-white hover:text-white font-semibold flex items-center gap-2"
                             href={"/my-profile"}
                           >
-                            <CgProfile /> My Profile
+                            <CgProfile /> {t("dropdown.myProfile")}
                           </Link>
                         </button>
+
                         {token && userType === "Volunteer" && (
                           <button>
                             <Link
                               className="text-white hover:text-white font-semibold flex items-center gap-2"
                               href={"/download-id"}
                             >
-                              <FaIdBadge /> Download Id Card
+                              <FaIdBadge /> {t("dropdown.downloadId")}
                             </Link>
                           </button>
                         )}
+
                         <button>
                           <Link
                             className="text-white hover:text-white font-semibold flex items-center gap-2"
                             href={"/download-report"}
                           >
-                            <FaFileDownload /> Download Report
+                            <FaFileDownload /> {t("dropdown.downloadReport")}
                           </Link>
                         </button>
+
                         {token && userType === "Admin" && (
                           <button>
                             <Link
                               className="text-white hover:text-white font-semibold flex items-center gap-2"
                               href={"/admin/change-password"}
                             >
-                              <FaFileDownload /> Change Password
+                              <FaFileDownload /> {t("dropdown.changePassword")}
                             </Link>
                           </button>
                         )}
+
                         <hr className="mt-5 mb-3" />
-                        <div className="">
-                          <>
-                            <button
-                              onClick={handleLogout}
-                              className="head-input-button"
-                            >
-                              Logout
-                            </button>
-                          </>
+
+                        <div>
+                          <button
+                            onClick={handleLogout}
+                            className="head-input-button"
+                          >
+                            {t("dropdown.logout")}
+                          </button>
                         </div>
                       </div>
                     </div>
                   }
                   placement="bottomRight"
                 >
-                  <div className="">
+                  <div>
                     <img
                       src={
                         user?.imageUrl
@@ -377,7 +385,7 @@ const Navbar = () => {
                           : "https://static.vecteezy.com/system/resources/thumbnails/004/607/791/small_2x/man-face-emotive-icon-smiling-male-character-in-blue-shirt-flat-illustration-isolated-on-white-happy-human-psychological-portrait-positive-emotions-user-avatar-for-app-web-design-vector.jpg"
                       }
                       className="rounded-full h-[40px] w-[40px] overflow-hidden"
-                      alt="Picture of the author"
+                      alt="Profile"
                     />
                   </div>
                 </Dropdown>
