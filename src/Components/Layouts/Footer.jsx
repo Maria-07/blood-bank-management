@@ -1,9 +1,24 @@
 import Image from "next/image";
 import Link from "next/link";
 import logo from "@/src/assets/Image/logo/logo.png";
-import { FaFacebookF, FaInstagram, FaTwitch, FaTwitter } from "react-icons/fa";
+import {
+  FaFacebookF,
+  FaGooglePlay,
+  FaInstagram,
+  FaMobileAlt,
+  FaTwitch,
+  FaTwitter,
+} from "react-icons/fa";
 
 const Footer = () => {
+  const handleDownload = () => {
+    const link = document.createElement("a");
+    link.href = "/files/hemoglobin-app.apk";
+    link.download = "hemoglobin-app.apk"; // filename for the download
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
   return (
     <div>
       <div className="bg-primary px-10 py-16 ">
@@ -63,6 +78,29 @@ const Footer = () => {
               <Link href={"/login"}>
                 <h2 className="text-white text-sm mb-1">Login</h2>
               </Link>
+
+              <div className="flex flex-col items-start mt-4">
+                <button
+                  onClick={handleDownload}
+                  className="group relative overflow-hidden bg-gradient-to-r from-sky-500 to-sky-700 hover:from-sky-600 hover:to-sky-800 text-white text-xs rounded px-4 py-2 flex items-center gap-2 shadow-lg transition-all duration-300 ease-in-out hover:scale-105"
+                >
+                  <span className="absolute left-0 top-0 w-1 h-full bg-sky-300 group-hover:w-full group-hover:bg-sky-500 transition-all duration-300 opacity-20"></span>
+                  <FaGooglePlay className="text-white text-2xl  animate-pulse group-hover:animate-none" />
+                  <span className="relative z-10 font-semibold text-sm tracking-wide">
+                    Get our mobile app
+                  </span>
+                </button>
+                <span className="text-sky-200 text-xs mt-2 flex items-center gap-1 animate-pulse">
+                  <svg
+                    className="w-3 h-3 text-sky-400"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-13v4h3l-4 5-4-5h3V5h2z" />
+                  </svg>
+                  Download now for exclusive features!
+                </span>
+              </div>
             </div>
 
             <div className="mx-auto">
