@@ -7,7 +7,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { useAuth } from "@/src/Hook/AuthContext";
-import { Dropdown, Switch } from "antd";
+import { Dropdown } from "antd";
 import { MdDashboard } from "react-icons/md";
 import { CgProfile } from "react-icons/cg";
 import { FaFileDownload } from "react-icons/fa";
@@ -16,6 +16,7 @@ import NavbarSmallDevice from "./NavbarSmallDevice";
 import { useEffect, useState } from "react";
 import UserInfo from "@/src/Hook/UserInfo";
 import { useTranslation } from "@/src/Hook/useTranslation";
+import LanguageToggle from "@/src/Components/UI/LanguageToggle";
 
 const Navbar = () => {
   //! User data
@@ -198,11 +199,16 @@ const Navbar = () => {
                 </div>
               )}
               <div>
-                <Switch
+                {/* <Switch
                   checked={language === "bn"}
                   onChange={toggleLanguage}
                   checkedChildren="বাংলা"
-                  unCheckedChildren="English"
+                  unCheckedChildren="English" */}
+
+                <LanguageToggle
+                  language={language}
+                  onLanguageChange={toggleLanguage}
+                  variant="pill"
                 />
               </div>
             </div>

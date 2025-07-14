@@ -10,6 +10,7 @@ import { Pagination, Table } from "antd";
 import Link from "next/link";
 import React, { useEffect, useMemo, useState } from "react";
 import { FaPlus, FaRegFilePdf } from "react-icons/fa6";
+import { useTranslation } from "@/src/Hook/useTranslation";
 
 const NoticePage = () => {
   const [tableData, setTableData] = useState([]);
@@ -21,6 +22,7 @@ const NoticePage = () => {
   const [page, setPage] = useState(1);
   const [size, setSize] = useState(10);
   const [record, setRecord] = useState({});
+  const { t } = useTranslation();
 
   //! Get all Campaigns Data
   const { data, isLoading, isError, refetch } = useGetAllNoticesQuery({
@@ -143,13 +145,15 @@ const NoticePage = () => {
   return (
     <div>
       <div className="flex items-center justify-between gap-2 flex-wrap mb-3 px-1">
-        <h1 className="text-primary2 font-semibold text-lg">Notices</h1>
+        <h1 className="text-primary2 font-semibold text-lg">
+          {t("sidebar.notice")}
+        </h1>
         <div className="flex items-center gap-2">
           <button
             onClick={handleCreateNotice}
             className="bbm-button flex items-center gap-2"
           >
-            <FaPlus /> Create Notice
+            <FaPlus /> {t("notice.createNotice")}
           </button>
         </div>
       </div>
