@@ -15,9 +15,12 @@ const fadeInVariants = {
 
 const HomePage = () => {
   const handleDownload = () => {
-    const downloadUrl =
-      "https://expo.dev/accounts/rajaul2810/projects/hemoglobin/builds/c768b1ef-ac34-44c0-83c3-d4cd64fc3a9e"; // real .apk link
-    window.location.href = downloadUrl;
+    const link = document.createElement("a");
+    link.href = "/files/hemoglobin-app.apk";
+    link.download = "hemoglobin-app.apk"; // filename for the download
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   };
   return (
     <div className="px-2">
