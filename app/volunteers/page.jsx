@@ -7,9 +7,6 @@ import {
   useGetScoutLeadersQuery,
 } from "@/src/redux/features/volunteers/volunteers";
 import Initiator from "@/src/Components/UI/Volunteers/Initiators/Initiator";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, Pagination, Navigation } from "swiper/modules";
-import Volunteer from "@/src/Components/UI/Volunteers/Volunteers/Volunteer";
 import Link from "next/link";
 import { useTranslation } from "@/src/Hook/useTranslation";
 import "slick-carousel/slick/slick.css";
@@ -20,11 +17,9 @@ const VolunteerPage = () => {
   const [allOfficialLeaders, setAllOfficialLeaders] = useState([]);
   const [allCivilOfficeLeaders, setAllCivilOfficeLeaders] = useState([]);
   const [allScoutLeaders, setAllScoutLeaders] = useState([]);
-  const [rowCount, setRowCount] = useState(0);
   const [page, setPage] = useState(1);
   const [size, setSize] = useState(10);
   const [scoutSize, setScoutSize] = useState(12);
-  const [swiperInitialized, setSwiperInitialized] = useState(false);
 
   const { t } = useTranslation();
 
@@ -50,7 +45,6 @@ const VolunteerPage = () => {
 
   useEffect(() => {
     if (!isLoadingOfficial && !isErrorOfficial && OfficialLeaders) {
-      setRowCount(OfficialLeaders?.rowCount || 0);
       setAllOfficialLeaders(OfficialLeaders?.dcOfficeLeaders || []);
       setAllCivilOfficeLeaders(OfficialLeaders?.civilOfficeLeaders || []);
     }
@@ -58,47 +52,23 @@ const VolunteerPage = () => {
 
   useEffect(() => {
     if (!isLoadingScout && !isErrorScout && ScoutLeaders) {
-      setRowCount(ScoutLeaders?.rowCount || 0);
       setAllScoutLeaders(ScoutLeaders?.data || []);
     }
   }, [ScoutLeaders, isLoadingScout, isErrorScout]);
 
-  // Ensure Swiper is initialized after the data has been loaded
-  useEffect(() => {
-    if (allOfficialLeaders.length > 0 || allScoutLeaders.length > 0) {
-      setSwiperInitialized(true);
-    }
-  }, [allOfficialLeaders, allScoutLeaders]);
-
-  if (!swiperInitialized) {
-    return null; // Don't render the swiper component until it's ready
+  if (isLoadingOfficial || isLoadingScout) {
+    return <div>Loading...</div>;
   }
 
   const settings = {
-    dots: true,
+    dots: false,
     infinite: true,
     speed: 500,
-    slidesToShow: 3, // adjust for breakpoints
-    slidesToScroll: 1,
-    autoplay: true,
-    autoplaySpeed: 3000,
+    slidesToShow: 4,
     responsive: [
-      {
-        breakpoint: 1280,
-        settings: { slidesToShow: 4 },
-      },
-      {
-        breakpoint: 1024,
-        settings: { slidesToShow: 3 },
-      },
-      {
-        breakpoint: 768,
-        settings: { slidesToShow: 2 },
-      },
-      {
-        breakpoint: 640,
-        settings: { slidesToShow: 1 },
-      },
+      { breakpoint: 1280, settings: { slidesToShow: 3 } },
+      { breakpoint: 1024, settings: { slidesToShow: 2 } },
+      { breakpoint: 640, settings: { slidesToShow: 1 } },
     ],
   };
 
@@ -110,11 +80,11 @@ const VolunteerPage = () => {
             {/* Left: Text Content */}
             <div className="w-full md:w-2/3 flex flex-col items-start">
               <h1 className="font-extrabold text-3xl md:text-5xl font-primary text-primary mb-3 drop-shadow-sm">
-                {t("leaders.title")}
+                {t("leaderSection.title")}
               </h1>
               <div className="h-2 w-24 bg-gradient-to-r from-primary to-secondary rounded-full mb-4"></div>
               <p className="text-base md:text-lg text-accent mb-4 leading-relaxed">
-                {t("leaders.subtitle")}
+                {t("leaderSection.subtitle")}
               </p>
             </div>
             {/* Right: Image */}
@@ -125,7 +95,7 @@ const VolunteerPage = () => {
                   src={bloodBank}
                   width={260}
                   height={140}
-                  alt={t("leaders.imageAlt")}
+                  alt={t("leaderSection.imageAlt")}
                   className="relative z-10 drop-shadow-xl rounded-xl"
                 />
               </div>
@@ -134,7 +104,7 @@ const VolunteerPage = () => {
         </section>
 
         <h1 className="lg:text-3xl text-2xl font-semibold text-center mt-20">
-          {t("leaders.dcOfficials")}
+          {t("leaderSection.dcOfficials")}
         </h1>
 
         <div className="md:w-[90%] sm:mx-auto mt-10 sm:px-0 px-2 mb-20">
@@ -148,11 +118,11 @@ const VolunteerPage = () => {
         </div>
       </div>
 
-      <div className="my-10 bg-[#F2F2F2] py-10 pb-20">
+      <div className="my-10  bg-[#F2F2F2] py-10 pb-20">
         <h1 className="lg:text-3xl text-2xl font-semibold text-center mt-10">
-          {t("leaders.civilSurgeon")}
+          {t("leaderSection.civilSurgeon")}
         </h1>
-        <div className="md:w-[90%] sm:mx-auto mt-10 px-2">
+        <div className="md:w-[80%] sm:mx-auto mt-10 px-2">
           <Slider {...settings}>
             {allCivilOfficeLeaders?.map((data, i) => (
               <div key={i}>
@@ -164,7 +134,7 @@ const VolunteerPage = () => {
       </div>
 
       <h1 className="lg:text-3xl text-2xl font-semibold text-center mt-20 ">
-        {t("leaders.volunteers")}
+        {t("leaderSection.volunteers")}
       </h1>
 
       <div className="md:w-[90%] sm:mx-auto my-20 px-20 ">
@@ -179,7 +149,7 @@ const VolunteerPage = () => {
             onClick={() => setScoutSize((prev) => prev + 6)}
             className="px-3 py-1 bg-primary2 text-sm text-white rounded-md shadow-md hover:bg-blue-600"
           >
-            {t("leaders.loadMore")}
+            {t("leaderSection.loadMore")}
           </button>
         </div>
       </div>
@@ -188,11 +158,11 @@ const VolunteerPage = () => {
         <div className="Volunteer-bg gap-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2">
           <div>
             <h1 className="lg:text-6xl text-4xl sm:w-[80%] font-semibold mt-[10%] ml-[10%] p-10">
-              {t("leaders.applyPrompt")}
+              {t("leaderSection.applyPrompt")}
             </h1>
             <div className="ml-[10%] px-12">
               <button className="bb-input-button">
-                <Link href={"/register"}>{t("leaders.applyHere")}</Link>
+                <Link href={"/register"}>{t("leaderSection.applyHere")}</Link>
               </button>
             </div>
           </div>

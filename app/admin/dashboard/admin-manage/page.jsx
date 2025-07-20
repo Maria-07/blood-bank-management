@@ -7,6 +7,7 @@ import { Pagination, Table } from "antd";
 import Link from "next/link";
 import React, { useEffect, useMemo, useState } from "react";
 import { FaPlus, FaRegNewspaper } from "react-icons/fa6";
+import { useTranslation } from "@/src/Hook/useTranslation";
 
 const AdminManagePage = () => {
   const [tableData, setTableData] = useState([]);
@@ -17,6 +18,7 @@ const AdminManagePage = () => {
   const [page, setPage] = useState(1);
   const [size, setSize] = useState(10);
   const [record, setRecord] = useState({});
+  const { t } = useTranslation();
 
   //! Get all Campaigns Data
   const { data, isLoading, isError, refetch } = useGetAllAdminQuery({
@@ -181,13 +183,15 @@ const AdminManagePage = () => {
   return (
     <div>
       <div className="flex items-center justify-between gap-2 flex-wrap mb-3 px-1">
-        <h1 className="text-primary2 font-semibold text-lg">Admin</h1>
+        <h1 className="text-primary2 font-semibold text-lg">
+          {t("admin.admin")}
+        </h1>
         <div className="flex items-center gap-2">
           <button
             onClick={handleAddAdmin}
             className="bbm-button flex items-center gap-2"
           >
-            <FaPlus /> Create Admin
+            <FaPlus /> {t("admin.create_admin")}
           </button>
         </div>
       </div>

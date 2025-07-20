@@ -102,7 +102,7 @@ const LanguageToggleDemo = () => {
             <div>
               <Text className="text-white text-lg">
                 Current Language:{" "}
-                <strong>{language === "en" ? "English" : "বাংলা"}</strong>
+                <strong>{language === "en" ? "English" : "BN"}</strong>
               </Text>
               <br />
               <Text className="text-white opacity-90">

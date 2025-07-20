@@ -37,8 +37,6 @@ const Navbar = () => {
     window.location.reload();
   };
 
-  console.log(language);
-
   const [open, setOpen] = useState(false);
   const { token, userType, logout, userId } = useAuth();
 
@@ -202,7 +200,7 @@ const Navbar = () => {
                 {/* <Switch
                   checked={language === "bn"}
                   onChange={toggleLanguage}
-                  checkedChildren="বাংলা"
+                  checkedChildren="BN"
                   unCheckedChildren="English" */}
 
                 <LanguageToggle
@@ -283,6 +281,7 @@ const Navbar = () => {
           </div>
         </div>
       </div>
+      {/* Mobile device  */}
       <div className="lg:hidden block">
         <div className="flex items-center justify-between px-3 py-3">
           <div>
@@ -367,6 +366,19 @@ const Navbar = () => {
                             </Link>
                           </button>
                         )}
+                        <div>
+                          {/* <Switch
+                  checked={language === "bn"}
+                  onChange={toggleLanguage}
+                  checkedChildren="BN"
+                  unCheckedChildren="English" */}
+
+                          <LanguageToggle
+                            language={language}
+                            onLanguageChange={toggleLanguage}
+                            variant="pill"
+                          />
+                        </div>
 
                         <hr className="mt-5 mb-3" />
 

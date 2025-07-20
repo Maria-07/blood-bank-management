@@ -13,9 +13,11 @@ import { FaUsersCog } from "react-icons/fa";
 import { FaPeopleCarryBox } from "react-icons/fa6";
 import { MdOutlineAssignmentReturned } from "react-icons/md";
 import { IoDocumentAttachSharp } from "react-icons/io5";
+import { useTranslation } from "@/src/Hook/useTranslation";
 
 const NavbarSmallDevice = ({ isOpen, setOpen, token, handleLogout }) => {
   const currentRoute = usePathname();
+  const { t } = useTranslation();
 
   const router = useRouter();
 
@@ -69,7 +71,7 @@ const NavbarSmallDevice = ({ isOpen, setOpen, token, handleLogout }) => {
             <span>
               <AiOutlineHome className="text-lg" />
             </span>
-            Home
+            {t("navbar.home")}
           </Link>
           <Link
             className={
@@ -82,7 +84,7 @@ const NavbarSmallDevice = ({ isOpen, setOpen, token, handleLogout }) => {
             <span>
               <AiFillShop className="text-lg" />
             </span>
-            About Us
+            {t("navbar.about")}
           </Link>
           <Link
             className={
@@ -95,7 +97,7 @@ const NavbarSmallDevice = ({ isOpen, setOpen, token, handleLogout }) => {
             <span>
               <FaUsersCog className="text-lg" />
             </span>
-            Campaigns
+            {t("navbar.campaigns")}
           </Link>
           <Link
             className={
@@ -108,7 +110,7 @@ const NavbarSmallDevice = ({ isOpen, setOpen, token, handleLogout }) => {
             <span>
               <MdOutlineAssignmentReturned className="text-lg" />
             </span>
-            Blood Bank
+            {t("navbar.bloodBank")}
           </Link>
           <Link
             className={
@@ -121,7 +123,7 @@ const NavbarSmallDevice = ({ isOpen, setOpen, token, handleLogout }) => {
             <span>
               <FaPeopleCarryBox className="text-lg" />
             </span>
-            Leaders
+            {t("navbar.leaders")}
           </Link>
           <Link
             className={
@@ -134,7 +136,7 @@ const NavbarSmallDevice = ({ isOpen, setOpen, token, handleLogout }) => {
             <span>
               <BiLogoBlogger className="text-lg" />
             </span>
-            Media
+            {t("navbar.media")}
           </Link>
           <Link
             className={
@@ -147,7 +149,7 @@ const NavbarSmallDevice = ({ isOpen, setOpen, token, handleLogout }) => {
             <span>
               <IoDocumentAttachSharp className="text-lg" />
             </span>
-            Notices
+            {t("navbar.notice")}
           </Link>
           <Link
             className={
@@ -160,7 +162,7 @@ const NavbarSmallDevice = ({ isOpen, setOpen, token, handleLogout }) => {
             <span>
               <BsChatSquareText className="text-lg" />
             </span>
-            Contact Us
+            {t("navbar.contact")}
           </Link>
 
           {/* <Link
@@ -187,16 +189,20 @@ const NavbarSmallDevice = ({ isOpen, setOpen, token, handleLogout }) => {
                 onClick={handleLogout}
               >
                 <BiLogOut className="font-semibold text-lg" />
-                Log Out
+                {t("dropdown.logout")}
               </button>
             ) : (
               <div className="flex items-center gap-5">
                 {" "}
                 <Link href={"/login"}>
-                  <button className="input-button w-[100px]">Log In</button>
+                  <button className="input-button w-[100px]">
+                    {t("navbar.login")}
+                  </button>
                 </Link>
                 <Link href={"/register/"}>
-                  <button className="input-button w-[100px]">Register</button>
+                  <button className="input-button w-[100px]">
+                    {t("navbar.register")}
+                  </button>
                 </Link>
               </div>
             )}

@@ -6,10 +6,11 @@ import React from "react";
 import { IoMdCloseCircleOutline } from "react-icons/io";
 import { MdDeleteOutline, MdDone } from "react-icons/md";
 import { toast } from "react-toastify";
+import { useTranslation } from "@/src/Hook/useTranslation";
 
 const NewsDeleteModal = ({ handleClose, clicked, record, refetch }) => {
   const id = record?.id;
-
+  const { t } = useTranslation();
   //! Delete News :
   const [deleteNews, { isLoading }] = useDeleteNewsMutation();
 
@@ -47,7 +48,7 @@ const NewsDeleteModal = ({ handleClose, clicked, record, refetch }) => {
         <div className="">
           <div className="flex items-center justify-between">
             <h1 className="text-xl  font-semibold tracking-tight">
-              Delete News
+              {t("news.deleteNews")}
             </h1>
 
             <IoMdCloseCircleOutline
@@ -60,9 +61,13 @@ const NewsDeleteModal = ({ handleClose, clicked, record, refetch }) => {
 
           <form>
             <div className="text-center text-base my-4">
-              Do you want to delete this{" "}
-              <span className="text-primary font-semibold">{record?.name}</span>{" "}
-              News ? This can not be reclaimed.
+              {" "}
+              {t("news.deleteNewsConfirm")} <br />
+              <br />
+              <span className="text-primary font-semibold">
+                {record?.name}
+              </span>{" "}
+              {t("news.deleteNewsConfirm2")}{" "}
             </div>
             <div className="bg-gray-200 py-[1px] mt-10"></div>
             <div className="flex items-end justify-end gap-2 mt-2">
@@ -73,7 +78,7 @@ const NewsDeleteModal = ({ handleClose, clicked, record, refetch }) => {
               >
                 <MdDone className=" text-white bg-secondary  px-1 py-[2px] text-[28px]" />
                 <span className="px-2 py-[6px] bg-primary transition-all hover:bg-secondary text-white text-xs">
-                  Delete
+                  {t("news.delete")}
                 </span>
               </button>
               <button
@@ -82,7 +87,7 @@ const NewsDeleteModal = ({ handleClose, clicked, record, refetch }) => {
               >
                 <MdDeleteOutline className=" text-white bg-rose-700  px-1 py-[2px] text-[28px]" />
                 <span className="px-2 py-[6px] bg-rose-500 transition-all hover:bg-rose-600 text-white text-xs">
-                  Cancel
+                  {t("news.cancel")}
                 </span>
               </button>
             </div>

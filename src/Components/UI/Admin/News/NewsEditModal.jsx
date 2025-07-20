@@ -6,8 +6,10 @@ import { IoMdCloseCircleOutline } from "react-icons/io";
 import { MdDeleteOutline, MdDone } from "react-icons/md";
 import { toast } from "react-toastify";
 import { useUpdateNewsMutation } from "@/src/redux/features/news/news";
+import { useTranslation } from "@/src/Hook/useTranslation";
 
 const NewsEditModal = ({ handleClose, record, clicked, refetch }) => {
+  const { t } = useTranslation();
   const {
     register,
     handleSubmit,
@@ -29,7 +31,7 @@ const NewsEditModal = ({ handleClose, record, clicked, refetch }) => {
   const onSubmit = async (data) => {
     try {
       const response = await updateNews({ ...data, id: record?.id });
-      
+
       if (response?.data?.data?.isSuccess) {
         toast.success(response?.data?.data?.message);
         handleClose();
@@ -52,7 +54,7 @@ const NewsEditModal = ({ handleClose, record, clicked, refetch }) => {
         <div>
           <div className="flex items-center justify-between">
             <h1 className="text-xl font-semibold tracking-tight">
-              Update a News
+              {t("news.updateNews")}
             </h1>
           </div>
 
@@ -62,7 +64,10 @@ const NewsEditModal = ({ handleClose, record, clicked, refetch }) => {
             <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 my-3 mr-2 gap-x-2 gap-y-3">
               <div className="sm:col-span-2">
                 <label className="label flex items-center">
-                  <div className="modal-label-name">Title</div>
+                  <div className="modal-label-name">
+                    {t("news.title")}
+                    <span className="text-red-600">*</span>
+                  </div>
                 </label>
                 <input
                   type="text"
@@ -72,7 +77,10 @@ const NewsEditModal = ({ handleClose, record, clicked, refetch }) => {
               </div>
               <div className="sm:col-span-2">
                 <label className="label flex items-center">
-                  <div className="modal-label-name">News Url</div>
+                  <div className="modal-label-name">
+                    {t("news.newsUrl")}
+                    <span className="text-red-600">*</span>
+                  </div>
                 </label>
                 <input
                   type="text"
@@ -83,7 +91,9 @@ const NewsEditModal = ({ handleClose, record, clicked, refetch }) => {
 
               <div className="sm:col-span-2">
                 <label className="label flex items-center">
-                  <div className="modal-label-name">Description</div>
+                  <div className="modal-label-name">
+                    {t("news.description")}
+                  </div>
                 </label>
                 <textarea
                   type="text"
@@ -101,7 +111,7 @@ const NewsEditModal = ({ handleClose, record, clicked, refetch }) => {
               >
                 <MdDone className="text-white bg-sky-700 px-1 py-[2px] text-[28px]" />
                 <span className="px-2 py-[6px] bg-sky-500 transition-all hover:bg-sky-600 text-white text-xs">
-                  Update News
+                  {t("news.updateNews")}
                 </span>
               </button>
               <button
@@ -110,7 +120,7 @@ const NewsEditModal = ({ handleClose, record, clicked, refetch }) => {
               >
                 <MdDeleteOutline className="text-white bg-secondary px-1 py-[2px] text-[28px]" />
                 <span className="px-2 py-[6px] bg-primary transition-all hover:bg-secondary text-white text-xs">
-                  Cancel
+                  {t("news.cancel")}
                 </span>
               </button>
             </div>

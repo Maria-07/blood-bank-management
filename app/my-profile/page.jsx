@@ -12,6 +12,7 @@ import Loader from "@/src/Components/Layouts/Loader";
 import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 import Link from "next/link";
 import ErrorLoader from "@/src/Components/Layouts/ErrorLoader";
+import { useTranslation } from "@/src/Hook/useTranslation";
 
 const MyProfilePage = () => {
   //! User data
@@ -29,6 +30,7 @@ const MyProfilePage = () => {
   const [loading, setLoading] = useState(false);
   const accessToken = Cookies.get("accessToken");
   const [showPassword, setShowPassword] = useState(false);
+  const { t } = useTranslation();
 
   if (!accessToken) {
     <>
@@ -63,7 +65,7 @@ const MyProfilePage = () => {
       type === "upazila"
         ? setUpazilas(data?.data || [])
         : setUnions(data?.data || []);
-    } catch (error) { }
+    } catch (error) {}
   };
 
   useEffect(() => {
@@ -177,7 +179,7 @@ const MyProfilePage = () => {
     <div className="min-h-screen">
       {" "}
       <div className="sm:w-[60%] rounded-t-md sm:mx-auto mt-10 bg-primary text-base px-5 py-2 text-white font-semibold">
-        <h1>Personal Information</h1>
+        <h1>{t("profile.personalInformation")}</h1>
       </div>
       <div className="sm:w-[60%] sm:mx-auto  border py-10 sm:px-16 px-5 rounded-md shadow-md">
         <div>
@@ -223,7 +225,7 @@ const MyProfilePage = () => {
                 <div className="sm:col-span-2">
                   {" "}
                   <div>
-                    <h1 className="input-title">Full Name</h1>
+                    <h1 className="input-title">{t("profile.fullName")}</h1>
                     <input
                       disabled={!isEdit}
                       defaultValue={user?.fullName}
@@ -235,7 +237,7 @@ const MyProfilePage = () => {
                 </div>
                 <div className="">
                   <h1 className="input-title flex items-center gap-1">
-                    Date of Birth
+                    {t("profile.dateOfBirth")}
                   </h1>
                   <input
                     disabled={!isEdit}
@@ -247,7 +249,7 @@ const MyProfilePage = () => {
                 </div>
                 <div>
                   <h1 className="input-title flex items-center gap-1">
-                    Contact
+                    {t("profile.contact")}
                   </h1>
                   <input
                     disabled
@@ -258,7 +260,7 @@ const MyProfilePage = () => {
                   />
                 </div>
                 <div>
-                  <h1 className="input-title">Gender</h1>
+                  <h1 className="input-title">{t("profile.gender")}</h1>
                   {!isEdit ? (
                     <input
                       disabled
@@ -273,14 +275,14 @@ const MyProfilePage = () => {
                       {...register("Gender")}
                     >
                       <option value="">Select</option>
-                      <option value="Male">Male</option>
-                      <option value="Female">Female</option>
-                      <option value="Other">Other</option>
+                      <option value="Male">{t("profile.male")}</option>
+                      <option value="Female">{t("profile.female")}</option>
+                      <option value="Other">{t("profile.other")}</option>
                     </select>
                   )}
                 </div>
                 <div>
-                  <h1 className="input-title">Father&apos;s Name</h1>
+                  <h1 className="input-title">{t("profile.fatherName")}</h1>
                   <input
                     disabled={!isEdit}
                     defaultValue={user?.fatherName}
@@ -290,7 +292,7 @@ const MyProfilePage = () => {
                   />
                 </div>
                 <div>
-                  <h1 className="input-title">Mother&apos;s Name</h1>
+                  <h1 className="input-title">{t("profile.motherName")}</h1>
                   <input
                     disabled={!isEdit}
                     defaultValue={user?.motherName}
@@ -300,7 +302,7 @@ const MyProfilePage = () => {
                   />
                 </div>
                 <div className="sm:col-span-2">
-                  <h1 className="input-title">Address</h1>
+                  <h1 className="input-title">{t("profile.address")}</h1>
                   <input
                     disabled={!isEdit}
                     type="text"
@@ -310,7 +312,7 @@ const MyProfilePage = () => {
                   />
                 </div>
                 <div>
-                  <h1 className="input-title">District</h1>
+                  <h1 className="input-title">{t("profile.district")}</h1>
                   {!isEdit ? (
                     <input
                       disabled
@@ -329,7 +331,7 @@ const MyProfilePage = () => {
                   )}
                 </div>
                 <div>
-                  <label className="input-title">Upazila</label>
+                  <label className="input-title">{t("profile.upazila")}</label>
 
                   {!isEdit ? (
                     <input
@@ -354,7 +356,7 @@ const MyProfilePage = () => {
                   )}
                 </div>
                 <div>
-                  <label className="input-title">Union</label>{" "}
+                  <label className="input-title">{t("profile.union")}</label>{" "}
                   {!isEdit ? (
                     <input
                       disabled={!isEdit}
@@ -394,7 +396,9 @@ const MyProfilePage = () => {
                   </div> */}
                 {user?.userType !== "Donor" && (
                   <div className="">
-                    <label className="input-title">Institution</label>
+                    <label className="input-title">
+                      {t("profile.institution")}
+                    </label>
                     <input
                       disabled={!isEdit}
                       type="text"
@@ -408,22 +412,24 @@ const MyProfilePage = () => {
                 )}
                 {(user?.leaderType === "Deputy Commissioner Official" ||
                   user?.leaderType === "") && (
-                    <div>
-                      <h1 className="input-title">Designation</h1>
-                      <input
-                        disabled={!isEdit}
-                        defaultValue={user?.Designation}
-                        type="text"
-                        className="input-border w-full mb-2"
-                        {...register("Designation")}
-                      />
-                    </div>
-                  )}
+                  <div>
+                    <h1 className="input-title">{t("profile.designation")}</h1>
+                    <input
+                      disabled={!isEdit}
+                      defaultValue={user?.Designation}
+                      type="text"
+                      className="input-border w-full mb-2"
+                      {...register("Designation")}
+                    />
+                  </div>
+                )}
                 {isEdit && (
                   <>
                     {" "}
                     <div className="">
-                      <h1 className="input-title ">Change profile</h1>
+                      <h1 className="input-title ">
+                        {t("profile.changeProfile")}
+                      </h1>
                       <input
                         disabled={!isEdit}
                         type="file"
@@ -433,22 +439,23 @@ const MyProfilePage = () => {
                         })}
                       />
                       {errors.ProfilePicture && (
-                        <p className="text-red-500 text-sm">{errors.ProfilePicture.message}</p>
+                        <p className="text-red-500 text-sm">
+                          {errors.ProfilePicture.message}
+                        </p>
                       )}
                     </div>
-
                   </>
                 )}
                 {/* Blood Information */}
                 <div className="sm:col-span-3">
                   {" "}
                   <h3 className="text-base font-normal text-gray-500 mb-1 mt-5">
-                    Blood Information
+                    {t("profile.bloodInformation")}
                   </h3>
                   <hr />
                 </div>
                 <div>
-                  <h1 className="input-title">Blood Group</h1>
+                  <h1 className="input-title">{t("profile.bloodGroup")}</h1>
                   {!isEdit ? (
                     <input
                       disabled
@@ -475,7 +482,9 @@ const MyProfilePage = () => {
                   )}
                 </div>
                 <div>
-                  <h1 className="input-title">Blood Donation Count</h1>
+                  <h1 className="input-title">
+                    {t("profile.bloodDonationCount")}
+                  </h1>
                   <input
                     disabled={!isEdit}
                     defaultValue={user?.bloodDonationCount}
@@ -485,7 +494,9 @@ const MyProfilePage = () => {
                   />
                 </div>
                 <div>
-                  <h1 className="input-title">Last Donation Time</h1>
+                  <h1 className="input-title">
+                    {t("profile.lastDonationTime")}
+                  </h1>
                   <input
                     disabled={!isEdit}
                     type="date"
@@ -494,7 +505,9 @@ const MyProfilePage = () => {
                   />
                 </div>
                 <div>
-                  <h1 className="input-title">Blood Donation Status</h1>
+                  <h1 className="input-title">
+                    {t("profile.bloodDonationStatus")}
+                  </h1>
                   {!isEdit ? (
                     <input
                       disabled
@@ -516,7 +529,9 @@ const MyProfilePage = () => {
                   )}
                 </div>
                 <div className="sm:col-span-2 ">
-                  <h1 className="input-title my-1">Any Physical Complexity?</h1>
+                  <h1 className="input-title my-1">
+                    {t("profile.physicalComplexity")}
+                  </h1>
                   {!isEdit ? (
                     <input
                       disabled
@@ -540,13 +555,13 @@ const MyProfilePage = () => {
               {isEdit && (
                 <div className="flex items-center gap-3 justify-end">
                   <button type="submit" className="input-button  my-5  ">
-                    Submit
+                    {t("profile.submit")}
                   </button>
                   <button
                     onClick={() => setIsEdit(false)}
                     className="bb-modal-red-button  my-5  "
                   >
-                    Cancel
+                    {t("profile.cancel")}
                   </button>
                 </div>
               )}

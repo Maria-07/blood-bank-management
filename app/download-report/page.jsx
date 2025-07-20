@@ -11,11 +11,13 @@ import {
   FaHandHoldingHeart,
   FaRegHandBackFist,
 } from "react-icons/fa6";
+import { useTranslation } from "@/src/Hook/useTranslation";
 
 const DownloadReport = () => {
   const user = UserInfo();
   const admin = "admin";
   const record = {};
+  const { t } = useTranslation();
 
   const {
     address,
@@ -93,218 +95,200 @@ const DownloadReport = () => {
         ref={contentRef}
         className="border rounded-md shadow-md p-3 mt-5 mb-10"
       >
-        <div className="bg-primary2 p-3 w-full rounded-t-lg text-center text-white font-bold pt-5 text-xl">
-          হিমোগ্লোবিন
-          <h1 className="text-base my-3 text-white">
-            মানবতার শ্রেষ্ঠ দান, রক্ত দিয়ে বাঁচাই প্রাণ
-          </h1>
-        </div>
-
-        <div className="flex items-center justify-center mt-2">
-          <h1 className="text-lg tracking-tight   rounded-md shadow-md text-primary px-3">
-            Blood Report
-          </h1>
+        <div className="w-full rounded-t-lg bg-gradient-to-r from-primary2 to-primary p-6 text-center">
+          <div className="flex flex-col items-center justify-center">
+            <div className="flex items-center gap-3 mb-2">
+              <span className="inline-block bg-white/20 rounded-full px-4 py-2 text-2xl font-extrabold text-white shadow">
+                {t("report.title")}
+              </span>
+            </div>
+            {/* <div className="w-full flex justify-center">
+              <h2 className="text-lg font-semibold text-white/90 mb-1 tracking-wide">
+                {t("report.reportTitle")}
+              </h2>
+            </div> */}
+            <p className="text-sm text-white/80 mt-2">{t("report.subtitle")}</p>
+          </div>
         </div>
 
         <div className="bg-gray-200 pt-[1px] my-3"></div>
 
-        <div>
-          <div>
-            <div className="border-[1px] p-3 rounded-md mb-3 flex justify-between">
-              <div className="flex items-center flex-wrap gap-3">
-                <div className="h-[80px] w-[80px] overflow-hidden rounded-full">
-                  <Image
-                    className="border object-cover w-full h-full"
-                    src={imageUrl}
-                    width={80}
-                    height={80}
-                    alt="Picture of the author"
-                    unoptimized 
-                  />
-                </div>
-
-                <div>
-                  <h1 className="text-capitalize flex items-center gap-1 text-sm ">
-                    <span className="font-semibold  text-lg">{fullName}</span>
-                  </h1>
-<h6 className="text-xs">#
-{code}</h6>
-                  <h2 className="text-capitalize text-accent text-sm font-semibold">
+        <div className="space-y-6">
+          {/* Header Card */}
+          <div className="flex flex-col md:flex-row items-center md:items-start justify-between border-[1px] border-primary2/20 bg-white p-5 rounded-lg shadow mb-4 gap-6">
+            {/* Profile Image */}
+            <div className="flex-shrink-0 flex flex-col items-center">
+              <div className="h-[100px] w-[100px] overflow-hidden rounded-full border-2 border-primary2/20 shadow">
+                <Image
+                  className="object-cover w-full h-full"
+                  src={imageUrl}
+                  width={100}
+                  height={100}
+                  alt="Profile"
+                  unoptimized
+                />
+              </div>
+              <h6 className="text-xs text-gray-400 mt-2">#{code}</h6>
+            </div>
+            {/* User Info */}
+            <div className="flex-1 flex flex-col md:flex-row md:items-center md:justify-between w-full gap-4">
+              <div>
+                <h1 className="text-2xl font-bold text-primary2 mb-1">
+                  {fullName}
+                </h1>
+                <div className="">
+                  <h1 className="text-sm font-semibold text-accent bg-accent/10 px-2 py-1 rounded w-full">
                     {userType}
-                  </h2>
-                  <h2 className="text-capitalize text-accent text-sm">
-                    {address}
-                  </h2>
+                  </h1>
+
+                  <h1 className="text-sm text-gray-600 my-1">{address}</h1>
                 </div>
               </div>
-              {campaignId === null || "" ? (
-                <div>
-                  <h1 className="text-xs text-accent">Registered Date</h1>
-                  <h6 className="text-base font-semibold">
-                    {createTime?.split("T")[0]}
-                  </h6>
-                </div>
-              ) : (
-                <>
-                  {" "}
-                  <div>
-                    <h1 className="text-xs text-accent">Test Date</h1>
-                    <h6 className="text-base font-semibold">
-                      {createTime?.split("T")[0]}
-                    </h6>
-                  </div>
-                </>
-              )}
-            </div>
-
-            {/* Details */}
-            <div className="relative flex items-center justify-center">
-              {/* Watermark Logo in Background */}
-              <img
-                src={logo.src}
-                alt="Logo Watermark"
-                className="absolute opacity-20 w-60 h-60 object-contain pointer-events-none"
-                style={{
-                  top: "50%",
-                  left: "50%",
-                  transform: "translate(-50%, -50%)",
-                }}
-              />
-              <div className="relative z-10 w-full">
-                {/* Personal Information */}
-                <div className="border-[1px] p-3 rounded-md mb-3">
-                  <h1 className="font-semibold text-lg mb-2 text-primary2">
-                    Personal Information
-                  </h1>
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
-                    <div>
-                      <h1 className="text-xs text-accent">Full Name</h1>
-                      <h6 className="text-base font-semibold">{fullName}</h6>
-                    </div>
-                    <div>
-                      <h1 className="text-xs text-accent">Mobile Number</h1>
-                      <h6 className="text-base font-semibold">
-                        {mobileNumber}
-                      </h6>
-                    </div>
-                    <div>
-                      <h1 className="text-xs text-accent">Date of Birth</h1>
-                      <h6 className="text-base font-semibold">{dateOfBirth}</h6>
-                    </div>
-                    <div>
-                      <h1 className="text-xs text-accent">Gender</h1>
-                      <h6 className="text-base font-semibold">{gender}</h6>
-                    </div>
-
-                    {/* Physical Complexity */}
-                    <div>
-                      <h1 className="text-xs text-accent">
-                        Any Physical Complexity?
-                      </h1>
-                      <h6 className="text-base font-semibold">
-                        {PhysicalComplexity ? PhysicalComplexity : "No"}
-                      </h6>
-                    </div>
-
-                    {/* NID Details (Admin view only) */}
-                    {admin && record?.nidUrls?.length > 0 && (
-                      <div>
-                        <h1 className="text-xs text-accent">NID details</h1>
-                        <div className="flex items-center mt-2 gap-2">
-                          {record.nidUrls.map((n, i) => (
-                            <div key={i} className="overflow-hidden">
-                              <Image
-                                className="border object-cover w-full h-full"
-                                src={`${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}/${n}`}
-                                width={100}
-                                height={80}
-                                alt="NID image"
-                              />
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                </div>
-
-                {/* Address Section
-                <div className="border-[1px] p-3 rounded-md mb-3">
-                  <h1 className="font-semibold text-primary2 text-lg mb-2">
-                    Address
-                  </h1>
-                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
-                    <div>
-                      <h1 className="text-xs text-accent">District</h1>
-                      <h6 className="text-base font-semibold">
-                        {districtName}
-                      </h6>
-                    </div>
-                    <div>
-                      <h1 className="text-xs text-accent">Upazila</h1>
-                      <h6 className="text-base font-semibold">{upazilaName}</h6>
-                    </div>
-                    <div>
-                      <h1 className="text-xs text-accent">Union</h1>
-                      <h6 className="text-base font-semibold">{unionName}</h6>
-                    </div>
-                  </div>
-                </div> */}
-
-                {/* Blood Donation Details */}
-                <div className="border-[1px] p-3 rounded-md mb-3">
-                  <h1 className="font-semibold text-primary2 text-lg mb-2">
-                    Blood Donation Details
-                  </h1>
-                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-3">
-                    <div>
-                      <h1 className="text-xs text-accent">Blood Group</h1>
-                      <h6 className="text-base font-semibold">{bloodGroup}</h6>
-                    </div>
-                    <div>
-                      <h1 className="text-xs text-accent">Donation Count</h1>
-                      <h6 className="text-base font-semibold">
-                        {bloodDonationCount} times
-                      </h6>
-                    </div>
-                    <div>
-                      <h1 className="text-xs text-accent">
-                        Last Donation Date
-                      </h1>
-                      <h6 className="text-base font-semibold">
-                        {lastDonationTime?.split("T")[0]}
-                      </h6>
-                    </div>
-                    {/* <div>
-                      <h1 className="text-xs text-accent">
-                        Blood Donation Status
-                      </h1>
-                      <h6 className="text-sm mt-[4px]">
-                        {bloodDonationStatus === "Interested" ? (
-                          <span className="flex items-center gap-2">
-                            <FaHandHoldingHeart className="text-sm text-secondary" />
-                            Interested
-                          </span>
-                        ) : (
-                          <span className="flex items-center gap-2">
-                            <FaRegHandBackFist className="text-sm" /> Not
-                            Interested
-                          </span>
-                        )}
-                      </h6>
-                    </div> */}
-                  </div>
-                </div>
-
-               
+              <div className="flex flex-col items-end">
+                <span className="text-xs text-accent font-medium">
+                  {campaignId === null || campaignId === ""
+                    ? t("report.registeredDate")
+                    : t("report.testDate")}
+                </span>
+                <span className="text-base font-semibold">
+                  {createTime?.split("T")[0]}
+                </span>
               </div>
             </div>
           </div>
-          <div className="my-5  italic ">
-                 <h1 className="text-sm mb-2 ">This is a system-generated report, No signature is required.</h1>
-                 <h1 className="text-[13px] text-accent w-[80%]"> Created under the &apos;Hemoglobin&apos; initiative by the Deputy Commissioner&apos;s Office, Nilphamari, with funding from the Zilla Parishad, Nilphamari.
-                 </h1>
+
+          {/* Main Details Section */}
+          <div className="relative bg-white rounded-lg shadow p-6 overflow-hidden">
+            {/* Watermark Logo */}
+            <img
+              src={logo.src}
+              alt="Logo Watermark"
+              className="absolute opacity-10 w-72 h-72 object-contain pointer-events-none"
+              style={{
+                top: "50%",
+                left: "50%",
+                transform: "translate(-50%, -50%)",
+                zIndex: 0,
+              }}
+            />
+            <div className="relative z-10">
+              {/* Personal Information */}
+              <div className="mb-6">
+                <h2 className="font-semibold text-lg text-primary2 mb-4 border-b border-primary2/20 pb-2">
+                  {t("report.personalInformation")}
+                </h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <span className="block text-xs text-accent">
+                      {t("report.fullName")}
+                    </span>
+                    <span className="block text-base font-semibold">
+                      {fullName}
+                    </span>
+                  </div>
+                  <div>
+                    <span className="block text-xs text-accent">
+                      {t("report.mobileNumber")}
+                    </span>
+                    <span className="block text-base font-semibold">
+                      {mobileNumber}
+                    </span>
+                  </div>
+                  <div>
+                    <span className="block text-xs text-accent">
+                      {t("report.dob")}
+                    </span>
+                    <span className="block text-base font-semibold">
+                      {dateOfBirth}
+                    </span>
+                  </div>
+                  <div>
+                    <span className="block text-xs text-accent">
+                      {t("report.gender")}
+                    </span>
+                    <span className="block text-base font-semibold">
+                      {gender}
+                    </span>
+                  </div>
+                  <div>
+                    <span className="block text-xs text-accent">
+                      {t("report.physicalComplexity")}
+                    </span>
+                    <span className="block text-base font-semibold">
+                      {PhysicalComplexity
+                        ? PhysicalComplexity
+                        : t("profile.no")}
+                    </span>
+                  </div>
+                  {/* NID Details (Admin only) */}
+                  {admin && record?.nidUrls?.length > 0 && (
+                    <div className="md:col-span-2">
+                      <span className="block text-xs text-accent">
+                        {t("report.nidDetails")}
+                      </span>
+                      <div className="flex flex-wrap items-center mt-2 gap-2">
+                        {record.nidUrls.map((n, i) => (
+                          <div
+                            key={i}
+                            className="overflow-hidden rounded border w-[100px] h-[80px] bg-gray-100"
+                          >
+                            <Image
+                              className="object-cover w-full h-full"
+                              src={`${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}/${n}`}
+                              width={100}
+                              height={80}
+                              alt="NID image"
+                            />
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
+              </div>
+
+              {/* Blood Donation Details */}
+              <div>
+                <h2 className="font-semibold text-lg text-primary2 mb-4 border-b border-primary2/20 pb-2">
+                  {t("report.bloodDonationDetails")}
+                </h2>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div>
+                    <span className="block text-xs text-accent">
+                      {t("report.bloodGroup")}
+                    </span>
+                    <span className="block text-base font-semibold">
+                      {bloodGroup}
+                    </span>
+                  </div>
+                  <div>
+                    <span className="block text-xs text-accent">
+                      {t("report.donationCount")}
+                    </span>
+                    <span className="block text-base font-semibold">
+                      {bloodDonationCount}
+                    </span>
+                  </div>
+                  <div>
+                    <span className="block text-xs text-accent">
+                      {t("report.lastDonation")}
+                    </span>
+                    <span className="block text-base font-semibold">
+                      {lastDonationTime?.split("T")[0]}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Footer Note */}
+          <div className="my-5 italic text-center">
+            <h1 className="text-sm mb-2">{t("report.systemNote")}</h1>
+            <h1 className="text-[13px] text-accent mx-auto max-w-xl">
+              {t("report.createdBy")}
+            </h1>
+          </div>
         </div>
       </div>
     </div>

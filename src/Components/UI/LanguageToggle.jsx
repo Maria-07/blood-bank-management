@@ -29,7 +29,7 @@ const LanguageToggle = ({ language, onLanguageChange, variant = "button" }) => {
           }
           ${smoothTransition}
         `}
-        style={{ minWidth: 40 }}
+        style={{ minWidth: 30 }}
       >
         EN
       </Button>
@@ -46,9 +46,9 @@ const LanguageToggle = ({ language, onLanguageChange, variant = "button" }) => {
           }
           ${smoothTransition}
         `}
-        style={{ minWidth: 40 }}
+        style={{ minWidth: 30 }}
       >
-        বাংলা
+        BN
       </Button>
     </div>
   );
@@ -60,7 +60,7 @@ const LanguageToggle = ({ language, onLanguageChange, variant = "button" }) => {
       onChange={handleLanguageChange}
       options={[
         { label: "EN", value: "en" },
-        { label: "বাংলা", value: "bn" },
+        { label: "BN", value: "bn" },
       ]}
       className="bg-white shadow-md rounded-full border-none"
       style={{
@@ -89,7 +89,7 @@ const LanguageToggle = ({ language, onLanguageChange, variant = "button" }) => {
       suffixIcon={<GlobalOutlined />}
       options={[
         { label: "English", value: "en" },
-        { label: "বাংলা", value: "bn" },
+        { label: "BN", value: "bn" },
       ]}
     />
   );
@@ -109,7 +109,7 @@ const LanguageToggle = ({ language, onLanguageChange, variant = "button" }) => {
           ${smoothTransition}
         `}
         title="English"
-        style={{ minWidth: 40 }}
+        style={{ minWidth: 30 }}
       >
         <span className="text-sm font-semibold">EN</span>
       </button>
@@ -124,8 +124,8 @@ const LanguageToggle = ({ language, onLanguageChange, variant = "button" }) => {
           }
           ${smoothTransition}
         `}
-        title="বাংলা"
-        style={{ minWidth: 40 }}
+        title="BN"
+        style={{ minWidth: 30 }}
       >
         <span className="text-sm font-semibold">বাং</span>
       </button>
@@ -169,7 +169,7 @@ const LanguageToggle = ({ language, onLanguageChange, variant = "button" }) => {
             ${smoothTransition}
           `}
         >
-          বাংলা
+          BN
         </button>
       </div>
     </div>
@@ -211,7 +211,7 @@ const LanguageToggle = ({ language, onLanguageChange, variant = "button" }) => {
             ${smoothTransition}
           `}
         >
-          বাংলা
+          BN
         </button>
       </div>
     </div>
