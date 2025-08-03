@@ -15,8 +15,33 @@ const ContactsApi = api.injectEndpoints({
         body: data,
       }),
     }),
+    getEmergencyContacts: builder.query({
+      query: ({ pageNo, pageSize }) => ({
+        url: `/user/getEmergencyContactList?pageNo=${pageNo}&pageSize=${pageSize}`,
+        method: "GET",
+      }),
+    }),
+    makeEmergencyContact: builder.mutation({
+      query: (data) => ({
+        url: "/user/makeEmergencyContact",
+        method: "POST",
+        body: data,
+      }),
+    }),
+    deleteEmergencyContact: builder.mutation({
+      query: (data) => ({
+        url: "/user/removeFromEmergencyContact",
+        method: "POST",
+        body: data,
+      }),
+    }),
   }),
 });
 
-export const { useGetAllContactsQuery, useGetMessageReadMutation } =
-  ContactsApi;
+export const {
+  useGetAllContactsQuery,
+  useGetMessageReadMutation,
+  useGetEmergencyContactsQuery,
+  useMakeEmergencyContactMutation,
+  useDeleteEmergencyContactMutation,
+} = ContactsApi;

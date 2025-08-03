@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Loader from "@/src/Components/Layouts/Loader";
+import { useTranslation } from "@/src/Hook/useTranslation";
 
 const AddAdminModal = ({ handleClose, clicked, refetch }) => {
   const [upazilas, setUpazilas] = useState([]);
@@ -17,6 +18,7 @@ const AddAdminModal = ({ handleClose, clicked, refetch }) => {
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [leaderType, setLeaderType] = useState("");
+  const { t } = useTranslation();
 
   const router = useRouter();
   const {
@@ -105,7 +107,7 @@ const AddAdminModal = ({ handleClose, clicked, refetch }) => {
         <div>
           <div className="flex items-center justify-between">
             <h1 className="text-xl font-semibold tracking-tight">
-              Create an admin
+              {t("admin.create_title")}
             </h1>
 
             <IoMdCloseCircleOutline
@@ -127,7 +129,8 @@ const AddAdminModal = ({ handleClose, clicked, refetch }) => {
                   {/* User Type Selection */}
                   <div>
                     <label className="input-title">
-                      User Type<span className="text-rose-600">*</span>
+                      {t("admin.user_type")}
+                      <span className="text-rose-600">*</span>
                     </label>
                     <select
                       onChange={(e) => {
@@ -144,7 +147,8 @@ const AddAdminModal = ({ handleClose, clicked, refetch }) => {
 
                   <div>
                     <label className="input-title">
-                      Leader Type<span className="text-rose-600">*</span>
+                      {t("admin.leader_type")}
+                      <span className="text-rose-600">*</span>
                     </label>
                     <select
                       // {...register("LeaderType", {
@@ -173,7 +177,8 @@ const AddAdminModal = ({ handleClose, clicked, refetch }) => {
                     leaderType === "Civil Surgeon Official") && (
                     <div>
                       <label className="input-title">
-                        Designation<span className="text-rose-600">*</span>
+                        {t("admin.designation")}
+                        <span className="text-rose-600">*</span>
                       </label>
                       <input
                         type="text"
@@ -194,13 +199,14 @@ const AddAdminModal = ({ handleClose, clicked, refetch }) => {
                   <div className="sm:col-span-3">
                     {" "}
                     <h3 className="text-base font-normal text-gray-500 mb-1">
-                      Personal Information
+                      {t("admin.personal_information")}
                     </h3>
                     <hr />
                   </div>
                   <div>
                     <label className="input-title">
-                      Full Name<span className="text-rose-600">*</span>
+                      {t("admin.full_name")}
+                      <span className="text-rose-600">*</span>
                     </label>
                     <input
                       type="text"
@@ -213,7 +219,8 @@ const AddAdminModal = ({ handleClose, clicked, refetch }) => {
 
                   <div>
                     <label className="input-title">
-                      Date of Birth<span className="text-rose-600">*</span>
+                      {t("admin.dob")}
+                      <span className="text-rose-600">*</span>
                     </label>
                     <DatePicker
                       className="w-full"
@@ -223,7 +230,8 @@ const AddAdminModal = ({ handleClose, clicked, refetch }) => {
                   </div>
                   <div>
                     <label className="input-title">
-                      Mobile Number<span className="text-rose-600">*</span>
+                      {t("admin.mobile")}
+                      <span className="text-rose-600">*</span>
                     </label>
                     <input
                       type="number"
@@ -236,7 +244,8 @@ const AddAdminModal = ({ handleClose, clicked, refetch }) => {
                   </div>
                   <div>
                     <label className="input-title">
-                      Gender<span className="text-rose-600">*</span>
+                      {t("admin.gender")}
+                      <span className="text-rose-600">*</span>
                     </label>
                     <select
                       {...register("Gender", {
@@ -252,7 +261,8 @@ const AddAdminModal = ({ handleClose, clicked, refetch }) => {
                   </div>
                   <div>
                     <label className="input-title">
-                      Father Name<span className="text-rose-600">*</span>
+                      {t("admin.father_name")}
+                      <span className="text-rose-600">*</span>
                     </label>
                     <input
                       type="text"
@@ -264,7 +274,8 @@ const AddAdminModal = ({ handleClose, clicked, refetch }) => {
                   </div>
                   <div>
                     <label className="input-title">
-                      Mother Name<span className="text-rose-600">*</span>
+                      {t("admin.mother_name")}
+                      <span className="text-rose-600">*</span>
                     </label>
                     <input
                       type="text"
@@ -276,7 +287,8 @@ const AddAdminModal = ({ handleClose, clicked, refetch }) => {
                   </div>
                   <div>
                     <label className="input-title">
-                      District<span className="text-rose-600">*</span>
+                      {t("admin.district")}
+                      <span className="text-rose-600">*</span>
                     </label>
                     <select
                       {...register("District", {
@@ -289,7 +301,8 @@ const AddAdminModal = ({ handleClose, clicked, refetch }) => {
                   </div>
                   <div>
                     <label className="input-title">
-                      Upazila<span className="text-rose-600">*</span>
+                      {t("admin.upazila")}
+                      <span className="text-rose-600">*</span>
                     </label>
                     <select
                       {...register("Upazila", {
@@ -307,7 +320,8 @@ const AddAdminModal = ({ handleClose, clicked, refetch }) => {
                   </div>
                   <div>
                     <label className="input-title">
-                      Union<span className="text-rose-600">*</span>
+                      {t("admin.union")}
+                      <span className="text-rose-600">*</span>
                     </label>
                     <select
                       {...register("Union", { required: "Union is required" })}
@@ -322,7 +336,7 @@ const AddAdminModal = ({ handleClose, clicked, refetch }) => {
                     </select>
                   </div>
                   <div className="sm:col-span-2">
-                    <label className="input-title">Address</label>
+                    <label className="input-title">{t("admin.address")}</label>
                     <input
                       type="text"
                       {...register("Address")}
@@ -332,7 +346,8 @@ const AddAdminModal = ({ handleClose, clicked, refetch }) => {
 
                   <div className="">
                     <label className="input-title">
-                      Institution<span className="text-rose-600">*</span>
+                      {t("admin.institute")}
+                      <span className="text-rose-600">*</span>
                     </label>
                     <input
                       type="text"
@@ -377,7 +392,9 @@ const AddAdminModal = ({ handleClose, clicked, refetch }) => {
 
                   {/* Documents */}
                   <div>
-                    <label className="input-title">Profile Picture</label>
+                    <label className="input-title">
+                      {t("admin.profile_picture")}
+                    </label>
                     <input
                       type="file"
                       {...register("ProfilePicture")}
@@ -385,7 +402,7 @@ const AddAdminModal = ({ handleClose, clicked, refetch }) => {
                     />
                   </div>
                   <div>
-                    <label className="input-title">NID/Student ID</label>
+                    <label className="input-title">{t("admin.nid")}</label>
                     <input
                       type="file"
                       multiple
@@ -399,14 +416,15 @@ const AddAdminModal = ({ handleClose, clicked, refetch }) => {
                   <div className="sm:col-span-3">
                     {" "}
                     <h3 className="text-base font-normal text-gray-500 mb-1">
-                      Blood Information
+                      {t("admin.blood_information")}
                     </h3>
                     <hr />
                   </div>
 
                   <div>
                     <label className="input-title">
-                      Blood Group<span className="text-rose-600">*</span>
+                      {t("admin.blood_group")}
+                      <span className="text-rose-600">*</span>
                     </label>
                     <select
                       {...register("BloodGroup", {
@@ -427,7 +445,8 @@ const AddAdminModal = ({ handleClose, clicked, refetch }) => {
                   </div>
                   <div>
                     <label className="input-title">
-                      Donation Status<span className="text-rose-600">*</span>
+                      {t("admin.donation_status")}
+                      <span className="text-rose-600">*</span>
                     </label>
                     <select
                       {...register("BloodDonationStatus", {
@@ -442,7 +461,9 @@ const AddAdminModal = ({ handleClose, clicked, refetch }) => {
                     </select>
                   </div>
                   <div>
-                    <label className="input-title">Last Donation Date</label>
+                    <label className="input-title">
+                      {t("admin.last_donation_date")}
+                    </label>
                     <DatePicker
                       className="w-full"
                       format="YYYY-MM-DD"
@@ -452,7 +473,9 @@ const AddAdminModal = ({ handleClose, clicked, refetch }) => {
                     />
                   </div>
                   <div>
-                    <label className="input-title">Blood Donation Count</label>
+                    <label className="input-title">
+                      {t("admin.donation_count")}
+                    </label>
                     <input
                       type="number"
                       {...register("BloodDonationCount")}
@@ -461,10 +484,10 @@ const AddAdminModal = ({ handleClose, clicked, refetch }) => {
                   </div>
                   <div className="sm:col-span-2">
                     <label htmlFor="PhysicalComplexity" className="input-title">
-                      Any Physical Complexity?
+                      {t("admin.physical_complexity")}
                       <span className="text-rose-600">*</span>
                       <span className="text-xs text-accent">
-                        (Diabetics / Cancer / thyroid etc.)
+                        {t("admin.physical_complexity_note")}
                       </span>
                     </label>
                     <select
@@ -485,7 +508,7 @@ const AddAdminModal = ({ handleClose, clicked, refetch }) => {
                   </div>
                 </div>
                 <button type="submit" className="input-button mb-4">
-                  Register
+                  {t("admin.register_button")}
                 </button>
               </form>
             </>

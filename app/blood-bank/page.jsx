@@ -52,12 +52,27 @@ const BloodBankPage = () => {
     <div>
       <div className="md:w-[90%] sm:mx-auto ">
         <div>
-          <div className=" p-5  mb-10 bg-[#F3F3F3] border-[1px] shadow-md px-2 rounded-xl">
-            {" "}
-            <FilteredUserData
-              role={"user"}
-              handleFilteredData={handleFilteredData}
+          <div
+            className="relative p-5 mb-10 border-[1px] shadow-md px-2 rounded-xl overflow-hidden"
+            style={{
+              background: "linear-gradient(90deg, #f3f3f3 60%, #e0e7ff 100%)",
+            }}
+          >
+            {/* Gradient overlay for extra effect */}
+            <div
+              className="absolute inset-0 pointer-events-none rounded-xl"
+              style={{
+                background:
+                  "linear-gradient(120deg, rgba(236,72,153,0.08) 0%, rgba(59,130,246,0.10) 100%)",
+                zIndex: 0,
+              }}
             />
+            <div className="relative z-10">
+              <FilteredUserData
+                role={"user"}
+                handleFilteredData={handleFilteredData}
+              />
+            </div>
           </div>
           {isLoading && <Loader></Loader>}
           <div className="gap-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-3 mt-20">

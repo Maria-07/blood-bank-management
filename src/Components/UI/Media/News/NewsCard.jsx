@@ -4,7 +4,6 @@ import React from "react";
 import { format } from "date-fns"; // ✅ Import format from date-fns
 
 const NewsCard = ({ news }) => {
-
   const { name, description, url, thumbnailUrl, createTime } = news;
 
   return (
@@ -12,7 +11,11 @@ const NewsCard = ({ news }) => {
       {/* Embed the iframe for live news */}
       <div className=" mb-4 read-only">
         <Image
-          src={thumbnailUrl !== "" ? thumbnailUrl : 'https://www.dailyjanakantha.com/media/imgAll/2024April/18-2504271834.jpg'}
+          src={
+            thumbnailUrl !== ""
+              ? thumbnailUrl
+              : "https://www.dailyjanakantha.com/media/imgAll/2024April/18-2504271834.jpg"
+          }
           width="100%"
           height="200px" // Adjust the height based on your needs
         />

@@ -6,11 +6,14 @@ import { useForm } from "react-hook-form";
 import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 import { RiLockPasswordLine } from "react-icons/ri";
 import { toast } from "react-toastify";
+import { useTranslation } from "@/src/Hook/useTranslation";
 
 const ChangePassword = () => {
   const [showOldPassword, setShowOldPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmNewPassword, setShowConfirmNewPassword] = useState(false);
+
+  const { t } = useTranslation();
 
   const {
     register,
@@ -45,7 +48,8 @@ const ChangePassword = () => {
           <div>
             <h1 className="input-title flex items-center gap-1">
               <RiLockPasswordLine className="text-primary" />
-              Old Password <span className="text-red-600">*</span>
+              {t("changePassword.oldPassword")}{" "}
+              <span className="text-red-600">*</span>
             </h1>
             <div className="relative">
               <input
@@ -80,7 +84,8 @@ const ChangePassword = () => {
           <div>
             <h1 className="input-title flex items-center gap-1">
               <RiLockPasswordLine className="text-primary" />
-              New Password <span className="text-red-600">*</span>
+              {t("changePassword.newPassword")}{" "}
+              <span className="text-red-600">*</span>
             </h1>
             <div className="relative">
               <input
@@ -115,7 +120,8 @@ const ChangePassword = () => {
           <div>
             <h1 className="input-title flex items-center gap-1">
               <RiLockPasswordLine className="text-primary" />
-              Confirm New Password <span className="text-red-600">*</span>
+              {t("changePassword.confirmPassword")}{" "}
+              <span className="text-red-600">*</span>
             </h1>
             <div className="relative">
               <input
@@ -151,7 +157,7 @@ const ChangePassword = () => {
 
           {/* Submit Button */}
           <button type="submit" className="input-button my-5">
-            Confirm Password
+            {t("changePassword.submit")}
           </button>
         </form>
       </div>

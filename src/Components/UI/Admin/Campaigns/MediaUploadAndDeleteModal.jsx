@@ -13,6 +13,7 @@ import {
 } from "@/src/redux/features/campaign/campaignApi";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import Loader from "@/src/Components/Layouts/Loader";
+import { useTranslation } from "@/src/Hook/useTranslation";
 
 const formatYouTubeUrl = (url) => {
   if (url.includes("shorts/")) {
@@ -44,6 +45,8 @@ const MediaUploadAndDeleteModal = ({ handleClose, clicked, record }) => {
     campaignId: id,
   });
 
+  const { t } = useTranslation();
+
   //! Delete Media :
   const [mediaDelete, { isLoading2 }] = useDeleteMediaMutation();
 
@@ -69,7 +72,7 @@ const MediaUploadAndDeleteModal = ({ handleClose, clicked, record }) => {
       } else {
         toast.error(response?.error?.data?.message);
       }
-    } catch (error) { }
+    } catch (error) {}
   };
 
   const {
@@ -81,16 +84,20 @@ const MediaUploadAndDeleteModal = ({ handleClose, clicked, record }) => {
     formState: { errors },
   } = useForm();
 
-
-
   const tabItems = [
     {
-      label: <h1 className="text-dark text-base hover:text-primary">Images</h1>,
+      label: (
+        <h1 className="text-dark text-base hover:text-primary">
+          {t("campaign.mediaModal.imagesTab")}
+        </h1>
+      ),
       key: 1,
       children: (
         <>
           <div>
-            <h1 className="input-title">Images</h1>
+            <h1 className="input-title">
+              {t("campaign.mediaModal.imageLabel")}
+            </h1>
             <div className="flex items-center justify-between">
               <input
                 type="file"
@@ -105,7 +112,7 @@ const MediaUploadAndDeleteModal = ({ handleClose, clicked, record }) => {
               >
                 <MdDone className="text-white bg-sky-700 px-1 py-[2px] text-[28px]" />
                 <span className="px-2 py-[6px] bg-sky-500 transition-all hover:bg-sky-600 text-white text-xs">
-                  Upload
+                  {t("campaign.mediaModal.upload")}
                 </span>
               </button>
             </div>
@@ -114,40 +121,45 @@ const MediaUploadAndDeleteModal = ({ handleClose, clicked, record }) => {
 
             {loading ? (
               <Loader />
-            ) : (<div>
-              {" "}
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4  max-h-[450px] overflow-y-scroll relative">
-                {images?.map((image, index) => (
-                  <div key={index} className="relative">
-                    <div className="overflow-hidden h-[180px] rounded-lg shadow-lg relative">
-                      <Image
-                        src={`${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}/${image?.imageUrl}`}
-                        alt=""
-                        preview={true}
-                        height={200}
-                        width='100%'
-                        className="transition-transform duration-300 hover:scale-105"
-                      />
-                      {/* Delete Button */}
-                      <button
-                        type="button"
-                        className="absolute top-1 right-1 bg-primary text-white p-1 rounded-full hover:bg-red-600"
-                        onClick={() => handleDelete(image?.id)}
-                      >
-                        <RiDeleteBin6Line className="w-4 h-4" />
-                      </button>
+            ) : (
+              <div>
+                {" "}
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4  max-h-[450px] overflow-y-scroll relative">
+                  {images?.map((image, index) => (
+                    <div key={index} className="relative">
+                      <div className="overflow-hidden h-[180px] rounded-lg shadow-lg relative">
+                        <Image
+                          src={`${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}/${image?.imageUrl}`}
+                          alt=""
+                          preview={true}
+                          height={200}
+                          width="100%"
+                          className="transition-transform duration-300 hover:scale-105"
+                        />
+                        {/* Delete Button */}
+                        <button
+                          type="button"
+                          className="absolute top-1 right-1 bg-primary text-white p-1 rounded-full hover:bg-red-600"
+                          onClick={() => handleDelete(image?.id)}
+                        >
+                          <RiDeleteBin6Line className="w-4 h-4" />
+                        </button>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
-            </div>)}
-
+            )}
           </div>
         </>
       ),
     },
     {
-      label: <h1 className="text-dark text-base hover:text-primary">Videos</h1>,
+      label: (
+        <h1 className="text-dark text-base hover:text-primary">
+          {t("campaign.mediaModal.videosTab")}
+        </h1>
+      ),
       key: 2,
       children: (
         <>
@@ -163,7 +175,7 @@ const MediaUploadAndDeleteModal = ({ handleClose, clicked, record }) => {
             >
               <MdDone className="text-white bg-sky-700 px-1 py-[2px] text-[28px]" />
               <span className="px-2 py-[6px] bg-sky-500 transition-all hover:bg-sky-600 text-white text-xs">
-                Upload
+                {t("campaign.mediaModal.upload")}
               </span>
             </button>
             <hr className="mt-5" />
@@ -197,7 +209,9 @@ const MediaUploadAndDeleteModal = ({ handleClose, clicked, record }) => {
                   </div>
                 ))
               ) : (
-                <p className="text-center text-gray-500">No videos available</p>
+                <p className="text-center text-gray-500">
+                  {t("campaign.mediaModal.noVideos")}
+                </p>
               )}
             </div>
           </div>
@@ -286,7 +300,7 @@ const MediaUploadAndDeleteModal = ({ handleClose, clicked, record }) => {
         <div className="">
           <div className="flex items-center justify-between">
             <h1 className="text-xl  font-semibold tracking-tight">
-              Upload media for this campaign
+              {t("campaign.mediaModal.title")}
             </h1>
 
             <IoMdCloseCircleOutline
@@ -311,7 +325,7 @@ const MediaUploadAndDeleteModal = ({ handleClose, clicked, record }) => {
               >
                 <MdDeleteOutline className=" text-white bg-rose-700  px-1 py-[2px] text-[28px]" />
                 <span className="px-2 py-[6px] bg-rose-500 transition-all hover:bg-rose-600 text-white text-xs">
-                  Cancel
+                  {t("campaign.mediaModal.cancel")}
                 </span>
               </button>
             </div>

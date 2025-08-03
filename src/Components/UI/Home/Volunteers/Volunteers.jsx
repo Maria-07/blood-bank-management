@@ -1,89 +1,111 @@
 "use client";
 import React from "react";
-import { useGetAllApprovedVolunteersQuery } from "@/src/redux/features/volunteers/volunteers";
 import { Card } from "antd";
 import { TiPointOfInterest } from "react-icons/ti";
+import { useTranslation } from "@/src/Hook/useTranslation";
+import { FaRocket, FaEye, FaBullseye } from "react-icons/fa";
+import Link from "next/link";
 
 const Volunteers = () => {
-  //! Get all volunteers using RTK Query
-  const { data, isLoading, isError } = useGetAllApprovedVolunteersQuery(
-    undefined,
-    {
-      refetchOnMountOrArgChange: true,
-      // pollingInterval: 8000,
-    }
-  );
+  const { t } = useTranslation();
+
+  // Safely handle translation points as array
+  const goalPoints = t("volunteers.goals.points");
+  const pointsArray = Array.isArray(goalPoints) ? goalPoints : [];
 
   return (
-    <div className="my-32">
-      <div className="gap-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 2xl:grid-cols-2 mt-20">
-        <div className="">
-          {" "}
-          <Card hoverable className="bg-primary text-white ">
-            <div className="py-16 2xl:py-12 px-10">
-              <h2 className="text-3xl mb-3 font-semibold">🚀 Mission</h2>
-              <div className="text-lg text-gray-50 ">
-                To establish an organized, technology-driven blood donation
-                network that helps identify everyone&apos;s blood group and
-                connect potential donors through a reliable platform.
+    <div className="py-20 px-4 ">
+      <div className="max-w-7xl mx-auto">
+        {/* Grid layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* Mission & Vision Card */}
+          <div className="group">
+            <Card
+              hoverable
+              className="h-full border-0 shadow-lg hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 bg-gradient-to-br from-primary to-secondary text-white overflow-hidden"
+            >
+              <div className="relative p-8 h-full flex flex-col">
+                {/* Mission */}
+                <h2 className="text-3xl flex items-center gap-3 font-bold text-white mb-4">
+                  <div className="bg-gradient-to-br from-primary2 to-primary rounded-full">
+                    <FaRocket className="p-2 text-white" />
+                  </div>
+                  {t("volunteers.mission.title")}
+                </h2>
+                <p className="text-gray-100 leading-relaxed flex-grow">
+                  {t("volunteers.mission.description")}
+                </p>
+
+                {/* Vision */}
+                <h2 className="text-3xl flex items-center gap-3 font-bold text-white mt-10 mb-4">
+                  <div className="bg-gradient-to-br from-primary2 to-primary rounded-full">
+                    <FaEye className="p-2 text-white" />
+                  </div>
+                  {t("volunteers.vision.title")}
+                </h2>
+                <p className="text-gray-100 leading-relaxed flex-grow">
+                  {t("volunteers.vision.description")}
+                </p>
+
+                <div className="absolute bottom-0 right-0 w-32 h-32 bg-white/10 rounded-full -translate-y-16 translate-x-16"></div>
               </div>
-            </div>
-          </Card>
-        </div>
-
-        <div className="sm:row-span-2 h-[100%]">
-          <Card hoverable className="shadow-md">
-            <h2 className="text-3xl bg-white text-primary py-6 px-10 font-semibold">🎯 Goals</h2>
-          </Card> <Card hoverable className="bg-primary text-white mb-6">
-
-          </Card>
-          <Card hoverable className="bg-primary text-white ">
-            <div className="py-10 2xl:py-12  px-10">
-
-              <div className="text-lg text-gray-50 ">
-                <div className="flex  gap-2 ml-7  mt-2">
-                  <TiPointOfInterest className="text-sm mt-2" /> Blood group
-                  identification at campaigns.
-                </div>
-                <div className="flex  gap-2 ml-7  mt-2">
-                  <TiPointOfInterest className="text-sm mt-2" /> Provide the right
-                  donor at the right time when blood is needed.
-                </div>
-                <div className="flex  gap-2 ml-7  mt-2">
-                  <TiPointOfInterest className="text-sm mt-2" /> Increase
-                  awareness of blood donation and grow the number of voluntary
-                  donors.
-                </div>
-                <div className="flex  gap-2 ml-7  mt-2">
-                  <TiPointOfInterest className="text-sm mt-2" /> Build an
-                  integrated, technology-supported blood donation ecosystem.
-                </div>
-                <div className="flex  gap-2 ml-7  mt-2">
-                  <TiPointOfInterest className="text-sm mt-2" /> Educate and
-                  encourage the public about the importance of donating blood.
-                </div>
-                <div className="flex  gap-2 ml-7  mt-2">
-                  <TiPointOfInterest className="text-sm mt-2" /> Recognize regular
-                  and active blood donors with appreciation and rewards.
-                </div>
-              </div>
-            </div>
-          </Card>
+            </Card>
           </div>
 
-                  <div>  <Card hoverable className="shadow-md">
-            <div className="py-16 2xl:py-12 px-10">
-              <h2 className="text-3xl mb-3 font-semibold text-primary">
-                🎭 Vision
-              </h2>
-              <div className="text-lg text-accent">
-                To simplify and accelerate the availability of blood in
-                Nilphamari by building a digital system that stores donor
-                information and helps locate suitable donors swiftly.
+          {/* Goals Section */}
+          <div className="lg:col-span-2 space-y-6">
+            {/* Goals Title */}
+            <Card hoverable className="border-0 shadow-lg bg-white">
+              <div className="p-2">
+                <h2 className="text-3xl flex items-center gap-3 font-bold text-primary">
+                  <div className="bg-gradient-to-br from-primary2 to-primary rounded-full">
+                    <FaBullseye className="text-white" />
+                  </div>
+                  {t("volunteers.goals.title")}
+                </h2>
               </div>
-            </div>
-          </Card></div>
+            </Card>
 
+            {/* Goals Points */}
+            <Card
+              hoverable
+              className="border-0 shadow-lg bg-gradient-to-br from-primary2 to-primary text-white"
+            >
+              <div className="p-8">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {pointsArray.map((point, i) => (
+                    <div
+                      key={i}
+                      className="flex items-start gap-3 p-4 bg-white/10 rounded-lg hover:bg-white/20 transition-all duration-300"
+                    >
+                      <div className="flex-shrink-0 w-8 h-8 bg-white/20 rounded-full flex items-center justify-center mt-1">
+                        <TiPointOfInterest className="text-white text-sm" />
+                      </div>
+                      <p className="text-gray-100 leading-relaxed">{point}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </Card>
+          </div>
+        </div>
+
+        {/* CTA Section */}
+        <div className="mt-16 text-center">
+          <div className="bg-gradient-to-r from-primary to-secondary text-white p-8 rounded-2xl shadow-xl">
+            <h3 className="text-2xl font-bold mb-4">
+              {t("volunteerSection.title")}
+            </h3>
+            <p className="text-gray-100 mb-6 max-w-2xl mx-auto">
+              {t("volunteerSection.description")}
+            </p>
+            <Link href="/register">
+              <button className="bg-white text-primary px-8 py-3 rounded-full font-semibold hover:bg-gray-100 transition-all duration-300 shadow-lg hover:shadow-xl">
+                {t("volunteerSection.button")}
+              </button>
+            </Link>
+          </div>
+        </div>
       </div>
     </div>
   );

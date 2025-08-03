@@ -13,12 +13,29 @@ import { CgProfile } from "react-icons/cg";
 import { FaFileDownload } from "react-icons/fa";
 import { FaIdBadge } from "react-icons/fa6";
 import NavbarSmallDevice from "./NavbarSmallDevice";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import UserInfo from "@/src/Hook/UserInfo";
+import { useTranslation } from "@/src/Hook/useTranslation";
+import LanguageToggle from "@/src/Components/UI/LanguageToggle";
 
 const Navbar = () => {
   //! User data
   const user = UserInfo();
+
+  const [language, setLanguage] = useState("en");
+
+  useEffect(() => {
+    const storedLang = localStorage.getItem("language") || "en";
+    setLanguage(storedLang);
+  }, []);
+
+  const toggleLanguage = (checked) => {
+    const lang = checked ? "bn" : "en";
+    setLanguage(lang);
+    console.log(lang);
+    localStorage.setItem("language", lang);
+    window.location.reload();
+  };
 
   const [open, setOpen] = useState(false);
   const { token, userType, logout, userId } = useAuth();
@@ -30,6 +47,8 @@ const Navbar = () => {
     logout(); // Update context
     router.push("/login");
   };
+
+  const { t } = useTranslation();
 
   return (
     <div>
@@ -55,22 +74,26 @@ const Navbar = () => {
                 className="text-white font-semibold hover:text-primary2 transition-all  border-r-[2px] px-3"
                 href={"/notice/"}
               >
-                Notices
+                {t("navbar.notice")}
               </Link>{" "}
               <Link
                 className="text-white font-semibold hover:text-primary2 transition-all mr-2 border-r-[2px] pr-2"
                 href={"/contact/"}
               >
-                Contact Us
+                {t("navbar.contact")}
               </Link>{" "}
               {!token && (
                 <>
                   <Link href={"/register/"}>
-                    <button className="head-input-button mr-3">Register</button>
+                    <button className="head-input-button mr-3">
+                      {t("navbar.register")}
+                    </button>
                   </Link>
 
                   <Link href={"/login/"}>
-                    <button className="head-input-button">Login</button>
+                    <button className="head-input-button">
+                      {t("navbar.login")}
+                    </button>
                   </Link>
                 </>
               )}
@@ -87,12 +110,13 @@ const Navbar = () => {
                                 {" "}
                                 <Link
                                   className="text-white hover:text-white font-semibold flex items-center gap-2"
-                                  href={`${userType === "Volunteer"
+                                  href={`${
+                                    userType === "Volunteer"
                                       ? "/admin/dashboard/my-campaign/"
                                       : "/admin/dashboard/campaigns/"
-                                    }`}
+                                  }`}
                                 >
-                                  <MdDashboard /> Dashboard
+                                  <MdDashboard /> {t("dropdown.dashboard")}
                                 </Link>{" "}
                               </button>
                             )}
@@ -101,7 +125,7 @@ const Navbar = () => {
                               className="text-white hover:text-white font-semibold flex items-center gap-2"
                               href={"/my-profile"}
                             >
-                              <CgProfile /> My Profile
+                              <CgProfile /> {t("dropdown.myProfile")}
                             </Link>
                           </button>
                           {token && userType === "Volunteer" && (
@@ -110,7 +134,7 @@ const Navbar = () => {
                                 className="text-white hover:text-white font-semibold flex items-center gap-2"
                                 href={"/download-id"}
                               >
-                                <FaIdBadge /> Download Id Card
+                                <FaIdBadge /> {t("dropdown.downloadId")}
                               </Link>
                             </button>
                           )}
@@ -119,7 +143,7 @@ const Navbar = () => {
                               className="text-white hover:text-white font-semibold flex items-center gap-2"
                               href={"/download-report"}
                             >
-                              <FaFileDownload /> Download Report
+                              <FaFileDownload /> {t("dropdown.downloadReport")}
                             </Link>
                           </button>
                           {token && userType === "Admin" && (
@@ -128,10 +152,12 @@ const Navbar = () => {
                                 className="text-white hover:text-white font-semibold flex items-center gap-2"
                                 href={"/admin/change-password"}
                               >
-                                <FaFileDownload /> Change Password
+                                <FaFileDownload />{" "}
+                                {t("dropdown.changePassword")}
                               </Link>
                             </button>
                           )}
+
                           <hr className="mt-5 mb-3" />
                           <div className="">
                             <>
@@ -139,7 +165,7 @@ const Navbar = () => {
                                 onClick={handleLogout}
                                 className="head-input-button"
                               >
-                                Logout
+                                {t("dropdown.logout")}
                               </button>
                             </>
                           </div>
@@ -170,6 +196,19 @@ const Navbar = () => {
                   </Dropdown>
                 </div>
               )}
+              <div>
+                {/* <Switch
+                  checked={language === "bn"}
+                  onChange={toggleLanguage}
+                  checkedChildren="BN"
+                  unCheckedChildren="English" */}
+
+                <LanguageToggle
+                  language={language}
+                  onLanguageChange={toggleLanguage}
+                  variant="pill"
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -181,7 +220,7 @@ const Navbar = () => {
               }
               href={"/"}
             >
-              Home
+              {t("navbar.home")}
             </Link>{" "}
             <Link
               className={
@@ -189,7 +228,7 @@ const Navbar = () => {
               }
               href={"/about/"}
             >
-              About us
+              {t("navbar.about")}
             </Link>
             <Link
               className={
@@ -199,7 +238,7 @@ const Navbar = () => {
               }
               href={"/campaigns/"}
             >
-              Campaigns
+              {t("navbar.campaigns")}
             </Link>
             <div className="mt-[-44px]">
               <Link href={"/"}>
@@ -219,7 +258,7 @@ const Navbar = () => {
               }
               href={"/blood-bank/"}
             >
-              Blood Bank
+              {t("navbar.bloodBank")}
             </Link>
             <Link
               className={
@@ -229,7 +268,7 @@ const Navbar = () => {
               }
               href={"/volunteers/"}
             >
-              Leaders
+              {t("navbar.leaders")}
             </Link>
             <Link
               className={
@@ -237,11 +276,12 @@ const Navbar = () => {
               }
               href={"/media/"}
             >
-              Media
+              {t("navbar.media")}
             </Link>
           </div>
         </div>
       </div>
+      {/* Mobile device  */}
       <div className="lg:hidden block">
         <div className="flex items-center justify-between px-3 py-3">
           <div>
@@ -268,77 +308,94 @@ const Navbar = () => {
               <div>
                 <Dropdown
                   overlay={
-                    <div className="bg-primary py-3 px-4 w-[200px] border shadow-md rounded-sm  ">
+                    <div className="bg-primary py-3 px-4 w-[200px] border shadow-md rounded-sm">
                       <div>
                         {token &&
                           (userType === "Admin" ||
                             userType === "Volunteer") && (
                             <button>
-                              {" "}
                               <Link
                                 className="text-white hover:text-white font-semibold flex items-center gap-2"
-                                href={`${userType === "Volunteer"
+                                href={
+                                  userType === "Volunteer"
                                     ? "/admin/dashboard/my-campaign/"
                                     : "/admin/dashboard/campaigns/"
-                                  }`}
+                                }
                               >
-                                <MdDashboard /> Dashboard
-                              </Link>{" "}
+                                <MdDashboard /> {t("dropdown.dashboard")}
+                              </Link>
                             </button>
                           )}
+
                         <button>
                           <Link
                             className="text-white hover:text-white font-semibold flex items-center gap-2"
                             href={"/my-profile"}
                           >
-                            <CgProfile /> My Profile
+                            <CgProfile /> {t("dropdown.myProfile")}
                           </Link>
                         </button>
+
                         {token && userType === "Volunteer" && (
                           <button>
                             <Link
                               className="text-white hover:text-white font-semibold flex items-center gap-2"
                               href={"/download-id"}
                             >
-                              <FaIdBadge /> Download Id Card
+                              <FaIdBadge /> {t("dropdown.downloadId")}
                             </Link>
                           </button>
                         )}
+
                         <button>
                           <Link
                             className="text-white hover:text-white font-semibold flex items-center gap-2"
                             href={"/download-report"}
                           >
-                            <FaFileDownload /> Download Report
+                            <FaFileDownload /> {t("dropdown.downloadReport")}
                           </Link>
                         </button>
+
                         {token && userType === "Admin" && (
                           <button>
                             <Link
                               className="text-white hover:text-white font-semibold flex items-center gap-2"
                               href={"/admin/change-password"}
                             >
-                              <FaFileDownload /> Change Password
+                              <FaFileDownload /> {t("dropdown.changePassword")}
                             </Link>
                           </button>
                         )}
+                        <div>
+                          {/* <Switch
+                  checked={language === "bn"}
+                  onChange={toggleLanguage}
+                  checkedChildren="BN"
+                  unCheckedChildren="English" */}
+
+                          <LanguageToggle
+                            language={language}
+                            onLanguageChange={toggleLanguage}
+                            variant="pill"
+                          />
+                        </div>
+
                         <hr className="mt-5 mb-3" />
-                        <div className="">
-                          <>
-                            <button
-                              onClick={handleLogout}
-                              className="head-input-button"
-                            >
-                              Logout
-                            </button>
-                          </>
+
+                        <div>
+                          <button
+                            onClick={handleLogout}
+                            className="head-input-button"
+                          >
+                            {t("dropdown.logout")}
+                          </button>
                         </div>
                       </div>
                     </div>
                   }
                   placement="bottomRight"
                 >
-                  <div className="">
+                  <div>
                     <img
                       src={
                         user?.imageUrl
@@ -346,7 +403,7 @@ const Navbar = () => {
                           : "https://static.vecteezy.com/system/resources/thumbnails/004/607/791/small_2x/man-face-emotive-icon-smiling-male-character-in-blue-shirt-flat-illustration-isolated-on-white-happy-human-psychological-portrait-positive-emotions-user-avatar-for-app-web-design-vector.jpg"
                       }
                       className="rounded-full h-[40px] w-[40px] overflow-hidden"
-                      alt="Picture of the author"
+                      alt="Profile"
                     />
                   </div>
                 </Dropdown>

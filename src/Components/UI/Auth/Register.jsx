@@ -7,6 +7,7 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import Loader from "../../Layouts/Loader";
+import { useTranslation } from "@/src/Hook/useTranslation";
 
 const Register = () => {
   const [upazilas, setUpazilas] = useState([]);
@@ -18,6 +19,8 @@ const Register = () => {
   const [loading, setLoading] = useState(false);
 
   const router = useRouter();
+
+  const { t } = useTranslation();
 
   const {
     register,
@@ -37,7 +40,7 @@ const Register = () => {
       type === "upazila"
         ? setUpazilas(data?.data || [])
         : setUnions(data?.data || []);
-    } catch (error) { }
+    } catch (error) {}
   };
 
   useEffect(() => {
@@ -109,7 +112,7 @@ const Register = () => {
   return (
     <div className="mt-1">
       <h3 className="text-lg font-normal text-primary mb-1">
-        Create your account
+        {t("register.registrationForm.heading")}
       </h3>
 
       {loading ? (
@@ -120,7 +123,8 @@ const Register = () => {
             {/* User Type Selection */}
             <div>
               <label className="input-title">
-                User Type<span className="text-rose-600">*</span>
+                {t("register.registrationForm.userType")}
+                <span className="text-rose-600">*</span>
               </label>
               <select
                 // {...register("UserType", { required: "User Type is required" })}
@@ -140,7 +144,8 @@ const Register = () => {
             {uType === "Volunteer" && (
               <div>
                 <label className="input-title">
-                  Leader Type<span className="text-rose-600">*</span>
+                  {t("register.registrationForm.leaderType")}
+                  <span className="text-rose-600">*</span>
                 </label>
                 <select
                   onChange={(e) => {
@@ -167,34 +172,36 @@ const Register = () => {
             )}
             {(leaderType === "Deputy Commissioner Official" ||
               leaderType === "Civil Surgeon Official") && (
-                <div>
-                  <label className="input-title">
-                    Designation<span className="text-rose-600">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    {...register("Designation", {
-                      required: "Designation is required",
-                    })}
-                    className="input-border w-full mb-2"
-                  />
-                  {errors.Designation && (
-                    <p className="text-red-500">{errors.Designation.message}</p>
-                  )}
-                </div>
-              )}
+              <div>
+                <label className="input-title">
+                  {t("register.registrationForm.designation")}
+                  <span className="text-rose-600">*</span>
+                </label>
+                <input
+                  type="text"
+                  {...register("Designation", {
+                    required: "Designation is required",
+                  })}
+                  className="input-border w-full mb-2"
+                />
+                {errors.Designation && (
+                  <p className="text-red-500">{errors.Designation.message}</p>
+                )}
+              </div>
+            )}
 
             {/* Personal Info */}
             <div className="sm:col-span-3">
               {" "}
               <h3 className="text-base font-normal text-gray-500 mb-1">
-                Personal Information
+                {t("register.registrationForm.personalInfo")}
               </h3>
               <hr />
             </div>
             <div>
               <label className="input-title">
-                Full Name<span className="text-rose-600">*</span>
+                {t("register.registrationForm.fullName")}
+                <span className="text-rose-600">*</span>
               </label>
               <input
                 type="text"
@@ -208,7 +215,8 @@ const Register = () => {
 
             <div>
               <label className="input-title">
-                Date of Birth<span className="text-rose-600">*</span>
+                {t("register.registrationForm.dob")}
+                <span className="text-rose-600">*</span>
               </label>
               <DatePicker
                 className="w-full"
@@ -218,7 +226,8 @@ const Register = () => {
             </div>
             <div>
               <label className="input-title">
-                Mobile Number<span className="text-rose-600">*</span>
+                {t("register.registrationForm.mobile")}
+                <span className="text-rose-600">*</span>
               </label>
               <input
                 type="number"
@@ -234,7 +243,8 @@ const Register = () => {
             </div>
             <div>
               <label className="input-title">
-                Gender<span className="text-rose-600">*</span>
+                {t("register.registrationForm.gender")}
+                <span className="text-rose-600">*</span>
               </label>
               <select
                 {...register("Gender", { required: "Gender is required" })}
@@ -248,7 +258,8 @@ const Register = () => {
             </div>
             <div>
               <label className="input-title">
-                Father Name<span className="text-rose-600">*</span>
+                {t("register.registrationForm.father")}
+                <span className="text-rose-600">*</span>
               </label>
               <input
                 type="text"
@@ -260,7 +271,8 @@ const Register = () => {
             </div>
             <div>
               <label className="input-title">
-                Mother Name<span className="text-rose-600">*</span>
+                {t("register.registrationForm.mother")}
+                <span className="text-rose-600">*</span>
               </label>
               <input
                 type="text"
@@ -272,7 +284,8 @@ const Register = () => {
             </div>
             <div>
               <label className="input-title">
-                District<span className="text-rose-600">*</span>
+                {t("register.registrationForm.district")}
+                <span className="text-rose-600">*</span>
               </label>
               <select
                 {...register("District", { required: "District is required" })}
@@ -283,7 +296,8 @@ const Register = () => {
             </div>
             <div>
               <label className="input-title">
-                Upazila<span className="text-rose-600">*</span>
+                {t("register.registrationForm.upazila")}
+                <span className="text-rose-600">*</span>
               </label>
               <select
                 {...register("Upazila", { required: "Upazila is required" })}
@@ -299,7 +313,8 @@ const Register = () => {
             </div>
             <div>
               <label className="input-title">
-                Union<span className="text-rose-600">*</span>
+                {t("register.registrationForm.union")}
+                <span className="text-rose-600">*</span>
               </label>
               <select
                 {...register("Union", { required: "Union is required" })}
@@ -314,7 +329,9 @@ const Register = () => {
               </select>
             </div>
             <div className="sm:col-span-2">
-              <label className="input-title">Address</label>
+              <label className="input-title">
+                {t("register.registrationForm.address")}
+              </label>
               <input
                 type="text"
                 {...register("Address")}
@@ -324,7 +341,8 @@ const Register = () => {
             {uType === "Volunteer" && (
               <div className="">
                 <label className="input-title">
-                  Institution<span className="text-rose-600">*</span>
+                  {t("register.registrationForm.institution")}
+                  <span className="text-rose-600">*</span>
                 </label>
                 <input
                   type="text"
@@ -341,7 +359,9 @@ const Register = () => {
 
             {/* Documents */}
             <div>
-              <label className="input-title">Profile Picture</label>
+              <label className="input-title">
+                {t("register.registrationForm.profilePic")}
+              </label>
               <input
                 type="file"
                 {...register("ProfilePicture", {
@@ -350,11 +370,15 @@ const Register = () => {
                 className="w-full mb-2"
               />
               {errors.ProfilePicture && (
-                <p className="text-red-500 text-sm">{errors.ProfilePicture.message}</p>
+                <p className="text-red-500 text-sm">
+                  {errors.ProfilePicture.message}
+                </p>
               )}
             </div>
             <div>
-              <label className="input-title">NID/Student ID</label>
+              <label className="input-title">
+                {t("register.registrationForm.nid")}
+              </label>
               <input
                 type="file"
                 multiple
@@ -368,14 +392,15 @@ const Register = () => {
             <div className="sm:col-span-3">
               {" "}
               <h3 className="text-base font-normal text-gray-500 mb-1">
-                Blood Information
+                {t("register.registrationForm.bloodInfo")}
               </h3>
               <hr />
             </div>
 
             <div>
               <label className="input-title">
-                Blood Group<span className="text-rose-600">*</span>
+                {t("register.registrationForm.bloodGroup")}
+                <span className="text-rose-600">*</span>
               </label>
               <select
                 {...register("BloodGroup", {
@@ -399,7 +424,8 @@ const Register = () => {
             </div>
             <div>
               <label className="input-title">
-                Donation Status<span className="text-rose-600">*</span>
+                {t("register.registrationForm.donationStatus")}
+                <span className="text-rose-600">*</span>
               </label>
               <select
                 {...register("BloodDonationStatus", {
@@ -419,7 +445,9 @@ const Register = () => {
               )}
             </div>
             <div>
-              <label className="input-title">Last Donation Date</label>
+              <label className="input-title">
+                {t("register.registrationForm.lastDonation")}
+              </label>
               <DatePicker
                 className="w-full"
                 format="YYYY-MM-DD"
@@ -427,7 +455,9 @@ const Register = () => {
               />
             </div>
             <div>
-              <label className="input-title">Blood Donation Count</label>
+              <label className="input-title">
+                {t("register.registrationForm.donationCount")}
+              </label>
               <input
                 type="number"
                 {...register("BloodDonationCount")}
@@ -436,9 +466,10 @@ const Register = () => {
             </div>
             <div className="sm:col-span-2">
               <label htmlFor="PhysicalComplexity" className="input-title">
-                Any Physical Complexity?<span className="text-rose-600">*</span>
+                {t("register.registrationForm.complexity")}
+                <span className="text-rose-600">*</span>
                 <span className="text-xs text-accent">
-                  (Diabetics / Cancer / thyroid etc.)
+                  {t("register.registrationForm.complexityNote")}
                 </span>
               </label>
               <select
@@ -459,7 +490,7 @@ const Register = () => {
             </div>
           </div>
           <button type="submit" className="input-button mb-4">
-            Register
+            {t("register.registrationForm.registerBtn")}
           </button>
         </form>
       )}

@@ -6,7 +6,8 @@ import DonarCards from "../src/Components/UI/Home/DonarCards/DonarCards";
 import Campaigns from "../src/Components/UI/Home/Campaigns/Campaigns";
 import Works from "../src/Components/UI/Home/Works/Works";
 import Volunteers from "../src/Components/UI/Home/Volunteers/Volunteers";
-import { FaMobileAlt } from "react-icons/fa";
+import Blood from "@/src/Components/UI/Home/Blood/Blood";
+import Reviews from "@/src/Components/UI/Home/Reviews/Reviews";
 
 const fadeInVariants = {
   hidden: { opacity: 0, y: 50 },
@@ -52,7 +53,25 @@ const HomePage = () => {
         variants={fadeInVariants}
         className="md:w-[90%] sm:mx-auto py-2"
       >
+        <Blood />
+      </motion.div>
+      <motion.div
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: false, amount: 0.2 }}
+        variants={fadeInVariants}
+        className="md:w-[90%] sm:mx-auto py-2 "
+      >
         <Works />
+      </motion.div>
+      <motion.div
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: false, amount: 0.2 }}
+        variants={fadeInVariants}
+        className="mt-10 bg-gradient-to-r from-red-500 via-red-400 to-pink-400"
+      >
+        <Reviews />
       </motion.div>
 
       <motion.div

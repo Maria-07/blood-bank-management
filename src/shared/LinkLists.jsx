@@ -3,12 +3,14 @@ import { FaUsersCog } from "react-icons/fa";
 import {
   MdAdminPanelSettings,
   MdOutlineAssignmentReturned,
+  MdOutlineReviews,
 } from "react-icons/md";
 import { FaPeopleCarryBox, FaRegNewspaper } from "react-icons/fa6";
 import { BsChatSquareText } from "react-icons/bs";
 import { IoDocumentAttachSharp } from "react-icons/io5";
 import { CgUserlane } from "react-icons/cg";
 
+// for admion and superAdmin
 export const settingsSidebar = [
   {
     icon: <FaUsersCog />,
@@ -41,12 +43,19 @@ export const settingsSidebar = [
     link: "/admin/dashboard/news",
   },
   {
+    icon: <MdOutlineReviews />,
+    link_name: "Reviews",
+    link: "/admin/dashboard/review-manage",
+  },
+  {
     icon: <MdAdminPanelSettings />,
     link_name: "Admins",
     link: "/admin/dashboard/admin-manage",
     onlySuperAdmin: true,
   },
 ];
+
+// for volunteerSidebar
 export const volunteerSidebar = [
   {
     icon: <FaUsersCog />,

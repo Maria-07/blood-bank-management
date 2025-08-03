@@ -14,8 +14,10 @@ import {
   useGetMessageReadMutation,
 } from "@/src/redux/features/contacts/contact";
 import ContactActionModal from "./ContactActionModal";
+import { useTranslation } from "@/src/Hook/useTranslation";
 
 const Contact = () => {
+  const { t } = useTranslation();
   const [userData, setUserData] = useState(null);
   const [messageModalVisible, setMessageModalVisible] = useState(false);
   const [page, setPage] = useState(1);
@@ -164,7 +166,9 @@ const Contact = () => {
   return (
     <div>
       <div className="flex items-center justify-between gap-2 flex-wrap mb-4">
-        <h1 className="text-primary2 font-semibold text-lg">Contacts</h1>
+        <h1 className="text-primary2 font-semibold text-lg">
+          {t("contactTabs.contact")}
+        </h1>
       </div>
       <div className="overflow-auto pb-4">
         {isLoading ? (

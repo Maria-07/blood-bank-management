@@ -1,141 +1,234 @@
+"use client";
 import React from "react";
 import { TbPointFilled } from "react-icons/tb";
+import {
+  FaHeart,
+  FaUsers,
+  FaHandshake,
+  FaShieldAlt,
+  FaLightbulb,
+  FaChartLine,
+} from "react-icons/fa";
+import { useTranslation } from "@/src/Hook/useTranslation";
+import Link from "next/link";
 
 const AboutPage = () => {
+  const { t } = useTranslation();
+
   return (
-    <div>
-      <div>
-        <div className="md:w-[70%] w-[90%] sm:mx-auto py-10">
-          <div className="md:w-[100%] sm:mx-auto sm:px-0 px-2  gap-3 items-center justify-between">
-            <div
-              initial={{ opacity: 0, x: -30 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.4 }}
-              className="sm:pl-10 mx-auto"
-            >
-              <h1 className="font-bold text-center lg:text-5xl text-3xl font-primary">
-                About Us
-              </h1>
-              <hr className="p-[2px] bg-primary w-[15%] mx-auto" />
-              <p className="text-base text-accent text-center mt-3 ">
-                &quot;The best gift of humanity is blood – save lives by
-                donating blood.&quot;
-              </p>
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
+      {/* Hero Section */}
+      <div className="relative overflow-hidden bg-gradient-to-r from-primary to-blue-600 text-white">
+        <div className="absolute inset-0 bg-black opacity-10"></div>
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+          <div className="text-center">
+            <h1 className="text-4xl md:text-6xl font-bold mb-6 font-primary">
+              {t("about.title")}
+            </h1>
+            <div className="w-24 h-1 bg-white mx-auto mb-8 rounded-full"></div>
+            <p className="text-xl md:text-2xl italic max-w-4xl mx-auto leading-relaxed">
+              {t("about.quote")}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Platform Introduction */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div className="bg-white rounded-2xl shadow-xl p-8 md:p-12">
+          <div className="text-center mb-12">
+            <div className="inline-flex items-center justify-center w-16 h-16 bg-primary rounded-full mb-6">
+              <FaHeart className="text-white text-2xl" />
+            </div>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              {t("about.platformName")}
+            </h2>
+            <p className="text-lg text-gray-600 leading-relaxed max-w-4xl mx-auto">
+              {t("about.platformDescription.part1")}{" "}
+              <strong className="text-primary">{t("about.leaderName")}</strong>{" "}
+              {t("about.platformDescription.part2")}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      {/* Why Needed Section */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div className="bg-gradient-to-r from-blue-600 to-primary rounded-2xl shadow-xl p-8 md:p-12 text-white">
+          <div className="text-center mb-12">
+            <div className="inline-flex items-center justify-center w-16 h-16 bg-white bg-opacity-20 rounded-full mb-6">
+              <FaLightbulb className="text-white text-2xl" />
+            </div>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              {t("about.whyNeeded.title")}
+            </h2>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8">
+            <div className="bg-white bg-opacity-10 rounded-xl p-6 backdrop-blur-sm">
+              <div className="flex items-start gap-4">
+                <div className="flex-shrink-0 w-8 h-8 bg-white bg-opacity-20 rounded-full flex items-center justify-center mt-1">
+                  <TbPointFilled className="text-white text-sm" />
+                </div>
+                <p className="text-lg leading-relaxed">
+                  {t("about.whyNeeded.reason1")}
+                </p>
+              </div>
+            </div>
+
+            <div className="bg-white bg-opacity-10 rounded-xl p-6 backdrop-blur-sm">
+              <div className="flex items-start gap-4">
+                <div className="flex-shrink-0 w-8 h-8 bg-white bg-opacity-20 rounded-full flex items-center justify-center mt-1">
+                  <TbPointFilled className="text-white text-sm" />
+                </div>
+                <p className="text-lg leading-relaxed">
+                  {t("about.whyNeeded.reason2")}
+                </p>
+              </div>
             </div>
           </div>
-          {/* <div className="py-5 bg-[#F2F2F2] rounded-xl shadow-md   px-5 "></div> */}
+        </div>
+      </div>
 
-          <div className="px-2 sm:px-10 my-5">
-            <div className="my-10 text-base  text-center">
-              <span className="text-xl font-semibold text-secondary">
-                Hemoglobin
-              </span>
-              {" "}is a digital blood donation platform initiated for the people of
-              Nilphamari District, aiming to ensure fast, easy, and effective
-              access to blood services. This initiative has been established and
-              is operated under the personal vision, direct guidance, and strong
-              efforts of the Honorable Deputy Commissioner of Nilphamari,
-              <strong>Mr. Mohammad Nairuzzaman.</strong> Under his leadership, a
-              dedicated team within the District Administration is consistently
-              working to ensure the success of this mission. The Civil Surgeon’s
-              Office, Nilphamari is providing technical support for blood group
-              testing and volunteer training, while members of the Bangladesh
-              Scouts, Nilphamari District are serving selflessly as volunteers
-              to push this humanitarian effort forward.
+      {/* Stakeholders Section */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div className="text-center mb-12">
+          <div className="inline-flex items-center justify-center w-16 h-16 bg-primary rounded-full mb-6">
+            <FaUsers className="text-white text-2xl" />
+          </div>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            {t("about.stakeholders.title")}
+          </h2>
+        </div>
+
+        <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-8">
+          {/* District Administration */}
+          <div className="lg:col-span-2 bg-gradient-to-br from-primary to-blue-700 text-white rounded-2xl shadow-xl p-8">
+            <div className="flex items-center gap-4 mb-6">
+              <div className="w-12 h-12 bg-white bg-opacity-20 rounded-full flex items-center justify-center">
+                <FaShieldAlt className="text-white text-xl" />
+              </div>
+              <h3 className="text-2xl font-bold">
+                {t("about.stakeholders.districtAdmin.title")}
+              </h3>
             </div>
-            <div className="border-[1px] sm:px-5 px-1 my-20 rounded-sm shadow-md pt-5 pb-16">
-              <h1 className="text-xl font-semibold uppercase my-10 text-center">
-                Why This Platform Was Needed?
-              </h1>
-              <div className="flex gap-2 mx-7 my-5 pl-5 border-primary border-l-[5px]">
-                Blood donation is a noble act — not only does it help save
-                lives, but donating blood regularly can also contribute
-                positively to the health of the donor. However, matching donors
-                and recipients at the right time remains a major challenge.
-                Additionally, many people in our society are unaware of their
-                blood group, which causes complications in emergencies.
+            <div className="space-y-4">
+              <div className="flex items-center gap-3">
+                <TbPointFilled className="text-lg flex-shrink-0" />
+                <span className="text-lg">
+                  {t("about.stakeholders.districtAdmin.platform")}
+                </span>
               </div>
-
-              <div className="flex gap-2 mx-7 my-5 pl-5 border-primary border-l-[5px]">
-                To overcome these barriers, this platform was created as an
-                innovative initiative by the Deputy Commissioner of Nilphamari.
-                It bridges the gap between donors and recipients and raises
-                awareness about blood donation.
+              <div className="flex items-center gap-3">
+                <TbPointFilled className="text-lg flex-shrink-0" />
+                <span className="text-lg">
+                  {t("about.stakeholders.districtAdmin.volunteerTraining")}
+                </span>
               </div>
-            </div>
-            <div className=" sm:p-5 p-1 my-20 ">
-              <h1 className="text-xl font-semibold text-center my-5 uppercase ">
-                Our Stakeholders
-              </h1>
-
-              <div className="ml-7 my-4">
-                {/* <h2 className="text-lg font-semibold text-secondary">
-                  This initiative involves three key groups:
-                </h2> */}
+              <div className="flex items-center gap-3">
+                <TbPointFilled className="text-lg flex-shrink-0" />
+                <span className="text-lg">
+                  {t("about.stakeholders.districtAdmin.campaignPlanning")}
+                </span>
               </div>
-              <div className="grid sm:grid-cols-2 grid-cols-1 gap-2">
-               
-                  <div className="sm:row-span-2 h-[100%] ml-7 my-4 p-5 rounded-md border  bg-primary text-white">
-                    <h2 className="text-lg font-semibold">
-                      District Administration – Led by the Deputy Commissioner
-                      and supported by the Civil Surgeon’s Office, this team
-                      handles:
-                    </h2>
-                    <div className="flex items-center gap-2  mt-2">
-                      <TbPointFilled className="text-sm" /> Platform development
-                      and maintenance
-                    </div>
-                    <div className="flex items-center gap-2  mt-2">
-                      <TbPointFilled className="text-sm" /> Volunteer training
-                    </div>
-                    <div className="flex items-center gap-2  mt-2">
-                      <TbPointFilled className="text-sm" /> Campaign planning
-                      and execution
-                    </div>
-                    <div className="flex items-center gap-2  mt-2">
-                      <TbPointFilled className="text-sm" /> Donor engagement and
-                      support
-                    </div>
-                    <div className="flex items-center gap-2  mt-2">
-                      <TbPointFilled className="text-base" /> Recognizing top
-                      donors and issuing digital ID cards
-                    </div>
-                  </div>
-              
-                  <div className="ml-7 my-4 p-5 h-[100%] rounded-md border ">
-                    <h2 className="text-lg font-semibold">
-                      Bangladesh Scouts – Nilphamari – Act as volunteers in:
-                    </h2>
-                    <div className="flex items-center gap-2  mt-2">
-                      <TbPointFilled className="text-sm" /> Blood group
-                      identification at campaign
-                    </div>
-                    <div className="flex items-center gap-2  mt-2">
-                      <TbPointFilled className="text-sm" /> Uploading data into
-                      the central database
-                    </div>
-                    <div className="flex items-center gap-2  mt-2">
-                      <TbPointFilled className="text-sm" /> Conducting awareness
-                      campaigns
-                    </div>
-                  </div>  
-                  <div className="ml-7 my-4 p-5 h-[100%] rounded-md border  bg-sky-600
-                   text-white">
-                    <h2 className="text-lg font-semibold">
-                      Platform Users – General public who:
-                    </h2>
-                    <div className="flex items-center gap-2  mt-2">
-                      <TbPointFilled className="text-sm" /> Register as donors
-                    </div>
-                    <div className="flex items-center gap-2   mt-2">
-                      <TbPointFilled className="text-sm" /> Search for and
-                      contact blood donors during emergencies
-                    </div>
-                  </div>
-               
-
+              <div className="flex items-center gap-3">
+                <TbPointFilled className="text-lg flex-shrink-0" />
+                <span className="text-lg">
+                  {t("about.stakeholders.districtAdmin.donorEngagement")}
+                </span>
+              </div>
+              <div className="flex items-center gap-3">
+                <TbPointFilled className="text-lg flex-shrink-0" />
+                <span className="text-lg">
+                  {t("about.stakeholders.districtAdmin.recognizingDonors")}
+                </span>
               </div>
             </div>
+          </div>
+
+          {/* Scouts */}
+          <div className="bg-white rounded-2xl shadow-xl p-8 border border-gray-100">
+            <div className="flex items-center gap-4 mb-6">
+              <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
+                <FaHandshake className="text-blue-600 text-xl" />
+              </div>
+              <h3 className="text-xl font-bold text-gray-900">
+                {t("about.stakeholders.scouts.title")}
+              </h3>
+            </div>
+            <div className="space-y-4">
+              <div className="flex items-center gap-3">
+                <TbPointFilled className="text-primary text-lg flex-shrink-0" />
+                <span className="text-gray-700">
+                  {t("about.stakeholders.scouts.bloodGroupId")}
+                </span>
+              </div>
+              <div className="flex items-center gap-3">
+                <TbPointFilled className="text-primary text-lg flex-shrink-0" />
+                <span className="text-gray-700">
+                  {t("about.stakeholders.scouts.dataUploading")}
+                </span>
+              </div>
+              <div className="flex items-center gap-3">
+                <TbPointFilled className="text-primary text-lg flex-shrink-0" />
+                <span className="text-gray-700">
+                  {t("about.stakeholders.scouts.awarenessCampaign")}
+                </span>
+              </div>
+            </div>
+          </div>
+
+          {/* Users */}
+          <div className="bg-white rounded-2xl shadow-xl p-8 border border-gray-100 hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 lg:col-span-3">
+            <div className="flex items-center gap-4 mb-6">
+              <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center">
+                <FaChartLine className="text-white text-xl" />
+              </div>
+              <h3 className="text-xl font-bold text-gray-900">
+                {t("about.stakeholders.users.title")}
+              </h3>
+            </div>
+            <div className="space-y-4">
+              <div className="flex items-center gap-3 p-3 bg-purple-50 rounded-lg">
+                <TbPointFilled className="text-purple-600 text-lg flex-shrink-0" />
+                <span className="text-gray-700 font-medium">
+                  {t("about.stakeholders.users.registerDonors")}
+                </span>
+              </div>
+              <div className="flex items-center gap-3 p-3 bg-pink-50 rounded-lg">
+                <TbPointFilled className="text-pink-600 text-lg flex-shrink-0" />
+                <span className="text-gray-700 font-medium">
+                  {t("about.stakeholders.users.contactDonors")}
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Call to Action */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div className="bg-gradient-to-r from-green-500 to-emerald-600 rounded-2xl shadow-xl p-8 md:p-12 text-white text-center">
+          <div className="inline-flex items-center justify-center w-16 h-16 bg-white bg-opacity-20 rounded-full mb-6">
+            <FaHeart className="text-white text-2xl" />
+          </div>
+          <h3 className="text-3xl md:text-4xl font-bold mb-4">
+            {t("cta.title")}
+          </h3>
+          <p className="text-xl mb-8 max-w-2xl mx-auto">
+            {t("cta.description")}
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Link href="/register">
+              <button className="bg-white text-green-600 px-8 py-3 rounded-full font-semibold hover:bg-gray-100 transition-colors">
+                {t("cta.register")}
+              </button>
+            </Link>
+            <Link href="/media">
+              <button className="border-2 border-white text-white px-8 py-3 rounded-full font-semibold hover:bg-white hover:text-green-600 transition-colors">
+                {t("cta.learnMore")}
+              </button>
+            </Link>
           </div>
         </div>
       </div>

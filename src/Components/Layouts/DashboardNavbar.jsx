@@ -1,9 +1,11 @@
 "use client";
+import { useTranslation } from "@/src/Hook/useTranslation";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
 
 const DashboardNavbar = ({ data }) => {
+  const { t } = useTranslation();
   const currentRoute = usePathname();
   const { icon, link_name, link } = data;
   return (
@@ -19,7 +21,7 @@ const DashboardNavbar = ({ data }) => {
           href={link}
         >
           <span className="text-xl">{icon}</span>
-          {link_name}
+          {t(`sidebar.${link_name.replace(/\s+/g, "").toLowerCase()}`)}
         </Link>
       </div>
     </div>

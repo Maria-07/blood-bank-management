@@ -14,12 +14,14 @@ import {
   useGetAllApprovedDonorMutation,
   useGetAllPendingDonorMutation,
 } from "@/src/redux/features/auth/userApi";
+import { useTranslation } from "@/src/Hook/useTranslation";
 
 const BloodBanks = () => {
   const [filterShow, setFilterShow] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
   const [id, setId] = useState(null);
   const [filteredData, setFilteredData] = useState({});
+  const { t } = useTranslation();
 
   // Pagination and row count
   const [pagination, setPagination] = useState({ page: 1, size: 10 });
@@ -128,6 +130,7 @@ const BloodBanks = () => {
                 "leaderType",
                 "bloodDonationCount",
                 "imageUrl",
+                "isEmergencyContact"
               ].includes(key)
           )
           .map((key) => ({
@@ -200,7 +203,9 @@ const BloodBanks = () => {
   return (
     <div>
       <div className="flex items-center justify-between gap-2 mb-2">
-        <h1 className="text-primary font-semibold text-lg">Users</h1>
+        <h1 className="text-primary font-semibold text-lg">
+          {t("userProfile.titleName")}
+        </h1>
         <button
           className="border p-1 rounded-sm"
           onClick={() => setFilterShow(!filterShow)}
@@ -230,7 +235,7 @@ const BloodBanks = () => {
             onChange={(key) => setActiveTabKey(key)}
             items={[
               {
-                label: "Approved",
+                label: t("userProfile.approved"),
                 key: "1",
                 children: (
                   <>
@@ -257,7 +262,7 @@ const BloodBanks = () => {
                 ),
               },
               {
-                label: "Pending",
+                label: t("userProfile.pending"),
                 key: "2",
                 children: (
                   <>

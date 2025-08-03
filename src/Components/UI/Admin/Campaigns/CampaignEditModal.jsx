@@ -15,6 +15,7 @@ import { FiEdit } from "react-icons/fi";
 import { normalFormatDate } from "@/src/shared/ReusedFunctions";
 import { format, parseISO } from "date-fns";
 import dayjs from "dayjs";
+import { useTranslation } from "@/src/Hook/useTranslation";
 
 const CampaignEditModal = ({ handleClose, clicked, record, refetch }) => {
   // debugger;
@@ -35,6 +36,8 @@ const CampaignEditModal = ({ handleClose, clicked, record, refetch }) => {
     institute,
   } = record;
   const dateFormat = "yyyy-MM-dd";
+
+  const { t } = useTranslation();
 
   // Convert initial string dates to dayjs objects
   const [StartDateEdit, setStartDateEdit] = useState();
@@ -153,7 +156,7 @@ const CampaignEditModal = ({ handleClose, clicked, record, refetch }) => {
       <div>
         <div className="flex items-center justify-between">
           <h1 className="text-xl font-semibold tracking-tight">
-            Edit Campaign
+            {t("campaign.editTitle")}
           </h1>
           <IoMdCloseCircleOutline
             onClick={handleClose}
@@ -166,7 +169,7 @@ const CampaignEditModal = ({ handleClose, clicked, record, refetch }) => {
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="grid grid-cols-1 lg:grid-cols-2 my-3 mr-2 gap-x-2 gap-y-3">
             <div className="sm:col-span-2">
-              <label className="modal-label-name">Campaign Name</label>
+              <label className="modal-label-name">{t("campaign.name")}</label>
               <input
                 defaultValue={name}
                 type="text"
@@ -176,7 +179,9 @@ const CampaignEditModal = ({ handleClose, clicked, record, refetch }) => {
             </div>
             <div className="sm:col-span-2">
               <label className="label flex items-center">
-                <div className="modal-label-name">Institution Name</div>
+                <div className="modal-label-name">
+                  {t("campaign.institute")}
+                </div>
               </label>
               <input
                 type="text"
@@ -187,7 +192,9 @@ const CampaignEditModal = ({ handleClose, clicked, record, refetch }) => {
               />
             </div>
             <div>
-              <label className="modal-label-name">Start Date</label>
+              <label className="modal-label-name">
+                {t("campaign.startDate")}
+              </label>
               <input
                 type="date"
                 name="startDate"
@@ -201,7 +208,9 @@ const CampaignEditModal = ({ handleClose, clicked, record, refetch }) => {
             </div>
 
             <div>
-              <label className="modal-label-name">End Date</label>
+              <label className="modal-label-name">
+                {t("campaign.endDate")}
+              </label>
               <input
                 type="date"
                 name="endDate"
@@ -215,7 +224,9 @@ const CampaignEditModal = ({ handleClose, clicked, record, refetch }) => {
             </div>
 
             <div className="sm:col-span-2">
-              <label className="modal-label-name">Address</label>
+              <label className="modal-label-name">
+                {t("campaign.address")}
+              </label>
               <input
                 defaultValue={address}
                 type="text"
@@ -224,7 +235,9 @@ const CampaignEditModal = ({ handleClose, clicked, record, refetch }) => {
               />
             </div>
             <div className="sm:col-span-2">
-              <label className="modal-label-name">Select Volunteers</label>
+              <label className="modal-label-name">
+                {t("campaign.volunteers")}
+              </label>
               <Select
                 mode="multiple"
                 maxTagCount="responsive"
@@ -238,7 +251,7 @@ const CampaignEditModal = ({ handleClose, clicked, record, refetch }) => {
               />
             </div>
             <div className="sm:col-span-2">
-              <label className="modal-label-name">Campaign Banner</label>
+              <label className="modal-label-name">{t("campaign.banner")}</label>
               {bannerEdit && (
                 <input
                   type="file"
@@ -255,7 +268,7 @@ const CampaignEditModal = ({ handleClose, clicked, record, refetch }) => {
                   onClick={() => setBannerEdit(!bannerEdit)}
                   className="flex items-center gap-2"
                 >
-                  <FiEdit className="" /> Edit Banner
+                  <FiEdit className="" /> {t("campaign.editBanner")}
                 </button>
               ) : (
                 <button
@@ -264,7 +277,7 @@ const CampaignEditModal = ({ handleClose, clicked, record, refetch }) => {
                   className="flex items-center gap-2 text-secondary"
                 >
                   <MdCancel className="" />
-                  Cancel Banner Upload
+                  {t("campaign.cancelBannerUpload")}
                 </button>
               )}
               <div className="overflow-hidden h-[200px] w-[500px]">
@@ -287,7 +300,7 @@ const CampaignEditModal = ({ handleClose, clicked, record, refetch }) => {
             >
               <MdDone className="text-white bg-sky-700 px-1 py-[2px] text-[28px]" />
               <span className="px-2 py-[6px] bg-sky-500 transition-all hover:bg-sky-600 text-white text-xs">
-                Edit Campaign
+                {t("campaign.editBtn")}
               </span>
             </button>
             <button
@@ -296,7 +309,7 @@ const CampaignEditModal = ({ handleClose, clicked, record, refetch }) => {
             >
               <MdDeleteOutline className="text-white bg-secondary px-1 py-[2px] text-[28px]" />
               <span className="px-2 py-[6px] bg-primary transition-all hover:bg-secondary text-white text-xs">
-                Cancel
+                {t("campaign.cancelBtn")}
               </span>
             </button>
           </div>

@@ -1,39 +1,29 @@
 "use client";
 import { useGetDashboardDataQuery } from "@/src/redux/features/home";
-import React, { useEffect } from "react";
-import { toast } from "react-toastify";
+import React from "react";
 
-const Count = () => {
-  //! get all Dashboard Data
+const Count = ({ t }) => {
   const { data: CountedData, isLoading, isError } = useGetDashboardDataQuery();
-
-  useEffect(() => {
-    if (!isLoading && !isError) {
-    } else {
-    }
-  }, [CountedData, isLoading, isError]);
-
-  // const { campaign, donor, registeredDonor, volunteer } = CountedData;
 
   return (
     <div className="gap-2 grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 2xl:grid-cols-7">
       <div>
         <h1 className="text-3xl font-extrabold">
-          {CountedData?.data?.volunteer}
+          {CountedData?.data?.volunteer ?? 0}
         </h1>
-        <p className="text-base text-accent my-1">Volunteer(s)</p>
+        <p className="text-base text-accent my-1">{t("count.volunteer")}</p>
       </div>
       <div>
         <h1 className="text-3xl font-extrabold">
-          {CountedData?.data?.registeredDonor}
+          {CountedData?.data?.registeredDonor ?? 0}
         </h1>
-        <p className="text-base text-accent my-1">Donor(s)</p>
+        <p className="text-base text-accent my-1">{t("count.donor")}</p>
       </div>
       <div>
         <h1 className="text-3xl font-extrabold">
-          {CountedData?.data?.campaign}
+          {CountedData?.data?.campaign ?? 0}
         </h1>
-        <p className="text-base text-accent my-1">Campaign(s)</p>
+        <p className="text-base text-accent my-1">{t("count.campaign")}</p>
       </div>
     </div>
   );

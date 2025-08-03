@@ -4,20 +4,22 @@ import React from "react";
 import { IoMdCloseCircleOutline } from "react-icons/io";
 import { MdDeleteOutline, MdDone } from "react-icons/md";
 import { toast } from "react-toastify";
+import { useTranslation } from "@/src/Hook/useTranslation";
 
 const DisApproveVolunteerModal = ({
   handleClose,
   clicked,
   record,
   refetch,
+  refetch2,
 }) => {
   const id = record?.id;
-
+  const { t } = useTranslation();
   const handleApproveVolunteer = async () => {
     const accessToken = Cookies.get("accessToken");
 
     if (!accessToken) {
-      toast.error("Unauthorized. Please log in again.");
+      toast.error(t("leaders.toast.unauthorized"));
       return;
     }
 
@@ -36,7 +38,7 @@ const DisApproveVolunteerModal = ({
       );
 
       if (response.status === 302) {
-        toast.warning("Session expired. Redirecting to login...");
+        toast.warning(t("leaders.toast.sessionExpired"));
         Cookies.remove("accessToken"); // Clear the token
         router.push("/login"); // Redirect to login page
         return;
@@ -44,7 +46,7 @@ const DisApproveVolunteerModal = ({
 
       if (!response.ok) {
         const errorText = await response.text();
-        toast.error(errorText || "Failed to approve volunteer.");
+        toast.error(errorText || t("leaders.toast.approveFailed"));
         Cookies.remove("accessToken");
         router.push("/login");
         return;
@@ -54,13 +56,15 @@ const DisApproveVolunteerModal = ({
 
       if (responseData?.data?.isSuccess) {
         toast.success(
-          responseData?.data?.message || "Volunteer dismissed successfully!"
+          responseData?.data?.message || t("leaders.toast.approveSuccess")
         );
         handleClose();
-        window.location.reload();
+        refetch();
+        refetch2();
+        // window.location.reload();
       }
     } catch (error) {
-      toast.error("An unexpected error occurred. Please try again.");
+      toast.error(t("leaders.toast.unexpected"));
     }
   };
   return (
@@ -78,7 +82,7 @@ const DisApproveVolunteerModal = ({
           <div className="">
             <div className="flex items-center justify-between">
               <h1 className="text-xl  font-semibold tracking-tight">
-                Remove this user
+                {t("leaders.modal.disapproveTitle")}
               </h1>
 
               <IoMdCloseCircleOutline
@@ -91,7 +95,7 @@ const DisApproveVolunteerModal = ({
 
             <form>
               <div className="text-center text-base my-4">
-                Do you want to Remove this user ?
+                {t("leaders.modal.disapproveConfirm")}
               </div>
               <div className="bg-gray-200 py-[1px] mt-10"></div>
               <div className="flex items-end justify-end gap-2 mt-2">
@@ -102,7 +106,7 @@ const DisApproveVolunteerModal = ({
                 >
                   <MdDone className=" text-white bg-green-700  px-1 py-[2px] text-[28px]" />
                   <span className="px-2 py-[6px] bg-green-600 transition-all hover:bg-green-700 text-white text-xs">
-                    Remove
+                    {t("leaders.modal.disapproveBtn")}
                   </span>
                 </button>
                 <button
@@ -111,7 +115,7 @@ const DisApproveVolunteerModal = ({
                 >
                   <MdDeleteOutline className=" text-white bg-rose-700  px-1 py-[2px] text-[28px]" />
                   <span className="px-2 py-[6px] bg-rose-500 transition-all hover:bg-rose-600 text-white text-xs">
-                    Cancel
+                    {t("leaders.modal.cancelBtn")}
                   </span>
                 </button>
               </div>

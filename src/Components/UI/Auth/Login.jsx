@@ -1,6 +1,7 @@
 "use client";
 
 import { useAuth } from "@/src/Hook/AuthContext";
+import { useTranslation } from "@/src/Hook/useTranslation";
 import { DatePicker } from "antd";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
@@ -12,24 +13,22 @@ import { RiLockPasswordLine } from "react-icons/ri";
 import { toast } from "react-toastify";
 
 const Login = () => {
-  const { login } = useAuth(); // Use login from AuthContext
+  const { t } = useTranslation();
+  const { login } = useAuth();
   const router = useRouter();
+
   const [showPassword, setShowPassword] = useState(false);
   const [userType, setUserType] = useState("User");
   const [dob, setDob] = useState("");
 
-  const handleDob = (date, dateString) => {
-    setDob(dateString);
-  };
+  const handleDob = (date, dateString) => setDob(dateString);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
-  /**
-   * Utility function to handle API requests with error handling.
-   */
+
   const fetchData = async (url, payload) => {
     try {
       const response = await fetch(url, {
@@ -43,23 +42,21 @@ const Login = () => {
 
       if (!response.ok) {
         const errorText = await response.text();
-        throw new Error(errorText || "Error occurred during the API request.");
+        throw new Error(errorText || t("login.apiError"));
       }
 
       return await response.json();
     } catch (error) {
-      toast.error(error.message || "An unexpected error occurred.");
+      toast.error(error.message || t("login.unexpectedError"));
       throw error;
     }
   };
-  /**
-   * Handles the login process for both Admin and regular users.
-   */
+
   const handleLogin = async (data, isAdmin = false) => {
     const payload = {
       MobileNumber: data.MobileNumber,
       DateOfBirth: dob,
-      ...(isAdmin && { Password: data.Password }), // Include password for Admin login
+      ...(isAdmin && { Password: data.Password }),
     };
 
     try {
@@ -67,21 +64,18 @@ const Login = () => {
       const responseLoginData = await fetchData(url, payload);
 
       if (responseLoginData?.data?.isSuccess) {
-        toast.success(responseLoginData?.data?.message || "Login successful!");
-
-        const accessToken = responseLoginData?.data?.content?.token;
-        if (accessToken) {
-          login(accessToken); // Update AuthContext with the token
-          router.push("/"); // Redirect to the homepage
+        toast.success(responseLoginData?.data?.message || t("login.success"));
+        const token = responseLoginData?.data?.content?.token;
+        if (token) {
+          login(token);
+          router.push("/");
         }
       } else {
-        toast.error(responseLoginData?.data?.message || "Login failed!");
+        toast.error(responseLoginData?.data?.message || t("login.failed"));
       }
     } catch (error) {}
   };
-  /**
-   * Handles form submission and determines user type before proceeding to login.
-   */
+
   const onSubmit = async (data) => {
     try {
       if (dob) {
@@ -93,8 +87,7 @@ const Login = () => {
         setUserType(detectedUserType);
 
         if (detectedUserType === "Admin") {
-          // Wait for admin login on button click
-          toast.info("Admin detected, please enter your password.");
+          toast.info(t("login.adminNotice"));
         } else {
           await handleLogin(data);
         }
@@ -105,19 +98,20 @@ const Login = () => {
   return (
     <div className="mt-5">
       <form onSubmit={handleSubmit(onSubmit)}>
+        {/* Mobile Number */}
         <div>
           <h1 className="input-title flex items-center gap-1">
-            <FaMobileScreen className="text-primary" /> Mobile Number{" "}
-            <span className="text-red-600">*</span>
+            <FaMobileScreen className="text-primary" />
+            {t("login.mobile")} <span className="text-red-600">*</span>
           </h1>
           <input
             type="number"
-            className="input-border w-full sm:w-[150%] mb-2"
+            className="input-border w-full sm:w-[120%] mb-2"
             {...register("MobileNumber", {
-              required: "Mobile number is required",
+              required: t("login.errors.mobileRequired"),
               minLength: {
                 value: 11,
-                message: "Mobile number must be 11 digits",
+                message: t("login.errors.mobileLength"),
               },
             })}
           />
@@ -125,35 +119,36 @@ const Login = () => {
             <p className="text-red-500">{errors.MobileNumber.message}</p>
           )}
         </div>
+
+        {/* Date of Birth */}
         <div>
           <h1 className="input-title flex items-center gap-1">
-            <MdOutlineDateRange className="text-primary" /> Date of Birth{" "}
-            <span className="text-red-600">*</span>
+            <MdOutlineDateRange className="text-primary" />
+            {t("login.dob")} <span className="text-red-600">*</span>
           </h1>
           <DatePicker
-            className="w-full sm:w-[150%]"
-            format={{
-              format: "YYYY-MM-DD",
-              type: "mask",
-            }}
+            className="w-full sm:w-[120%]"
+            format={{ format: "YYYY-MM-DD", type: "mask" }}
             onChange={handleDob}
           />
         </div>
+
+        {/* Password (Admin only) */}
         {userType === "Admin" && (
           <div>
             <h1 className="input-title flex items-center gap-1">
-              <RiLockPasswordLine className="text-primary" /> Password{" "}
-              <span className="text-red-600">*</span>
+              <RiLockPasswordLine className="text-primary" />
+              {t("login.password")} <span className="text-red-600">*</span>
             </h1>
-            <div className="relative w-full sm:w-[150%]">
+            <div className="relative w-full sm:w-[120%]">
               <input
                 type={showPassword ? "text" : "password"}
-                className="input-border w-full sm:w-[100%] mb-2"
+                className="input-border w-full mb-2"
                 {...register("Password", {
-                  required: "Password is required",
+                  required: t("login.errors.passwordRequired"),
                   minLength: {
                     value: 6,
-                    message: "Password must be at least 6 characters",
+                    message: t("login.errors.passwordLength"),
                   },
                 })}
               />
@@ -174,20 +169,22 @@ const Login = () => {
             )}
           </div>
         )}
+
+        {/* Submit/Login Button */}
         {userType !== "Admin" ? (
           <button
             type="submit"
-            className="input-button w-full my-5 sm:w-[150%]"
+            className="input-button w-full my-5 sm:w-[120%]"
           >
-            Submit
+            {t("login.submit")}
           </button>
         ) : (
           <button
             type="button"
             onClick={handleSubmit((data) => handleLogin(data, true))}
-            className="input-button w-full my-5 sm:w-[150%]"
+            className="input-button w-full my-5 sm:w-[120%]"
           >
-            Login
+            {t("login.login")}
           </button>
         )}
       </form>

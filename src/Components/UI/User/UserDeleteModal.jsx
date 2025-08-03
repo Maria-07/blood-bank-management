@@ -5,16 +5,23 @@ import React from "react";
 import { IoMdCloseCircleOutline } from "react-icons/io";
 import { MdDeleteOutline, MdDone } from "react-icons/md";
 import { toast } from "react-toastify";
+import { useTranslation } from "@/src/Hook/useTranslation";
 
-const UserDeleteModal = ({ record, handleClose, clicked }) => {
+const UserDeleteModal = ({
+  record,
+  handleClose,
+  clicked,
+  refetch,
+  refetch2,
+}) => {
   const router = useRouter();
   const id = record?.id;
-
+  const { t } = useTranslation();
   const handleDelete = async () => {
     const accessToken = Cookies.get("accessToken");
 
     if (!accessToken) {
-      toast.error("Unauthorized. Please log in again.");
+      toast.error(t("leaders.toast.unauthorized"));
       return;
     }
 
@@ -31,7 +38,7 @@ const UserDeleteModal = ({ record, handleClose, clicked }) => {
 
       if (!response.ok) {
         const errorText = await response.text();
-        toast.error(errorText || "Failed to delete the User.");
+        toast.error(errorText || t("leaders.toast.deleteFailed"));
         return;
       }
 
@@ -40,13 +47,16 @@ const UserDeleteModal = ({ record, handleClose, clicked }) => {
 
       if (responseData?.data?.isSuccess) {
         toast.success(
-          responseData?.data?.message || "User deleted successfully!"
+          responseData?.data?.message || t("leaders.toast.deleteSuccess")
         );
-        window.location.reload();
+
+        // window.location.reload();
         handleClose();
+        refetch();
+        refetch2();
       }
     } catch (error) {
-      toast.error("An unexpected error occurred. Please try again.");
+      toast.error(t("leaders.toast.unexpected"));
     }
   };
   return (
@@ -63,14 +73,8 @@ const UserDeleteModal = ({ record, handleClose, clicked }) => {
         <div className="">
           <div className="flex items-center justify-between">
             <h1 className="text-xl  font-semibold tracking-tight">
-              {" "}
-              <div className="text-center text-base my-4">
-                Do you want to delete this{" "}
-                <span className="text-primary font-semibold">
-                  {record?.fullName}
-                </span>{" "}
-                User ?
-              </div>
+              {t("leaders.title.delete")}
+              <div className="text-center text-base my-4"></div>
             </h1>
 
             <IoMdCloseCircleOutline
@@ -81,7 +85,15 @@ const UserDeleteModal = ({ record, handleClose, clicked }) => {
 
           <div className="bg-gray-200 pt-[1px] mt-3"></div>
           <div className="my-2">
-            <div>{record?.message}</div>
+            <div>
+              {" "}
+              {t("leaders.confirm.delete")}
+              <span className="text-primary font-semibold">
+                {" "}
+                {record?.fullName}
+              </span>{" "}
+              {t("leaders.confirm.user")} ?
+            </div>
           </div>
           <div className="bg-gray-200 py-[1px] mt-10"></div>
           <div className="flex items-end justify-end gap-2 mt-2">
@@ -92,7 +104,7 @@ const UserDeleteModal = ({ record, handleClose, clicked }) => {
             >
               <MdDone className=" text-white bg-secondary  px-1 py-[2px] text-[28px]" />
               <span className="px-2 py-[6px] bg-primary transition-all hover:bg-secondary text-white text-xs">
-                Delete
+                {t("leaders.modal.disapproveBtn")}
               </span>
             </button>
             <button
@@ -101,7 +113,7 @@ const UserDeleteModal = ({ record, handleClose, clicked }) => {
             >
               <MdDeleteOutline className=" text-white bg-rose-700  px-1 py-[2px] text-[28px]" />
               <span className="px-2 py-[6px] bg-rose-500 transition-all hover:bg-rose-600 text-white text-xs">
-                Cancel
+                {t("leaders.modal.cancelBtn")}
               </span>
             </button>
           </div>
