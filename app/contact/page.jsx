@@ -1,17 +1,31 @@
 "use client";
 
 import Image from "next/image";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import contact from "@/src/assets/Image/contact.png";
 import { useForm } from "react-hook-form";
 import Cookies from "js-cookie";
 import { toast } from "react-toastify";
 import { getUserDetails } from "@/src/Hook/authUtils";
 import { useTranslation } from "@/src/Hook/useTranslation";
+import { useGetEmergencyContactsQuery } from "@/src/redux/features/contacts/contact";
 
 const ContactPage = () => {
   const type = getUserDetails();
   const { t } = useTranslation();
+  const [emergencyContact, setEmergencyContact] = useState(null);
+
+  const { data: emergencyContactData, isLoading: isEmergencyContactsLoading } =
+    useGetEmergencyContactsQuery({
+      pageNo: 1,
+      pageSize: 10,
+    });
+
+  useEffect(() => {
+    if (emergencyContactData?.data?.data?.length > 0) {
+      setEmergencyContact(emergencyContactData?.data?.data);
+    }
+  }, [emergencyContactData]);
 
   const {
     register,
@@ -96,14 +110,6 @@ const ContactPage = () => {
                 </span>
               </li>
             </ul>
-            <div className="mt-6 text-sm text-gray-500">
-              <div>
-                <span className="font-semibold text-primary">
-                  {t("contact.hours.label")}:
-                </span>{" "}
-                {t("contact.hours.time")}
-              </div>
-            </div>
           </div>
           <div className="w-full md:w-1/3 flex items-center justify-center">
             <div className="relative">
@@ -232,6 +238,42 @@ const ContactPage = () => {
               <p className="text-accent text-center text-sm">
                 {t("contact.right.feedbackDesc")}
               </p>
+              <div className="flex flex-col gap-2 mt-4">
+                {emergencyContact && emergencyContact.length > 0 ? (
+                  <div className="w-full">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      {emergencyContact.slice(0, 6).map((contact) => (
+                        <div
+                          key={contact.id}
+                          className="flex items-center justify-between bg-gradient-to-r from-primary/5 to-secondary/5 rounded-xl p-4 shadow-md"
+                        >
+                          <div className="flex items-center gap-3">
+                            <div className="flex items-center justify-center w-10 h-10 rounded-full bg-primary/20 text-primary font-bold text-lg uppercase">
+                              {contact.fullName
+                                .split(" ")
+                                .map((n) => n[0])
+                                .join("")
+                                .slice(0, 2)}
+                            </div>
+                            <div>
+                              <div className="text-base font-semibold text-primary2">
+                                {contact.fullName}
+                              </div>
+                              <div className="text-sm text-accent ">
+                                {contact.mobileNumber}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ) : (
+                  <div className="text-accent text-center text-base py-6">
+                    {t("leaders.emergencyContactFailed")}
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </form>

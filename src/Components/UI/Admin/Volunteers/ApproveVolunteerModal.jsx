@@ -7,7 +7,13 @@ import { MdDeleteOutline, MdDone } from "react-icons/md";
 import { toast } from "react-toastify";
 import { useTranslation } from "@/src/Hook/useTranslation";
 
-const ApproveVolunteerModal = ({ handleClose, clicked, record, refetch }) => {
+const ApproveVolunteerModal = ({
+  handleClose,
+  clicked,
+  record,
+  refetch,
+  refetch2,
+}) => {
   const router = useRouter();
   const id = record?.id;
   const { t } = useTranslation();
@@ -55,8 +61,10 @@ const ApproveVolunteerModal = ({ handleClose, clicked, record, refetch }) => {
           responseData?.data?.message || t("leaders.toast.approveSuccess")
         );
         handleClose();
+        refetch();
+        refetch2();
         // router.replace(router.asPath);
-        window.location.reload();
+        // window.location.reload();
       }
     } catch (error) {
       toast.error(t("leaders.toast.unexpected"));

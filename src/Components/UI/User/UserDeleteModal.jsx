@@ -7,7 +7,13 @@ import { MdDeleteOutline, MdDone } from "react-icons/md";
 import { toast } from "react-toastify";
 import { useTranslation } from "@/src/Hook/useTranslation";
 
-const UserDeleteModal = ({ record, handleClose, clicked }) => {
+const UserDeleteModal = ({
+  record,
+  handleClose,
+  clicked,
+  refetch,
+  refetch2,
+}) => {
   const router = useRouter();
   const id = record?.id;
   const { t } = useTranslation();
@@ -43,8 +49,11 @@ const UserDeleteModal = ({ record, handleClose, clicked }) => {
         toast.success(
           responseData?.data?.message || t("leaders.toast.deleteSuccess")
         );
-        window.location.reload();
+
+        // window.location.reload();
         handleClose();
+        refetch();
+        refetch2();
       }
     } catch (error) {
       toast.error(t("leaders.toast.unexpected"));

@@ -14,7 +14,7 @@ const Volunteers = () => {
   const pointsArray = Array.isArray(goalPoints) ? goalPoints : [];
 
   return (
-    <div className="py-20 px-4 bg-gradient-to-br from-soft via-white to-soft">
+    <div className="py-20 px-4 ">
       <div className="max-w-7xl mx-auto">
         {/* Grid layout */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">

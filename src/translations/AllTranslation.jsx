@@ -216,7 +216,8 @@ export const translations = {
     leaderSection: {
       title: "Leaders",
       subtitle:
-        "Search for blood donors in your area quickly and conveniently. Filter results by blood group.",
+        "Meet the dedicated leaders who are driving this life-saving initiative forward. Their commitment and leadership are the backbone of our success.",
+
       dcOfficials: "Deputy Commissioner Officials",
       civilSurgeon: "Civil Surgeon Officials",
       volunteers: "Volunteers",
@@ -333,7 +334,7 @@ export const translations = {
       right: {
         feedbackTitle: "We value your feedback!",
         feedbackDesc:
-          "Fill out the form and our team will get back to you as soon as possible.",
+          "Fill out the form and let us know your opinion you can contact in case of an emergency.",
       },
       success: "Your message was sent successfully.",
       errors: {
@@ -414,6 +415,17 @@ export const translations = {
         delete: "Do you want to delete this",
         user: "User?",
       },
+      emergencyContact: "Emergency Contact",
+      confirmEmergencyContact: "Do you want to make",
+      user: "User as an emergency contact?",
+      emergencyContactSuccess: "Emergency contact made successfully!",
+      emergencyContactFailed: "Emergency contact failed.",
+      confirmButton: "Confirm",
+      cancelButton: "Cancel",
+      removeEmergencyContact: "Remove Emergency Contact",
+      confirmRemoveEmergencyContact: "Do you want to remove",
+      removeEmergencyContactSuccess: "Emergency contact removed successfully!",
+      removeEmergencyContactFailed: "Emergency contact removal failed.",
     },
     userProfile: {
       userProfile: "User Profile",
@@ -463,6 +475,7 @@ export const translations = {
       admins: "Admins",
       mycampaigns: "My Campaigns",
       mydonors: "My Donors",
+      reviews: "Reviews",
     },
     notice: {
       createNotice: "Create Notice",
@@ -593,6 +606,134 @@ export const translations = {
       newPassword: "New Password",
       confirmPassword: "Confirm Password",
       submit: "Submit",
+      cancel: "Cancel",
+    },
+    bloodInfo: {
+      title: "The Importance of Blood",
+      importance:
+        "Blood is the lifeline of our bodies, delivering oxygen and nutrients to every cell, removing waste, fighting infections, and supporting vital functions.",
+      importance2:
+        "Understanding blood and its care is essential for a healthy life.",
+      components: {
+        title: "Components of Blood",
+        plasma: "Plasma",
+        plasmaDescription:
+          "Yellowish liquid carrying water, salts, antibodies, enzymes, and proteins.",
+        rbc: "Red blood cells",
+        rbcDescription:
+          "Carry oxygen using hemoglobin, giving blood its red color.",
+        rbcLifespan: "Lifespan: ~120 days.",
+        wbc: "White blood cells",
+        wbcDescription: "Defend against infections and foreign invaders.",
+        platelets: "Platelets",
+        plateletsDescription: "Help clot blood and repair vessel damage.",
+      },
+      bloodTypes: {
+        title: "Types of Blood",
+        description: "8 main blood types in the ABO & Rh system:",
+      },
+      note: {
+        title: "Note",
+        description:
+          "  Knowing your blood type is crucial for safe transfusions and emergencies.",
+      },
+      healthTips: {
+        title: "How to Keep Blood Healthy and Clean",
+        tips: "Eat a balanced diet:",
+        tips1:
+          "Eat dried fruits, green vegetables, beans, whole grains, low fat dairy etc.",
+        tips2: "Stay hydrated and exercise regularly.",
+        tips3: "Avoid smoking and excessive alcohol.",
+        tips4: "Inform staff about medications/health conditions",
+      },
+      hemoglobin: {
+        title: "Hemoglobin & Its Production",
+        description1: "Hemoglobin",
+        description2:
+          "is the protein in RBCs that carries oxygen. Its production depends on:",
+        synthesis: {
+          heme: "Heme - the iron-containing part, synthesized in mitochondria...",
+          globin: "Globin - the protein part, synthesized by ribosomes...",
+        },
+        keyFactors: {
+          title: "Key Factors Influencing Hemoglobin Production",
+          iron: "Dietary Iron",
+          b12: "Vitamin B12",
+          vitaminA: "Vitamin A",
+          betaCarotene: "Beta-Carotene",
+          epo: "Erythropoietin (EPO)",
+        },
+      },
+      transfusion: {
+        title: "Blood Donation & Transfusion",
+        description1:
+          "A blood transfusion is a safe procedure where donated blood is given to those in need.",
+        description2: "Donating blood saves lives!",
+      },
+
+      donorCriteria: {
+        title: "Who Can Donate Blood?",
+        criteria: {
+          age: "Age",
+          age1: "Age: healthy individuals aged 18 to 60",
+          weight: "Weight",
+          weight1: "over 50 kg",
+          hemoglobin: "Hemoglobin",
+          hemoglobin1: "Hemoglobin level above 12 g/dl",
+          maleFreq: "MaleFreq",
+          maleFreq1: "Males can donate every 4 months",
+          femaleFreq: "FemaleFreq",
+          femaleFreq1: "Females can donate every 6 months",
+          disqualify: "Disqualify",
+          disqualify1:
+            "Certain health conditions, medications, and lifestyle factors may disqualify",
+        },
+      },
+      caution: {
+        title: "Caution",
+        description: "Avoid donations from first-degree relatives",
+        description1: "(risk of TA-GVHD).",
+        description2: "TA-GVHD",
+        description3:
+          "(transfusion-associated graft-versus-host disease) can be life-threatening.",
+      },
+      instructions: {
+        title: "General Instructions for Blood Donors",
+        before: {
+          title: "Before Blood Donation",
+          hydrate: "Drink plenty of fluids",
+          meal: "Eat a balanced meal, avoid fatty foods",
+          sleep: "Get 7-9 hours of sleep",
+          exercise: "Avoid strenuous exercise",
+          medication: "Inform about medications",
+          honesty: "Be honest about health conditions",
+        },
+        during: {
+          title: "During Blood Donation",
+          followInstructions: "Follow staff instructions",
+          stayCalm: "Try to relax and focus on breathing",
+          reportDiscomfort: "Inform staff if any discomfort occurs",
+        },
+        after: {
+          title: "After Donation",
+          fluids: "Continue to drink fluids",
+          rest: "Avoid strenuous activity",
+          staffAdvice: "Follow any given instructions",
+        },
+      },
+      info: {
+        details:
+          " By donating blood, you can save lives and help ensure a healthy community!",
+      },
+    },
+
+    reviews: {
+      title: "They Trust Us",
+      description:
+        "Hear from our community members who have experienced our services firsthand. Your trust and feedback inspire us to keep making a difference every day.",
+      addReview: "Add Review",
+      loginToAddReview: "Login to Add your Review",
+      writeYourReview: "Write your review",
       cancel: "Cancel",
     },
   },
@@ -810,7 +951,7 @@ export const translations = {
     leaderSection: {
       title: "নেতৃবৃন্দ",
       subtitle:
-        "আপনার এলাকায় রক্তদাতাদের দ্রুত ও সহজে খুঁজুন। রক্তের গ্রুপ অনুসারে ফিল্টার করুন।",
+        "পরিচিত হন নিবেদিতপ্রাণ নেতৃবৃন্দের সঙ্গে, যারা এই জীবনরক্ষাকারী উদ্যোগকে এগিয়ে নিচ্ছেন। তাঁদের অঙ্গীকার ও নেতৃত্বই আমাদের সাফল্যের মূল ভিত্তি।",
       dcOfficials: "ডেপুটি কমিশনার অফিসিয়াল",
       civilSurgeon: "সিভিল সার্জন অফিসিয়াল",
       volunteers: "স্বেচ্ছাসেবক",
@@ -827,7 +968,7 @@ export const translations = {
       logout: "লগআউট",
     },
     register: {
-      welcome: "হেমোগ্লোবিনে স্বাগতম",
+      welcome: "হিমোগ্লোবিনে স্বাগতম",
       subtitle: "আমাদের জীবন-রক্ষাকারী মিশনে যোগ দিন – আজই রেজিস্টার করুন!",
       description1:
         "আপনি যখন রেজিস্টার করেন, তখন আপনি একটি সহানুভূতিশীল কমিউনিটির অংশ হয়ে যান যারা পরিবর্তন আনার জন্য একসাথে কাজ করে। আপনি রক্তদান করুন বা স্বেচ্ছাসেবক হন, আপনার ছোট পদক্ষেপ কারো জীবনের জন্য বিশাল অর্থবহ হতে পারে।",
@@ -927,7 +1068,7 @@ export const translations = {
       right: {
         feedbackTitle: "আমরা আপনার মতামতকে গুরুত্ব দিই!",
         feedbackDesc:
-          "ফর্মটি পূরণ করুন, আমাদের দল যত তাড়াতাড়ি সম্ভব আপনার সাথে যোগাযোগ করবে।",
+          "ফর্মটি পূরণ করুন এবং জরুরি পরিস্থিতিতে আপনার মতামত আমাদের জানান। ",
       },
       success: "আপনার বার্তাটি সফলভাবে পাঠানো হয়েছে।",
       errors: {
@@ -1010,6 +1151,19 @@ export const translations = {
         delete: "আপনি কি",
         user: "ব্যবহারকারী অপসারণ করতে চান",
       },
+      emergencyContact: "ইমারজেন্সি কন্টাক্ট করুন",
+      confirmEmergencyContact: "আপনি কি",
+      user: "ব্যবহারকারীকে ইমারজেন্সি কন্টাক্ট করতে চান",
+      emergencyContactSuccess: "ইমারজেন্সি কন্টাক্ট সফলভাবে করা হয়েছে!",
+      emergencyContactFailed: "ইমারজেন্সি কন্টাক্ট করতে ব্যর্থ হয়েছে।",
+      confirmButton: "নিশ্চিত করুন",
+      cancelButton: "বাতিল করুন",
+      removeEmergencyContact: "ইমারজেন্সি কন্টাক্ট হতে সরান",
+      confirmRemoveEmergencyContact:
+        "আপনি কি ইমারজেন্সি কন্টাক্ট হতে সরাতে চান ? ",
+      removeEmergencyContactSuccess:
+        "ইমারজেন্সি কন্টাক্ট সফলভাবে সরানো হয়েছে!",
+      removeEmergencyContactFailed: "ইমারজেন্সি কন্টাক্ট সরানো ব্যর্থ হয়েছে।",
     },
     userProfile: {
       userProfile: "ব্যবহারকারীর প্রোফাইল",
@@ -1059,6 +1213,7 @@ export const translations = {
       admins: "অ্যাডমিন",
       mycampaigns: "আমার ক্যাম্পেইনসমূহ",
       mydonors: "আমার রক্তদাতারা",
+      reviews: "রিভিউসমূহ",
     },
     notice: {
       createNotice: "নোটিশ তৈরি করুন",
@@ -1189,6 +1344,134 @@ export const translations = {
       newPassword: "নতুন পাসওয়ার্ড",
       confirmPassword: "নতুন পাসওয়ার্ড নিশ্চিত করুন",
       submit: "পাসওয়ার্ড পরিবর্তন করুন",
+      cancel: "বাতিল করুন",
+    },
+    bloodInfo: {
+      title: "রক্তের গুরুত্ব",
+      importance:
+        "রক্ত সবার জীবন রক্ষা করার জন্য অত্যন্ত গুরুত্বপূর্ণ। এটি দেহের কোষে পুষ্টি ও অক্সিজেন সরবরাহ করে",
+      importance2:
+        "রক্ত ও তার দানের গুরুত্ব বুঝার জন্য একটি সুস্থ জীবনের জন্য অত্যন্ত গুরুত্বপূর্ণ",
+      components: {
+        title: "রক্তের উপাদানসমূহ",
+        plasma: "প্লাজমা",
+        plasmaDescription:
+          "হলদেটে তরল অংশ, এতে জল, লবণ, অ্যান্টিবডি, এনজাইম এবং কিছু প্রোটিন থাকে",
+        rbc: "লাল রক্ত কণিকা",
+        rbcDescription: "অক্সিজেন বহন করে, রক্তের লাল রঙ দেয়",
+        rbcLifespan: "জীবনধারা: ~120 দিন",
+        wbc: "সাদা রক্ত কণিকা",
+        wbcDescription:
+          "ইমিউন সিস্টেমের অংশ এবং দেহকে সংক্রমণ ও বাইরের আক্রমণ থেকে রক্ষা করে",
+        platelets: "প্লেটলেট",
+        plateletsDescription:
+          "রক্তনালীর ক্ষতির জায়গায় জমাট বাঁধাতে সাহায্য করে",
+      },
+      bloodTypes: {
+        title: "রক্তের ধরণ",
+        description: "ABO এবং Rh গ্রুপ সিস্টেম অনুযায়ী ৮টি রক্তের ধরন আছে",
+      },
+      note: {
+        title: "নোট",
+        description:
+          "রক্তের ধরণ জানা প্রয়োজন রক্ত সঞ্চালন এবং আশ্রয়ের জন্য অত্যন্ত গুরুত্বপূর্ণ",
+      },
+      healthTips: {
+        title: "রক্ত সুস্থ ও পরিষ্কার রাখার উপায়",
+        tips: "সুস্থ খাবার খেতে হবে:",
+        tips1:
+          "রক্ত সুস্থ রাখতে শুষ্ক ফল, সবুজ শাকসবজি, ডাল, গোটা শস্য, কম চর্বিযুক্ত দুগ্ধজাত খাবার খেতে হবে।",
+        tips2: "পানি পান করুন এবং প্রায়শই ব্যায়াম করুন।",
+        tips3: "ধূমপান ও অতিরিক্ত মদ্যপান এড়িয়ে চলুন।",
+        tips4: "ওষুধ বা স্বাস্থ্যগত অবস্থার কথা কর্মীদের জানান।",
+      },
+      hemoglobin: {
+        title: "হিমোগ্লোবিন & এর উৎপাদন ",
+        description1: "হিমোগ্লোবিন",
+        description2:
+          "হল একটি প্রোটিন যা রক্তের লাল কণিকায় থাকে এবং অক্সিজেন বহন করে। এর উৎপাদন নিম্নলিখিত উপাদানের উপর নির্ভর করে:",
+        synthesis: {
+          heme: "হিম - হিমোগ্লোবিনের লৌহযুক্ত অংশ, যা মাইটোকন্ড্রিয়া এবং সাইটোসোলে তৈরি হয়।",
+          globin: "গ্লোবিন - হিমোগ্লোবিনের প্রোটিন অংশ, যা রাইবোসমে তৈরি হয়।",
+        },
+        keyFactors: {
+          title: "হিমোগ্লোবিন উৎপাদনে প্রভাবকারী মূল উপাদান",
+          iron: "আয়রন",
+          b12: "ভিটামিন B12",
+          vitaminA: "ভিটামিন A",
+          betaCarotene: "বেটা-ক্যারোটিন",
+          epo: "এরিথ্রোপয়েটিন (EPO)",
+        },
+      },
+      transfusion: {
+        title: "রক্ত দান ও সঞ্চালন",
+        description1:
+          "রক্ত সঞ্চালন একটি নিরাপদ পদ্ধতি যেখানে একজন দাতার রক্ত একজন রোগীর শিরায় দেওয়া হয়।",
+        description2: "রক্ত দিন, জীবন রক্ষা করুন!",
+      },
+      donorCriteria: {
+        title: "কে রক্ত দিতে পারে?",
+        criteria: {
+          age: "বয়স",
+          age1: "বয়স: ১৮ থেকে ৬০ বছর বয়সী সুস্থ ব্যক্তি।",
+          weight: "ওজন",
+          weight1: "ওজন: ৫০ কেজির বেশি।",
+          hemoglobin: "হিমোগ্লোবিন",
+          hemoglobin1: "হিমোগ্লোবিন: ১২ গ্রাম/ডেসি লিটারের বেশি।",
+          maleFreq: "পুরুষরা",
+          maleFreq1: "পুরুষরা প্রতি ৪ মাসে রক্ত দিতে পারে।",
+          femaleFreq: "নারীরা",
+          femaleFreq1: "নারীরা প্রতি ৬ মাসে রক্ত দিতে পারে।",
+          disqualify: "অযোগ্য",
+          disqualify1:
+            "কিছু স্বাস্থ্য সমস্যা, ওষুধ, বা জীবনধারা রক্তদানে অযোগ্য করতে পারে।",
+        },
+      },
+      caution: {
+        title: "সতর্কতা",
+        description:
+          "প্রথম শ্রেণির আত্মীয়দের (পিতা-মাতা, সন্তান, ভাই-বোন) রক্তদানে নিরুৎসাহিত করা হয়",
+        description1: "(TA-GVHD এর ঝুঁকি থাকে)।",
+        description2: "TA-GVHD",
+        description3:
+          "(transfusion-associated graft-versus-host disease) জীবন-হানিকর হতে পারে।",
+      },
+      instructions: {
+        title: "রক্তদাতার জন্য সাধারণ নির্দেশনা",
+        before: {
+          title: "রক্তদানের আগে",
+          hydrate: "রক্তদানের আগে পর্যাপ্ত পানি পান করুন।",
+          meal: "একটি সুষম খাবার খান এবং চর্বিযুক্ত খাবার এড়িয়ে চলুন।",
+          sleep: "৭-৯ ঘণ্টা ঘুম নিশ্চিত করুন।",
+          exercise: "রক্তদানের দিন ভারী ব্যায়াম এড়িয়ে চলুন।",
+          medication: "যেকোনো ওষুধ সম্পর্কে তথ্য দিন।",
+          honesty: "সম্প্রতি অসুস্থতা, সার্জারি বা গর্ভাবস্থার তথ্য দিন।",
+        },
+        during: {
+          title: "রক্তদানের সময়",
+          followInstructions: "দানের কর্মীদের নির্দেশনা অনুসরণ করুন।",
+          stayCalm: "স্নায়ুচাপ এড়িয়ে বিশ্রাম নিন।",
+          reportDiscomfort: "অস্বস্তি হলে সঙ্গে সঙ্গে জানান।",
+        },
+        after: {
+          title: "রক্তদানের পরে",
+          fluids: "পানীয় পান করে শরীরের পানির ঘাটতি পূরণ করুন।",
+          rest: "শরীরকে বিশ্রাম দিন এবং ভারী কাজ এড়িয়ে চলুন।",
+          staffAdvice: "যে কোনো নির্দেশনা অনুসরণ করুন।",
+        },
+      },
+      info: {
+        details:
+          "রক্ত দিয়ে আপনি জীবন রক্ষা করতে পারেন এবং একটি সুস্থ সম্প্রদায় নিরাপদ করতে পারেন!",
+      },
+    },
+    reviews: {
+      title: "তারা আমাদের বিশ্বাস করেন",
+      description:
+        "আমাদের সেবাগ্রহণকারীদের অভিজ্ঞতা থেকে শুনুন। আপনার আস্থা ও মতামত আমাদের প্রতিদিন আরও ভালো করতে অনুপ্রাণিত করে।",
+      addReview: "রিভিউ দিন",
+      loginToAddReview: "রিভিউ দিতে লগইন করুন",
+      writeYourReview: "আপনার মতামত লিখুন",
       cancel: "বাতিল করুন",
     },
   },

@@ -17,6 +17,7 @@ import { useTranslation } from "@/src/Hook/useTranslation";
 const MyProfilePage = () => {
   //! User data
   const user = UserInfo();
+  console.log(user);
 
   const donationDate =
     user?.lastDonationTime !== null
@@ -86,6 +87,7 @@ const MyProfilePage = () => {
       setValue("UserType", user.userType || "");
       setValue("BloodDonationStatus", user.bloodDonationStatus || "");
       setValue("LastDonationTime", donationDate || "");
+      setValue("Designation", user?.designation || "");
     }
   }, [user, setValue, donationDate]);
 
@@ -416,7 +418,7 @@ const MyProfilePage = () => {
                     <h1 className="input-title">{t("profile.designation")}</h1>
                     <input
                       disabled={!isEdit}
-                      defaultValue={user?.Designation}
+                      defaultValue={user?.designation}
                       type="text"
                       className="input-border w-full mb-2"
                       {...register("Designation")}

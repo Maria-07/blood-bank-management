@@ -11,6 +11,7 @@ const DisApproveVolunteerModal = ({
   clicked,
   record,
   refetch,
+  refetch2,
 }) => {
   const id = record?.id;
   const { t } = useTranslation();
@@ -58,7 +59,9 @@ const DisApproveVolunteerModal = ({
           responseData?.data?.message || t("leaders.toast.approveSuccess")
         );
         handleClose();
-        window.location.reload();
+        refetch();
+        refetch2();
+        // window.location.reload();
       }
     } catch (error) {
       toast.error(t("leaders.toast.unexpected"));

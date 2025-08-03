@@ -24,7 +24,7 @@ const Works = () => {
   const steps = t("works.steps");
 
   return (
-    <div>
+    <div className="py-12 px-4 bg-gradient-to-br from-red-50 via-white to-red-100 rounded-xl shadow-lg  mx-auto">
       <div className="gap-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 2xl:grid-cols-2 my-20">
         <div className="p-5">
           <h1 className=" text-6xl font-semibold  ">{t("works.title")}</h1>

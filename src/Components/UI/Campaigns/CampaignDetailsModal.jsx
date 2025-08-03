@@ -53,7 +53,11 @@ const CampaignDetailsModal = ({ handleClose, clicked, record }) => {
             <Image
               preview={false}
               className="object-cover w-full h-full"
-              src={`${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}/${bannerUrl}`}
+              src={
+                bannerUrl
+                  ? `${process.env.NEXT_PUBLIC_IMAGE_BASE_URL}/${bannerUrl}`
+                  : "https://static.vecteezy.com/system/resources/previews/025/406/648/non_2x/infographic-of-blood-donation-with-receiving-to-human-in-various-blood-groups-and-example-texts-and-red-gradient-background-poster-s-infographic-of-world-blood-donor-day-campaign-in-design-vector.jpg"
+              }
               alt="Campaign banner"
             />
             <div className="absolute bottom-0 left-0 w-full bg-gradient-to-t from-black/70 to-transparent px-4 py-2">

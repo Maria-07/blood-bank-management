@@ -65,6 +65,8 @@ const VolunteerPage = () => {
     infinite: true,
     speed: 500,
     slidesToShow: 4,
+    autoplay: true,
+    autoplaySpeed: 2000,
     responsive: [
       { breakpoint: 1280, settings: { slidesToShow: 3 } },
       { breakpoint: 1024, settings: { slidesToShow: 2 } },
