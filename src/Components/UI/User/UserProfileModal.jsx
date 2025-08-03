@@ -41,6 +41,9 @@ const UserProfileModal = ({ handleClose, clicked, record, admin }) => {
     code,
   } = record;
 
+
+  
+
   return (
     <div>
       <Modal

@@ -111,6 +111,7 @@ const AdminManagePage = () => {
               "code",
               "bloodDonationCount",
               "imageUrl",
+              "isEmergencyContact"
             ].includes(key)
         )
         .map((key, index) => ({

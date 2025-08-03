@@ -130,6 +130,7 @@ const BloodBanks = () => {
                 "leaderType",
                 "bloodDonationCount",
                 "imageUrl",
+                "isEmergencyContact"
               ].includes(key)
           )
           .map((key) => ({

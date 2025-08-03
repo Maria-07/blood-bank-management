@@ -45,7 +45,7 @@ const AboutPage = () => {
             </h2>
             <p className="text-lg text-gray-600 leading-relaxed max-w-4xl mx-auto">
               {t("about.platformDescription.part1")}{" "}
-              <strong className="text-primary">{t("about.leaderName")}</strong>.{" "}
+              <strong className="text-primary">{t("about.leaderName")}</strong>{" "}
               {t("about.platformDescription.part2")}
             </p>
           </div>
