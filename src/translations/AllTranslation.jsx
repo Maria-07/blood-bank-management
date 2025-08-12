@@ -476,6 +476,7 @@ export const translations = {
       mycampaigns: "My Campaigns",
       mydonors: "My Donors",
       reviews: "Reviews",
+      donation: "Donation Tracking",
     },
     notice: {
       createNotice: "Create Notice",
@@ -735,6 +736,15 @@ export const translations = {
       loginToAddReview: "Login to Add your Review",
       writeYourReview: "Write your review",
       cancel: "Cancel",
+    },
+
+    donationTracking: {
+      fromDate: "Start Date",
+      toDate: "End Date",
+      Go: "GO",
+      dateRequired: "Date is required",
+      invalidDateRange: "Start date cannot be after end date",
+      noData: "No data found",
     },
   },
 
@@ -1214,6 +1224,7 @@ export const translations = {
       mycampaigns: "আমার ক্যাম্পেইনসমূহ",
       mydonors: "আমার রক্তদাতারা",
       reviews: "রিভিউসমূহ",
+      donation: "রক্তদান ট্র্যাকিং",
     },
     notice: {
       createNotice: "নোটিশ তৈরি করুন",
@@ -1473,6 +1484,15 @@ export const translations = {
       loginToAddReview: "রিভিউ দিতে লগইন করুন",
       writeYourReview: "আপনার মতামত লিখুন",
       cancel: "বাতিল করুন",
+    },
+
+    donationTracking: {
+      fromDate: "শুরুর তারিখ",
+      toDate: "শেষের তারিখ",
+      Go: "যাও",
+      dateRequired: "তারিখ প্রয়োজন",
+      invalidDateRange: "শুরুর তারিখ শেষের তারিখ অপেক্ষা বেশি হতে পারে",
+      noData: "কোনো ডাটা পাওয়া যায়নি",
     },
   },
 };

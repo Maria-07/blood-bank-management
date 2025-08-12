@@ -1,5 +1,5 @@
 "use client";
-import { Image } from "antd";
+import { Image, Modal } from "antd";
 import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { AiOutlineEdit } from "react-icons/ai";
@@ -9,15 +9,17 @@ import dayjs from "dayjs";
 import Cookies from "js-cookie";
 import { toast } from "react-toastify";
 import Loader from "@/src/Components/Layouts/Loader";
-import { IoMdEye, IoMdEyeOff } from "react-icons/io";
+import { IoMdCloseCircleOutline, IoMdEye, IoMdEyeOff } from "react-icons/io";
 import Link from "next/link";
 import ErrorLoader from "@/src/Components/Layouts/ErrorLoader";
 import { useTranslation } from "@/src/Hook/useTranslation";
+import { BiMinus, BiPlanet, BiPlus } from "react-icons/bi";
+import { usePostDonationTrackingMutation } from "@/src/redux/features/campaign/campaignApi";
+import { MdDeleteOutline, MdDone } from "react-icons/md";
 
 const MyProfilePage = () => {
   //! User data
   const user = UserInfo();
-  console.log(user);
 
   const donationDate =
     user?.lastDonationTime !== null
@@ -32,6 +34,50 @@ const MyProfilePage = () => {
   const accessToken = Cookies.get("accessToken");
   const [showPassword, setShowPassword] = useState(false);
   const { t } = useTranslation();
+  const [donationType, setDonationType] = useState("no");
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [date, setDate] = useState("");
+  const [bloodDonationCount, setBloodDonationCount] = useState(0);
+
+  const [postDonationTracking, { isLoading: isPosting }] =
+    usePostDonationTrackingMutation();
+
+  // Modal states
+  const [donationTrackingModal, setDonationTrackingModal] = useState(false);
+  const handleDonationTrackingModal = () => {
+    setDonationTrackingModal(!donationTrackingModal);
+  };
+
+  const handleDonationTracking = async () => {
+    if (donationType === "yes") {
+      if (!date || !phone || !name) {
+        toast.error("Please fill in all required fields.");
+        return;
+      }
+      try {
+        const data = {
+          date,
+          phone,
+          name,
+        };
+        const response = await postDonationTracking(data);
+
+        if (response?.data?.response?.isSuccess === true) {
+          setBloodDonationCount(bloodDonationCount + 1);
+          toast.success(response?.data?.response?.message);
+          setDonationTrackingModal(false);
+        } else {
+          toast.error(response?.data?.response?.message);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      setBloodDonationCount(bloodDonationCount + 1);
+      setDonationTrackingModal(false);
+    }
+  };
 
   if (!accessToken) {
     <>
@@ -82,7 +128,8 @@ const MyProfilePage = () => {
       setValue("District", user.district || "");
       setValue("Upazila", user.upazila || "");
       setValue("Union", user?.union || ""); // Default value of Union
-      setValue("BloodDonationCount", user.bloodDonationCount || 0);
+      // setValue("BloodDonationCount", user.bloodDonationCount || 0);
+      setBloodDonationCount(user.bloodDonationCount || 0);
       setValue("Gender", user.gender || "");
       setValue("UserType", user.userType || "");
       setValue("BloodDonationStatus", user.bloodDonationStatus || "");
@@ -141,6 +188,7 @@ const MyProfilePage = () => {
 
     formData.append("LastDonationTime", donationDate);
     formData.append("id", user?.id);
+    formData.append("BloodDonationCount", bloodDonationCount);
 
     if (data?.Upazila && data?.Union) {
       setLoading(true);
@@ -487,13 +535,35 @@ const MyProfilePage = () => {
                   <h1 className="input-title">
                     {t("profile.bloodDonationCount")}
                   </h1>
-                  <input
-                    disabled={!isEdit}
-                    defaultValue={user?.bloodDonationCount}
-                    type="number"
-                    className="input-border w-full mb-2"
-                    {...register("BloodDonationCount")}
-                  />
+                  <div className="flex items-center gap-2">
+                    <input
+                      disabled
+                      defaultValue={bloodDonationCount}
+                      type="number"
+                      className="input-border w-full mb-2"
+                      // {...register("BloodDonationCount")}
+                    />
+                    {isEdit && (
+                      <button
+                        type="button"
+                        className="py-1 mt-[-7px] rounded-md bg-primary2 "
+                        onClick={handleDonationTrackingModal}
+                      >
+                        <BiPlus className="text-white text-xl" />
+                      </button>
+                    )}
+                    {isEdit && (
+                      <button
+                        type="button"
+                        className="py-1 mt-[-7px] rounded-md bg-primary "
+                        onClick={() => {
+                          setBloodDonationCount(bloodDonationCount - 1);
+                        }}
+                      >
+                        <BiMinus className="text-white text-xl" />
+                      </button>
+                    )}
+                  </div>
                 </div>
                 <div>
                   <h1 className="input-title">
@@ -583,6 +653,122 @@ const MyProfilePage = () => {
           </div>
         </div> */}
       </div>
+      {donationTrackingModal && (
+        <div>
+          <Modal
+            open={donationTrackingModal}
+            centered
+            footer={null}
+            width={700}
+            closable={false}
+            className="box"
+          >
+            <div>
+              <div className="flex items-center justify-between">
+                <h1 className="text-xl font-semibold tracking-tight">
+                  Do you want to donate blood through Hemoglobin ?
+                </h1>
+
+                <IoMdCloseCircleOutline
+                  onClick={handleDonationTrackingModal}
+                  className="text-gray-500 text-2xl hover:text-primary"
+                />
+              </div>
+              <div className="bg-gray-200 pt-[1px] mt-3"></div>
+              <div className="my-5">
+                <div className="flex items-center gap-4 my-2">
+                  <label className="flex items-center gap-1">
+                    <input
+                      type="radio"
+                      name="donationType"
+                      value="yes"
+                      onChange={(e) => setDonationType(e.target.value)}
+                      className="accent-primary"
+                    />
+                    Yes
+                  </label>
+                  <label className="flex items-center gap-1">
+                    <input
+                      type="radio"
+                      name="donationType"
+                      value="no"
+                      onChange={(e) => setDonationType(e.target.value)}
+                      className="accent-primary"
+                    />
+                    No
+                  </label>
+                </div>
+
+                {donationType === "yes" && (
+                  <>
+                    {" "}
+                    <h1 className="text-base text-primary2 font-semibold my-2">
+                      If you want to donate blood through Hemoglobin, please
+                      fill out this form:{" "}
+                    </h1>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                      <div>
+                        <h1 className="input-title">Date*</h1>
+                        <input
+                          type="date"
+                          className="input-border w-full mb-2"
+                          value={date}
+                          onChange={(e) => setDate(e.target.value)}
+                          required
+                        />
+                      </div>
+                      <div>
+                        <h1 className="input-title">Receiver Phone*</h1>
+                        <input
+                          type="number"
+                          className="input-border w-full mb-2"
+                          value={phone}
+                          onChange={(e) => setPhone(e.target.value)}
+                          required
+                        />
+                      </div>
+                    </div>
+                    <div>
+                      <h1 className="input-title">Receiver Name*</h1>
+                      <input
+                        type="text"
+                        className="input-border w-full mb-2"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        required
+                      />
+                    </div>
+                  </>
+                )}
+                <div className="bg-gray-200 py-[1px] mt-10"></div>
+                <div className="flex items-end justify-end gap-2 mt-2">
+                  <button
+                    onClick={() => {
+                      handleDonationTracking();
+                    }}
+                    type="button"
+                    className="border-secondary flex items-center border rounded-sm"
+                  >
+                    <MdDone className="text-white bg-secondary px-1 py-[2px] text-[28px]" />
+                    <span className="px-2 py-[6px] bg-primary transition-all hover:bg-secondary text-white text-xs">
+                      Submit
+                    </span>
+                  </button>
+                  <button
+                    className="border-rose-600 flex items-center border rounded-sm"
+                    onClick={handleDonationTrackingModal}
+                  >
+                    <MdDeleteOutline className="text-white bg-rose-700 px-1 py-[2px] text-[28px]" />
+                    <span className="px-2 py-[6px] bg-rose-500 transition-all hover:bg-rose-600 text-white text-xs">
+                      Cancel
+                    </span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </Modal>
+        </div>
+      )}
     </div>
   );
 };

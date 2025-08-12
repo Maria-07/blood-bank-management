@@ -35,6 +35,12 @@ const ReviewApi = api.injectEndpoints({
         body: data,
       }),
     }),
+    deleteReview: builder.mutation({
+      query: (id) => ({
+        url: `/review/delete/${id}`,
+        method: "DELETE",
+      }),
+    }),
   }),
 });
 
@@ -44,4 +50,5 @@ export const {
   useGetAllUnapprovedReviewsQuery,
   useApproveReviewMutation,
   useRemoveReviewMutation,
+  useDeleteReviewMutation,
 } = ReviewApi;

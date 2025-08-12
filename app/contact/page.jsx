@@ -9,6 +9,9 @@ import { toast } from "react-toastify";
 import { getUserDetails } from "@/src/Hook/authUtils";
 import { useTranslation } from "@/src/Hook/useTranslation";
 import { useGetEmergencyContactsQuery } from "@/src/redux/features/contacts/contact";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 const ContactPage = () => {
   const type = getUserDetails();
@@ -69,6 +72,20 @@ const ContactPage = () => {
     }
   };
 
+  const settings = {
+    dots: false,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 4,
+    autoplay: true,
+    autoplaySpeed: 2500,
+    responsive: [
+      { breakpoint: 1280, settings: { slidesToShow: 3 } },
+      { breakpoint: 1024, settings: { slidesToShow: 2 } },
+      { breakpoint: 640, settings: { slidesToShow: 1 } },
+    ],
+  };
+
   return (
     <div className="md:w-[90%] sm:mx-auto">
       <section className="relative overflow-hidden rounded-2xl shadow-lg bg-gradient-to-tr from-[#f3f3f3] via-[#f2f2f2] to-[#e0e7ff] py-10 px-6 md:px-12 mb-8">
@@ -81,35 +98,6 @@ const ContactPage = () => {
             <p className="text-base md:text-lg text-accent mb-4 leading-relaxed">
               {t("contact.description")}
             </p>
-            <ul className="space-y-2 mt-4">
-              <li className="flex items-center gap-2">
-                <span className="inline-block w-2 h-2 bg-primary rounded-full"></span>
-                <span className="font-semibold text-primary2">
-                  {t("contact.types.general")}
-                </span>
-                <span className="text-accent">
-                  {t("contact.types.generalDesc")}
-                </span>
-              </li>
-              <li className="flex items-center gap-2">
-                <span className="inline-block w-2 h-2 bg-secondary rounded-full"></span>
-                <span className="font-semibold text-primary2">
-                  {t("contact.types.complain")}
-                </span>
-                <span className="text-accent">
-                  {t("contact.types.complainDesc")}
-                </span>
-              </li>
-              <li className="flex items-center gap-2">
-                <span className="inline-block w-2 h-2 bg-primary2 rounded-full"></span>
-                <span className="font-semibold text-primary2">
-                  {t("contact.types.suggestion")}
-                </span>
-                <span className="text-accent">
-                  {t("contact.types.suggestionDesc")}
-                </span>
-              </li>
-            </ul>
           </div>
           <div className="w-full md:w-1/3 flex items-center justify-center">
             <div className="relative">
@@ -125,6 +113,44 @@ const ContactPage = () => {
           </div>
         </div>
       </section>
+
+      <div className="my-4">
+        {emergencyContact && emergencyContact.length > 0 ? (
+          <Slider {...settings}>
+            {emergencyContact.map((contact) => (
+              <div
+                key={contact.id}
+                className="px-3 pb-4" // Add horizontal gap between slides
+              >
+                <div className="bg-white rounded-3xl shadow-xl p-8 flex flex-col items-center border border-gray-200 hover:shadow-2xl transition-all duration-300 group min-h-[280px] cursor-pointer">
+                  <div className="mx-auto w-20 h-20 bg-gradient-to-tr from-primary2 to-secondary rounded-full flex items-center justify-center shadow-lg border-4 border-white mb-5">
+                    <span className="text-white text-3xl font-bold uppercase tracking-wide">
+                      {contact.fullName
+                        .split(" ")
+                        .map((n) => n[0])
+                        .join("")
+                        .slice(0, 2)}
+                    </span>
+                  </div>
+                  <div className="flex flex-col items-center w-full">
+                    <h2 className="text-xl font-semibold text-gray-900 mb-1 text-center tracking-wide">
+                      {contact.fullName}
+                    </h2>
+                    <span className="text-base text-gray-500 mb-2 text-center">
+                      {contact.mobileNumber}
+                    </span>
+                    <div className="w-10 h-1 bg-gradient-to-r from-primary2 to-secondary rounded-full mb-2"></div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </Slider>
+        ) : (
+          <div className="text-accent text-center text-base py-6">
+            {t("leaders.emergencyContactFailed")}
+          </div>
+        )}
+      </div>
 
       {/* form  */}
       <div className="w-full mx-auto my-10 p-0 rounded-xl border shadow-lg bg-gradient-to-br from-[#e0e7ff] via-[#f3f3f3] to-[#f2f2f2]">
@@ -238,42 +264,35 @@ const ContactPage = () => {
               <p className="text-accent text-center text-sm">
                 {t("contact.right.feedbackDesc")}
               </p>
-              <div className="flex flex-col gap-2 mt-4">
-                {emergencyContact && emergencyContact.length > 0 ? (
-                  <div className="w-full">
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      {emergencyContact.slice(0, 6).map((contact) => (
-                        <div
-                          key={contact.id}
-                          className="flex items-center justify-between bg-gradient-to-r from-primary/5 to-secondary/5 rounded-xl p-4 shadow-md"
-                        >
-                          <div className="flex items-center gap-3">
-                            <div className="flex items-center justify-center w-10 h-10 rounded-full bg-primary/20 text-primary font-bold text-lg uppercase">
-                              {contact.fullName
-                                .split(" ")
-                                .map((n) => n[0])
-                                .join("")
-                                .slice(0, 2)}
-                            </div>
-                            <div>
-                              <div className="text-base font-semibold text-primary2">
-                                {contact.fullName}
-                              </div>
-                              <div className="text-sm text-accent ">
-                                {contact.mobileNumber}
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                ) : (
-                  <div className="text-accent text-center text-base py-6">
-                    {t("leaders.emergencyContactFailed")}
-                  </div>
-                )}
-              </div>
+              <ul className="space-y-2 mt-4">
+                <li className="flex items-center gap-2">
+                  <span className="inline-block w-2 h-2 bg-primary rounded-full"></span>
+                  <span className="font-semibold text-primary2">
+                    {t("contact.types.general")}
+                  </span>
+                  <span className="text-accent">
+                    {t("contact.types.generalDesc")}
+                  </span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="inline-block w-2 h-2 bg-secondary rounded-full"></span>
+                  <span className="font-semibold text-primary2">
+                    {t("contact.types.complain")}
+                  </span>
+                  <span className="text-accent">
+                    {t("contact.types.complainDesc")}
+                  </span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="inline-block w-2 h-2 bg-primary2 rounded-full"></span>
+                  <span className="font-semibold text-primary2">
+                    {t("contact.types.suggestion")}
+                  </span>
+                  <span className="text-accent">
+                    {t("contact.types.suggestionDesc")}
+                  </span>
+                </li>
+              </ul>
             </div>
           </div>
         </form>

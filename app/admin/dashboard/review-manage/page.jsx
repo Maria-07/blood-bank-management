@@ -251,7 +251,7 @@ const ReviewManage = () => {
     <div>
       <div className="flex items-center justify-between flex-wrap gap-2 mb-3 px-1">
         <h1 className="text-primary2 font-semibold text-lg">
-          {t("leaders.titleName")}
+          {t("reviews.titleName")}
         </h1>
       </div>
       {isPendingLoading ? (

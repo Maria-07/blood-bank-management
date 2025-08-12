@@ -60,13 +60,14 @@ const Reviews = () => {
       </div>
 
       <div>
-        <Slider {...settings}>
-          {reviews?.map((review) => (
-            <div key={review._id} className="px-3">
+        {reviews && reviews.length === 1 ? (
+          // If only one review, render it centered and without Slider's slide styling
+          <div className="flex justify-center">
+            <div className="px-3 max-w-sm w-full">
               <div className="bg-white rounded-3xl shadow-2xl p-8 flex flex-col items-center border border-gray-200 hover:shadow-3xl transition-all duration-300 group min-h-[370px]">
                 <div className="mx-auto w-24 h-24 bg-gradient-to-tr from-primary2 to-secondary rounded-full flex items-center justify-center shadow-lg border-4 border-white">
                   <span className="text-white text-4xl font-bold">
-                    {review.reviewOwner?.fullName
+                    {reviews[0].reviewOwner?.fullName
                       ?.split(" ")
                       .map((n) => n[0])
                       .join("")
@@ -75,20 +76,62 @@ const Reviews = () => {
                 </div>
                 <div className="mt-3 flex flex-col items-center w-full">
                   <h2 className="text-lg font-semibold text-gray-900 mb-1 text-center tracking-wide">
-                    {review.reviewOwner?.fullName || "Anonymous"}
+                    {reviews[0].reviewOwner?.fullName || "Anonymous"}
                   </h2>
                   <span className="text-xs text-gray-500 mb-2 text-center">
-                    {review.reviewOwner?.email || ""}
+                    {reviews[0].reviewOwner?.email || ""}
                   </span>
                   <div className="w-12 h-1 bg-gradient-to-r from-primary2 to-secondary rounded-full mb-4"></div>
-                  <p className="text-gray-700 text-center mb-2 italic font-medium break-words">
-                    “{review.reviewMessage}”
+                  <p
+                    className="text-gray-700 text-center mb-2 italic font-medium break-words flex flex-wrap"
+                    style={{
+                      wordBreak: "break-word",
+                      overflowWrap: "break-word",
+                    }}
+                  >
+                    “{reviews[0].reviewMessage}”
                   </p>
                 </div>
               </div>
             </div>
-          ))}
-        </Slider>
+          </div>
+        ) : (
+          <Slider {...settings}>
+            {reviews?.map((review) => (
+              <div key={review._id} className="px-3">
+                <div className="bg-white rounded-3xl shadow-2xl p-8 flex flex-col items-center border border-gray-200 hover:shadow-3xl transition-all duration-300 group min-h-[370px]">
+                  <div className="mx-auto w-24 h-24 bg-gradient-to-tr from-primary2 to-secondary rounded-full flex items-center justify-center shadow-lg border-4 border-white">
+                    <span className="text-white text-4xl font-bold">
+                      {review.reviewOwner?.fullName
+                        ?.split(" ")
+                        .map((n) => n[0])
+                        .join("")
+                        .toUpperCase()}
+                    </span>
+                  </div>
+                  <div className="mt-3 flex flex-col items-center w-full">
+                    <h2 className="text-lg font-semibold text-gray-900 mb-1 text-center tracking-wide">
+                      {review.reviewOwner?.fullName || "Anonymous"}
+                    </h2>
+                    <span className="text-xs text-gray-500 mb-2 text-center">
+                      {review.reviewOwner?.email || ""}
+                    </span>
+                    <div className="w-12 h-1 bg-gradient-to-r from-primary2 to-secondary rounded-full mb-4"></div>
+                    <p
+                      className="text-gray-700 text-center mb-2 italic font-medium break-words flex flex-wrap"
+                      style={{
+                        wordBreak: "break-word",
+                        overflowWrap: "break-word",
+                      }}
+                    >
+                      “{review.reviewMessage}”
+                    </p>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </Slider>
+        )}
       </div>
 
       <AddReviewModal handleClose={handleClose} clicked={clicked} />

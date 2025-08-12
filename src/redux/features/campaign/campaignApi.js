@@ -47,6 +47,21 @@ const campaignApi = api.injectEndpoints({
         body: data,
       }),
     }),
+
+    postDonationTracking: builder.mutation({
+      query: (data) => ({
+        url: `/donationTracking/Upsert`,
+        method: "POST",
+        body: data,
+      }),
+    }),
+
+    getDonationTracking: builder.query({
+      query: ({ pageNo, pageSize, startTime, endTime }) => ({
+        url: `/donationTracking/GetHighestDonorList?pageNo=${pageNo}&pageSize=${pageSize}&startTime=${startTime}&endTime=${endTime}`,
+        method: "GET",
+      }),
+    }),
   }),
 });
 
@@ -57,4 +72,6 @@ export const {
   useGetAllMediaMutation,
   useGetAllCampaignMediaQuery,
   useDeleteMediaMutation,
+  usePostDonationTrackingMutation,
+  useGetDonationTrackingQuery,
 } = campaignApi;

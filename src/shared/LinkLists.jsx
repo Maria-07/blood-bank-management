@@ -48,6 +48,11 @@ export const settingsSidebar = [
     link: "/admin/dashboard/review-manage",
   },
   {
+    icon: <MdOutlineReviews />,
+    link_name: "Donation",
+    link: "/admin/dashboard/donation-tracking",
+  },
+  {
     icon: <MdAdminPanelSettings />,
     link_name: "Admins",
     link: "/admin/dashboard/admin-manage",
