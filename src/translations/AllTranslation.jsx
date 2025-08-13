@@ -20,6 +20,7 @@ export const translations = {
       upazila: "Upazila",
       union: "Union",
       age: "Age",
+      userName: "User Name",
     },
     donarCard: {
       contact: "Contact",
@@ -749,6 +750,11 @@ export const translations = {
       noData: "No data found",
       clear: "Clear",
     },
+
+    bloodBank: {
+      totalSearchResult: "Total Search Result",
+      totalDonors: "Total Donors",
+    },
   },
 
   bn: {
@@ -770,6 +776,7 @@ export const translations = {
       upazila: "উপজেলা",
       union: "ইউনিয়ন",
       age: "বয়স",
+      userName: "ব্যবহারকারী নাম",
     },
     donarCard: {
       contact: "যোগাযোগ",
@@ -1499,6 +1506,10 @@ export const translations = {
       invalidDateRange: "শুরুর তারিখ শেষের তারিখ অপেক্ষা বেশি হতে পারে",
       noData: "কোনো ডাটা পাওয়া যায়নি",
       clear: "বাতিল করুন",
+    },
+    bloodBank: {
+      totalSearchResult: "সর্বমোট সন্ধান ফলাফল",
+      totalDonors: "সর্বমোট দাতার সংখ্যা",
     },
   },
 };

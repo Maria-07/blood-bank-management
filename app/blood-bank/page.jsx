@@ -5,14 +5,16 @@ import FilteredUserData from "@/src/shared/FilteredUserData";
 import DonarCard from "@/src/Components/UI/Home/DonarCards/DonarCard";
 import { Pagination } from "antd";
 import Loader from "@/src/Components/Layouts/Loader";
+import { useTranslation } from "@/src/Hook/useTranslation";
 
 const BloodBankPage = () => {
+  const { t } = useTranslation();
   const [page, setPage] = useState(1);
   const [size, setSize] = useState(10);
   const [rowCount, setRowCount] = useState(0);
   const [filteredData, setFilteredData] = useState({});
   const [donors, setDonors] = useState([]);
-
+  const [resetTrigger, setResetTrigger] = useState(0);
   const itemRender = (_, type, originalElement) => {
     if (type === "prev") {
       return <a>Previous</a>;
@@ -28,6 +30,11 @@ const BloodBankPage = () => {
       ...prev,
       [key]: value,
     }));
+  };
+
+  const clearFilters = () => {
+    setFilteredData({});
+    setResetTrigger((prev) => prev + 1);
   };
 
   const [getAllUsers, { data, isLoading, isError }] = useGetAllDonorMutation();
@@ -71,7 +78,22 @@ const BloodBankPage = () => {
               <FilteredUserData
                 role={"user"}
                 handleFilteredData={handleFilteredData}
+                resetTrigger={resetTrigger}
               />
+            </div>
+            <div className="flex justify-between gap-2 flex-wrap">
+              {Object.keys(filteredData).length > 0 ? (
+                <div className="text-sm text-gray-500 mt-2">
+                  {t("bloodBank.totalSearchResult")}: {rowCount}
+                </div>
+              ) : (
+                <div className="text-sm text-gray-500 mt-2">
+                  {t("bloodBank.totalDonors")}: {rowCount}
+                </div>
+              )}
+              <button className="input-button mt-2" onClick={clearFilters}>
+                {t("donationTracking.clear")}
+              </button>
             </div>
           </div>
           {isLoading && <Loader></Loader>}

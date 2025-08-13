@@ -37,12 +37,21 @@ const BloodBanks = () => {
   const [tableDataPending, setTableDataPending] = useState([]);
   const [filteredInfo, setFilteredInfo] = useState({});
   const [sortedInfo, setSortedInfo] = useState({});
+  const [resetTrigger, setResetTrigger] = useState(0);
 
   const handleFilteredData = (key, value) => {
     setFilteredData((prev) => ({
       ...prev,
       [key]: value,
     }));
+  };
+  console.log(filteredData);
+
+  const clearFilters = () => {
+    setFilteredData({});
+    setFilteredInfo({});
+    setSortedInfo({});
+    setResetTrigger((prev) => prev + 1);
   };
 
   const [getAllApprovedDonors, { isLoading, isError }] =
@@ -130,7 +139,7 @@ const BloodBanks = () => {
                 "leaderType",
                 "bloodDonationCount",
                 "imageUrl",
-                "isEmergencyContact"
+                "isEmergencyContact",
               ].includes(key)
           )
           .map((key) => ({
@@ -206,19 +215,35 @@ const BloodBanks = () => {
         <h1 className="text-primary font-semibold text-lg">
           {t("userProfile.titleName")}
         </h1>
-        <button
-          className="border p-1 rounded-sm"
-          onClick={() => setFilterShow(!filterShow)}
-        >
-          {!filterShow ? <LuFilter /> : <LuFilterX />}
-        </button>
+        <div className="flex items-center gap-2">
+          <button
+            className="border p-1 rounded-sm"
+            onClick={() => setFilterShow(!filterShow)}
+          >
+            {!filterShow ? <LuFilter /> : <LuFilterX />}
+          </button>
+          <button
+            className="border px-3 py-1 rounded-sm text-sm hover:bg-gray-50"
+            onClick={clearFilters}
+          >
+            Clear
+          </button>
+        </div>
       </div>
 
       {filterShow && (
-        <div className="border px-5 py-5 rounded-md shadow-md mt-5 mb-10">
+        <div
+          style={{
+            background:
+              "linear-gradient(120deg, rgba(236,72,153,0.08) 0%, rgba(59,130,246,0.10) 100%)",
+            zIndex: 0,
+          }}
+          className="border px-5 py-5 rounded-md shadow-md mt-5 mb-10"
+        >
           <FilteredUserData
             role="admin"
             handleFilteredData={handleFilteredData}
+            resetTrigger={resetTrigger}
           />
         </div>
       )}

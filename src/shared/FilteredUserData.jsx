@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { MdBloodtype } from "react-icons/md";
 import { LuMapPinned } from "react-icons/lu";
 import { TiPin } from "react-icons/ti";
@@ -15,8 +15,9 @@ import {
 import { BiSolidDonateHeart } from "react-icons/bi";
 import { BsGenderAmbiguous } from "react-icons/bs";
 import { useTranslation } from "../Hook/useTranslation";
+import { FaUser } from "react-icons/fa";
 
-const FilteredUserData = ({ role, handleFilteredData }) => {
+const FilteredUserData = ({ role, handleFilteredData, resetTrigger }) => {
   // const [userType, setUserType] = useState("");
   // const [bloodType, setBloodType] = useState("");
   const [upazilaId, setUpazilaId] = useState();
@@ -24,6 +25,7 @@ const FilteredUserData = ({ role, handleFilteredData }) => {
   const [age, setAge] = useState({ startAge: null, endAge: null });
   const [upazilas, setUpazilas] = useState([]);
   const [unions, setUnions] = useState([]);
+  const searchInputRef = useRef(null);
 
   const { t } = useTranslation();
 
@@ -65,6 +67,18 @@ const FilteredUserData = ({ role, handleFilteredData }) => {
     }
   }, [upazilaId]);
 
+  //! Reset all filter states when resetTrigger changes
+  useEffect(() => {
+    if (resetTrigger) {
+      setUpazilaId(undefined);
+      setAge({ startAge: null, endAge: null });
+      setUnions([]);
+      if (searchInputRef.current) {
+        searchInputRef.current.value = "";
+      }
+    }
+  }, [resetTrigger]);
+
   //! Handle Age Selection
   const handleAgeSelection = (selectedAgeRange) => {
     setAge(selectedAgeRange);
@@ -91,6 +105,7 @@ const FilteredUserData = ({ role, handleFilteredData }) => {
               // setBloodType(selectedBloodType);
               updateFilters("bloodGroup", selectedBloodType?.value);
             }}
+            resetTrigger={resetTrigger}
           />
         </div>
         {/* Blood Group Filter */}
@@ -105,6 +120,7 @@ const FilteredUserData = ({ role, handleFilteredData }) => {
               // setBloodType(selectedBloodType);
               updateFilters("gender", selectedGenderType?.value);
             }}
+            resetTrigger={resetTrigger}
           />
         </div>
         {/* User Type Filter */}
@@ -151,6 +167,7 @@ const FilteredUserData = ({ role, handleFilteredData }) => {
                 // setBloodType(selectedbdStatus);
                 updateFilters("bloodDonationStatus", selectedbdStatus?.value);
               }}
+              resetTrigger={resetTrigger}
             />
           </div>
         )}
@@ -166,6 +183,7 @@ const FilteredUserData = ({ role, handleFilteredData }) => {
             option={(selectedUpazila) => {
               updateFilters("upazila", selectedUpazila?.key);
             }}
+            resetTrigger={resetTrigger}
           />
         </div>
 
@@ -179,6 +197,7 @@ const FilteredUserData = ({ role, handleFilteredData }) => {
             option={(selectedUnion) => {
               updateFilters("union", selectedUnion?.key);
             }}
+            resetTrigger={resetTrigger}
           />
         </div>
 
@@ -188,8 +207,28 @@ const FilteredUserData = ({ role, handleFilteredData }) => {
             <FaPeopleArrows className="text-secondary text-lg" />{" "}
             {t("filters.age")}
           </h1>
-          <CustomSearchOption item={ageRange} option={handleAgeSelection} />
+          <CustomSearchOption
+            item={ageRange}
+            option={handleAgeSelection}
+            resetTrigger={resetTrigger}
+          />
         </div>
+
+        {role === "admin" && (
+          <div className="sm:col-span-2">
+            <h1 className="flex items-center gap-1 font-semibold text-sm mb-2 text-black">
+              <FaUser className="text-secondary text-lg" />{" "}
+              {t("filters.userName")}
+            </h1>
+            <input
+              ref={searchInputRef}
+              type="text"
+              placeholder={t("filters.userName")}
+              className="input-border w-full "
+              onChange={(e) => updateFilters("searchQuery", e.target.value)}
+            />
+          </div>
+        )}
       </div>
     </div>
   );

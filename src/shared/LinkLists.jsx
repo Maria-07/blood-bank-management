@@ -9,6 +9,7 @@ import { FaPeopleCarryBox, FaRegNewspaper } from "react-icons/fa6";
 import { BsChatSquareText } from "react-icons/bs";
 import { IoDocumentAttachSharp } from "react-icons/io5";
 import { CgUserlane } from "react-icons/cg";
+import { TbListSearch } from "react-icons/tb";
 
 // for admion and superAdmin
 export const settingsSidebar = [
@@ -48,7 +49,7 @@ export const settingsSidebar = [
     link: "/admin/dashboard/review-manage",
   },
   {
-    icon: <MdOutlineReviews />,
+    icon: <TbListSearch />,
     link_name: "Donation",
     link: "/admin/dashboard/donation-tracking",
   },
