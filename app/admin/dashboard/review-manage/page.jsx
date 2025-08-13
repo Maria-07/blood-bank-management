@@ -6,12 +6,16 @@ import React, { useEffect, useMemo, useState, useCallback } from "react";
 import { useTranslation } from "@/src/Hook/useTranslation";
 import {
   useApproveReviewMutation,
+  useDeleteReviewMutation,
   useGetAllReviewsQuery,
   useGetAllUnapprovedReviewsQuery,
   useRemoveReviewMutation,
 } from "@/src/redux/features/review/review";
-import { FcApproval } from "react-icons/fc";
+import { FcApproval, FcDeleteColumn } from "react-icons/fc";
 import { IoIosRemoveCircle } from "react-icons/io";
+import { FiDelete } from "react-icons/fi";
+import { MdDelete } from "react-icons/md";
+import { toast } from "react-toastify";
 
 const ReviewManage = () => {
   const { t } = useTranslation();
@@ -50,6 +54,24 @@ const ReviewManage = () => {
     pageNo: pendingPage,
     pageSize: pendingPageSize,
   });
+
+  const [deleteReview] = useDeleteReviewMutation();
+
+  const handleDelete = useCallback(
+    async (record) => {
+      await deleteReview(record?.id)
+        .unwrap()
+        .then(() => {
+          toast.success(t("reviews.reviewDeleted"));
+        })
+        .catch((error) => {
+          toast.error(error?.data?.message || t("reviews.somethingWentWrong"));
+        });
+      refetchPending();
+      refetchApproved();
+    },
+    [deleteReview, refetchPending, refetchApproved]
+  );
 
   const [approveReview] = useApproveReviewMutation();
   const [removeReview] = useRemoveReviewMutation();
@@ -201,11 +223,19 @@ const ReviewManage = () => {
         key: "action",
         render: (_, record) =>
           isPending ? (
-            <div className="flex items-center justify-center" title="Approve">
-              <FcApproval
-                onClick={() => handleApprove(record)}
-                className="cursor-pointer"
-              />
+            <div>
+              <div className="flex items-center justify-center gap-2">
+                <FcApproval
+                  title="Approve"
+                  onClick={() => handleApprove(record)}
+                  className="cursor-pointer"
+                />
+                <MdDelete
+                  title="Delete"
+                  onClick={() => handleDelete(record)}
+                  className="cursor-pointer text-primary"
+                />
+              </div>
             </div>
           ) : (
             <div className="flex items-center justify-center" title="Remove">
@@ -251,7 +281,7 @@ const ReviewManage = () => {
     <div>
       <div className="flex items-center justify-between flex-wrap gap-2 mb-3 px-1">
         <h1 className="text-primary2 font-semibold text-lg">
-          {t("reviews.titleName")}
+          {t("reviews.title")}
         </h1>
       </div>
       {isPendingLoading ? (

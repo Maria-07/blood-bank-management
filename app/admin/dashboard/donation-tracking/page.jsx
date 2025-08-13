@@ -1,9 +1,11 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState, useMemo, useCallback } from "react";
 import { useTranslation } from "@/src/Hook/useTranslation";
-import { DatePicker, Pagination, Table } from "antd";
+import { DatePicker, Pagination, Table, Button } from "antd";
 import { MdOutlineDateRange } from "react-icons/md";
+import { LuFilterX } from "react-icons/lu";
 import { toast } from "react-toastify";
 import { useGetDonationTrackingQuery } from "@/src/redux/features/campaign/campaignApi";
 import Loader from "@/src/Components/Layouts/Loader";
@@ -13,15 +15,14 @@ const DonationTracking = () => {
   const { t } = useTranslation();
   const [fromDate, setFromDate] = useState(null);
   const [toDate, setToDate] = useState(null);
-  const [searchParams, setSearchParams] = useState(null); // all query params here
+  const [searchParams, setSearchParams] = useState(null);
   const [tableData, setTableData] = useState([]);
   const [filteredInfo, setFilteredInfo] = useState({});
   const [sortedInfo, setSortedInfo] = useState({});
   const [rowCount, setRowCount] = useState(0);
   const [dateError, setDateError] = useState("");
   const [tableShow, setTableShow] = useState(false);
-  const [page, setPage] = useState(1);
-  const [size, setSize] = useState(10);
+  const [pagination, setPagination] = useState({ page: 1, size: 10 });
 
   const queryParams = useMemo(() => {
     if (!searchParams) return undefined;
@@ -40,7 +41,7 @@ const DonationTracking = () => {
     }
   );
 
-  const handleSearch = () => {
+  const handleSearch = useCallback(() => {
     if (!fromDate || !toDate) {
       setDateError(t("donationTracking.dateRequired"));
       toast.error(t("donationTracking.dateRequired"));
@@ -58,28 +59,47 @@ const DonationTracking = () => {
     setSearchParams({
       fromDate,
       toDate,
-      page: page,
-      size: size,
+      page: pagination.page,
+      size: pagination.size,
     });
-  };
+  }, [fromDate, toDate, pagination.page, pagination.size, t]);
 
-  const handlePageChange = (currentPage, pageSize) => {
-    setPage(currentPage);
-    setSize(pageSize);
-  };
+  const handleClear = useCallback(() => {
+    setFromDate(null);
+    setToDate(null);
+    setSearchParams(null);
+    setTableData([]);
+    setTableShow(false);
+    setRowCount(0);
+    setDateError("");
+    setPagination({ page: 1, size: 10 });
+  }, []);
+
+  const handlePageChange = useCallback(
+    (currentPage, pageSize) => {
+      const newPagination = { page: currentPage, size: pageSize };
+      setPagination(newPagination);
+
+      if (searchParams) {
+        setSearchParams({
+          ...searchParams,
+          page: currentPage,
+          size: pageSize,
+        });
+      }
+    },
+    [searchParams]
+  );
 
   useEffect(() => {
     if (!isLoading && !isError && data) {
-      // Ensure data?.data is always an array
-      setTableData(data?.data?.data);
-
+      setTableData(data?.data?.data || []);
       setTableShow(true);
       setRowCount(data?.totalCount || 0);
     }
   }, [data, isLoading, isError]);
 
   const generateFilterValues = (data, columnKey) => {
-    // Defensive: ensure data is array
     const arr = Array.isArray(data) ? data : [];
     const uniqueValues = [...new Set(arr.map((d) => d[columnKey]))];
     return uniqueValues.map((value) => ({ text: value, value }));
@@ -176,10 +196,21 @@ const DonationTracking = () => {
             value={toDate}
           />
         </div>
-        <button onClick={handleSearch} className="input-button mt-5">
-          {t("donationTracking.Go")}
-        </button>
+        <div className="flex gap-2 mt-5">
+          <button onClick={handleSearch} className="input-button">
+            {t("donationTracking.Go")}
+          </button>
+          <button
+            onClick={handleClear}
+            className="flex items-center gap-1 input-button bg-primary"
+          >
+            <LuFilterX /> {t("donationTracking.clear")}
+          </button>
+        </div>
       </div>
+      {dateError && (
+        <div className="text-red-500 text-sm mt-2">{dateError}</div>
+      )}
       <div className="mt-6">
         {isLoading && (
           <div className="flex justify-center items-center py-10">
@@ -207,9 +238,9 @@ const DonationTracking = () => {
                 showSizeChanger
                 onChange={handlePageChange}
                 align="end"
-                current={page}
+                current={pagination.page}
                 total={rowCount}
-                pageSize={size}
+                pageSize={pagination.size}
               />
             </div>
           </div>

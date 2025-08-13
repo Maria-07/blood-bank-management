@@ -736,6 +736,8 @@ export const translations = {
       loginToAddReview: "Login to Add your Review",
       writeYourReview: "Write your review",
       cancel: "Cancel",
+      reviewDeleted: "Review deleted successfully",
+      somethingWentWrong: "Something went wrong",
     },
 
     donationTracking: {
@@ -745,6 +747,7 @@ export const translations = {
       dateRequired: "Date is required",
       invalidDateRange: "Start date cannot be after end date",
       noData: "No data found",
+      clear: "Clear",
     },
   },
 
@@ -1477,22 +1480,25 @@ export const translations = {
       },
     },
     reviews: {
-      title: "মানুষের মতামত",
+      title: "মতামত",
       description:
         "আমাদের সেবাগ্রহণকারীদের অভিজ্ঞতা থেকে শুনুন। আপনার আস্থা ও মতামত আমাদের প্রতিদিন আরও ভালো করতে অনুপ্রাণিত করে।",
       addReview: "রিভিউ দিন",
       loginToAddReview: "রিভিউ দিতে লগইন করুন",
       writeYourReview: "আপনার মতামত লিখুন",
       cancel: "বাতিল করুন",
+      reviewDeleted: "রিভিউ সফলভাবে মুছে ফেলা হয়েছে",
+      somethingWentWrong: "কিছু ভুল হয়েছে",
     },
 
     donationTracking: {
       fromDate: "শুরুর তারিখ",
       toDate: "শেষের তারিখ",
-      Go: "যাও",
+      Go: "সন্ধান করুন",
       dateRequired: "তারিখ প্রয়োজন",
       invalidDateRange: "শুরুর তারিখ শেষের তারিখ অপেক্ষা বেশি হতে পারে",
       noData: "কোনো ডাটা পাওয়া যায়নি",
+      clear: "বাতিল করুন",
     },
   },
 };
