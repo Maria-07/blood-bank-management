@@ -10,6 +10,7 @@ import store from "@/src/redux/store";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { AuthProvider } from "@/src/Hook/AuthContext";
+import AuthMiddleware from "@/src/Components/Layouts/AuthMiddleware";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -36,9 +37,11 @@ export default function RootLayout({ children }) {
           <ToastContainer />
           <AuthProvider>
             <Provider store={store}>
-              <Navbar />
-              <div className="min-h-[70vh] p-2 sm:p-0">{children}</div>
-              <Footer />
+              <AuthMiddleware>
+                <Navbar />
+                <div className="min-h-[70vh] p-2 sm:p-0">{children}</div>
+                <Footer />
+              </AuthMiddleware>
             </Provider>
           </AuthProvider>
         </body>

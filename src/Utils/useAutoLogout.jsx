@@ -1,33 +1,85 @@
-import { useEffect } from "react";
-import { useHistory } from "react-router-dom";
-import { getToken, removeToken, isTokenExpired } from "./utils/auth";
+import { useEffect, useRef } from "react";
+import { useRouter } from "next/navigation";
+import Cookies from "js-cookie";
+import { isTokenExpired, getTimeUntilExpiry } from "@/src/Hook/authUtils";
 
 const useAutoLogout = () => {
-  const history = useHistory();
-
-  useEffect(() => {
-    const token = getToken();
-
-    if (isTokenExpired(token)) {
-      handleLogout();
-    } else {
-      // Optionally, set a timer to log out when the token expires
-      const decoded = JSON.parse(atob(token.split(".")[1])); // Decode JWT
-      const expiryTime = decoded.exp * 1000;
-
-      const timeout = setTimeout(() => {
-        handleLogout();
-      }, expiryTime - Date.now());
-
-      // Cleanup timeout when the component unmounts
-      return () => clearTimeout(timeout);
-    }
-  }, [history]);
+  const router = useRouter();
+  const timeoutRef = useRef(null);
+  const intervalRef = useRef(null);
 
   const handleLogout = () => {
-    removeToken(); // Remove token from localStorage/sessionStorage
-    history.push("/login"); // Redirect to the login page
+    Cookies.remove("accessToken");
+    router.push("/login");
   };
+
+  const checkTokenExpiry = () => {
+    const token = Cookies.get("accessToken");
+
+    if (!token || isTokenExpired(token)) {
+      handleLogout();
+      return;
+    }
+
+    const timeUntilExpiry = getTimeUntilExpiry(token);
+
+    if (timeUntilExpiry <= 0) {
+      handleLogout();
+      return;
+    }
+
+    if (timeUntilExpiry <= 60000) {
+      handleLogout();
+      return;
+    }
+  };
+
+  const setupTokenValidation = () => {
+    const token = Cookies.get("accessToken");
+
+    if (!token || isTokenExpired(token)) {
+      handleLogout();
+      return;
+    }
+
+    const timeUntilExpiry = getTimeUntilExpiry(token);
+
+    if (timeUntilExpiry <= 0) {
+      handleLogout();
+      return;
+    }
+
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+
+    timeoutRef.current = setTimeout(() => {
+      handleLogout();
+    }, timeUntilExpiry);
+
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+    }
+
+    intervalRef.current = setInterval(() => {
+      checkTokenExpiry();
+    }, 60000);
+  };
+
+  useEffect(() => {
+    setupTokenValidation();
+
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+    };
+  }, []);
+
+  return { handleLogout };
 };
 
 export default useAutoLogout;
