@@ -1,7 +1,7 @@
 "use client";
 
 import Loader from "@/src/Components/Layouts/Loader";
-import { Pagination, Table, Tabs } from "antd";
+import { Modal, Pagination, Table, Tabs } from "antd";
 import React, { useEffect, useMemo, useState, useCallback } from "react";
 import { useTranslation } from "@/src/Hook/useTranslation";
 import {
@@ -11,11 +11,11 @@ import {
   useGetAllUnapprovedReviewsQuery,
   useRemoveReviewMutation,
 } from "@/src/redux/features/review/review";
-import { FcApproval, FcDeleteColumn } from "react-icons/fc";
+import { FcApproval } from "react-icons/fc";
 import { IoIosRemoveCircle } from "react-icons/io";
-import { FiDelete } from "react-icons/fi";
-import { MdDelete } from "react-icons/md";
+import { MdDelete, MdDeleteOutline, MdDone } from "react-icons/md";
 import { toast } from "react-toastify";
+import { IoMdCloseCircleOutline } from "react-icons/io";
 
 const ReviewManage = () => {
   const { t } = useTranslation();
@@ -34,47 +34,45 @@ const ReviewManage = () => {
   const [sortedInfo, setSortedInfo] = useState({});
   const [showModal, setShowModal] = useState(false);
   const [modalReviewText, setModalReviewText] = useState("");
+  const [activeTab, setActiveTab] = useState("approved");
+
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [deleteTarget, setDeleteTarget] = useState(null);
 
   const {
     data: approvedData,
     isLoading: isApprovedLoading,
     isError: isApprovedError,
     refetch: refetchApproved,
-  } = useGetAllReviewsQuery({
-    pageNo: approvedPage,
-    pageSize: approvedPageSize,
-  });
+  } = useGetAllReviewsQuery(
+    {
+      pageNo: approvedPage,
+      pageSize: approvedPageSize,
+    },
+    { refetchOnMountOrArgChange: true }
+  );
 
   const {
     data: pendingData,
     isLoading: isPendingLoading,
     isError: isPendingError,
     refetch: refetchPending,
-  } = useGetAllUnapprovedReviewsQuery({
-    pageNo: pendingPage,
-    pageSize: pendingPageSize,
-  });
-
-  const [deleteReview] = useDeleteReviewMutation();
-
-  const handleDelete = useCallback(
-    async (record) => {
-      await deleteReview(record?.id)
-        .unwrap()
-        .then(() => {
-          toast.success(t("reviews.reviewDeleted"));
-        })
-        .catch((error) => {
-          toast.error(error?.data?.message || t("reviews.somethingWentWrong"));
-        });
-      refetchPending();
-      refetchApproved();
+  } = useGetAllUnapprovedReviewsQuery(
+    {
+      pageNo: pendingPage,
+      pageSize: pendingPageSize,
     },
-    [deleteReview, refetchPending, refetchApproved]
+    { refetchOnMountOrArgChange: true }
   );
 
+  const [deleteReview] = useDeleteReviewMutation();
   const [approveReview] = useApproveReviewMutation();
   const [removeReview] = useRemoveReviewMutation();
+
+  useEffect(() => {
+    refetchApproved();
+    refetchPending();
+  }, []);
 
   useEffect(() => {
     if (!isApprovedLoading && !isApprovedError && approvedData) {
@@ -89,6 +87,20 @@ const ReviewManage = () => {
       setPendingReviews(pendingData?.data?.data || []);
     }
   }, [pendingData, isPendingLoading, isPendingError]);
+
+  const handleDelete = useCallback(
+    async (record) => {
+      try {
+        await deleteReview(record?.id).unwrap();
+        toast.success(t("reviews.reviewDeleted"));
+        refetchPending();
+        refetchApproved();
+      } catch (error) {
+        toast.error(error?.data?.message || t("reviews.somethingWentWrong"));
+      }
+    },
+    [deleteReview, refetchPending, refetchApproved, t]
+  );
 
   const handleApprove = useCallback(
     async (record) => {
@@ -203,17 +215,15 @@ const ReviewManage = () => {
               : reviewText;
 
           return (
-            <>
-              <span
-                className="font-semibold cursor-pointer text-primary2 hover:underline"
-                onClick={() => {
-                  setModalReviewText(reviewText);
-                  setShowModal(true);
-                }}
-              >
-                {truncated}
-              </span>
-            </>
+            <span
+              className="font-semibold cursor-pointer text-primary2 hover:underline"
+              onClick={() => {
+                setModalReviewText(reviewText);
+                setShowModal(true);
+              }}
+            >
+              {truncated}
+            </span>
           );
         },
       },
@@ -232,7 +242,10 @@ const ReviewManage = () => {
                 />
                 <MdDelete
                   title="Delete"
-                  onClick={() => handleDelete(record)}
+                  onClick={() => {
+                    setDeleteTarget(record);
+                    setShowDeleteModal(true);
+                  }}
                   className="cursor-pointer text-primary"
                 />
               </div>
@@ -284,14 +297,18 @@ const ReviewManage = () => {
           {t("reviews.title")}
         </h1>
       </div>
-      {isPendingLoading ? (
+      {(isApprovedLoading && activeTab === "approved") ||
+      (isPendingLoading && activeTab === "pending") ? (
         <Loader />
-      ) : isPendingError ? (
+      ) : (isApprovedError && activeTab === "approved") ||
+        (isPendingError && activeTab === "pending") ? (
         <div>Something went wrong</div>
       ) : (
         <div className="my-5">
           <Tabs
             type="card"
+            activeKey={activeTab}
+            onChange={setActiveTab}
             items={[
               {
                 label: t("leaders.approved"),
@@ -354,20 +371,101 @@ const ReviewManage = () => {
         </div>
       )}
       {showModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40">
-          <div className="bg-white rounded shadow-lg p-6 max-w-lg w-full relative">
-            <button
+        <Modal
+          open={showModal}
+          centered
+          footer={null}
+          width={500}
+          closable={false}
+          className="box"
+        >
+          <div className="">
+            <div className="flex items-center justify-between">
+              <h1 className="text-xl  font-semibold tracking-tight">
+                {t("reviews.title")}
+              </h1>
+
+              <IoMdCloseCircleOutline
+                onClick={() => setShowModal(false)}
+                className="text-gray-500 text-2xl hover:text-primary"
+              />
+            </div>
+
+            <div className="bg-gray-200 pt-[1px] mt-3"></div>
+            {/* <button
               className="absolute top-2 right-2 text-gray-500 hover:text-gray-700 text-xl"
               onClick={() => setShowModal(false)}
             >
               ×
-            </button>
-            <h2 className="text-lg font-bold mb-2">Full Review</h2>
-            <div className="text-gray-800 whitespace-pre-line break-words">
+            </button> */}
+
+            <div className="text-gray-800 whitespace-pre-line break-words my-3 p-3 border border-gray-200 rounded-md">
               {modalReviewText}
             </div>
           </div>
-        </div>
+        </Modal>
+      )}
+      {showDeleteModal && (
+        <Modal
+          open={showDeleteModal}
+          centered
+          footer={null}
+          width={500}
+          closable={false}
+          className="box"
+        >
+          <div className="">
+            <div className="flex items-center justify-between">
+              <h1 className="text-xl  font-semibold tracking-tight">
+                {t("reviews.confirmDeleteTitle")}
+              </h1>
+
+              <IoMdCloseCircleOutline
+                onClick={() => setShowDeleteModal(false)}
+                className="text-gray-500 text-2xl hover:text-primary"
+              />
+            </div>
+
+            <div className="bg-gray-200 pt-[1px] mt-3"></div>
+
+            <form>
+              <div className="text-center text-base my-4">
+                {t("reviews.confirmDeleteMessage")}
+              </div>
+              <div className="bg-gray-200 py-[1px] mt-10"></div>
+              <div className="flex items-end justify-end gap-2 mt-2">
+                <button
+                  onClick={async () => {
+                    if (deleteTarget) {
+                      await handleDelete(deleteTarget);
+                    }
+                    setShowDeleteModal(false);
+                    setDeleteTarget(null);
+                  }}
+                  type="button"
+                  className=" border-green-600 bg-green-700 flex items-center border rounded-sm"
+                >
+                  <MdDone className=" text-white bg-green-700  px-1 py-[2px] text-[28px]" />
+                  <span className="px-2 py-[6px] bg-green-600 transition-all hover:bg-green-700 text-white text-xs">
+                    {t("reviews.delete")}
+                  </span>
+                </button>
+                <button
+                  className=" border-rose-600 flex items-center border rounded-sm"
+                  onClick={() => {
+                    setShowDeleteModal(false);
+                    setDeleteTarget(null);
+                  }}
+                >
+                  <MdDeleteOutline className=" text-white bg-rose-700  px-1 py-[2px] text-[28px]" />
+                  <span className="px-2 py-[6px] bg-rose-500 transition-all hover:bg-rose-600 text-white text-xs">
+                    {t("reviews.cancel")}
+                  </span>
+                </button>
+              </div>
+            </form>
+          </div>
+        </Modal>
       )}
     </div>
   );

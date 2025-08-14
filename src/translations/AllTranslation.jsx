@@ -739,6 +739,10 @@ export const translations = {
       cancel: "Cancel",
       reviewDeleted: "Review deleted successfully",
       somethingWentWrong: "Something went wrong",
+      confirmDeleteTitle: "Review Disapprove",
+      confirmDeleteMessage:
+        "Are you sure you want to disapprove this review? This action cannot be undone.",
+      delete: "Delete",
     },
 
     donationTracking: {
@@ -1496,6 +1500,9 @@ export const translations = {
       cancel: "বাতিল করুন",
       reviewDeleted: "রিভিউ সফলভাবে মুছে ফেলা হয়েছে",
       somethingWentWrong: "কিছু ভুল হয়েছে",
+      confirmDeleteTitle: "রিভিউ মুছে ফেলা করা হবে",
+      confirmDeleteMessage: "আপনি কি নিশ্চিত যে আপনি এই রিভিউ মুছে ফেলতে চান?",
+      delete: "মতামত অপসারণ করুন",
     },
 
     donationTracking: {

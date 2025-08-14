@@ -57,9 +57,9 @@ const MyProfilePage = () => {
       }
       try {
         const data = {
-          date,
-          phone,
-          name,
+          donationDate: date,
+          mobileNumber: phone,
+          receiverName: name,
         };
         const response = await postDonationTracking(data);
 
@@ -67,6 +67,7 @@ const MyProfilePage = () => {
           setBloodDonationCount(bloodDonationCount + 1);
           toast.success(response?.data?.response?.message);
           setDonationTrackingModal(false);
+          console.log(bloodDonationCount);
         } else {
           toast.error(response?.data?.response?.message);
         }
@@ -129,7 +130,7 @@ const MyProfilePage = () => {
       setValue("Upazila", user.upazila || "");
       setValue("Union", user?.union || ""); // Default value of Union
       // setValue("BloodDonationCount", user.bloodDonationCount || 0);
-      setBloodDonationCount(user.bloodDonationCount || 0);
+      setBloodDonationCount(user.bloodDonationCount);
       setValue("Gender", user.gender || "");
       setValue("UserType", user.userType || "");
       setValue("BloodDonationStatus", user.bloodDonationStatus || "");
@@ -708,34 +709,31 @@ const MyProfilePage = () => {
                     </h1>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                       <div>
-                        <h1 className="input-title">Date*</h1>
+                        <h1 className="input-title">Date</h1>
                         <input
                           type="date"
                           className="input-border w-full mb-2"
                           value={date}
                           onChange={(e) => setDate(e.target.value)}
-                          required
                         />
                       </div>
                       <div>
-                        <h1 className="input-title">Receiver Phone*</h1>
+                        <h1 className="input-title">Receiver Phone</h1>
                         <input
                           type="number"
                           className="input-border w-full mb-2"
                           value={phone}
                           onChange={(e) => setPhone(e.target.value)}
-                          required
                         />
                       </div>
                     </div>
                     <div>
-                      <h1 className="input-title">Receiver Name*</h1>
+                      <h1 className="input-title">Receiver Name</h1>
                       <input
                         type="text"
                         className="input-border w-full mb-2"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
-                        required
                       />
                     </div>
                   </>
