@@ -571,6 +571,15 @@ export const translations = {
       cancel: "Cancel",
       editProfile: "Edit Profile",
       pleaseLogin: "Please login again to continue",
+      donationTracking: "Donation Tracking",
+      donationTrackingTitle: "Do you want to donate blood through Hemoglobin ?",
+      donationTrackingDescription:
+        "If you want to donate blood through Hemoglobin, please fill out this form:",
+      donationTrackingCancel: "Cancel",
+      donationTrackingSubmit: "Submit",
+      receiverPhone: "Receiver Phone",
+      receiverName: "Receiver Name",
+      date: "Date",
     },
     report: {
       personalInformation: "Personal Information",
@@ -1333,6 +1342,15 @@ export const translations = {
       cancel: "বাতিল করুন",
       editProfile: "প্রোফাইল সম্পাদনা করুন",
       pleaseLogin: "চালিয়ে যেতে অনুগ্রহ করে লগইন করুন",
+      donationTracking: "রক্তদান ট্র্যাকিং",
+      donationTrackingTitle: "রক্তদান করতে আগ্রহী কি?",
+      donationTrackingDescription:
+        "রক্তদান করতে আগ্রহী হলে নিচের ফর্মটি ভরাট করুন:",
+      donationTrackingCancel: "বাতিল করুন",
+      donationTrackingSubmit: "সাবমিট করুন",
+      receiverPhone: "প্রাপকের ফোন নম্বর",
+      receiverName: "প্রাপকের নাম",
+      date: "তারিখ",
     },
     report: {
       personalInformation: "ব্যক্তিগত তথ্য",
@@ -1502,7 +1520,7 @@ export const translations = {
       somethingWentWrong: "কিছু ভুল হয়েছে",
       confirmDeleteTitle: "রিভিউ মুছে ফেলা করা হবে",
       confirmDeleteMessage: "আপনি কি নিশ্চিত যে আপনি এই রিভিউ মুছে ফেলতে চান?",
-      delete: "মতামত অপসারণ করুন",
+      delete: "অপসারণ করুন",
     },
 
     donationTracking: {

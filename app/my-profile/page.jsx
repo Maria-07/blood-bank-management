@@ -51,10 +51,6 @@ const MyProfilePage = () => {
 
   const handleDonationTracking = async () => {
     if (donationType === "yes") {
-      if (!date || !phone || !name) {
-        toast.error("Please fill in all required fields.");
-        return;
-      }
       try {
         const data = {
           donationDate: date,
@@ -667,7 +663,7 @@ const MyProfilePage = () => {
             <div>
               <div className="flex items-center justify-between">
                 <h1 className="text-xl font-semibold tracking-tight">
-                  Do you want to donate blood through Hemoglobin ?
+                  {t("profile.donationTrackingTitle")}
                 </h1>
 
                 <IoMdCloseCircleOutline
@@ -704,12 +700,11 @@ const MyProfilePage = () => {
                   <>
                     {" "}
                     <h1 className="text-base text-primary2 font-semibold my-2">
-                      If you want to donate blood through Hemoglobin, please
-                      fill out this form:{" "}
+                      {t("profile.donationTrackingDescription")}
                     </h1>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                       <div>
-                        <h1 className="input-title">Date</h1>
+                        <h1 className="input-title">{t("profile.date")}</h1>
                         <input
                           type="date"
                           className="input-border w-full mb-2"
@@ -718,7 +713,9 @@ const MyProfilePage = () => {
                         />
                       </div>
                       <div>
-                        <h1 className="input-title">Receiver Phone</h1>
+                        <h1 className="input-title">
+                          {t("profile.receiverPhone")}
+                        </h1>
                         <input
                           type="number"
                           className="input-border w-full mb-2"
@@ -728,7 +725,9 @@ const MyProfilePage = () => {
                       </div>
                     </div>
                     <div>
-                      <h1 className="input-title">Receiver Name</h1>
+                      <h1 className="input-title">
+                        {t("profile.receiverName")}
+                      </h1>
                       <input
                         type="text"
                         className="input-border w-full mb-2"
@@ -749,7 +748,7 @@ const MyProfilePage = () => {
                   >
                     <MdDone className="text-white bg-secondary px-1 py-[2px] text-[28px]" />
                     <span className="px-2 py-[6px] bg-primary transition-all hover:bg-secondary text-white text-xs">
-                      Submit
+                      {t("profile.donationTrackingSubmit")}
                     </span>
                   </button>
                   <button
@@ -758,7 +757,7 @@ const MyProfilePage = () => {
                   >
                     <MdDeleteOutline className="text-white bg-rose-700 px-1 py-[2px] text-[28px]" />
                     <span className="px-2 py-[6px] bg-rose-500 transition-all hover:bg-rose-600 text-white text-xs">
-                      Cancel
+                      {t("profile.donationTrackingCancel")}
                     </span>
                   </button>
                 </div>
