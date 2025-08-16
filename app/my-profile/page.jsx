@@ -38,7 +38,6 @@ const MyProfilePage = () => {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [date, setDate] = useState("");
-  const [bloodDonationCount, setBloodDonationCount] = useState(0);
 
   const [postDonationTracking, { isLoading: isPosting }] =
     usePostDonationTrackingMutation();
@@ -111,6 +110,10 @@ const MyProfilePage = () => {
         : setUnions(data?.data || []);
     } catch (error) {}
   };
+
+  const [bloodDonationCount, setBloodDonationCount] = useState(
+    user?.bloodDonationCount
+  );
 
   useEffect(() => {
     if (user) {
