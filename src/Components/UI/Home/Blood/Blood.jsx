@@ -117,9 +117,9 @@ const Blood = () => {
                   <div className="text-gray-700 text-xs sm:text-sm">
                     {item.desc}
                   </div>
-                  {idx < 3 && (
-                    <div className="hidden sm:block absolute right-[-30px] md:right-[-40px] top-1/2 transform -translate-y-1/2 w-12 md:w-20 h-1 bg-gradient-to-r from-primary2 to-primary opacity-40"></div>
-                  )}
+                  {/* {idx < 3 && (
+                    <div className="hidden sm:block absolute right-[-30px] md:right-[-40px] top-1/2 transform -translate-y-1/2 w-5 md:w-10 h-1 bg-gradient-to-r from-primary2 to-primary opacity-40"></div>
+                  )} */}
                 </div>
               ))}
             </div>

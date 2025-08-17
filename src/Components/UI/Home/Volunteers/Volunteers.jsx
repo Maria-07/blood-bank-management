@@ -91,7 +91,7 @@ const Volunteers = () => {
         </div>
 
         {/* CTA Section */}
-        <div className="mt-16 text-center">
+        {/* <div className="mt-16 text-center">
           <div className="bg-gradient-to-r from-primary to-secondary text-white p-8 rounded-2xl shadow-xl">
             <h3 className="text-2xl font-bold mb-4">
               {t("volunteerSection.title")}
@@ -105,7 +105,7 @@ const Volunteers = () => {
               </button>
             </Link>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

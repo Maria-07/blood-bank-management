@@ -64,15 +64,6 @@ const HomePage = () => {
       >
         <Works />
       </motion.div>
-      <motion.div
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: false, amount: 0.2 }}
-        variants={fadeInVariants}
-        className="mt-10 bg-gradient-to-r from-red-500 via-red-400 to-pink-400"
-      >
-        <Reviews />
-      </motion.div>
 
       <motion.div
         initial="hidden"
@@ -82,6 +73,15 @@ const HomePage = () => {
         className="md:w-[90%] sm:mx-auto py-2"
       >
         <Volunteers />
+      </motion.div>
+      <motion.div
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: false, amount: 0.2 }}
+        variants={fadeInVariants}
+        className="mt-10 bg-gradient-to-r from-red-500 via-red-400 to-pink-400"
+      >
+        <Reviews />
       </motion.div>
     </div>
   );
