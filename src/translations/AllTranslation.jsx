@@ -221,7 +221,7 @@ export const translations = {
       subtitle:
         "Meet the dedicated leaders who are driving this life-saving initiative forward. Their commitment and leadership are the backbone of our success.",
 
-      dcOfficials: "Admin Officials",
+      dcOfficials: "Admins",
       civilSurgeon: "Civil Surgeon Officials",
       volunteers: "Volunteers",
       loadMore: "Load More",
