@@ -43,9 +43,9 @@ const Initiator = ({ record }) => {
               {record?.designation}
             </span>
           )}
-          {record?.district && (
+          {/* {record?.district && (
             <span className="text-xs text-accent">{record?.district}</span>
-          )}
+          )} */}
         </div>
       </Card>
     </div>

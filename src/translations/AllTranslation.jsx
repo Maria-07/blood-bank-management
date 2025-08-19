@@ -138,9 +138,11 @@ export const translations = {
       platformName: "Hemoglobin",
       platformDescription: {
         part1:
-          "is a digital blood donation platform initiated for the people of Nilphamari District, aiming to ensure fast, easy, and effective access to blood services. This initiative has been established and is operated under the personal vision, direct guidance, and strong efforts of the Honorable Deputy Commissioner of Nilphamari,",
+          "Is a digital blood donation platform established to ensure easy, fast and effective blood services for the people of Nilphamari district.",
         part2:
-          "Under his leadership, a dedicated team within the District Administration is consistently working to ensure the success of this mission. The Civil Surgeon’s Office, Nilphamari is providing technical support for blood group testing and volunteer training, while members of the Bangladesh Scouts, Nilphamari District are serving selflessly as volunteers to push this humanitarian effort forward.",
+          "This platform has been established and operated under the personal initiative, dedicated efforts and direct guidance of the Deputy Commissioner, Nilphamari",
+        part3:
+          "A team of the district administration led by the Deputy Commissioner, Nilphamari is working regularly to make this initiative a success. In this program, which is being implemented in collaboration with the District Council, Nilphamari, the Civil Surgeon's Office, Nilphamari, is providing technical support in determining blood groups and training donors. Bangladesh Red Crescent, Nilphamari District and other volunteers are working as its members and taking this great program forward.",
       },
       leaderName: "Mr. Mohammad Nairuzzaman.",
       whyNeeded: {
@@ -219,7 +221,7 @@ export const translations = {
       subtitle:
         "Meet the dedicated leaders who are driving this life-saving initiative forward. Their commitment and leadership are the backbone of our success.",
 
-      dcOfficials: "Deputy Commissioner Officials",
+      dcOfficials: "Admin Officials",
       civilSurgeon: "Civil Surgeon Officials",
       volunteers: "Volunteers",
       loadMore: "Load More",
@@ -905,11 +907,13 @@ export const translations = {
       platformName: "হিমোগ্লোবিন",
       platformDescription: {
         part1:
-          "একটি ডিজিটাল রক্ত দান প্ল্যাটফর্ম যা নীলফামারী জেলার মানুষের জন্য শুরু করা হয়েছে, দ্রুত, সহজ এবং কার্যকর রক্ত পরিষেবা নিশ্চিত করার লক্ষ্যে। এই উদ্যোগটি প্রতিষ্ঠিত এবং পরিচালিত হচ্ছে মাননীয় জেলা প্রশাসক নীলফামারীর ব্যক্তিগত দৃষ্টিভঙ্গি, সরাসরি নির্দেশনা এবং শক্তিশালী প্রচেষ্টার অধীনে।",
+          "একটি ডিজিটাল রক্তদান প্ল্যাটফর্ম যা নীলফামারী জেলার মানুষের জন্য সহজে দ্রুত কার্যকরভাবে রক্ত সেবা নিশ্চিত করতে প্রতিষ্ঠিত হয়েছে। জেলা প্রশাসক, নীলফামারী",
         part2:
-          "তার নেতৃত্বে জেলা প্রশাসনের একটি নিবেদিত দল এই মিশনের সাফল্য নিশ্চিত করতে নিয়মিত কাজ করছে। সিভিল সার্জনের অফিস, নীলফামারী রক্ত গ্রুপ পরীক্ষা এবং স্বেচ্ছাসেবক প্রশিক্ষণের জন্য প্রযুক্তিগত সহায়তা প্রদান করছে, এবং বাংলাদেশ স্কাউটস, নীলফামারী জেলা সদস্যরা নিঃস্বার্থভাবে স্বেচ্ছাসেবক হিসাবে কাজ করছেন এই মানবিক প্রচেষ্টাকে এগিয়ে নিতে।",
+          " মহোদয়ের ব্যক্তিগত উদ্যোগ, ঐকান্তিক প্রচেষ্টা ও প্রত্যক্ষ নির্দেশনায় এই প্ল্যাটফর্মকে প্রতিষ্ঠিত ও পরিচালিত হয়েছে। জেলা প্রশাসক, নীলফামারী ",
+        part3:
+          " মহোদয়ের নেতৃত্বে জেলা প্রশাসনের একটি টিম এ উদ্যোগকে সফলমণ্ডিত করার জন্য নিয়মিত কাজ করছে। জেলা পরিষদ, নীলফামারীর সহযোগিতায় পরিচলিত এ কার্যক্রমে সিভিল সার্জন কার্যালয়, নীলফামারী রক্তের গ্রুপ নির্ণয় ও ডোনারদের প্রশিক্ষণ প্রদানের ক্ষেত্রে কারিগরি সহায়তা প্রদান করছে। বাংলাদেশ রেড ক্রিসেন্ট, নীলফামারী জেলা সহ অন্যান্য স্বেচ্ছাসেবীরা এর সদস্য হিসেবে কাজ করে এই মহৎ কার্যক্রমকে সামনের দিকে এগিয়ে নিয়ে যাচ্ছে।",
       },
-      leaderName: "জনাব মোহাম্মদ নাঈরুজ্জামান।",
+      leaderName: "জনাব মোহাম্মদ নায়িরুজ্জামান",
       whyNeeded: {
         title: "এই প্ল্যাটফর্মের প্রয়োজন কেন?",
         reason1:
@@ -985,7 +989,7 @@ export const translations = {
       title: "নেতৃবৃন্দ",
       subtitle:
         "পরিচিত হন নিবেদিতপ্রাণ নেতৃবৃন্দের সঙ্গে, যারা এই জীবনরক্ষাকারী উদ্যোগকে এগিয়ে নিচ্ছেন। তাঁদের অঙ্গীকার ও নেতৃত্বই আমাদের সাফল্যের মূল ভিত্তি।",
-      dcOfficials: "ডেপুটি কমিশনার অফিসিয়াল",
+      dcOfficials: "অ্যাডমিনবৃন্দ",
       civilSurgeon: "সিভিল সার্জন অফিসিয়াল",
       volunteers: "স্বেচ্ছাসেবক",
       loadMore: "আরও দেখুন",

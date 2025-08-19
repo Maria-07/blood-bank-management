@@ -12,13 +12,15 @@ import { useTranslation } from "@/src/Hook/useTranslation";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
+import { useGetAllAdminQuery } from "@/src/redux/features/auth/userApi";
 
 const VolunteerPage = () => {
   const [allOfficialLeaders, setAllOfficialLeaders] = useState([]);
+  const [admin, setAdmin] = useState([]);
   const [allCivilOfficeLeaders, setAllCivilOfficeLeaders] = useState([]);
   const [allScoutLeaders, setAllScoutLeaders] = useState([]);
   const [page, setPage] = useState(1);
-  const [size, setSize] = useState(10);
+  const [size, setSize] = useState(30);
   const [scoutSize, setScoutSize] = useState(12);
 
   const { t } = useTranslation();
@@ -33,6 +35,12 @@ const VolunteerPage = () => {
     pageSize: size,
   });
 
+  //! Get all Admin Data
+  const { data, isLoading, isError, refetch } = useGetAllAdminQuery({
+    pageNo: page,
+    pageSize: size,
+  });
+
   // Fetch Scout Leaders Data
   const {
     data: ScoutLeaders,
@@ -42,6 +50,12 @@ const VolunteerPage = () => {
     pageNo: 1,
     pageSize: scoutSize,
   });
+
+  useEffect(() => {
+    if (!isLoading && !isError && data) {
+      setAdmin(data?.data);
+    }
+  }, [data, isLoading, isError]);
 
   useEffect(() => {
     if (!isLoadingOfficial && !isErrorOfficial && OfficialLeaders) {
@@ -109,10 +123,10 @@ const VolunteerPage = () => {
           {t("leaderSection.dcOfficials")}
         </h1>
 
-        <div className="md:w-[90%] sm:mx-auto mt-10 sm:px-0 px-2 mb-20">
+        <div className="md:w-[90%] sm:mx-auto mt-10 sm:px-0 px-2 mb-20 ">
           <Slider {...settings}>
-            {allOfficialLeaders?.map((data, i) => (
-              <div key={i}>
+            {admin?.map((data, i) => (
+              <div key={i} className="pb-10">
                 <Initiator record={data} />
               </div>
             ))}
@@ -120,7 +134,7 @@ const VolunteerPage = () => {
         </div>
       </div>
 
-      <div className="my-10  bg-[#F2F2F2] py-10 pb-20">
+      {/* <div className="my-10  bg-[#F2F2F2] py-10 pb-20">
         <h1 className="lg:text-3xl text-2xl font-semibold text-center mt-10">
           {t("leaderSection.civilSurgeon")}
         </h1>
@@ -133,7 +147,7 @@ const VolunteerPage = () => {
             ))}
           </Slider>
         </div>
-      </div>
+      </div> */}
 
       <h1 className="lg:text-3xl text-2xl font-semibold text-center mt-20 ">
         {t("leaderSection.volunteers")}

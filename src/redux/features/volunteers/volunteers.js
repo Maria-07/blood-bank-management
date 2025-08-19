@@ -4,7 +4,7 @@ const VolunteerApi = api.injectEndpoints({
   endpoints: (builder) => ({
     getOfficialLeaders: builder.query({
       query: ({ pageNo, pageSize }) => ({
-        url: `/user/getOfficialLeaders?pageNo=${pageNo}&pageSize=${pageSize}`,
+        url: `/user/getAllAdmin?pageNo=${pageNo}&pageSize=${pageSize}`,
         method: "GET",
       }),
     }),

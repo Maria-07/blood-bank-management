@@ -6,7 +6,6 @@ import { Table, Tabs, Pagination } from "antd";
 import { LuFilter, LuFilterX } from "react-icons/lu";
 
 import Loader from "@/src/Components/Layouts/Loader";
-import ActionModal from "@/src/Components/UI/Admin/Volunteers/ActionModal";
 import UserDeleteModal from "@/src/Components/UI/User/UserDeleteModal";
 import FilteredUserData from "@/src/shared/FilteredUserData";
 
@@ -15,13 +14,39 @@ import {
   useGetAllPendingDonorMutation,
 } from "@/src/redux/features/auth/userApi";
 import { useTranslation } from "@/src/Hook/useTranslation";
+import { FcDisapprove } from "react-icons/fc";
+import { MdDeleteForever } from "react-icons/md";
+import { FaRegCheckSquare, FaRegEye } from "react-icons/fa";
+import ApproveVolunteerModal from "@/src/Components/UI/Admin/Volunteers/ApproveVolunteerModal";
+import DisApproveVolunteerModal from "@/src/Components/UI/Admin/Volunteers/DisApproveVolunteerModal";
+import UserProfileModal from "@/src/Components/UI/User/UserProfileModal";
+import { useAuth } from "@/src/Hook/AuthContext";
 
 const BloodBanks = () => {
   const [filterShow, setFilterShow] = useState(false);
-  const [deleteModal, setDeleteModal] = useState(false);
-  const [id, setId] = useState(null);
   const [filteredData, setFilteredData] = useState({});
   const { t } = useTranslation();
+  const { userType } = useAuth();
+
+  const [ApproveVolunteer, setApproveVolunteer] = useState(false);
+  const [DisApproveVolunteer, setDisApproveVolunteer] = useState(false);
+  const [deleteModal, setDeleteModal] = useState(false);
+  const [UserDetails, setUserDetails] = useState(false);
+
+  // Misc
+  const [approveRecord, setApproveRecord] = useState(null);
+  const [id, setId] = useState();
+
+  // Modal toggles
+  const handleUserDetails = () => setUserDetails((prev) => !prev);
+  const handleApproveVolunteer = () => setApproveVolunteer((prev) => !prev);
+  const handleDisApproveVolunteer = () =>
+    setDisApproveVolunteer((prev) => !prev);
+
+  const handleDeleteModal = () => {
+    setDeleteModal((prev) => !prev);
+    setId(approveRecord?.id);
+  };
 
   // Pagination and row count
   const [pagination, setPagination] = useState({ page: 1, size: 10 });
@@ -45,7 +70,6 @@ const BloodBanks = () => {
       [key]: value,
     }));
   };
-  console.log(filteredData);
 
   const clearFilters = () => {
     setFilteredData({});
@@ -54,10 +78,12 @@ const BloodBanks = () => {
     setResetTrigger((prev) => prev + 1);
   };
 
-  const [getAllApprovedDonors, { isLoading, isError }] =
+  const [getAllApprovedDonors, { isLoading, isError, refetch: refetch }] =
     useGetAllApprovedDonorMutation();
-  const [getAllPendingDonors, { isLoadingPending, isErrorPending }] =
-    useGetAllPendingDonorMutation();
+  const [
+    getAllPendingDonors,
+    { isLoadingPending, isErrorPending, refetch: refetch2 },
+  ] = useGetAllPendingDonorMutation();
 
   const tableDataWithKeys = (data) =>
     data?.map((item, index) => ({ ...item, key: item?.id || index }));
@@ -191,7 +217,41 @@ const BloodBanks = () => {
       {
         title: "Action",
         key: "view",
-        render: (_, record) => <ActionModal record={record} />,
+        render: (_, record) => (
+          <div className="flex items-center justify-center gap-2">
+            <button
+              title="Reject"
+              onClick={() => {
+                setApproveRecord(record);
+                handleDisApproveVolunteer();
+              }}
+              className="text-green-500 text-[16px] px-2 py-[1px] font-semibold rounded-md"
+            >
+              <FcDisapprove />
+            </button>
+            <button
+              title="Delete User"
+              type="button"
+              onClick={() => {
+                setApproveRecord(record);
+                handleDeleteModal();
+              }}
+              className="flex items-center justify-center text-secondary"
+            >
+              <MdDeleteForever />
+            </button>
+            <button
+              title="Details"
+              className="text-green-500 text-[13px] px-2 py-[1px] font-semibold rounded-md"
+              onClick={() => {
+                setApproveRecord(record);
+                handleUserDetails();
+              }}
+            >
+              <FaRegEye className="text-green-700" />
+            </button>
+          </div>
+        ),
       },
     ],
     [tableData, sortedInfo, filteredInfo]
@@ -203,7 +263,41 @@ const BloodBanks = () => {
       {
         title: "Action",
         key: "view",
-        render: (_, record) => <ActionModal record={record} />,
+        render: (_, record) => (
+          <div className="flex items-center justify-center gap-2">
+            <button
+              title="Approve"
+              onClick={() => {
+                setApproveRecord(record);
+                handleApproveVolunteer();
+              }}
+              className="text-green-500 text-[11px] px-2 py-[1px] font-semibold rounded-md"
+            >
+              <FaRegCheckSquare />
+            </button>
+            <button
+              title="Delete User"
+              type="button"
+              onClick={() => {
+                setApproveRecord(record);
+                handleDeleteModal();
+              }}
+              className="flex items-center justify-center text-secondary"
+            >
+              <MdDeleteForever />
+            </button>
+            <button
+              title="Details"
+              className="text-green-500 text-[13px] px-2 py-[1px] font-semibold rounded-md"
+              onClick={() => {
+                setApproveRecord(record);
+                handleUserDetails();
+              }}
+            >
+              <FaRegEye className="text-green-700" />
+            </button>
+          </div>
+        ),
       },
     ],
     [tableDataPending, sortedInfo, filteredInfo]
@@ -320,19 +414,113 @@ const BloodBanks = () => {
         </div>
       )}
 
-      {deleteModal && (
-        <UserDeleteModal
-          record={id}
-          refetch={() =>
+      {ApproveVolunteer && (
+        <ApproveVolunteerModal
+          record={approveRecord}
+          handleClose={handleApproveVolunteer}
+          clicked={ApproveVolunteer}
+          refetch={() => {
+            if (activeTabKey === "1") {
+              fetchData(
+                getAllApprovedDonors,
+                setTableData,
+                pagination,
+                setRowCount
+              );
+            } else {
+              fetchData(
+                getAllPendingDonors,
+                setTableDataPending,
+                pagination2,
+                setRowCount2
+              );
+            }
+          }}
+          refetch2={() => {
+            fetchData(
+              getAllPendingDonors,
+              setTableDataPending,
+              pagination2,
+              setRowCount2
+            );
             fetchData(
               getAllApprovedDonors,
               setTableData,
               pagination,
               setRowCount
-            )
-          }
+            );
+          }}
+        />
+      )}
+      {DisApproveVolunteer && (
+        <DisApproveVolunteerModal
+          record={approveRecord}
+          handleClose={handleDisApproveVolunteer}
+          clicked={DisApproveVolunteer}
+          refetch={() => {
+            fetchData(
+              getAllPendingDonors,
+              setTableDataPending,
+              pagination2,
+              setRowCount2
+            );
+          }}
+          refetch2={() => {
+            fetchData(
+              getAllApprovedDonors,
+              setTableData,
+              pagination,
+              setRowCount
+            );
+          }}
+        />
+      )}
+      {deleteModal && (
+        <UserDeleteModal
+          record={approveRecord}
           clicked={deleteModal}
-          handleClose={() => setDeleteModal(false)}
+          handleClose={handleDeleteModal}
+          refetch={() => {
+            fetchData(
+              getAllPendingDonors,
+              setTableDataPending,
+              pagination2,
+              setRowCount2
+            );
+          }}
+          refetch2={() => {
+            fetchData(
+              getAllApprovedDonors,
+              setTableData,
+              pagination,
+              setRowCount
+            );
+          }}
+        />
+      )}
+      {UserDetails && (
+        <UserProfileModal
+          record={approveRecord}
+          handleClose={handleUserDetails}
+          clicked={UserDetails}
+          admin={userType === "Admin"}
+          refetch={() => {
+            if (activeTabKey === "2") {
+              fetchData(
+                getAllPendingDonors,
+                setTableDataPending,
+                pagination2,
+                setRowCount2
+              );
+            } else {
+              fetchData(
+                getAllApprovedDonors,
+                setTableData,
+                pagination,
+                setRowCount
+              );
+            }
+          }}
         />
       )}
     </div>

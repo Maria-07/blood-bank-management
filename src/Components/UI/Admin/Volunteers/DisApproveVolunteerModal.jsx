@@ -64,7 +64,7 @@ const DisApproveVolunteerModal = ({
         // window.location.reload();
       }
     } catch (error) {
-      toast.error(t("leaders.toast.unexpected"));
+      console.log(error);
     }
   };
   return (

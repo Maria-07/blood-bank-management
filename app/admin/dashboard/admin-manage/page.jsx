@@ -20,7 +20,7 @@ const AdminManagePage = () => {
   const [record, setRecord] = useState({});
   const { t } = useTranslation();
 
-  //! Get all Campaigns Data
+  //! Get all Admin Data
   const { data, isLoading, isError, refetch } = useGetAllAdminQuery({
     pageNo: page,
     pageSize: size,
@@ -111,7 +111,7 @@ const AdminManagePage = () => {
               "code",
               "bloodDonationCount",
               "imageUrl",
-              "isEmergencyContact"
+              "isEmergencyContact",
             ].includes(key)
         )
         .map((key, index) => ({
