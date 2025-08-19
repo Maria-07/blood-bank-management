@@ -148,7 +148,7 @@ export const translations = {
       whyNeeded: {
         title: "Why This Platform Was Needed?",
         reason1:
-          "Blood donation is a noble act — not only does it help save lives, but donating blood regularly can also contribute positively to the health of the donor. However, matching donors and recipients at the right time remains a major challenge. Additionally, many people in our society are unaware of their blood group, which causes complications in emergencies.",
+          "Blood donation is a noble act, not only does it help save lives, but donating blood regularly can also contribute positively to the health of the donor. However, matching donors and recipients at the right time remains a major challenge. Additionally, many people in our society are unaware of their blood group, which causes complications in emergencies.",
         reason2:
           "To overcome these barriers, this platform was created as an innovative initiative by the Deputy Commissioner of Nilphamari. It bridges the gap between donors and recipients and raises awareness about blood donation.",
       },
@@ -156,7 +156,7 @@ export const translations = {
         title: "Our Stakeholders",
         districtAdmin: {
           title:
-            "District Administration – Led by the Deputy Commissioner and supported by the Civil Surgeon’s Office, this team handles:",
+            "District Administration, Led by the Deputy Commissioner and supported by the Civil Surgeon’s Office, this team handles:",
           platform: "Platform development and maintenance",
           volunteerTraining: "Volunteer training",
           campaignPlanning: "Campaign planning and execution",
@@ -165,13 +165,13 @@ export const translations = {
             "Recognizing top donors and issuing digital ID cards",
         },
         scouts: {
-          title: "Bangladesh Scouts – Nilphamari – Act as volunteers in:",
+          title: "Bangladesh Scouts, Nilphamari act as volunteers in:",
           bloodGroupId: "Blood group identification at campaign",
           dataUploading: "Uploading data into the central database",
           awarenessCampaign: "Conducting awareness campaigns",
         },
         users: {
-          title: "Platform Users – General public who:",
+          title: "Platform Users:",
           registerDonors: "Register as donors",
           contactDonors:
             "Search for and contact blood donors during emergencies",
@@ -181,7 +181,7 @@ export const translations = {
     campaigns: {
       title: "Campaigns",
       subtitle:
-        "Every drop of blood counts. By donating blood, you’re not just giving a part of yourself; you’re giving someone a second chance at life. With every donation, you can save up to three lives. It’s a simple act that can make an extraordinary difference. Join the movement today—be a hero, share the gift of life, and inspire others to do the same. Donate blood, save lives, and make the world a healthier place for all.",
+        "Every drop of blood counts. By donating blood, you’re not just giving a part of yourself; you’re giving someone a second chance at life. With every donation, you can save up to three lives. It’s a simple act that can make an extraordinary difference. Join the movement today, be a hero, share the gift of life, and inspire others to do the same. Donate blood, save lives, and make the world a healthier place for all.",
       imageAlt: "Blood donation illustration",
     },
     media: {
@@ -917,7 +917,7 @@ export const translations = {
       whyNeeded: {
         title: "এই প্ল্যাটফর্মের প্রয়োজন কেন?",
         reason1:
-          "রক্তদান একটি মহান কাজ — এটি শুধু জীবন বাঁচায় না, নিয়মিত রক্তদান দাতার স্বাস্থ্যের জন্যও ইতিবাচক প্রভাব ফেলে। তবে, সঠিক সময়ে দাতা ও গ্রাহককে ম্যাচ করা একটি বড় চ্যালেঞ্জ। এছাড়াও, অনেকেই তাদের রক্তের গ্রুপ জানেন না, যা জরুরি পরিস্থিতিতে জটিলতা সৃষ্টি করে।",
+          "রক্তদান একটি মহান কাজ, এটি শুধু জীবন বাঁচায় না, নিয়মিত রক্তদান দাতার স্বাস্থ্যের জন্যও ইতিবাচক প্রভাব ফেলে। তবে, সঠিক সময়ে দাতা ও গ্রাহককে ম্যাচ করা একটি বড় চ্যালেঞ্জ। এছাড়াও, অনেকেই তাদের রক্তের গ্রুপ জানেন না, যা জরুরি পরিস্থিতিতে জটিলতা সৃষ্টি করে।",
         reason2:
           "এই বাধাগুলো কাটিয়ে উঠতে, নীলফামারীর জেলা প্রশাসকের উদ্যোগে এই প্ল্যাটফর্মটি তৈরি হয়েছে। এটি দাতা ও গ্রাহকের মধ্যে সেতুবন্ধন রচনা করে এবং রক্তদান সম্পর্কে সচেতনতা বৃদ্ধি করে।",
       },
@@ -925,7 +925,7 @@ export const translations = {
         title: "আমাদের অংশীদারগণ",
         districtAdmin: {
           title:
-            "জেলা প্রশাসন – জেলা প্রশাসক কর্তৃক নেতৃত্বদান এবং সিভিল সার্জনের অফিস দ্বারা সমর্থিত, এই দলটি পরিচালনা করে:",
+            "জেলা প্রশাসন, জেলা প্রশাসক কর্তৃক নেতৃত্বদান এবং সিভিল সার্জনের অফিস দ্বারা সমর্থিত, এই দলটি পরিচালনা করে:",
           platform: "প্ল্যাটফর্ম উন্নয়ন এবং রক্ষণাবেক্ষণ",
           volunteerTraining: "স্বেচ্ছাসেবক প্রশিক্ষণ",
           campaignPlanning: "প্রচারণার পরিকল্পনা এবং বাস্তবায়ন",
@@ -934,13 +934,13 @@ export const translations = {
             "শীর্ষ দাতাদের স্বীকৃতি এবং ডিজিটাল আইডি কার্ড ইস্যু করা",
         },
         scouts: {
-          title: "বাংলাদেশ স্কাউটস – নীলফামারী – স্বেচ্ছাসেবক হিসাবে কাজ করে:",
+          title: "বাংলাদেশ স্কাউটস, নীলফামারী স্বেচ্ছাসেবক হিসাবে কাজ করে:",
           bloodGroupId: "প্রচারণায় রক্ত গ্রুপ শনাক্তকরণ",
           dataUploading: "কেন্দ্রীয় ডাটাবেসে ডেটা আপলোড",
           awarenessCampaign: "সচেতনতা প্রচারণা পরিচালনা",
         },
         users: {
-          title: "প্ল্যাটফর্ম ব্যবহারকারীরা – সাধারণ জনগণ যারা:",
+          title: "প্ল্যাটফর্ম ব্যবহারকারীরা",
           registerDonors: "দাতা হিসাবে নিবন্ধন করেন",
           contactDonors:
             "জরুরি পরিস্থিতিতে রক্ত দাতাদের সন্ধান এবং যোগাযোগ করেন",
@@ -950,7 +950,7 @@ export const translations = {
     campaigns: {
       title: "ক্যাম্পেইন",
       subtitle:
-        "প্রতি বিন্দু রক্তই মূল্যবান। রক্তদান করে আপনি শুধু নিজের রক্ত দিচ্ছেন না; আপনি কারো জীবনে দ্বিতীয় সুযোগ দিচ্ছেন। প্রতিটি রক্তদানে আপনি তিনজনের জীবন বাঁচাতে পারেন। এটি একটি সহজ কাজ যা অসাধারণ পরিবর্তন আনতে পারে। আজই অংশ নিন—একজন নায়ক হোন, জীবন উপহার দিন, এবং অন্যদেরও অনুপ্রেরণা দিন। রক্ত দিন, জীবন বাঁচান, এবং বিশ্বকে আরও সুস্থ করে তুলুন।",
+        "প্রতি বিন্দু রক্তই মূল্যবান। রক্তদান করে আপনি শুধু নিজের রক্ত দিচ্ছেন না; আপনি কারো জীবনে দ্বিতীয় সুযোগ দিচ্ছেন। প্রতিটি রক্তদানে আপনি তিনজনের জীবন বাঁচাতে পারেন। এটি একটি সহজ কাজ যা অসাধারণ পরিবর্তন আনতে পারে। আজই অংশ নিন, একজন নায়ক হোন, জীবন উপহার দিন, এবং অন্যদেরও অনুপ্রেরণা দিন। রক্ত দিন, জীবন বাঁচান, এবং বিশ্বকে আরও সুস্থ করে তুলুন।",
       imageAlt: "রক্ত দানের ছবি",
     },
     media: {
