@@ -138,11 +138,11 @@ export const translations = {
       platformName: "Hemoglobin",
       platformDescription: {
         part1:
-          "Is a digital blood donation platform established to ensure easy, fast and effective blood services for the people of Nilphamari district.",
+          "A digital blood donation platform established to ensure easy, fast, and effective blood services for the people of Nilphamari district. This platform has been founded and is being operated through the personal initiative, dedicated efforts, and direct guidance of the Deputy Commissioner of Nilphamari,",
         part2:
-          "This platform has been established and operated under the personal initiative, dedicated efforts and direct guidance of the Deputy Commissioner, Nilphamari",
+          "",
         part3:
-          "A team of the district administration led by the Deputy Commissioner, Nilphamari is working regularly to make this initiative a success. In this program, which is being implemented in collaboration with the District Council, Nilphamari, the Civil Surgeon's Office, Nilphamari, is providing technical support in determining blood groups and training donors. Bangladesh Red Crescent, Nilphamari District and other volunteers are working as its members and taking this great program forward.",
+          "Under the leadership of the Deputy Commissioner of Nilphamari, a team from the District Administration is regularly working to make this initiative successful. With the cooperation of the Nilphamari District Council, this program is being implemented, where the Civil Surgeon’s Office, Nilphamari, is providing technical support in determining blood groups and training volunteers. Alongside, Bangladesh Scouts, Nilphamari district unit, and other volunteers are working as members to take this noble initiative forward.",
       },
       leaderName: "Mr. Mohammad Nairuzzaman.",
       whyNeeded: {
@@ -909,9 +909,9 @@ export const translations = {
         part1:
           "একটি ডিজিটাল রক্তদান প্ল্যাটফর্ম যা নীলফামারী জেলার মানুষের জন্য সহজে দ্রুত কার্যকরভাবে রক্ত সেবা নিশ্চিত করতে প্রতিষ্ঠিত হয়েছে। জেলা প্রশাসক, নীলফামারী",
         part2:
-          " মহোদয়ের ব্যক্তিগত উদ্যোগ, ঐকান্তিক প্রচেষ্টা ও প্রত্যক্ষ নির্দেশনায় এই প্ল্যাটফর্মকে প্রতিষ্ঠিত ও পরিচালিত হয়েছে। জেলা প্রশাসক, নীলফামারী ",
+          " মহোদয়ের ব্যক্তিগত উদ্যোগ, ঐকান্তিক প্রচেষ্টা ও প্রত্যক্ষ নির্দেশনায় এই প্ল্যাটফর্মটি প্রতিষ্ঠিত ও পরিচালিত হচ্ছে।",
         part3:
-          " মহোদয়ের নেতৃত্বে জেলা প্রশাসনের একটি টিম এ উদ্যোগকে সফলমণ্ডিত করার জন্য নিয়মিত কাজ করছে। জেলা পরিষদ, নীলফামারীর সহযোগিতায় পরিচলিত এ কার্যক্রমে সিভিল সার্জন কার্যালয়, নীলফামারী রক্তের গ্রুপ নির্ণয় ও ডোনারদের প্রশিক্ষণ প্রদানের ক্ষেত্রে কারিগরি সহায়তা প্রদান করছে। বাংলাদেশ রেড ক্রিসেন্ট, নীলফামারী জেলা সহ অন্যান্য স্বেচ্ছাসেবীরা এর সদস্য হিসেবে কাজ করে এই মহৎ কার্যক্রমকে সামনের দিকে এগিয়ে নিয়ে যাচ্ছে।",
+          "জেলা প্রশাসক, নীলফামারী মহোদয়ের নেতৃত্বে জেলা প্রশাসনের একটি টিম এ উদ্যোগকে সফলমণ্ডিত করার জন্য নিয়মিত কাজ করছে। জেলা পরিষদ, নীলফামারীর সহযোগিতায় পরিচলিত এ কার্যক্রমে সিভিল সার্জন কার্যালয়, নীলফামারী রক্তের গ্রুপ নির্ণয় ও ভলান্টিয়ারদের প্রশিক্ষণ প্রদানের ক্ষেত্রে কারিগরি সহায়তা প্রদান করছে। বাংলাদেশ স্কাউটস, নীলফামারী জেলাসহ অন্যান্য স্বেচ্ছাসেবীরা এর সদস্য হিসেবে কাজ করে এই মহৎ কার্যক্রমকে সামনের দিকে এগিয়ে নিয়ে যাচ্ছে।",
       },
       leaderName: "জনাব মোহাম্মদ নায়িরুজ্জামান",
       whyNeeded: {
