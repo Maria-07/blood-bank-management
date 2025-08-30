@@ -142,7 +142,7 @@ export const translations = {
         part2:
           "",
         part3:
-          "Under the leadership of the Deputy Commissioner of Nilphamari, a team from the District Administration is regularly working to make this initiative successful. With the cooperation of the Nilphamari District Council, this program is being implemented, where the Civil Surgeon’s Office, Nilphamari, is providing technical support in determining blood groups and training volunteers. Alongside, Bangladesh Scouts, Nilphamari district unit, and other volunteers are working as members to take this noble initiative forward.",
+          "Under the leadership of the Deputy Commissioner of Nilphamari, a team from the District Administration is regularly working to make this initiative successful. In this program, funded by the District Council, Nilphamari, the Civil Surgeon's Office, Nilphamari is providing technical assistance in blood group determination and training of volunteers. Alongside, Bangladesh Scouts, Nilphamari district unit, and other volunteers are working as members to take this noble initiative forward.",
       },
       leaderName: "Mr. Mohammad Nairuzzaman.",
       whyNeeded: {
@@ -911,7 +911,7 @@ export const translations = {
         part2:
           " মহোদয়ের ব্যক্তিগত উদ্যোগ, ঐকান্তিক প্রচেষ্টা ও প্রত্যক্ষ নির্দেশনায় এই প্ল্যাটফর্মটি প্রতিষ্ঠিত ও পরিচালিত হচ্ছে।",
         part3:
-          "জেলা প্রশাসক, নীলফামারী মহোদয়ের নেতৃত্বে জেলা প্রশাসনের একটি টিম এ উদ্যোগকে সফলমণ্ডিত করার জন্য নিয়মিত কাজ করছে। জেলা পরিষদ, নীলফামারীর সহযোগিতায় পরিচলিত এ কার্যক্রমে সিভিল সার্জন কার্যালয়, নীলফামারী রক্তের গ্রুপ নির্ণয় ও ভলান্টিয়ারদের প্রশিক্ষণ প্রদানের ক্ষেত্রে কারিগরি সহায়তা প্রদান করছে। বাংলাদেশ স্কাউটস, নীলফামারী জেলাসহ অন্যান্য স্বেচ্ছাসেবীরা এর সদস্য হিসেবে কাজ করে এই মহৎ কার্যক্রমকে সামনের দিকে এগিয়ে নিয়ে যাচ্ছে।",
+          "জেলা প্রশাসক, নীলফামারী মহোদয়ের নেতৃত্বে জেলা প্রশাসনের একটি টিম এ উদ্যোগকে সফলমণ্ডিত করার জন্য নিয়মিত কাজ করছে। জেলা পরিষদ, নীলফামারীর অর্থায়নে পরিচলিত এ কার্যক্রমে সিভিল সার্জন কার্যালয়, নীলফামারী রক্তের গ্রুপ নির্ণয় ও ভলান্টিয়ারদের প্রশিক্ষণ প্রদানের ক্ষেত্রে কারিগরি সহায়তা প্রদান করছে। বাংলাদেশ স্কাউটস, নীলফামারী জেলাসহ অন্যান্য স্বেচ্ছাসেবীরা এর সদস্য হিসেবে কাজ করে এই মহৎ কার্যক্রমকে সামনের দিকে এগিয়ে নিয়ে যাচ্ছে।",
       },
       leaderName: "জনাব মোহাম্মদ নায়িরুজ্জামান",
       whyNeeded: {
