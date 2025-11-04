@@ -1,6 +1,8 @@
 "use client";
 
+import { useEffect } from "react";
 import localFont from "next/font/local";
+import Script from "next/script";
 import Navbar from "../src/Components/Layouts/Navbar";
 import "./styles/globals.css";
 import "./styles/antdCustom.css";
@@ -28,11 +30,34 @@ const geistMono = localFont({
 // };
 
 export default function RootLayout({ children }) {
+  useEffect(() => {
+    // Add Google AdSense meta tag
+    const metaTag = document.createElement("meta");
+    metaTag.name = "google-adsense-account";
+    metaTag.content = "ca-pub-3058178790781075";
+    document.head.appendChild(metaTag);
+
+    return () => {
+      // Cleanup: remove meta tag on unmount (optional)
+      const existingTag = document.querySelector(
+        'meta[name="google-adsense-account"]'
+      );
+      if (existingTag) {
+        document.head.removeChild(existingTag);
+      }
+    };
+  }, []);
+
   return (
     <html lang="en">
       <>
         <body>
-          {" "}
+          <Script
+            async
+            src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3058178790781075"
+            crossOrigin="anonymous"
+            strategy="afterInteractive"
+          />
           <ToastContainer />
           <AuthProvider>
             <Provider store={store}>
