@@ -16,7 +16,7 @@ const Footer = () => {
 
   const handleDownload = () => {
     const link = document.createElement("a");
-    link.href = "/files/hemoglobin-app.apk";
+    link.href = "https://play.google.com/store/apps/details?id=com.blood.hemoglobin";
     link.download = "hemoglobin-app.apk";
     document.body.appendChild(link);
     link.click();
